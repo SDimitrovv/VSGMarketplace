@@ -1,0 +1,32 @@
+#landingMain {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: url('../images/home/landing-background.png') center fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    #loginButton {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        background-color: #ED1C25;
+        border-color: #ED1C25;
+        font-size: 2rem;
+        width: 175px;
+        height: 62px;
+        border-radius: 4px;
+        margin-top: 120px;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+    }
+
+    #loginButton:hover {
+        cursor: pointer;
+    }
+}

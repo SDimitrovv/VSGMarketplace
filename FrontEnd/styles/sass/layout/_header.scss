@@ -1,0 +1,33 @@
+@import '../abstracts/mixins';
+
+header {
+  background-color: #FFF;
+  font-family: 'Montserrat';
+  width: 100%;
+  padding: 10px;
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+
+  #logo {
+    width: 30px;
+    height: 30px;
+    padding-right: 70px;
+  }
+
+  #pageTitle {
+    font-size: 30px;
+  }
+
+  #profileGreet {
+    span {
+      font-weight: 700;
+      margin-right: 10px;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}

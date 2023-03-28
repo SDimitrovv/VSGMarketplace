@@ -1,0 +1,94 @@
+#searchSpace {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+    #input {
+        display: flex;
+        align-items: flex-end;
+        width: 20%;
+        border-bottom: 1px solid #000;
+
+        input {
+            outline: none;
+            padding-bottom: 2px;
+        }
+
+        svg {
+            padding-bottom: 6px;
+            margin-right: 12px;
+        }
+    }
+
+    button {
+        margin-left: 20px;
+        width: 120px;
+        height: 36px;
+        color: #FFF;
+        background: #2E7D32;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+
+        svg {
+            margin-right: 6px;
+        }
+    }
+}
+
+#tableBorder {
+    display: flex;
+    justify-content: center;
+    border: 1px solid #B3B3B3;
+    border-radius: 4px;
+    margin-top: 40px;
+    height: 86%;
+
+    table {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-spacing: 0;
+        border-collapse: collapse;
+        text-align: left;
+
+        thead tr {
+            height: 60px;
+            border-bottom: 1px solid #B3B3B3;
+            padding-left: 20px;
+
+        }
+
+        tbody tr {
+            height: 30px;
+            max-height: 50px;
+            border-bottom: 1px solid #B3B3B3;
+            padding-left: 20px;
+        }
+
+        th,
+        td {
+            padding-left: 20px;
+
+            a {
+                margin: 8px;
+            }
+        }
+
+        tfoot {
+            display: table;
+            margin-top: 100%;
+            border-top: 1px solid #B3B3B3;
+            height: 50px;
+        }
+
+        .delete {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .edit {
+            position: relative;
+            cursor: pointer;
+        }
+    }
+}

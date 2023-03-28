@@ -1,0 +1,429 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+a {
+  color: #FFF;
+  text-decoration: none;
+}
+
+body {
+  height: 100vh;
+  background-color: #F0F2F3;
+  font-family: "Roboto";
+}
+body #root {
+  display: flex;
+  width: 100%;
+}
+
+header {
+  background-color: #FFF;
+  font-family: "Montserrat";
+  width: 100%;
+  padding: 10px;
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+}
+header #logo {
+  width: 30px;
+  height: 30px;
+  padding-right: 70px;
+}
+header #pageTitle {
+  font-size: 30px;
+}
+header #profileGreet span {
+  font-weight: 700;
+  margin-right: 10px;
+}
+header #profileGreet img {
+  width: 30px;
+  height: 30px;
+}
+
+aside,
+main {
+  height: calc(100vh - 160px);
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  margin: 30px 20px;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px 26px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+aside {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 20px 8px;
+  justify-content: space-evenly;
+  width: 30%;
+  max-width: 320px;
+  min-width: 160px;
+  overflow-y: auto;
+}
+aside nav {
+  height: inherit;
+  width: 100%;
+}
+aside nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  height: 94%;
+  margin-top: 7%;
+}
+aside nav ul .navButton {
+  margin: 6px 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #FFF;
+  color: #000;
+  height: 46px;
+  width: 90%;
+  border-radius: 10px;
+}
+aside nav ul .navButton:hover {
+  cursor: pointer;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+aside nav ul .navButton:active {
+  cursor: pointer;
+  color: #FFFFFF;
+  background: #ED1C25;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+aside nav ul .navButton:active .icon > path {
+  fill: #FFF;
+}
+aside nav ul .icon {
+  margin: 0px 14px;
+}
+aside nav ul .active {
+  cursor: pointer;
+  color: #FFFFFF;
+  background: #ED1C25;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  fill: #FFFFFF;
+}
+aside nav ul #logout {
+  margin-top: auto;
+}
+
+#landingMain {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: url("../images/home/landing-background.png") center fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#landingMain #loginButton {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #ED1C25;
+  border-color: #ED1C25;
+  font-size: 2rem;
+  width: 175px;
+  height: 62px;
+  border-radius: 4px;
+  margin-top: 120px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+#landingMain #loginButton:hover {
+  cursor: pointer;
+}
+
+#marketplaceMain {
+  display: flex;
+  align-content: flex-start;
+  justify-content: space-evenly;
+}
+
+.product {
+  margin: 20px 10px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+}
+.product .productButton {
+  cursor: pointer;
+}
+.product .productContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+}
+.product .productContent .price {
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.product .productContent .price span {
+  line-height: 22px;
+  font-weight: 600;
+}
+.product .productContent .price small {
+  font-size: 12px;
+  color: #9A9A9A;
+}
+.product .productContent .quantityAndImg {
+  display: flex;
+  flex-direction: row;
+}
+.product .productContent .quantityAndImg .quantity {
+  display: flex;
+  flex-direction: column;
+  margin: 22px 4px;
+}
+.product .productContent .quantityAndImg .quantity span {
+  font-size: 10px;
+  color: #B3B3B3;
+}
+.product .productContent .quantityAndImg .quantity select {
+  cursor: pointer;
+  border-bottom: 1px solid #000;
+}
+.product .productContent .buyButton {
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 31px;
+  height: 31px;
+  margin: 18px 0px;
+  margin-right: 14px;
+  margin-left: 6px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  width: 280px;
+  height: 80px;
+  top: 82%;
+  left: 35%;
+  padding: 14px;
+  background: #FFF;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  z-index: 99;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 7px 10px 7px;
+  border-color: transparent transparent #FFF transparent;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  margin: 16px 0px;
+  justify-content: center;
+  align-self: flex-end;
+}
+.buttons button {
+  cursor: pointer;
+  height: 22px;
+  width: 56px;
+  margin: 0px 6px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  border: 1px solid #ED1C25;
+}
+.buttons .no,
+.buttons .yes:active {
+  background-color: #FFF;
+  color: #ED1C25;
+}
+.buttons .yes,
+.buttons .no:active {
+  background-color: #ED1C25;
+  color: #FFF;
+}
+
+#overlay {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5019607843);
+}
+#overlay #modalContent {
+  display: flex;
+  flex-direction: column;
+  height: 66%;
+  width: 31%;
+  background: #FFF;
+  border-radius: 20px;
+  position: relative;
+}
+#overlay #modalContent button {
+  position: absolute;
+  left: 94%;
+  top: 2%;
+  cursor: pointer;
+}
+#overlay #modalContent img {
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+#overlay #modalContent #modalFrameOne {
+  margin: 20px;
+  overflow-y: auto;
+}
+#overlay #modalContent #modalFrameOne #modalFrameTwo {
+  display: flex;
+  justify-content: space-between;
+}
+#overlay #modalContent #modalFrameOne #modalFrameTwo b {
+  width: 70%;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+}
+#overlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+#overlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty b {
+  width: 100%;
+}
+#overlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty small {
+  width: 40px;
+  color: #9A9A9A;
+}
+#overlay #modalContent #modalFrameOne small {
+  color: #9A9A9A;
+}
+#overlay #modalContent #modalFrameOne p {
+  margin-top: 10px;
+  width: 100%;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+#searchSpace {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+#searchSpace #input {
+  display: flex;
+  align-items: flex-end;
+  width: 20%;
+  border-bottom: 1px solid #000;
+}
+#searchSpace #input input {
+  outline: none;
+  padding-bottom: 2px;
+}
+#searchSpace #input svg {
+  padding-bottom: 6px;
+  margin-right: 12px;
+}
+#searchSpace button {
+  margin-left: 20px;
+  width: 120px;
+  height: 36px;
+  color: #FFF;
+  background: #2E7D32;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+#searchSpace button svg {
+  margin-right: 6px;
+}
+
+#tableBorder {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #B3B3B3;
+  border-radius: 4px;
+  margin-top: 40px;
+  height: 86%;
+}
+#tableBorder table {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  text-align: left;
+}
+#tableBorder table thead tr {
+  height: 60px;
+  border-bottom: 1px solid #B3B3B3;
+  padding-left: 20px;
+}
+#tableBorder table tbody tr {
+  height: 30px;
+  max-height: 50px;
+  border-bottom: 1px solid #B3B3B3;
+  padding-left: 20px;
+}
+#tableBorder table th,
+#tableBorder table td {
+  padding-left: 20px;
+}
+#tableBorder table th a,
+#tableBorder table td a {
+  margin: 8px;
+}
+#tableBorder table tfoot {
+  display: table;
+  margin-top: 100%;
+  border-top: 1px solid #B3B3B3;
+  height: 50px;
+}
+#tableBorder table .delete {
+  position: relative;
+  cursor: pointer;
+}
+#tableBorder table .edit {
+  position: relative;
+  cursor: pointer;
+}/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,29 @@
+@import '../abstracts/mixins';
+
+* {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+    
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+a {
+    color: #FFF;
+    text-decoration: none;
+}
+
+body {
+    
+    height: 100vh;
+    background-color: #F0F2F3;
+    font-family: 'Roboto';
+
+    #root {
+        display: flex;
+        width: 100%;
+    }
+}
