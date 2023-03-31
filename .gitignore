@@ -1,0 +1,18 @@
+# Visual Studio files
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+
+# NuGet packages
+*.nuget/
+packages/
+*.nupkg
+
+# Build results
+[Bb]uild/
