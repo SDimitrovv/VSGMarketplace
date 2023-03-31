@@ -1,3 +1,5 @@
+import { addButtons } from "./global.js";
+
 export function marketplace() {
     const div = document.createElement('div');
     div.className = 'container';
@@ -9,6 +11,15 @@ export function marketplace() {
     </div>
     `;
 
+    document.querySelectorAll('.buyButton').forEach(b => {
+        b.addEventListener('click', (e) => {
+            e.preventDefault();
+            const el = e.target.parentElement;
+            el.appendChild(div);
+            addButtons();
+        })
+    })
+
     document.querySelectorAll('.productButton').forEach(b => {
         b.addEventListener('click', (e) => {
             e.preventDefault();
@@ -16,28 +27,4 @@ export function marketplace() {
             document.querySelector('#overlay').style.display = 'flex';
         })
     });
-
-    document.querySelectorAll('.buyButton').forEach(b => {
-        b.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            e.target.parentElement.parentElement.appendChild(div);
-            addButtons();
-        })
-    })
-
-    document.querySelector('#closeModal')?.addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelector('#overlay').style.display = 'none';
-    })
-}
-
-export function addButtons() {
-    document.querySelectorAll('.buttons button').forEach(b => {
-        b.addEventListener('click', e => {
-            e.preventDefault();
-            const container = e.target.parentElement.parentElement;
-            container.remove();
-        })
-    })
 }

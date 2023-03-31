@@ -1,0 +1,70 @@
+#pendingOrdersMain,
+#myOrdersMain {
+    @include flex-align(column, flex-start);
+    align-content: center;
+
+    #headingSection,
+    .pendingOrders {
+
+        @include flex-align(row, center);
+        width: 97%;
+        margin-top: 20px;
+        background: #DADCDD;
+        border-radius: 10px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 20px;
+        padding: 20px 20px;
+    }
+
+    .pendingOrders {
+        position: relative;
+        border: 1px solid #DADCDD;
+        background-color: #FFF;
+        border-radius: 10px;
+        font-weight: 400;
+        font-size: 14px;
+        padding: 6px 20px;
+        height: 40px;
+
+        .cancelOrder {
+            cursor: pointer;
+            margin-left: 26px;
+        }
+    }
+
+    .codeColumn {
+        width: 15%;
+    }
+
+    .qtyColumn {
+        width: 15%;
+    }
+
+    .priceColumn {
+        width: 15%;
+    }
+
+    .orderedByColumn,
+    .nameColumn {
+        width: 25%;
+    }
+
+    .orderDateColumn {
+        width: 20%;
+    }
+
+    .actionColumn {
+        align-self: flex-end;
+    }
+
+    .completeButton {
+        @include button(#ED1C25);
+        font-style: normal;
+        font-size: 16px;
+        margin-top: 0px;
+        width: 90px;
+    }
+}

@@ -4,8 +4,7 @@
     margin-top: 10px;
 
     #input {
-        display: flex;
-        align-items: flex-end;
+        @include flex-align(row, flex-end);
         width: 20%;
         border-bottom: 1px solid #000;
 
@@ -21,6 +20,7 @@
     }
 
     button {
+        cursor: pointer;
         margin-left: 20px;
         width: 120px;
         height: 36px;
@@ -36,31 +36,28 @@
 }
 
 #tableBorder {
-    display: flex;
-    justify-content: center;
     border: 1px solid #B3B3B3;
     border-radius: 4px;
     margin-top: 40px;
     height: 86%;
+    overflow-x: auto;
 
     table {
         position: relative;
         width: 100%;
-        height: 100%;
         border-spacing: 0;
         border-collapse: collapse;
         text-align: left;
 
-        thead tr {
-            height: 60px;
+        tr th {
+            padding: 22px;
             border-bottom: 1px solid #B3B3B3;
             padding-left: 20px;
 
         }
 
-        tbody tr {
-            height: 30px;
-            max-height: 50px;
+        tr td {
+            padding: 16px;
             border-bottom: 1px solid #B3B3B3;
             padding-left: 20px;
         }
@@ -74,21 +71,125 @@
             }
         }
 
-        tfoot {
-            display: table;
-            margin-top: 100%;
-            border-top: 1px solid #B3B3B3;
-            height: 50px;
+        .editDelete {
+            position: relative;
+            width: 60px;
+
+            .edit {
+                position: relative;
+                cursor: pointer;
+            }
+
+            .delete {
+                position: relative;
+                cursor: pointer;
+            }
         }
 
-        .delete {
-            position: relative;
-            cursor: pointer;
+    }
+}
+
+.removeContainer {
+    @include pop-up(150%, -295%);
+}
+
+.removeContainer::before {
+    @include triangle(70%);
+}
+
+#addItemOverlay,
+#addItemOverlay2 {
+    @include overlay;
+
+    .modalContent {
+        @include modal(76%, 31%);
+        overflow-y: auto;
+        overflow-x: auto;
+
+        .closeModal {
+            @include close-button;
         }
 
-        .edit {
-            position: relative;
-            cursor: pointer;
+        .row {
+            margin-top: 8%;
+            display: flex;
+            justify-content: center;
+
+            .leftModal {
+                @include flex-align(column, flex-start);
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 17px;
+                width: 40%;
+                margin-left: 8%;
+
+                h2 {
+                    font-weight: 700;
+                    font-size: 24px;
+                    line-height: 29px;
+                    margin-bottom: 40px;
+                }
+
+                input,
+                textarea,
+                select {
+                    resize: none;
+                    font-family: 'Inter';
+                    border-bottom: 1px solid #9A9A9A;
+                    outline: none;
+                    margin-bottom: 30px;
+                    height: 34px;
+                    width: 240px;
+                }
+
+                input::placeholder,
+                textarea::placeholder,
+                select::placeholder {
+                    color: #9A9A9A;
+                }
+
+                textarea {
+                    height: 100px;
+                }
+            }
+
+            .rightModal {
+                @include flex-align(column, center);
+                width: 50%;
+                justify-content: center;
+                margin-top: 14%;
+
+                img {
+                    max-width: 260px;
+                    max-height: 150px;
+                }
+
+                .uploadImg {
+                    @include button (#ED6C02);
+                }
+
+                .deleteImg {
+                    @include button (#ED1C25);
+                }
+            }
+
         }
+    }
+
+    button[type="submit"] {
+        cursor: pointer;
+        margin-top: 8%;
+        align-self: center;
+        width: 150px;
+        height: 36px;
+        background: #2E7D32;
+        color: #FFF;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 24px;
     }
 }

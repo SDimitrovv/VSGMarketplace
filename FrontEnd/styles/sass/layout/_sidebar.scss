@@ -4,23 +4,21 @@ main {
     background-color: #FFFFFF;
     border-radius: 20px;
     margin: 30px 20px;
-}
-
-main {
-    @include flex-center(row, center);
-    padding: 20px 26px;
-    width: 100%;
     overflow-y: auto;
 }
 
+main {
+    padding: 20px 26px;
+    width: 100%;
+}
+
 aside {
-    @include flex-center(row, flex-start);
+    @include flex-align(row, flex-start);
     padding: 20px 8px;
     justify-content: space-evenly;
     width: 30%;
     max-width: 320px;
     min-width: 160px;
-    overflow-y: auto;
 
     nav {
         height: inherit;
@@ -78,5 +76,11 @@ aside {
                 margin-top: auto;
             }
         }
+    }
+}
+
+@media screen and (max-width: 787px) {
+    aside {
+        justify-content: center;
     }
 }

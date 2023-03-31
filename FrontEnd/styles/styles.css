@@ -9,9 +9,18 @@ img {
   max-width: 100%;
 }
 
+button,
+a {
+  pointer-events: auto;
+}
+
 a {
   color: #FFF;
   text-decoration: none;
+}
+
+svg {
+  pointer-events: none;
 }
 
 body {
@@ -24,12 +33,24 @@ body #root {
   width: 100%;
 }
 
+@media screen and (max-width: 787px) {
+  #root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  #root aside {
+    display: none;
+  }
+}
 header {
   background-color: #FFF;
   font-family: "Montserrat";
+  box-sizing: border-box;
   width: 100%;
-  padding: 10px;
-  height: 36px;
+  padding: 12px 16px;
+  height: 54px;
   display: flex;
   justify-content: space-between;
 }
@@ -41,6 +62,12 @@ header #logo {
 header #pageTitle {
   font-size: 30px;
 }
+header #profileGreet {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
 header #profileGreet span {
   font-weight: 700;
   margin-right: 10px;
@@ -49,6 +76,21 @@ header #profileGreet img {
   width: 30px;
   height: 30px;
 }
+header #hamburger {
+  display: none;
+  align-self: center;
+}
+@media screen and (max-width: 787px) {
+  header #logo {
+    padding-right: 0px;
+  }
+  header #profileGreet {
+    display: none;
+  }
+  header #hamburger {
+    display: block;
+  }
+}
 
 aside,
 main {
@@ -56,16 +98,12 @@ main {
   background-color: #FFFFFF;
   border-radius: 20px;
   margin: 30px 20px;
+  overflow-y: auto;
 }
 
 main {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
   padding: 20px 26px;
   width: 100%;
-  overflow-y: auto;
 }
 
 aside {
@@ -78,7 +116,6 @@ aside {
   width: 30%;
   max-width: 320px;
   min-width: 160px;
-  overflow-y: auto;
 }
 aside nav {
   height: inherit;
@@ -130,6 +167,11 @@ aside nav ul #logout {
   margin-top: auto;
 }
 
+@media screen and (max-width: 787px) {
+  aside {
+    justify-content: center;
+  }
+}
 #landingMain {
   margin: 0;
   height: 100%;
@@ -163,6 +205,9 @@ aside nav ul #logout {
 
 #marketplaceMain {
   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
   align-content: flex-start;
   justify-content: space-evenly;
 }
@@ -183,9 +228,9 @@ aside nav ul #logout {
   flex-direction: row;
   justify-content: space-between;
   position: relative;
+  padding: 14px;
 }
 .product .productContent .price {
-  margin: 16px;
   display: flex;
   flex-direction: column;
 }
@@ -197,56 +242,66 @@ aside nav ul #logout {
   font-size: 12px;
   color: #9A9A9A;
 }
-.product .productContent .quantityAndImg {
+.product .productContent form {
   display: flex;
-  flex-direction: row;
+  position: relative;
 }
-.product .productContent .quantityAndImg .quantity {
+.product .productContent form .quantity {
   display: flex;
   flex-direction: column;
-  margin: 22px 4px;
 }
-.product .productContent .quantityAndImg .quantity span {
+.product .productContent form .quantity span {
   font-size: 10px;
   color: #B3B3B3;
 }
-.product .productContent .quantityAndImg .quantity select {
+.product .productContent form .quantity select {
   cursor: pointer;
   border-bottom: 1px solid #000;
 }
-.product .productContent .buyButton {
+.product .productContent form .buyButton {
+  pointer-events: auto;
   cursor: pointer;
   background: none;
   border: none;
   width: 31px;
   height: 31px;
-  margin: 18px 0px;
-  margin-right: 14px;
-  margin-left: 6px;
+  margin-left: 4px;
+}
+.product .productContent form .buyButton svg {
+  pointer-events: none;
 }
 
+@media screen and (max-width: 787px) {
+  #marketplaceMain {
+    width: 80%;
+    margin: 16px 0px;
+  }
+}
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
   position: absolute;
+  color: #000;
+  flex-wrap: nowrap;
   width: 280px;
   height: 80px;
-  top: 82%;
-  left: 35%;
+  top: 140%;
+  left: -160%;
   padding: 14px;
-  background: #FFF;
+  background-color: #FFF;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   z-index: 99;
+  pointer-events: all;
 }
 
 .container::before {
   content: "";
   position: absolute;
   bottom: 100%;
-  width: 0;
-  height: 0;
+  left: 48%;
   border-style: solid;
   border-width: 0 7px 10px 7px;
   border-color: transparent transparent #FFF transparent;
@@ -280,15 +335,28 @@ aside nav ul #logout {
 }
 
 #overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
   display: none;
   justify-content: center;
-  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.5019607843);
+}
+#overlay button {
+  position: absolute;
+  left: 94%;
+  top: 2%;
+  cursor: pointer;
+}
+#overlay img {
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
 }
 #overlay #modalContent {
   display: flex;
@@ -298,16 +366,12 @@ aside nav ul #logout {
   background: #FFF;
   border-radius: 20px;
   position: relative;
+  background-image: url("/images/marketplace/ellipse.png");
+  background-position: bottom right;
+  background-repeat: no-repeat;
 }
-#overlay #modalContent button {
-  position: absolute;
-  left: 94%;
-  top: 2%;
-  cursor: pointer;
-}
-#overlay #modalContent img {
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
+#overlay #modalContent .closeModal {
+  background: none;
 }
 #overlay #modalContent #modalFrameOne {
   margin: 20px;
@@ -335,10 +399,10 @@ aside nav ul #logout {
   width: 40px;
   color: #9A9A9A;
 }
-#overlay #modalContent #modalFrameOne small {
+#overlay #modalContent small {
   color: #9A9A9A;
 }
-#overlay #modalContent #modalFrameOne p {
+#overlay #modalContent p {
   margin-top: 10px;
   width: 100%;
   font-weight: 500;
@@ -353,7 +417,9 @@ aside nav ul #logout {
 }
 #searchSpace #input {
   display: flex;
+  flex-direction: row;
   align-items: flex-end;
+  flex-wrap: wrap;
   width: 20%;
   border-bottom: 1px solid #000;
 }
@@ -366,6 +432,7 @@ aside nav ul #logout {
   margin-right: 12px;
 }
 #searchSpace button {
+  cursor: pointer;
   margin-left: 20px;
   width: 120px;
   height: 36px;
@@ -379,29 +446,26 @@ aside nav ul #logout {
 }
 
 #tableBorder {
-  display: flex;
-  justify-content: center;
   border: 1px solid #B3B3B3;
   border-radius: 4px;
   margin-top: 40px;
   height: 86%;
+  overflow-x: auto;
 }
 #tableBorder table {
   position: relative;
   width: 100%;
-  height: 100%;
   border-spacing: 0;
   border-collapse: collapse;
   text-align: left;
 }
-#tableBorder table thead tr {
-  height: 60px;
+#tableBorder table tr th {
+  padding: 22px;
   border-bottom: 1px solid #B3B3B3;
   padding-left: 20px;
 }
-#tableBorder table tbody tr {
-  height: 30px;
-  max-height: 50px;
+#tableBorder table tr td {
+  padding: 16px;
   border-bottom: 1px solid #B3B3B3;
   padding-left: 20px;
 }
@@ -413,17 +477,281 @@ aside nav ul #logout {
 #tableBorder table td a {
   margin: 8px;
 }
-#tableBorder table tfoot {
-  display: table;
-  margin-top: 100%;
-  border-top: 1px solid #B3B3B3;
-  height: 50px;
+#tableBorder table .editDelete {
+  position: relative;
+  width: 60px;
 }
-#tableBorder table .delete {
+#tableBorder table .editDelete .edit {
   position: relative;
   cursor: pointer;
 }
-#tableBorder table .edit {
+#tableBorder table .editDelete .delete {
   position: relative;
   cursor: pointer;
+}
+
+.removeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  position: absolute;
+  color: #000;
+  flex-wrap: nowrap;
+  width: 280px;
+  height: 80px;
+  top: 150%;
+  left: -295%;
+  padding: 14px;
+  background-color: #FFF;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  z-index: 99;
+}
+
+.removeContainer::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 70%;
+  border-style: solid;
+  border-width: 0 7px 10px 7px;
+  border-color: transparent transparent #FFF transparent;
+}
+
+#addItemOverlay,
+#addItemOverlay2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  display: none;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5019607843);
+}
+#addItemOverlay .modalContent,
+#addItemOverlay2 .modalContent {
+  display: flex;
+  flex-direction: column;
+  height: 76%;
+  width: 31%;
+  background: #FFF;
+  border-radius: 20px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+#addItemOverlay .modalContent .closeModal,
+#addItemOverlay2 .modalContent .closeModal {
+  position: absolute;
+  left: 94%;
+  top: 2%;
+  cursor: pointer;
+}
+#addItemOverlay .modalContent .row,
+#addItemOverlay2 .modalContent .row {
+  margin-top: 8%;
+  display: flex;
+  justify-content: center;
+}
+#addItemOverlay .modalContent .row .leftModal,
+#addItemOverlay2 .modalContent .row .leftModal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  width: 40%;
+  margin-left: 8%;
+}
+#addItemOverlay .modalContent .row .leftModal h2,
+#addItemOverlay2 .modalContent .row .leftModal h2 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  margin-bottom: 40px;
+}
+#addItemOverlay .modalContent .row .leftModal input,
+#addItemOverlay .modalContent .row .leftModal textarea,
+#addItemOverlay .modalContent .row .leftModal select,
+#addItemOverlay2 .modalContent .row .leftModal input,
+#addItemOverlay2 .modalContent .row .leftModal textarea,
+#addItemOverlay2 .modalContent .row .leftModal select {
+  resize: none;
+  font-family: "Inter";
+  border-bottom: 1px solid #9A9A9A;
+  outline: none;
+  margin-bottom: 30px;
+  height: 34px;
+  width: 240px;
+}
+#addItemOverlay .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal select::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal select::-moz-placeholder {
+  color: #9A9A9A;
+}
+#addItemOverlay .modalContent .row .leftModal input::placeholder,
+#addItemOverlay .modalContent .row .leftModal textarea::placeholder,
+#addItemOverlay .modalContent .row .leftModal select::placeholder,
+#addItemOverlay2 .modalContent .row .leftModal input::placeholder,
+#addItemOverlay2 .modalContent .row .leftModal textarea::placeholder,
+#addItemOverlay2 .modalContent .row .leftModal select::placeholder {
+  color: #9A9A9A;
+}
+#addItemOverlay .modalContent .row .leftModal textarea,
+#addItemOverlay2 .modalContent .row .leftModal textarea {
+  height: 100px;
+}
+#addItemOverlay .modalContent .row .rightModal,
+#addItemOverlay2 .modalContent .row .rightModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 50%;
+  justify-content: center;
+  margin-top: 14%;
+}
+#addItemOverlay .modalContent .row .rightModal img,
+#addItemOverlay2 .modalContent .row .rightModal img {
+  max-width: 260px;
+  max-height: 150px;
+}
+#addItemOverlay .modalContent .row .rightModal .uploadImg,
+#addItemOverlay2 .modalContent .row .rightModal .uploadImg {
+  cursor: pointer;
+  margin-top: 20px;
+  color: #FFF;
+  width: 120px;
+  height: 40px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  background: #ED6C02;
+}
+#addItemOverlay .modalContent .row .rightModal .deleteImg,
+#addItemOverlay2 .modalContent .row .rightModal .deleteImg {
+  cursor: pointer;
+  margin-top: 20px;
+  color: #FFF;
+  width: 120px;
+  height: 40px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  background: #ED1C25;
+}
+#addItemOverlay button[type=submit],
+#addItemOverlay2 button[type=submit] {
+  cursor: pointer;
+  margin-top: 8%;
+  align-self: center;
+  width: 150px;
+  height: 36px;
+  background: #2E7D32;
+  color: #FFF;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+#pendingOrdersMain,
+#myOrdersMain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-content: center;
+}
+#pendingOrdersMain #headingSection,
+#pendingOrdersMain .pendingOrders,
+#myOrdersMain #headingSection,
+#myOrdersMain .pendingOrders {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 97%;
+  margin-top: 20px;
+  background: #DADCDD;
+  border-radius: 10px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 20px 20px;
+}
+#pendingOrdersMain .pendingOrders,
+#myOrdersMain .pendingOrders {
+  position: relative;
+  border: 1px solid #DADCDD;
+  background-color: #FFF;
+  border-radius: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 6px 20px;
+  height: 40px;
+}
+#pendingOrdersMain .pendingOrders .cancelOrder,
+#myOrdersMain .pendingOrders .cancelOrder {
+  cursor: pointer;
+  margin-left: 26px;
+}
+#pendingOrdersMain .codeColumn,
+#myOrdersMain .codeColumn {
+  width: 15%;
+}
+#pendingOrdersMain .qtyColumn,
+#myOrdersMain .qtyColumn {
+  width: 15%;
+}
+#pendingOrdersMain .priceColumn,
+#myOrdersMain .priceColumn {
+  width: 15%;
+}
+#pendingOrdersMain .orderedByColumn,
+#pendingOrdersMain .nameColumn,
+#myOrdersMain .orderedByColumn,
+#myOrdersMain .nameColumn {
+  width: 25%;
+}
+#pendingOrdersMain .orderDateColumn,
+#myOrdersMain .orderDateColumn {
+  width: 20%;
+}
+#pendingOrdersMain .actionColumn,
+#myOrdersMain .actionColumn {
+  align-self: flex-end;
+}
+#pendingOrdersMain .completeButton,
+#myOrdersMain .completeButton {
+  cursor: pointer;
+  margin-top: 20px;
+  color: #FFF;
+  width: 120px;
+  height: 40px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  background: #ED1C25;
+  font-style: normal;
+  font-size: 16px;
+  margin-top: 0px;
+  width: 90px;
 }/*# sourceMappingURL=styles.css.map */

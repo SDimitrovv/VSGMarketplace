@@ -12,3 +12,31 @@ export function navStyling() {
         }
     });
 }
+
+export function addButtons() {
+    document.querySelectorAll('.buttons button').forEach(b => {
+        b.addEventListener('click', e => {
+            e.preventDefault();
+            let container = document.querySelector('.container');
+
+            if (!container) {
+                container = document.querySelector('.removeContainer');
+            }
+            container?.remove();
+        })
+    })
+}
+
+document.querySelectorAll('.closeModal')?.forEach(b =>
+    b.addEventListener('click', e => {
+        e.preventDefault();
+        let overlay = document.querySelector('#overlay');
+        if (!overlay) {
+            overlay = document.querySelector('#addItemOverlay');
+            const overlay2 = document.querySelector('#addItemOverlay2');
+            overlay2.style.display = 'none';
+        }
+
+        overlay.style.display = 'none';
+    })
+)

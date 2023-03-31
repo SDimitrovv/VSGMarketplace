@@ -1,11 +1,10 @@
-@import '../abstracts/mixins';
-
 header {
   background-color: #FFF;
   font-family: 'Montserrat';
+  box-sizing: border-box;
   width: 100%;
-  padding: 10px;
-  height: 36px;
+  padding: 12px 16px;
+  height: 54px;
   display: flex;
   justify-content: space-between;
 
@@ -20,6 +19,8 @@ header {
   }
 
   #profileGreet {
+    @include flex-align(row, center);
+
     span {
       font-weight: 700;
       margin-right: 10px;
@@ -28,6 +29,25 @@ header {
     img {
       width: 30px;
       height: 30px;
+    }
+  }
+
+  #hamburger {
+    display: none;
+    align-self: center;
+  }
+
+  @media screen and (max-width: 787px) {
+    #logo {
+      padding-right: 0px;
+    }
+
+    #profileGreet {
+      display: none;
+    }
+
+    #hamburger {
+      display: block;
     }
   }
 }

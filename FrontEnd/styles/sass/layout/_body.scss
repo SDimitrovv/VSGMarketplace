@@ -1,14 +1,17 @@
-@import '../abstracts/mixins';
-
 * {
     margin: 0px;
     padding: 0px;
     border: 0px;
 }
-    
+
 img {
     height: auto;
     max-width: 100%;
+}
+
+button,
+a {
+    pointer-events: auto;
 }
 
 a {
@@ -16,8 +19,11 @@ a {
     text-decoration: none;
 }
 
+svg {
+    pointer-events: none;
+}
+
 body {
-    
     height: 100vh;
     background-color: #F0F2F3;
     font-family: 'Roboto';
@@ -25,5 +31,15 @@ body {
     #root {
         display: flex;
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 787px) {
+    #root {
+        @include flex-align(column, center);
+
+        aside {
+            display: none;
+        }
     }
 }

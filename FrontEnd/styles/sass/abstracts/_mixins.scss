@@ -1,13 +1,76 @@
-@mixin flex-column-center($direction) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-@mixin flex-center($direction,$align) {
+@mixin flex-align($direction, $align) {
     display: flex;
     flex-direction: $direction;
     align-items: $align;
     flex-wrap: wrap;
+}
+
+@mixin pop-up($top, $left) {
+    @include flex-align(column, center);
+    position: absolute;
+    color: #000;
+    flex-wrap: nowrap;
+    width: 280px;
+    height: 80px;
+    top: $top;
+    left: $left;
+    padding: 14px;
+    background-color: #FFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    z-index: 99;
+}
+
+@mixin triangle($left) {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: $left;
+    border-style: solid;
+    border-width: 0 7px 10px 7px;
+    border-color: transparent transparent #FFF transparent;
+}
+
+@mixin overlay {
+    @include flex-align(column, center);
+    display: none;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #00000080;
+
+}
+
+@mixin modal($height, $width) {
+    display: flex;
+    flex-direction: column;
+    height: $height;
+    width: $width;
+    background: #FFF;
+    border-radius: 20px;
+    position: relative;
+}
+
+@mixin close-button {
+    position: absolute;
+    left: 94%;
+    top: 2%;
+    cursor: pointer;
+}
+
+@mixin button($backgroundColor) {
+    cursor: pointer;
+    margin-top: 20px;
+    color: #FFF;
+    width: 120px;
+    height: 40px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    background: $backgroundColor;
 }
