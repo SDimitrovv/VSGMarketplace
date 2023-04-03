@@ -113,17 +113,13 @@
 #overlay {
     @include overlay;
 
-    button {
-        @include close-button;
-    }
-
     img {
         border-top-right-radius: 20px;
         border-top-left-radius: 20px;
     }
 
     #modalContent {
-        @include modal(66%, 31%);
+        @include modal(620px, 600px);
         background-image: url('/images/marketplace/ellipse.png');
         background-position: bottom right;
         background-repeat: no-repeat;
@@ -135,7 +131,6 @@
         #modalFrameOne {
             margin: 20px;
             overflow-y: auto;
-
 
             #modalFrameTwo {
                 display: flex;
@@ -175,6 +170,16 @@
             font-weight: 500;
             font-size: 16px;
             line-height: 19px;
+        }
+    }
+
+    @media screen and (max-width: 787px) {
+        #modalContent {
+            @include modal(90%, 92%);
+
+            #modalFrameTwo {
+                flex-direction: column;
+            }
         }
     }
 }

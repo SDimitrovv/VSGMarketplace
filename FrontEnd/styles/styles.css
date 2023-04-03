@@ -352,7 +352,6 @@ aside nav ul #logout {
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  display: none;
   justify-content: center;
   position: fixed;
   top: 0;
@@ -368,8 +367,8 @@ aside nav ul #logout {
 #overlay #modalContent {
   display: flex;
   flex-direction: column;
-  height: 66%;
-  width: 31%;
+  height: 620px;
+  width: 600px;
   background: #FFF;
   border-radius: 20px;
   position: relative;
@@ -415,6 +414,20 @@ aside nav ul #logout {
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
+}
+@media screen and (max-width: 787px) {
+  #overlay #modalContent {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    width: 92%;
+    background: #FFF;
+    border-radius: 20px;
+    position: relative;
+  }
+  #overlay #modalContent #modalFrameTwo {
+    flex-direction: column;
+  }
 }
 
 #searchSpace {
@@ -532,7 +545,6 @@ aside nav ul #logout {
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  display: none;
   justify-content: center;
   position: fixed;
   top: 0;
