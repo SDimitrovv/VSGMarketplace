@@ -1,12 +1,13 @@
 export function navStyling() {
     document.querySelectorAll('.navButton').forEach(n => {
-        let pathname = document.URL.split('/')[4];
+        let currentPath = document.URL.split('/')[3];
+        const allPaths = '#' + n.textContent.trim().toLowerCase();
 
-        if (pathname.includes('-')) {
-            pathname = pathname.replace('-', ' ');
+        if (currentPath.includes('-')) {
+            currentPath = currentPath.replace('-', ' ');
         }
 
-        if (pathname.includes(n.textContent.trim())) {
+        if (allPaths === currentPath) {
             n.className += ' active';
             n.querySelector('path').style.fill = '#F0F0F0';
         }
@@ -17,12 +18,7 @@ export function addButtons() {
     document.querySelectorAll('.buttons button').forEach(b => {
         b.addEventListener('click', e => {
             e.preventDefault();
-            let container = document.querySelector('.container');
-
-            if (!container) {
-                container = document.querySelector('.removeContainer');
-            }
-            container?.remove();
+            e.target.parentElement.parentElement.remove();
         })
     })
 }
@@ -40,3 +36,4 @@ document.querySelectorAll('.closeModal')?.forEach(b =>
         overlay.style.display = 'none';
     })
 )
+

@@ -1,6 +1,7 @@
 #landingMain {
     margin: 0;
-    height: 100%;
+    padding: 0;
+    height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -28,5 +29,11 @@
 
     #loginButton:hover {
         cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 787px) {
+    #marketplaceLogo {
+        width: 80%;
     }
 }

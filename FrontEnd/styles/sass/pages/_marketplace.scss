@@ -5,10 +5,9 @@
 }
 
 .product {
+    @include flex-align(column, space-between);
     margin: 20px 10px;
     width: 280px;
-    display: flex;
-    flex-direction: column;
     border-radius: 5px;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
 
@@ -18,9 +17,7 @@
 
     .productContent {
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
-        position: relative;
         padding: 14px;
 
         .price {
@@ -43,8 +40,7 @@
             position: relative;
 
             .quantity {
-                display: flex;
-                flex-direction: column;
+                @include flex-align(column, flex-start);
 
                 span {
                     font-size: 10px;
@@ -58,17 +54,11 @@
             }
 
             .buyButton {
-                pointer-events: auto;
                 cursor: pointer;
                 background: none;
-                border: none;
                 width: 31px;
                 height: 31px;
                 margin-left: 4px;
-
-                svg {
-                    pointer-events: none;
-                }
             }
         }
     }
@@ -81,12 +71,11 @@
     }
 }
 
-.container {
+.buyContainer {
     @include pop-up(140%, -160%);
-    pointer-events: all;
 }
 
-.container::before {
+.buyContainer::before {
     @include triangle(48%);
 }
 

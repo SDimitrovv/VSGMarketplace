@@ -55,10 +55,7 @@
 }
 
 @mixin close-button {
-    position: absolute;
-    left: 94%;
-    top: 2%;
-    cursor: pointer;
+   
 }
 
 @mixin button($backgroundColor) {

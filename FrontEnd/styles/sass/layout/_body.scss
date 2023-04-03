@@ -9,6 +9,14 @@ img {
     max-width: 100%;
 }
 
+.closeModal {
+    position: absolute;
+    left: 94%;
+    top: 2%;
+    cursor: pointer;
+    background: none;
+}
+
 button,
 a {
     pointer-events: auto;

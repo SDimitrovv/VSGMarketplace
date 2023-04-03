@@ -9,6 +9,14 @@ img {
   max-width: 100%;
 }
 
+.closeModal {
+  position: absolute;
+  left: 94%;
+  top: 2%;
+  cursor: pointer;
+  background: none;
+}
+
 button,
 a {
   pointer-events: auto;
@@ -58,6 +66,9 @@ header #logo {
   width: 30px;
   height: 30px;
   padding-right: 70px;
+}
+header #logo img {
+  position: none;
 }
 header #pageTitle {
   font-size: 30px;
@@ -174,7 +185,8 @@ aside nav ul #logout {
 }
 #landingMain {
   margin: 0;
-  height: 100%;
+  padding: 0;
+  height: 100vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -203,6 +215,11 @@ aside nav ul #logout {
   cursor: pointer;
 }
 
+@media screen and (max-width: 787px) {
+  #marketplaceLogo {
+    width: 80%;
+  }
+}
 #marketplaceMain {
   display: flex;
   flex-direction: row;
@@ -213,10 +230,12 @@ aside nav ul #logout {
 }
 
 .product {
-  margin: 20px 10px;
-  width: 280px;
   display: flex;
   flex-direction: column;
+  align-items: space-between;
+  flex-wrap: wrap;
+  margin: 20px 10px;
+  width: 280px;
   border-radius: 5px;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
 }
@@ -225,9 +244,7 @@ aside nav ul #logout {
 }
 .product .productContent {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  position: relative;
   padding: 14px;
 }
 .product .productContent .price {
@@ -249,6 +266,8 @@ aside nav ul #logout {
 .product .productContent form .quantity {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 .product .productContent form .quantity span {
   font-size: 10px;
@@ -259,16 +278,11 @@ aside nav ul #logout {
   border-bottom: 1px solid #000;
 }
 .product .productContent form .buyButton {
-  pointer-events: auto;
   cursor: pointer;
   background: none;
-  border: none;
   width: 31px;
   height: 31px;
   margin-left: 4px;
-}
-.product .productContent form .buyButton svg {
-  pointer-events: none;
 }
 
 @media screen and (max-width: 787px) {
@@ -277,7 +291,7 @@ aside nav ul #logout {
     margin: 16px 0px;
   }
 }
-.container {
+.buyContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -294,10 +308,9 @@ aside nav ul #logout {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   z-index: 99;
-  pointer-events: all;
 }
 
-.container::before {
+.buyContainer::before {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -347,12 +360,6 @@ aside nav ul #logout {
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.5019607843);
-}
-#overlay button {
-  position: absolute;
-  left: 94%;
-  top: 2%;
-  cursor: pointer;
 }
 #overlay img {
   border-top-right-radius: 20px;
@@ -449,7 +456,7 @@ aside nav ul #logout {
   border: 1px solid #B3B3B3;
   border-radius: 4px;
   margin-top: 40px;
-  height: 86%;
+  height: calc(100% - 100px);
   overflow-x: auto;
 }
 #tableBorder table {
@@ -545,13 +552,6 @@ aside nav ul #logout {
   position: relative;
   overflow-y: auto;
   overflow-x: auto;
-}
-#addItemOverlay .modalContent .closeModal,
-#addItemOverlay2 .modalContent .closeModal {
-  position: absolute;
-  left: 94%;
-  top: 2%;
-  cursor: pointer;
 }
 #addItemOverlay .modalContent .row,
 #addItemOverlay2 .modalContent .row {
@@ -706,10 +706,52 @@ aside nav ul #logout {
   padding: 6px 20px;
   height: 40px;
 }
-#pendingOrdersMain .pendingOrders .cancelOrder,
-#myOrdersMain .pendingOrders .cancelOrder {
+#pendingOrdersMain .pendingOrders .orderStatus,
+#myOrdersMain .pendingOrders .orderStatus {
+  display: flex;
+  position: relative;
+}
+#pendingOrdersMain .pendingOrders .orderStatus .cancelOrder,
+#myOrdersMain .pendingOrders .orderStatus .cancelOrder {
   cursor: pointer;
   margin-left: 26px;
+}
+#pendingOrdersMain .pendingOrders .orderStatus .cancelOrder svg,
+#myOrdersMain .pendingOrders .orderStatus .cancelOrder svg {
+  pointer-events: none;
+}
+#pendingOrdersMain .pendingOrders .cancelOrderContainer,
+#myOrdersMain .pendingOrders .cancelOrderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  position: absolute;
+  color: #000;
+  flex-wrap: nowrap;
+  width: 280px;
+  height: 80px;
+  top: 140%;
+  left: -210%;
+  padding: 14px;
+  background-color: #FFF;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  z-index: 99;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+}
+#pendingOrdersMain .pendingOrders .cancelOrderContainer::before,
+#myOrdersMain .pendingOrders .cancelOrderContainer::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 85%;
+  border-style: solid;
+  border-width: 0 7px 10px 7px;
+  border-color: transparent transparent #FFF transparent;
 }
 #pendingOrdersMain .codeColumn,
 #myOrdersMain .codeColumn {

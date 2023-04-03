@@ -29,9 +29,30 @@
         padding: 6px 20px;
         height: 40px;
 
-        .cancelOrder {
-            cursor: pointer;
-            margin-left: 26px;
+        .orderStatus {
+            display: flex;
+            position: relative;
+
+            .cancelOrder {
+                cursor: pointer;
+                margin-left: 26px;
+
+                svg {
+                    pointer-events: none;
+                }
+            }
+        }
+
+        .cancelOrderContainer {
+            @include pop-up(140%, -210%);
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+        }
+
+        .cancelOrderContainer::before {
+            @include triangle(85%);
         }
     }
 

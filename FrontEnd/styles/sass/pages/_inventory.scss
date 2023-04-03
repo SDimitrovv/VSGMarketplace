@@ -39,7 +39,7 @@
     border: 1px solid #B3B3B3;
     border-radius: 4px;
     margin-top: 40px;
-    height: 86%;
+    height: calc(100% - 100px);
     overflow-x: auto;
 
     table {
@@ -105,10 +105,6 @@
         @include modal(76%, 31%);
         overflow-y: auto;
         overflow-x: auto;
-
-        .closeModal {
-            @include close-button;
-        }
 
         .row {
             margin-top: 8%;
