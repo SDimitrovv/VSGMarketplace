@@ -1,7 +1,7 @@
 aside,
 main {
     height: calc(100vh - 160px);
-    background-color: #FFFFFF;
+    background-color: $general-white;
     border-radius: 20px;
     margin: 30px 20px;
     overflow-y: auto;
@@ -37,8 +37,8 @@ aside {
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
-                background: #FFF;
-                color: #000;
+                background: $general-white;
+                color: $general-black;
                 height: 46px;
                 width: 90%;
                 border-radius: 10px;
@@ -51,13 +51,13 @@ aside {
 
             .navButton:active {
                 cursor: pointer;
-                color: #FFFFFF;
-                background: #ED1C25;
+                color: $general-white;
+                background: $main-color;
                 box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
             }
 
             .navButton:active .icon>path {
-                fill: #FFF;
+                fill: $general-white;
             }
 
             .icon {
@@ -66,10 +66,10 @@ aside {
 
             .active {
                 cursor: pointer;
-                color: #FFFFFF;
-                background: #ED1C25;
+                color: $general-white;
+                background: $main-color;
                 box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-                fill: #FFFFFF;
+                fill: $general-white;
             }
 
             #logout {

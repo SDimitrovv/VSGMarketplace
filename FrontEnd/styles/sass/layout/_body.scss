@@ -4,6 +4,10 @@
     border: 0px;
 }
 
+small {
+    color: $border-gray;
+}
+
 img {
     height: auto;
     max-width: 100%;
@@ -23,7 +27,7 @@ a {
 }
 
 a {
-    color: #FFF;
+    color: $general-white;
     text-decoration: none;
 }
 
@@ -33,7 +37,7 @@ svg {
 
 body {
     height: 100vh;
-    background-color: #F0F2F3;
+    background-color: $body-background;
     font-family: 'Roboto';
 
     #root {

@@ -4,6 +4,10 @@
   border: 0px;
 }
 
+small {
+  color: #b3b3b3;
+}
+
 img {
   height: auto;
   max-width: 100%;
@@ -106,7 +110,7 @@ header #hamburger {
 aside,
 main {
   height: calc(100vh - 160px);
-  background-color: #FFFFFF;
+  background-color: #FFF;
   border-radius: 20px;
   margin: 30px 20px;
   overflow-y: auto;
@@ -157,7 +161,7 @@ aside nav ul .navButton:hover {
 }
 aside nav ul .navButton:active {
   cursor: pointer;
-  color: #FFFFFF;
+  color: #FFF;
   background: #ED1C25;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
@@ -169,10 +173,10 @@ aside nav ul .icon {
 }
 aside nav ul .active {
   cursor: pointer;
-  color: #FFFFFF;
+  color: #FFF;
   background: #ED1C25;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  fill: #FFFFFF;
+  fill: #FFF;
 }
 aside nav ul #logout {
   margin-top: auto;
@@ -257,7 +261,6 @@ aside nav ul #logout {
 }
 .product .productContent .price small {
   font-size: 12px;
-  color: #9a9a9a;
 }
 .product .productContent form {
   display: flex;
@@ -289,6 +292,33 @@ aside nav ul #logout {
   #marketplaceMain {
     width: 80%;
     margin: 16px 0px;
+  }
+  #marketplaceMain .buyContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    position: absolute;
+    color: #000;
+    flex-wrap: nowrap;
+    width: 280px;
+    height: 80px;
+    top: 140%;
+    left: -330%;
+    padding: 14px;
+    background-color: #FFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    z-index: 99;
+  }
+  #marketplaceMain .buyContainer::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 84%;
+    border-style: solid;
+    border-width: 0 7px 10px 7px;
+    border-color: transparent transparent #FFF transparent;
   }
 }
 .buyContainer {
@@ -334,17 +364,17 @@ aside nav ul #logout {
   margin: 0px 6px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  border: 1px solid #ed1c25;
+  border: 1px solid #ED1C25;
 }
 .buttons .no,
 .buttons .yes:active {
-  background-color: #fff;
-  color: #ed1c25;
+  background-color: #FFF;
+  color: #ED1C25;
 }
 .buttons .yes,
 .buttons .no:active {
-  background-color: #ed1c25;
-  color: #fff;
+  background-color: #ED1C25;
+  color: #FFF;
 }
 
 #overlay {
@@ -412,10 +442,6 @@ aside nav ul #logout {
 }
 #overlay #modalContent #modalFrameOne #modalFrameTwo small {
   padding: 4px 0px;
-  color: #9a9a9a;
-}
-#overlay #modalContent small {
-  color: #9a9a9a;
 }
 #overlay #modalContent p {
   margin-top: 10px;
@@ -433,6 +459,10 @@ aside nav ul #logout {
     background: #FFF;
     border-radius: 20px;
     position: relative;
+  }
+  #overlay #modalContent .closeModal {
+    top: 1%;
+    left: 92%;
   }
   #overlay #modalContent #modalFrameOne {
     height: 90%;
@@ -493,7 +523,7 @@ aside nav ul #logout {
   margin-left: 20px;
   width: 120px;
   height: 36px;
-  color: #fff;
+  color: #FFF;
   background: #2e7d32;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
@@ -708,7 +738,7 @@ aside nav ul #logout {
   font-weight: 700;
   font-size: 18px;
   line-height: 24px;
-  background: #ed1c25;
+  background: #ED1C25;
 }
 #addItemOverlay button[type=submit],
 #addItemOverlay2 button[type=submit] {
@@ -718,7 +748,7 @@ aside nav ul #logout {
   width: 150px;
   height: 36px;
   background: #2e7d32;
-  color: #fff;
+  color: #FFF;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   font-weight: 700;
@@ -749,6 +779,33 @@ aside nav ul #logout {
   #inventoryMain #tableBorder {
     margin-top: 20px;
     margin: 20px 10px;
+  }
+  #inventoryMain .removeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    position: absolute;
+    color: #000;
+    flex-wrap: nowrap;
+    width: 280px;
+    height: 80px;
+    top: 150%;
+    left: -398%;
+    padding: 14px;
+    background-color: #FFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    z-index: 99;
+  }
+  #inventoryMain .removeContainer::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 90%;
+    border-style: solid;
+    border-width: 0 7px 10px 7px;
+    border-color: transparent transparent #FFF transparent;
   }
   #addItemOverlay .modalContent,
   #addItemOverlay2 .modalContent {
@@ -864,6 +921,15 @@ aside nav ul #logout {
 #pendingOrdersMain .pendingOrders .firstThree span,
 #myOrdersMain .pendingOrders .firstThree span {
   width: 33%;
+}
+#pendingOrdersMain .pendingOrders .firstTwo,
+#myOrdersMain .pendingOrders .firstTwo {
+  display: flex;
+  width: 30%;
+}
+#pendingOrdersMain .pendingOrders .firstTwo span,
+#myOrdersMain .pendingOrders .firstTwo span {
+  width: 50%;
 }
 #pendingOrdersMain .pendingOrders .orderStatus,
 #myOrdersMain .pendingOrders .orderStatus {
@@ -982,8 +1048,38 @@ aside nav ul #logout {
     align-self: center;
     width: 76%;
     min-height: 200px;
+    height: 28%;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     padding: 0px 10px;
+  }
+  #root #pendingOrdersMain .pendingOrders .cancelOrderContainer,
+  #root #myOrdersMain .pendingOrders .cancelOrderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    position: absolute;
+    color: #000;
+    flex-wrap: nowrap;
+    width: 280px;
+    height: 80px;
+    top: 120%;
+    left: -6%;
+    padding: 14px;
+    background-color: #FFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    z-index: 99;
+  }
+  #root #pendingOrdersMain .pendingOrders .cancelOrderContainer::before,
+  #root #myOrdersMain .pendingOrders .cancelOrderContainer::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 90%;
+    border-style: solid;
+    border-width: 0 7px 10px 7px;
+    border-color: transparent transparent #FFF transparent;
   }
   #root #pendingOrdersMain .pendingOrders span,
   #root #myOrdersMain .pendingOrders span {
@@ -991,24 +1087,45 @@ aside nav ul #logout {
     padding: 10px 0px;
   }
   #root #pendingOrdersMain .pendingOrders .firstThree,
+  #root #pendingOrdersMain .pendingOrders .firstTwo,
   #root #pendingOrdersMain .pendingOrders .orderedByColumn,
+  #root #pendingOrdersMain .pendingOrders .orderDateColumn,
+  #root #pendingOrdersMain .pendingOrders .nameColumn,
   #root #myOrdersMain .pendingOrders .firstThree,
-  #root #myOrdersMain .pendingOrders .orderedByColumn {
+  #root #myOrdersMain .pendingOrders .firstTwo,
+  #root #myOrdersMain .pendingOrders .orderedByColumn,
+  #root #myOrdersMain .pendingOrders .orderDateColumn,
+  #root #myOrdersMain .pendingOrders .nameColumn {
     width: 100%;
-    border-bottom: 1px solid #B3B3B3;
+    border-bottom: 1px solid #b3b3b3;
     border-spacing: 0;
     border-collapse: collapse;
   }
+  #root #pendingOrdersMain .pendingOrders .orderStatus,
+  #root #myOrdersMain .pendingOrders .orderStatus {
+    align-self: flex-start;
+    margin: 0;
+    width: 100%;
+    padding-top: 24px;
+  }
+  #root #pendingOrdersMain .pendingOrders .orderStatus span,
+  #root #myOrdersMain .pendingOrders .orderStatus span {
+    padding: 0;
+  }
+  #root #pendingOrdersMain .pendingOrders .nameColumn::before,
   #root #pendingOrdersMain .pendingOrders .codeColumn::before,
   #root #pendingOrdersMain .pendingOrders .qtyColumn::before,
   #root #pendingOrdersMain .pendingOrders .priceColumn::before,
   #root #pendingOrdersMain .pendingOrders .orderedByColumn::before,
   #root #pendingOrdersMain .pendingOrders .orderDateColumn::before,
+  #root #pendingOrdersMain .pendingOrders .orderStatus > span::before,
+  #root #myOrdersMain .pendingOrders .nameColumn::before,
   #root #myOrdersMain .pendingOrders .codeColumn::before,
   #root #myOrdersMain .pendingOrders .qtyColumn::before,
   #root #myOrdersMain .pendingOrders .priceColumn::before,
   #root #myOrdersMain .pendingOrders .orderedByColumn::before,
-  #root #myOrdersMain .pendingOrders .orderDateColumn::before {
+  #root #myOrdersMain .pendingOrders .orderDateColumn::before,
+  #root #myOrdersMain .pendingOrders .orderStatus > span::before {
     font-weight: 700;
   }
   #root #pendingOrdersMain .pendingOrders .codeColumn::before,
@@ -1018,6 +1135,10 @@ aside nav ul #logout {
   #root #myOrdersMain .pendingOrders .qtyColumn::before,
   #root #myOrdersMain .pendingOrders .priceColumn::before {
     display: block;
+  }
+  #root #pendingOrdersMain .pendingOrders .nameColumn::before,
+  #root #myOrdersMain .pendingOrders .nameColumn::before {
+    content: "Name:   ";
   }
   #root #pendingOrdersMain .pendingOrders .codeColumn::before,
   #root #myOrdersMain .pendingOrders .codeColumn::before {
@@ -1039,9 +1160,13 @@ aside nav ul #logout {
   #root #myOrdersMain .pendingOrders .orderDateColumn::before {
     content: "Order date:   ";
   }
+  #root #pendingOrdersMain .pendingOrders .orderStatus span::before,
+  #root #myOrdersMain .pendingOrders .orderStatus span::before {
+    content: "Status:   ";
+  }
   #root #pendingOrdersMain .pendingOrders .completeButton,
   #root #myOrdersMain .pendingOrders .completeButton {
-    margin-top: 6px;
+    margin-top: 16px;
     align-self: center;
   }
 }/*# sourceMappingURL=styles.css.map */

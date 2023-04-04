@@ -1,4 +1,6 @@
-import { addButtons } from "./global.js";
+import { addButtons, closeModal } from "./global.js";
+
+closeModal();
 
 const div = document.createElement('div');
 div.className = 'removeContainer';

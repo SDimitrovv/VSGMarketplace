@@ -24,8 +24,8 @@
         margin-left: 20px;
         width: 120px;
         height: 36px;
-        color: #fff;
-        background: #2e7d32;
+        color: $general-white;
+        background: $add-button;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
         border-radius: 4px;
 
@@ -36,7 +36,7 @@
 }
 
 #tableBorder {
-    border: 1px solid #b3b3b3;
+    border: 1px solid $border-gray;
     border-radius: 4px;
     margin-top: 40px;
     height: calc(100% - 100px);
@@ -51,13 +51,13 @@
 
         tr th {
             padding: 22px;
-            border-bottom: 1px solid #b3b3b3;
+            border-bottom: 1px solid $border-gray;
             padding-left: 20px;
         }
 
         tr td {
             padding: 16px;
-            border-bottom: 1px solid #b3b3b3;
+            border-bottom: 1px solid $border-gray;
             padding-left: 20px;
         }
 
@@ -131,7 +131,7 @@
                 select {
                     resize: none;
                     font-family: "Inter";
-                    border-bottom: 1px solid #9a9a9a;
+                    border-bottom: 1px solid $underline-gray;
                     outline: none;
                     margin-bottom: 30px;
                     height: 34px;
@@ -141,7 +141,7 @@
                 input::placeholder,
                 textarea::placeholder,
                 select::placeholder {
-                    color: #9a9a9a;
+                    color: $underline-gray;
                 }
 
                 textarea {
@@ -166,11 +166,11 @@
                 }
 
                 .uploadImg {
-                    @include button(#ed6c02);
+                    @include button($upload-image);
                 }
 
                 .deleteImg {
-                    @include button(#ed1c25);
+                    @include button($main-color);
                 }
             }
         }
@@ -182,8 +182,8 @@
         align-self: center;
         width: 150px;
         height: 36px;
-        background: #2e7d32;
-        color: #fff;
+        background: $add-button;
+        color: $general-white;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
         border-radius: 4px;
         font-weight: 700;
@@ -215,6 +215,14 @@
         #tableBorder {
             margin-top: 20px;
             margin: 20px 10px;
+        }
+
+        .removeContainer {
+            @include pop-up(150%, -398%);
+        }
+
+        .removeContainer::before {
+            @include triangle(90%);
         }
     }
 

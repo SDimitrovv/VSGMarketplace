@@ -2,6 +2,8 @@ import { navbar } from "../components/navbar.js";
 
 
 const MyOrders = () => {
+    setPageScripts(['src/ordersApp.js']);
+    
     return `
     ${navbar}
     <main id="myOrdersMain">
@@ -13,9 +15,11 @@ const MyOrders = () => {
         <span>Status</span>
     </div>
     <div class="pendingOrders">
-        <span class="nameColumn">MacBook Pro 16” M1 Max 32GB 1TB</span>
+    <span class="nameColumn">MacBook Pro 16” M1 Max 32GB 1TB</span>
+    <div class="firstTwo">
         <span class="qtyColumn">1</span>
         <span class="priceColumn">5000 BGN</span>
+        </div>
         <span class="orderDateColumn">2023-03-13 16:30</span>
         <div class="orderStatus">
             <span>Pending</span>
@@ -32,16 +36,22 @@ const MyOrders = () => {
         </div>
     </div>
     <div class="pendingOrders">
-        <span class="nameColumn">Gaming Chair RedDragon</span>
+    <span class="nameColumn">Gaming Chair RedDragon</span>
+    <div class="firstTwo">
         <span class="qtyColumn">10</span>
         <span class="priceColumn">900 BGN</span>
+        </div>
         <span class="orderDateColumn">2023-03-13 12:30</span>
+        <div class="orderStatus">
         <span>Finished</span>
+        </div>
     </div>
     <div class="pendingOrders">
-        <span class="nameColumn">Monitor Dell 27” IPS + Stand</span>
+    <span class="nameColumn">Monitor Dell 27” IPS + Stand</span>
+    <div class="firstTwo">
         <span class="qtyColumn">3</span>
         <span class="priceColumn">750 BGN</span>
+        </div>
         <span class="orderDateColumn">2023-03-13 20:30</span>
         <div class="orderStatus">
             <span>Pending</span>

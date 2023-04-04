@@ -21,7 +21,7 @@
     .pendingOrders {
         position: relative;
         border: 1px solid #DADCDD;
-        background-color: #FFF;
+        background-color: $general-white;
         border-radius: 10px;
         font-weight: 400;
         font-size: 14px;
@@ -37,9 +37,19 @@
             }
         }
 
+        .firstTwo {
+            display: flex;
+            width: 30%;
+
+            span {
+                width: 50%;
+            }
+        }
+
         .orderStatus {
             display: flex;
             position: relative;
+
 
             .cancelOrder {
                 cursor: pointer;
@@ -90,7 +100,7 @@
     }
 
     .completeButton {
-        @include button(#ED1C25);
+        @include button($main-color);
         font-style: normal;
         font-size: 16px;
         margin-top: 0px;
@@ -119,8 +129,17 @@
                 align-self: center;
                 width: 76%;
                 min-height: 200px;
+                height: 28%;
                 box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
                 padding: 0px 10px;
+
+                .cancelOrderContainer {
+                    @include pop-up(120%, -6%);
+                }
+
+                .cancelOrderContainer::before {
+                    @include triangle(90%);
+                }
 
                 span {
                     width: 100%;
@@ -128,18 +147,34 @@
                 }
 
                 .firstThree,
-                .orderedByColumn {
+                .firstTwo,
+                .orderedByColumn,
+                .orderDateColumn,
+                .nameColumn {
                     width: 100%;
-                    border-bottom: 1px solid #B3B3B3;
+                    border-bottom: 1px solid $border-gray;
                     border-spacing: 0;
                     border-collapse: collapse;
                 }
 
+                .orderStatus {
+                    align-self: flex-start;
+                    margin: 0;
+                    width: 100%;
+                    padding-top: 24px;
+
+                    span {
+                        padding: 0;
+                    }
+                }
+
+                .nameColumn,
                 .codeColumn,
                 .qtyColumn,
                 .priceColumn,
                 .orderedByColumn,
-                .orderDateColumn {
+                .orderDateColumn,
+                .orderStatus>span {
                     &::before {
                         font-weight: 700;
                     }
@@ -153,9 +188,12 @@
                     }
                 }
 
+                .nameColumn::before {
+                    content: 'Name:   ';
+                }
+
                 .codeColumn::before {
                     content: 'Code   ';
-
                 }
 
                 .qtyColumn::before {
@@ -174,8 +212,12 @@
                     content: 'Order date:   ';
                 }
 
+                .orderStatus span::before {
+                    content: 'Status:   ';
+                }
+
                 .completeButton {
-                    margin-top: 6px;
+                    margin-top: 16px;
                     align-self: center;
                 }
             }

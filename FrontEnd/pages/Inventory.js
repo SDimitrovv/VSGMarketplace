@@ -1,6 +1,8 @@
 import { navbar } from "../components/navbar.js";
 
 const Inventory = () => {
+    setPageScripts(['src/inventoryApp.js']);
+
     return `
     ${navbar}
     <main id="inventoryMain">

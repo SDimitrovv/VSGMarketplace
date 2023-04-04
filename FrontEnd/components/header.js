@@ -1,3 +1,5 @@
+import { router } from '../src/router.js'
+
 export const header = `
     <a id='logo' href="/" spa>
     <img src="../../images/marketplace-mini-logo.png" alt="Marketplace-logo">
@@ -15,5 +17,5 @@ export const header = `
     </svg>
 </a>
     `;
-
+    
 document.querySelector('header').innerHTML = header;

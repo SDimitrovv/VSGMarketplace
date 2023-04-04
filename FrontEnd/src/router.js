@@ -1,4 +1,3 @@
-import { header } from "../components/header.js";
 import Home from "../pages/Home.js";
 import Inventory from "../pages/Inventory.js";
 import Marketplace from "../pages/Marketplace.js";
@@ -7,6 +6,7 @@ import PendingOrders from "../pages/PendingOrders.js";
 import { navStyling } from "./global.js";
 
 const root = document.getElementById("root");
+const head = document.querySelector('head');
 const routes = {
   "/": Home,
   marketplace: Marketplace,
@@ -15,9 +15,10 @@ const routes = {
   "my-orders": MyOrders,
 };
 
-const router = () => {
+export const router = () => {
   const path = window.location.hash.replace('#', '') || '/';
   const page = routes[path];
+  head.querySelectorAll('script').forEach(e => e.remove());
   document.querySelector("header").style.display = "flex";
   root.innerHTML = page();
 };
@@ -55,3 +56,13 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener("popstate", router);
+
+window.setPageScripts = (scripts) => {
+  scripts.forEach((s) => {
+    const scriptEl = document.createElement('script');
+    scriptEl.setAttribute('src', s);
+    scriptEl.setAttribute('type', 'module');
+    scriptEl.setAttribute('defer', '');
+    head.appendChild(scriptEl);
+  })
+}

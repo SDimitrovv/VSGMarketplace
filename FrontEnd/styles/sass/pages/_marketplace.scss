@@ -31,7 +31,6 @@
 
             small {
                 font-size: 12px;
-                color: #9a9a9a;
             }
         }
 
@@ -44,7 +43,7 @@
 
                 span {
                     font-size: 10px;
-                    color: #b3b3b3;
+                    color: $border-gray;
                 }
 
                 select {
@@ -68,6 +67,14 @@
     #marketplaceMain {
         width: 80%;
         margin: 16px 0px;
+
+        .buyContainer {
+            @include pop-up(140%, -330%);
+        }
+
+        .buyContainer::before {
+            @include triangle(84%);
+        }
     }
 }
 
@@ -93,19 +100,19 @@
         margin: 0px 6px;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
         border-radius: 4px;
-        border: 1px solid #ed1c25;
+        border: 1px solid $main-color;
     }
 
     .no,
     .yes:active {
-        background-color: #fff;
-        color: #ed1c25;
+        background-color: $general-white;
+        color: $main-color;
     }
 
     .yes,
     .no:active {
-        background-color: #ed1c25;
-        color: #fff;
+        background-color: $main-color;
+        color: $general-white;
     }
 }
 
@@ -153,13 +160,8 @@
 
                 small {
                     padding: 4px 0px;
-                    color: #9a9a9a;
                 }
             }
-        }
-
-        small {
-            color: #9a9a9a;
         }
 
         p {
@@ -174,6 +176,11 @@
     @media screen and (max-width: 768px) {
         #modalContent {
             @include modal(90%, 92%);
+
+            .closeModal {
+                top: 1%;
+                left: 92%;
+            }
 
             #modalFrameOne {
                 height: 90%;

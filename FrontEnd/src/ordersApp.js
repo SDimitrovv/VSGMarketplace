@@ -1,6 +1,5 @@
 import { addButtons } from "./global.js";
 
-function asd() {
 document.querySelectorAll(".cancelOrder").forEach((b) => {
     b.addEventListener("click", (e) => {
         e.preventDefault();
@@ -17,8 +16,3 @@ document.querySelectorAll(".cancelOrder").forEach((b) => {
         addButtons();
     });
 });
-
-console.log('done');
-}
-
-asd();

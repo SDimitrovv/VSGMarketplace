@@ -1,6 +1,8 @@
 import { navbar } from "../components/navbar.js";
 
 const Marketplace = () => {
+    setPageScripts(['src/marketplaceApp.js']);
+
     return `
     ${navbar}
     <main id="marketplaceMain">
