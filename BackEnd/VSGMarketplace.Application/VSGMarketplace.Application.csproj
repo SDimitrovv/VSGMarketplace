@@ -10,7 +10,6 @@
     <Folder Include="Models\ItemModels\Interfaces\" />
     <Folder Include="Models\OrderModels\DTOs\" />
     <Folder Include="Models\OrderModels\Interfaces\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

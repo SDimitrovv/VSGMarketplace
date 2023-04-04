@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using VSGMarketplace.Application.Models.ItemModels.DTOs;
 using VSGMarketplace.Application.Models.ItemModels.Interfaces;
 using VSGMarketplace.Infrastructure.Context;
@@ -9,7 +11,20 @@ namespace VSGMarketplace.Infrastructure.Repositories
     {
         private readonly DapperContext _context;
 
-        public ItemRepository(DapperContext context) => _context = context;
+        private readonly Cloudinary _cloudinary;
+
+        public ItemRepository(DapperContext context)
+        {
+            _context = context;
+
+            Account account = new Account(
+                "dwmtkp1d1",
+                "983881433641766",
+                "03sMbu4hUUs6UjW8-QwhL5TWLu4"
+            );
+
+            _cloudinary = new Cloudinary(account);
+        }
 
         public async Task<IEnumerable<GetItemDto>> GetAll()
         {

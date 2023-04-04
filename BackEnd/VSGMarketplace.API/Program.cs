@@ -1,12 +1,14 @@
 using VSGMarketplace.Infrastructure.Context;
 using VSGMarketplace.Infrastructure.Repositories;
 using VSGMarketplace.Application.Models.ItemModels.Interfaces;
+using VSGMarketplace.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<IItemService, ItemService>();
 
 builder.Services.AddControllers();
 
