@@ -4,13 +4,13 @@ namespace VSGMarketplace.Application.Models.ItemModels.Interfaces;
 
 public interface IItemRepository
 {
-    public Task<IEnumerable<ItemDTO>> GetAll();
+    public Task<IEnumerable<GetItemDto>> GetAll();
 
-    public Task<ItemDTO> GetById(int id);
+    public Task<GetItemDto> GetById(int id);
 
-    public Task<ItemDTO> Create(ItemDTO item);
+    public Task<CreateItemDto> Create(CreateItemDto item);
 
-    public Task Update(ItemDTO item);
+    public Task Update(GetItemDto item);
 
     public Task Delete(int id);
 } 

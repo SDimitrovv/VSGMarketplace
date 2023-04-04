@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\VSGMarketplace.Infrastructure\VSGMarketplace.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
