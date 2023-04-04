@@ -41,7 +41,7 @@ body #root {
   width: 100%;
 }
 
-@media screen and (max-width: 787px) {
+@media screen and (max-width: 768px) {
   #root {
     display: flex;
     flex-direction: column;
@@ -91,7 +91,7 @@ header #hamburger {
   display: none;
   align-self: center;
 }
-@media screen and (max-width: 787px) {
+@media screen and (max-width: 768px) {
   header #logo {
     padding-right: 0px;
   }
@@ -178,7 +178,7 @@ aside nav ul #logout {
   margin-top: auto;
 }
 
-@media screen and (max-width: 787px) {
+@media screen and (max-width: 768px) {
   aside {
     justify-content: center;
   }
@@ -215,7 +215,7 @@ aside nav ul #logout {
   cursor: pointer;
 }
 
-@media screen and (max-width: 787px) {
+@media screen and (max-width: 768px) {
   #marketplaceLogo {
     width: 80%;
   }
@@ -257,7 +257,7 @@ aside nav ul #logout {
 }
 .product .productContent .price small {
   font-size: 12px;
-  color: #9A9A9A;
+  color: #9a9a9a;
 }
 .product .productContent form {
   display: flex;
@@ -271,7 +271,7 @@ aside nav ul #logout {
 }
 .product .productContent form .quantity span {
   font-size: 10px;
-  color: #B3B3B3;
+  color: #b3b3b3;
 }
 .product .productContent form .quantity select {
   cursor: pointer;
@@ -285,7 +285,7 @@ aside nav ul #logout {
   margin-left: 4px;
 }
 
-@media screen and (max-width: 787px) {
+@media screen and (max-width: 768px) {
   #marketplaceMain {
     width: 80%;
     margin: 16px 0px;
@@ -334,17 +334,17 @@ aside nav ul #logout {
   margin: 0px 6px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  border: 1px solid #ED1C25;
+  border: 1px solid #ed1c25;
 }
 .buttons .no,
 .buttons .yes:active {
-  background-color: #FFF;
-  color: #ED1C25;
+  background-color: #fff;
+  color: #ed1c25;
 }
 .buttons .yes,
 .buttons .no:active {
-  background-color: #ED1C25;
-  color: #FFF;
+  background-color: #ed1c25;
+  color: #fff;
 }
 
 #overlay {
@@ -352,6 +352,7 @@ aside nav ul #logout {
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
+  display: none;
   justify-content: center;
   position: fixed;
   top: 0;
@@ -380,6 +381,10 @@ aside nav ul #logout {
   background: none;
 }
 #overlay #modalContent #modalFrameOne {
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  flex-wrap: wrap;
   margin: 20px;
   overflow-y: auto;
 }
@@ -387,26 +392,30 @@ aside nav ul #logout {
   display: flex;
   justify-content: space-between;
 }
-#overlay #modalContent #modalFrameOne #modalFrameTwo b {
-  width: 70%;
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 26px;
+#overlay #modalContent #modalFrameOne #modalFrameTwo #productName {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 390px;
 }
 #overlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  flex-wrap: wrap;
 }
-#overlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty b {
-  width: 100%;
+#overlay #modalContent #modalFrameOne #modalFrameTwo b {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
 }
-#overlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty small {
-  width: 40px;
-  color: #9A9A9A;
+#overlay #modalContent #modalFrameOne #modalFrameTwo small {
+  padding: 4px 0px;
+  color: #9a9a9a;
 }
 #overlay #modalContent small {
-  color: #9A9A9A;
+  color: #9a9a9a;
 }
 #overlay #modalContent p {
   margin-top: 10px;
@@ -415,7 +424,7 @@ aside nav ul #logout {
   font-size: 16px;
   line-height: 19px;
 }
-@media screen and (max-width: 787px) {
+@media screen and (max-width: 768px) {
   #overlay #modalContent {
     display: flex;
     flex-direction: column;
@@ -425,8 +434,36 @@ aside nav ul #logout {
     border-radius: 20px;
     position: relative;
   }
-  #overlay #modalContent #modalFrameTwo {
+  #overlay #modalContent #modalFrameOne {
+    height: 90%;
+  }
+  #overlay #modalContent #modalFrameOne #modalFrameTwo {
+    display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  #overlay #modalContent #modalFrameOne #modalFrameTwo #productName {
+    width: 100%;
+  }
+  #overlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty {
+    margin: 10px 0px;
+  }
+  #overlay #modalContent #modalFrameOne #modalFrameTwo b {
+    width: 305px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+  }
+  #overlay #modalContent #modalFrameOne #modalFrameTwo small {
+    padding: 0px;
+    align-self: flex-start;
+  }
+  #overlay #modalContent #modalFrameOne p {
+    text-overflow: ellipsis;
   }
 }
 
@@ -456,8 +493,8 @@ aside nav ul #logout {
   margin-left: 20px;
   width: 120px;
   height: 36px;
-  color: #FFF;
-  background: #2E7D32;
+  color: #fff;
+  background: #2e7d32;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
 }
@@ -466,7 +503,7 @@ aside nav ul #logout {
 }
 
 #tableBorder {
-  border: 1px solid #B3B3B3;
+  border: 1px solid #b3b3b3;
   border-radius: 4px;
   margin-top: 40px;
   height: calc(100% - 100px);
@@ -481,12 +518,12 @@ aside nav ul #logout {
 }
 #tableBorder table tr th {
   padding: 22px;
-  border-bottom: 1px solid #B3B3B3;
+  border-bottom: 1px solid #b3b3b3;
   padding-left: 20px;
 }
 #tableBorder table tr td {
   padding: 16px;
-  border-bottom: 1px solid #B3B3B3;
+  border-bottom: 1px solid #b3b3b3;
   padding-left: 20px;
 }
 #tableBorder table th,
@@ -545,6 +582,7 @@ aside nav ul #logout {
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
+  display: none;
   justify-content: center;
   position: fixed;
   top: 0;
@@ -557,8 +595,8 @@ aside nav ul #logout {
 #addItemOverlay2 .modalContent {
   display: flex;
   flex-direction: column;
-  height: 76%;
-  width: 31%;
+  height: 700px;
+  width: 600px;
   background: #FFF;
   border-radius: 20px;
   position: relative;
@@ -600,14 +638,14 @@ aside nav ul #logout {
 #addItemOverlay2 .modalContent .row .leftModal select {
   resize: none;
   font-family: "Inter";
-  border-bottom: 1px solid #9A9A9A;
+  border-bottom: 1px solid #9a9a9a;
   outline: none;
   margin-bottom: 30px;
   height: 34px;
   width: 240px;
 }
 #addItemOverlay .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal select::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal select::-moz-placeholder {
-  color: #9A9A9A;
+  color: #9a9a9a;
 }
 #addItemOverlay .modalContent .row .leftModal input::placeholder,
 #addItemOverlay .modalContent .row .leftModal textarea::placeholder,
@@ -615,7 +653,7 @@ aside nav ul #logout {
 #addItemOverlay2 .modalContent .row .leftModal input::placeholder,
 #addItemOverlay2 .modalContent .row .leftModal textarea::placeholder,
 #addItemOverlay2 .modalContent .row .leftModal select::placeholder {
-  color: #9A9A9A;
+  color: #9a9a9a;
 }
 #addItemOverlay .modalContent .row .leftModal textarea,
 #addItemOverlay2 .modalContent .row .leftModal textarea {
@@ -636,6 +674,14 @@ aside nav ul #logout {
   max-width: 260px;
   max-height: 150px;
 }
+#addItemOverlay .modalContent .row .rightModal .uploadDelete,
+#addItemOverlay2 .modalContent .row .rightModal .uploadDelete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
 #addItemOverlay .modalContent .row .rightModal .uploadImg,
 #addItemOverlay2 .modalContent .row .rightModal .uploadImg {
   cursor: pointer;
@@ -648,7 +694,7 @@ aside nav ul #logout {
   font-weight: 700;
   font-size: 18px;
   line-height: 24px;
-  background: #ED6C02;
+  background: #ed6c02;
 }
 #addItemOverlay .modalContent .row .rightModal .deleteImg,
 #addItemOverlay2 .modalContent .row .rightModal .deleteImg {
@@ -662,7 +708,7 @@ aside nav ul #logout {
   font-weight: 700;
   font-size: 18px;
   line-height: 24px;
-  background: #ED1C25;
+  background: #ed1c25;
 }
 #addItemOverlay button[type=submit],
 #addItemOverlay2 button[type=submit] {
@@ -671,8 +717,8 @@ aside nav ul #logout {
   align-self: center;
   width: 150px;
   height: 36px;
-  background: #2E7D32;
-  color: #FFF;
+  background: #2e7d32;
+  color: #fff;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   font-weight: 700;
@@ -680,6 +726,98 @@ aside nav ul #logout {
   line-height: 24px;
 }
 
+@media screen and (max-width: 768px) {
+  #inventoryMain {
+    height: 100%;
+    width: 86%;
+    padding: 0px 4px;
+  }
+  #inventoryMain #searchSpace {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 10px;
+  }
+  #inventoryMain #searchSpace #input {
+    width: 46%;
+  }
+  #inventoryMain #searchSpace #input input {
+    width: 50%;
+  }
+  #inventoryMain #tableBorder {
+    margin-top: 20px;
+    margin: 20px 10px;
+  }
+  #addItemOverlay .modalContent,
+  #addItemOverlay2 .modalContent {
+    display: flex;
+    flex-direction: column;
+    height: 96%;
+    width: 92%;
+    background: #FFF;
+    border-radius: 20px;
+    position: relative;
+  }
+  #addItemOverlay .modalContent .closeModal,
+  #addItemOverlay2 .modalContent .closeModal {
+    left: 90%;
+  }
+  #addItemOverlay .modalContent .row,
+  #addItemOverlay2 .modalContent .row {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  #addItemOverlay .modalContent .row .leftModal,
+  #addItemOverlay .modalContent .row .rightModal,
+  #addItemOverlay2 .modalContent .row .leftModal,
+  #addItemOverlay2 .modalContent .row .rightModal {
+    margin: 0px;
+    padding: 0px 16px;
+    width: 90%;
+  }
+  #addItemOverlay .modalContent .row .leftModal h2,
+  #addItemOverlay .modalContent .row .rightModal h2,
+  #addItemOverlay2 .modalContent .row .leftModal h2,
+  #addItemOverlay2 .modalContent .row .rightModal h2 {
+    margin: 0px;
+  }
+  #addItemOverlay .modalContent .row .leftModal input,
+  #addItemOverlay .modalContent .row .leftModal select,
+  #addItemOverlay .modalContent .row .rightModal input,
+  #addItemOverlay .modalContent .row .rightModal select,
+  #addItemOverlay2 .modalContent .row .leftModal input,
+  #addItemOverlay2 .modalContent .row .leftModal select,
+  #addItemOverlay2 .modalContent .row .rightModal input,
+  #addItemOverlay2 .modalContent .row .rightModal select {
+    padding: 10px 0px;
+    margin-bottom: 14px;
+    width: 96%;
+  }
+  #addItemOverlay .modalContent .row .leftModal textarea,
+  #addItemOverlay .modalContent .row .rightModal textarea,
+  #addItemOverlay2 .modalContent .row .leftModal textarea,
+  #addItemOverlay2 .modalContent .row .rightModal textarea {
+    width: 96%;
+  }
+  #addItemOverlay .modalContent .row .leftModal img,
+  #addItemOverlay .modalContent .row .rightModal img,
+  #addItemOverlay2 .modalContent .row .leftModal img,
+  #addItemOverlay2 .modalContent .row .rightModal img {
+    margin-top: 16px;
+  }
+  #addItemOverlay .modalContent .row .leftModal .uploadDelete,
+  #addItemOverlay .modalContent .row .rightModal .uploadDelete,
+  #addItemOverlay2 .modalContent .row .leftModal .uploadDelete,
+  #addItemOverlay2 .modalContent .row .rightModal .uploadDelete {
+    flex-direction: row;
+    width: 100%;
+  }
+}
 #pendingOrdersMain,
 #myOrdersMain {
   display: flex;
@@ -717,6 +855,15 @@ aside nav ul #logout {
   font-size: 14px;
   padding: 6px 20px;
   height: 40px;
+}
+#pendingOrdersMain .pendingOrders .firstThree,
+#myOrdersMain .pendingOrders .firstThree {
+  display: flex;
+  width: 45%;
+}
+#pendingOrdersMain .pendingOrders .firstThree span,
+#myOrdersMain .pendingOrders .firstThree span {
+  width: 33%;
 }
 #pendingOrdersMain .pendingOrders .orderStatus,
 #myOrdersMain .pendingOrders .orderStatus {
@@ -808,4 +955,93 @@ aside nav ul #logout {
   font-size: 16px;
   margin-top: 0px;
   width: 90px;
+}
+
+@media screen and (max-width: 768px) {
+  #root {
+    height: 93%;
+  }
+  #root #pendingOrdersMain,
+  #root #myOrdersMain {
+    flex-wrap: nowrap;
+    margin: 16px;
+    padding: 0px;
+    width: 92%;
+    height: 100%;
+  }
+  #root #pendingOrdersMain #headingSection,
+  #root #myOrdersMain #headingSection {
+    display: none;
+  }
+  #root #pendingOrdersMain .pendingOrders,
+  #root #myOrdersMain .pendingOrders {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    align-self: center;
+    width: 76%;
+    min-height: 200px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    padding: 0px 10px;
+  }
+  #root #pendingOrdersMain .pendingOrders span,
+  #root #myOrdersMain .pendingOrders span {
+    width: 100%;
+    padding: 10px 0px;
+  }
+  #root #pendingOrdersMain .pendingOrders .firstThree,
+  #root #pendingOrdersMain .pendingOrders .orderedByColumn,
+  #root #myOrdersMain .pendingOrders .firstThree,
+  #root #myOrdersMain .pendingOrders .orderedByColumn {
+    width: 100%;
+    border-bottom: 1px solid #B3B3B3;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  #root #pendingOrdersMain .pendingOrders .codeColumn::before,
+  #root #pendingOrdersMain .pendingOrders .qtyColumn::before,
+  #root #pendingOrdersMain .pendingOrders .priceColumn::before,
+  #root #pendingOrdersMain .pendingOrders .orderedByColumn::before,
+  #root #pendingOrdersMain .pendingOrders .orderDateColumn::before,
+  #root #myOrdersMain .pendingOrders .codeColumn::before,
+  #root #myOrdersMain .pendingOrders .qtyColumn::before,
+  #root #myOrdersMain .pendingOrders .priceColumn::before,
+  #root #myOrdersMain .pendingOrders .orderedByColumn::before,
+  #root #myOrdersMain .pendingOrders .orderDateColumn::before {
+    font-weight: 700;
+  }
+  #root #pendingOrdersMain .pendingOrders .codeColumn::before,
+  #root #pendingOrdersMain .pendingOrders .qtyColumn::before,
+  #root #pendingOrdersMain .pendingOrders .priceColumn::before,
+  #root #myOrdersMain .pendingOrders .codeColumn::before,
+  #root #myOrdersMain .pendingOrders .qtyColumn::before,
+  #root #myOrdersMain .pendingOrders .priceColumn::before {
+    display: block;
+  }
+  #root #pendingOrdersMain .pendingOrders .codeColumn::before,
+  #root #myOrdersMain .pendingOrders .codeColumn::before {
+    content: "Code   ";
+  }
+  #root #pendingOrdersMain .pendingOrders .qtyColumn::before,
+  #root #myOrdersMain .pendingOrders .qtyColumn::before {
+    content: "Qty   ";
+  }
+  #root #pendingOrdersMain .pendingOrders .priceColumn::before,
+  #root #myOrdersMain .pendingOrders .priceColumn::before {
+    content: "Price   ";
+  }
+  #root #pendingOrdersMain .pendingOrders .orderedByColumn::before,
+  #root #myOrdersMain .pendingOrders .orderedByColumn::before {
+    content: "Ordered by:   ";
+  }
+  #root #pendingOrdersMain .pendingOrders .orderDateColumn::before,
+  #root #myOrdersMain .pendingOrders .orderDateColumn::before {
+    content: "Order date:   ";
+  }
+  #root #pendingOrdersMain .pendingOrders .completeButton,
+  #root #myOrdersMain .pendingOrders .completeButton {
+    margin-top: 6px;
+    align-self: center;
+  }
 }/*# sourceMappingURL=styles.css.map */

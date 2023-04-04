@@ -24,8 +24,8 @@
         margin-left: 20px;
         width: 120px;
         height: 36px;
-        color: #FFF;
-        background: #2E7D32;
+        color: #fff;
+        background: #2e7d32;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
         border-radius: 4px;
 
@@ -36,7 +36,7 @@
 }
 
 #tableBorder {
-    border: 1px solid #B3B3B3;
+    border: 1px solid #b3b3b3;
     border-radius: 4px;
     margin-top: 40px;
     height: calc(100% - 100px);
@@ -51,14 +51,13 @@
 
         tr th {
             padding: 22px;
-            border-bottom: 1px solid #B3B3B3;
+            border-bottom: 1px solid #b3b3b3;
             padding-left: 20px;
-
         }
 
         tr td {
             padding: 16px;
-            border-bottom: 1px solid #B3B3B3;
+            border-bottom: 1px solid #b3b3b3;
             padding-left: 20px;
         }
 
@@ -85,7 +84,6 @@
                 cursor: pointer;
             }
         }
-
     }
 }
 
@@ -102,7 +100,7 @@
     @include overlay;
 
     .modalContent {
-        @include modal(76%, 31%);
+        @include modal(700px, 600px);
         overflow-y: auto;
         overflow-x: auto;
 
@@ -113,7 +111,7 @@
 
             .leftModal {
                 @include flex-align(column, flex-start);
-                font-family: 'Inter';
+                font-family: "Inter";
                 font-style: normal;
                 font-weight: 400;
                 font-size: 14px;
@@ -132,8 +130,8 @@
                 textarea,
                 select {
                     resize: none;
-                    font-family: 'Inter';
-                    border-bottom: 1px solid #9A9A9A;
+                    font-family: "Inter";
+                    border-bottom: 1px solid #9a9a9a;
                     outline: none;
                     margin-bottom: 30px;
                     height: 34px;
@@ -143,7 +141,7 @@
                 input::placeholder,
                 textarea::placeholder,
                 select::placeholder {
-                    color: #9A9A9A;
+                    color: #9a9a9a;
                 }
 
                 textarea {
@@ -162,15 +160,19 @@
                     max-height: 150px;
                 }
 
+                .uploadDelete {
+                    @include flex-align(column, center);
+                    justify-content: space-evenly;
+                }
+
                 .uploadImg {
-                    @include button (#ED6C02);
+                    @include button(#ed6c02);
                 }
 
                 .deleteImg {
-                    @include button (#ED1C25);
+                    @include button(#ed1c25);
                 }
             }
-
         }
     }
 
@@ -180,12 +182,86 @@
         align-self: center;
         width: 150px;
         height: 36px;
-        background: #2E7D32;
-        color: #FFF;
+        background: #2e7d32;
+        color: #fff;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
         border-radius: 4px;
         font-weight: 700;
         font-size: 18px;
         line-height: 24px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #inventoryMain {
+        height: 100%;
+        width: 86%;
+        padding: 0px 4px;
+
+        #searchSpace {
+            @include flex-align(row, flex-end);
+            justify-content: space-between;
+            margin: 20px 10px;
+
+            #input {
+                width: 46%;
+
+                input {
+                    width: 50%;
+                }
+            }
+        }
+
+        #tableBorder {
+            margin-top: 20px;
+            margin: 20px 10px;
+        }
+    }
+
+    #addItemOverlay,
+    #addItemOverlay2 {
+        .modalContent {
+            @include modal(96%, 92%);
+
+            .closeModal {
+                left: 90%;
+            }
+
+            .row {
+                margin-top: 16px;
+                @include flex-align(column, center);
+
+                .leftModal,
+                .rightModal {
+                    margin: 0px;
+                    padding: 0px 16px;
+                    width: 90%;
+
+                    h2 {
+                        margin: 0px;
+                    }
+
+                    input,
+                    select {
+                        padding: 10px 0px;
+                        margin-bottom: 14px;
+                        width: 96%;
+                    }
+
+                    textarea {
+                        width: 96%;
+                    }
+
+                    img {
+                        margin-top: 16px;
+                    }
+
+                    .uploadDelete {
+                        flex-direction: row;
+                        width: 100%;
+                    }
+                }
+            }
+        }
     }
 }

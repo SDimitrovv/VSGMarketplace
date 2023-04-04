@@ -31,7 +31,7 @@
 
             small {
                 font-size: 12px;
-                color: #9A9A9A;
+                color: #9a9a9a;
             }
         }
 
@@ -44,7 +44,7 @@
 
                 span {
                     font-size: 10px;
-                    color: #B3B3B3;
+                    color: #b3b3b3;
                 }
 
                 select {
@@ -64,7 +64,7 @@
     }
 }
 
-@media screen and (max-width: 787px) {
+@media screen and (max-width: 768px) {
     #marketplaceMain {
         width: 80%;
         margin: 16px 0px;
@@ -93,20 +93,19 @@
         margin: 0px 6px;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
         border-radius: 4px;
-        border: 1px solid #ED1C25;
+        border: 1px solid #ed1c25;
     }
 
     .no,
     .yes:active {
-        background-color: #FFF;
-        color: #ED1C25;
+        background-color: #fff;
+        color: #ed1c25;
     }
 
     .yes,
     .no:active {
-        background-color: #ED1C25;
-        color: #FFF;
-
+        background-color: #ed1c25;
+        color: #fff;
     }
 }
 
@@ -120,7 +119,7 @@
 
     #modalContent {
         @include modal(620px, 600px);
-        background-image: url('/images/marketplace/ellipse.png');
+        background-image: url("/images/marketplace/ellipse.png");
         background-position: bottom right;
         background-repeat: no-repeat;
 
@@ -129,6 +128,7 @@
         }
 
         #modalFrameOne {
+            @include flex-align(column, space-between);
             margin: 20px;
             overflow-y: auto;
 
@@ -136,32 +136,30 @@
                 display: flex;
                 justify-content: space-between;
 
+                #productName {
+                    @include flex-align(column, flex-start);
+                    width: 390px;
+                }
+
+                #priceAndQty {
+                    @include flex-align(column, flex-end);
+                }
+
                 b {
-                    width: 70%;
                     font-weight: 700;
                     font-size: 22px;
                     line-height: 26px;
                 }
 
-                #priceAndQty {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-end;
-
-                    b {
-                        width: 100%;
-                    }
-
-                    small {
-                        width: 40px;
-                        color: #9A9A9A;
-                    }
+                small {
+                    padding: 4px 0px;
+                    color: #9a9a9a;
                 }
             }
         }
 
         small {
-            color: #9A9A9A;
+            color: #9a9a9a;
         }
 
         p {
@@ -173,12 +171,43 @@
         }
     }
 
-    @media screen and (max-width: 787px) {
+    @media screen and (max-width: 768px) {
         #modalContent {
             @include modal(90%, 92%);
 
-            #modalFrameTwo {
-                flex-direction: column;
+            #modalFrameOne {
+                height: 90%;
+
+                #modalFrameTwo {
+                    @include flex-align(column, flex-start);
+                    width: 100%;
+
+                    #productName {
+                        width: 100%;
+                    }
+
+                    #priceAndQty {
+                        margin: 10px 0px;
+                    }
+
+                    b {
+                        width: 305px;
+                        font-family: "Roboto";
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 20px;
+                        line-height: 23px;
+                    }
+
+                    small {
+                        padding: 0px;
+                        align-self: flex-start;
+                    }
+                }
+
+                p {
+                    text-overflow: ellipsis;
+                }
             }
         }
     }

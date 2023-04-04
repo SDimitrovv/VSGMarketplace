@@ -33,7 +33,7 @@
 
 @mixin overlay {
     @include flex-align(column, center);
-    // display: none;
+    display: none;
     justify-content: center;
     position: fixed;
     top: 0;

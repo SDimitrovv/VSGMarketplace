@@ -42,7 +42,7 @@ body {
     }
 }
 
-@media screen and (max-width: 787px) {
+@media screen and (max-width: 768px) {
     #root {
         @include flex-align(column, center);
 

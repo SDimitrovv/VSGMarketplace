@@ -369,13 +369,15 @@ const Marketplace = () => {
         <img id="modalImage" src="../../images/marketplace/product-image.png">
         <div id="modalFrameOne">
             <div id="modalFrameTwo">
-                <b>Laptop MacBook Pro 16” M1 Max 32GB RAM 1TB SSD 32 Cores GPU</b>
+                <div id="productName">
+                    <b>Laptop MacBook Pro 16” M1 Max 32GB RAM 1TB SSD 32 Cores GPU</b>
+                    <small>Laptops</small>
+                </div>
                 <div id="priceAndQty">
                     <b>5000 BGN</b>
                     <small>Qty: 2</small>
                 </div>
             </div>
-            <small>Laptops</small>
             <p>
                 This it the description of the product. This it the description of the product.
                 This it the description of the product. This it the description of the product.
