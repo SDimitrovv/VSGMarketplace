@@ -12,11 +12,11 @@
 
         public string Description { get; set; }
 
-        public string CategoryType { get; set; }
+        public string Type { get; set; }
 
         public string City { get; set; }
 
-        public string Image { get; set; }
+        public byte[] Image { get; set; }
 
         public int ItemId { get; set; }
     }

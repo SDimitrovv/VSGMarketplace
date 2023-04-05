@@ -27,9 +27,9 @@ namespace VSGMarketplace.Application.Services
             return createdItem;
         }
 
-        public async Task Update(GetItemDto item)
+        public async Task Update(int id, GetItemDto item)
         {
-            await _itemRepository.Update(item);
+            await _itemRepository.Update(id, item);
         }
 
         public async Task Delete(int id)

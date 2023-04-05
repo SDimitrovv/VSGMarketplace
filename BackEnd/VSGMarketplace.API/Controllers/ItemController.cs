@@ -17,6 +17,7 @@ namespace VSGMarketplace.API.Controllers
         public async Task<IActionResult> GetAllItems()
         {
             var items = await _itemService.GetAll();
+
             return Ok(items);
         }
 
@@ -34,13 +35,15 @@ namespace VSGMarketplace.API.Controllers
         public async Task<IActionResult> CreateItem([FromBody] CreateItemDto item)
         {
             var createdItem = await _itemService.Create(item);
+
             return CreatedAtAction(nameof(GetItemById), new { id = createdItem.ItemId }, createdItem);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateItem(int id, GetItemDto item)
+        public async Task<IActionResult> UpdateItem(int id, [FromBody] GetItemDto item)
         {
-            await _itemService.Update(item);
+            await _itemService.Update(id, item);
+
             return NoContent();
         }
 
@@ -48,6 +51,7 @@ namespace VSGMarketplace.API.Controllers
         public async Task<IActionResult> DeleteItem(int id)
         {
             await _itemService.Delete(id);
+
             return NoContent();
         }
 

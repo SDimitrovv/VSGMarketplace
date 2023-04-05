@@ -13,7 +13,7 @@ public class GetItemDto
 
     public string Description { get; set; }
 
-    public string CategoryType { get; set; }
+    public string Type { get; set; }
 
     public string City { get; set; }
 
