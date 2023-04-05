@@ -1,14 +1,14 @@
 import { navbar } from "../components/navbar.js";
+import { marketplaceApp } from "../src/marketplaceApp.js";
 
 const Marketplace = () => {
-    setPageScripts(['src/marketplaceApp.js']);
 
-    return `
+    document.querySelector('#root').innerHTML = `
     ${navbar}
     <main id="marketplaceMain">
     <div class="product">
         <a class='productButton'>
-            <img src="../../images/marketplace/product-image.png" alt="Product-image">
+            <img src="images/marketplace/product-image.png" alt="Product-image">
         </a>
         <div class="productContent">
             <div class="price">
@@ -394,6 +394,8 @@ const Marketplace = () => {
 </div>
 <script src="../src/marketplaceApp.js" type="module" defer></script>
     `;
+    marketplaceApp();
+    // setPageScripts(['src/marketplaceApp.js']);
 };
 
 export default Marketplace;

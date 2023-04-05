@@ -11,6 +11,7 @@ small {
 img {
   height: auto;
   max-width: 100%;
+  pointer-events: none;
 }
 
 .closeModal {
@@ -51,6 +52,7 @@ body #root {
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
+    height: 93%;
   }
   #root aside {
     display: none;
@@ -71,27 +73,26 @@ header #logo {
   height: 30px;
   padding-right: 70px;
 }
-header #logo img {
-  position: none;
-}
 header #pageTitle {
   font-size: 30px;
 }
-header #profileGreet {
+header .profileGreet {
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
 }
-header #profileGreet span {
+header .profileGreet span {
   font-weight: 700;
   margin-right: 10px;
 }
-header #profileGreet img {
+header .profileGreet img {
   width: 30px;
   height: 30px;
 }
+header #closeMenu,
 header #hamburger {
+  color: #ED1C25;
   display: none;
   align-self: center;
 }
@@ -99,11 +100,8 @@ header #hamburger {
   header #logo {
     padding-right: 0px;
   }
-  header #profileGreet {
+  header .profileGreet {
     display: none;
-  }
-  header #hamburger {
-    display: block;
   }
 }
 
@@ -123,7 +121,7 @@ main {
 
 aside {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   flex-wrap: wrap;
   padding: 20px 8px;
@@ -131,6 +129,15 @@ aside {
   width: 30%;
   max-width: 320px;
   min-width: 160px;
+  flex-wrap: nowrap;
+}
+aside .profileGreet2 {
+  display: none;
+  margin: 0px 14px;
+  margin-top: 20px;
+}
+aside .profileGreet2 span {
+  margin-left: 10px;
 }
 aside nav {
   height: inherit;
@@ -184,7 +191,19 @@ aside nav ul #logout {
 
 @media screen and (max-width: 768px) {
   aside {
-    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 16px 0px;
+    padding: 0px 20px;
+  }
+  aside .profileGreet2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  aside nav ul {
+    margin-top: 20px;
   }
 }
 #landingMain {
@@ -497,6 +516,10 @@ aside nav ul #logout {
   }
 }
 
+#inventoryMain {
+  flex-direction: column;
+}
+
 #searchSpace {
   display: flex;
   justify-content: flex-end;
@@ -671,7 +694,7 @@ aside nav ul #logout {
   border-bottom: 1px solid #9a9a9a;
   outline: none;
   margin-bottom: 30px;
-  height: 34px;
+  height: 38px;
   width: 240px;
 }
 #addItemOverlay .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal select::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal select::-moz-placeholder {
@@ -851,7 +874,7 @@ aside nav ul #logout {
   #addItemOverlay2 .modalContent .row .leftModal select,
   #addItemOverlay2 .modalContent .row .rightModal input,
   #addItemOverlay2 .modalContent .row .rightModal select {
-    padding: 10px 0px;
+    padding: 8px 0px;
     margin-bottom: 14px;
     width: 96%;
   }
@@ -1024,23 +1047,20 @@ aside nav ul #logout {
 }
 
 @media screen and (max-width: 768px) {
-  #root {
-    height: 93%;
-  }
-  #root #pendingOrdersMain,
-  #root #myOrdersMain {
+  #pendingOrdersMain,
+  #myOrdersMain {
     flex-wrap: nowrap;
     margin: 16px;
     padding: 0px;
     width: 92%;
     height: 100%;
   }
-  #root #pendingOrdersMain #headingSection,
-  #root #myOrdersMain #headingSection {
+  #pendingOrdersMain #headingSection,
+  #myOrdersMain #headingSection {
     display: none;
   }
-  #root #pendingOrdersMain .pendingOrders,
-  #root #myOrdersMain .pendingOrders {
+  #pendingOrdersMain .pendingOrders,
+  #myOrdersMain .pendingOrders {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1052,8 +1072,8 @@ aside nav ul #logout {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     padding: 0px 10px;
   }
-  #root #pendingOrdersMain .pendingOrders .cancelOrderContainer,
-  #root #myOrdersMain .pendingOrders .cancelOrderContainer {
+  #pendingOrdersMain .pendingOrders .cancelOrderContainer,
+  #myOrdersMain .pendingOrders .cancelOrderContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1071,8 +1091,8 @@ aside nav ul #logout {
     border-radius: 4px;
     z-index: 99;
   }
-  #root #pendingOrdersMain .pendingOrders .cancelOrderContainer::before,
-  #root #myOrdersMain .pendingOrders .cancelOrderContainer::before {
+  #pendingOrdersMain .pendingOrders .cancelOrderContainer::before,
+  #myOrdersMain .pendingOrders .cancelOrderContainer::before {
     content: "";
     position: absolute;
     bottom: 100%;
@@ -1081,91 +1101,91 @@ aside nav ul #logout {
     border-width: 0 7px 10px 7px;
     border-color: transparent transparent #FFF transparent;
   }
-  #root #pendingOrdersMain .pendingOrders span,
-  #root #myOrdersMain .pendingOrders span {
+  #pendingOrdersMain .pendingOrders span,
+  #myOrdersMain .pendingOrders span {
     width: 100%;
     padding: 10px 0px;
   }
-  #root #pendingOrdersMain .pendingOrders .firstThree,
-  #root #pendingOrdersMain .pendingOrders .firstTwo,
-  #root #pendingOrdersMain .pendingOrders .orderedByColumn,
-  #root #pendingOrdersMain .pendingOrders .orderDateColumn,
-  #root #pendingOrdersMain .pendingOrders .nameColumn,
-  #root #myOrdersMain .pendingOrders .firstThree,
-  #root #myOrdersMain .pendingOrders .firstTwo,
-  #root #myOrdersMain .pendingOrders .orderedByColumn,
-  #root #myOrdersMain .pendingOrders .orderDateColumn,
-  #root #myOrdersMain .pendingOrders .nameColumn {
+  #pendingOrdersMain .pendingOrders .firstThree,
+  #pendingOrdersMain .pendingOrders .firstTwo,
+  #pendingOrdersMain .pendingOrders .orderedByColumn,
+  #pendingOrdersMain .pendingOrders .orderDateColumn,
+  #pendingOrdersMain .pendingOrders .nameColumn,
+  #myOrdersMain .pendingOrders .firstThree,
+  #myOrdersMain .pendingOrders .firstTwo,
+  #myOrdersMain .pendingOrders .orderedByColumn,
+  #myOrdersMain .pendingOrders .orderDateColumn,
+  #myOrdersMain .pendingOrders .nameColumn {
     width: 100%;
     border-bottom: 1px solid #b3b3b3;
     border-spacing: 0;
     border-collapse: collapse;
   }
-  #root #pendingOrdersMain .pendingOrders .orderStatus,
-  #root #myOrdersMain .pendingOrders .orderStatus {
+  #pendingOrdersMain .pendingOrders .orderStatus,
+  #myOrdersMain .pendingOrders .orderStatus {
     align-self: flex-start;
     margin: 0;
     width: 100%;
     padding-top: 24px;
   }
-  #root #pendingOrdersMain .pendingOrders .orderStatus span,
-  #root #myOrdersMain .pendingOrders .orderStatus span {
+  #pendingOrdersMain .pendingOrders .orderStatus span,
+  #myOrdersMain .pendingOrders .orderStatus span {
     padding: 0;
   }
-  #root #pendingOrdersMain .pendingOrders .nameColumn::before,
-  #root #pendingOrdersMain .pendingOrders .codeColumn::before,
-  #root #pendingOrdersMain .pendingOrders .qtyColumn::before,
-  #root #pendingOrdersMain .pendingOrders .priceColumn::before,
-  #root #pendingOrdersMain .pendingOrders .orderedByColumn::before,
-  #root #pendingOrdersMain .pendingOrders .orderDateColumn::before,
-  #root #pendingOrdersMain .pendingOrders .orderStatus > span::before,
-  #root #myOrdersMain .pendingOrders .nameColumn::before,
-  #root #myOrdersMain .pendingOrders .codeColumn::before,
-  #root #myOrdersMain .pendingOrders .qtyColumn::before,
-  #root #myOrdersMain .pendingOrders .priceColumn::before,
-  #root #myOrdersMain .pendingOrders .orderedByColumn::before,
-  #root #myOrdersMain .pendingOrders .orderDateColumn::before,
-  #root #myOrdersMain .pendingOrders .orderStatus > span::before {
+  #pendingOrdersMain .pendingOrders .nameColumn::before,
+  #pendingOrdersMain .pendingOrders .codeColumn::before,
+  #pendingOrdersMain .pendingOrders .qtyColumn::before,
+  #pendingOrdersMain .pendingOrders .priceColumn::before,
+  #pendingOrdersMain .pendingOrders .orderedByColumn::before,
+  #pendingOrdersMain .pendingOrders .orderDateColumn::before,
+  #pendingOrdersMain .pendingOrders .orderStatus > span::before,
+  #myOrdersMain .pendingOrders .nameColumn::before,
+  #myOrdersMain .pendingOrders .codeColumn::before,
+  #myOrdersMain .pendingOrders .qtyColumn::before,
+  #myOrdersMain .pendingOrders .priceColumn::before,
+  #myOrdersMain .pendingOrders .orderedByColumn::before,
+  #myOrdersMain .pendingOrders .orderDateColumn::before,
+  #myOrdersMain .pendingOrders .orderStatus > span::before {
     font-weight: 700;
   }
-  #root #pendingOrdersMain .pendingOrders .codeColumn::before,
-  #root #pendingOrdersMain .pendingOrders .qtyColumn::before,
-  #root #pendingOrdersMain .pendingOrders .priceColumn::before,
-  #root #myOrdersMain .pendingOrders .codeColumn::before,
-  #root #myOrdersMain .pendingOrders .qtyColumn::before,
-  #root #myOrdersMain .pendingOrders .priceColumn::before {
+  #pendingOrdersMain .pendingOrders .codeColumn::before,
+  #pendingOrdersMain .pendingOrders .qtyColumn::before,
+  #pendingOrdersMain .pendingOrders .priceColumn::before,
+  #myOrdersMain .pendingOrders .codeColumn::before,
+  #myOrdersMain .pendingOrders .qtyColumn::before,
+  #myOrdersMain .pendingOrders .priceColumn::before {
     display: block;
   }
-  #root #pendingOrdersMain .pendingOrders .nameColumn::before,
-  #root #myOrdersMain .pendingOrders .nameColumn::before {
+  #pendingOrdersMain .pendingOrders .nameColumn::before,
+  #myOrdersMain .pendingOrders .nameColumn::before {
     content: "Name:   ";
   }
-  #root #pendingOrdersMain .pendingOrders .codeColumn::before,
-  #root #myOrdersMain .pendingOrders .codeColumn::before {
+  #pendingOrdersMain .pendingOrders .codeColumn::before,
+  #myOrdersMain .pendingOrders .codeColumn::before {
     content: "Code   ";
   }
-  #root #pendingOrdersMain .pendingOrders .qtyColumn::before,
-  #root #myOrdersMain .pendingOrders .qtyColumn::before {
+  #pendingOrdersMain .pendingOrders .qtyColumn::before,
+  #myOrdersMain .pendingOrders .qtyColumn::before {
     content: "Qty   ";
   }
-  #root #pendingOrdersMain .pendingOrders .priceColumn::before,
-  #root #myOrdersMain .pendingOrders .priceColumn::before {
+  #pendingOrdersMain .pendingOrders .priceColumn::before,
+  #myOrdersMain .pendingOrders .priceColumn::before {
     content: "Price   ";
   }
-  #root #pendingOrdersMain .pendingOrders .orderedByColumn::before,
-  #root #myOrdersMain .pendingOrders .orderedByColumn::before {
+  #pendingOrdersMain .pendingOrders .orderedByColumn::before,
+  #myOrdersMain .pendingOrders .orderedByColumn::before {
     content: "Ordered by:   ";
   }
-  #root #pendingOrdersMain .pendingOrders .orderDateColumn::before,
-  #root #myOrdersMain .pendingOrders .orderDateColumn::before {
+  #pendingOrdersMain .pendingOrders .orderDateColumn::before,
+  #myOrdersMain .pendingOrders .orderDateColumn::before {
     content: "Order date:   ";
   }
-  #root #pendingOrdersMain .pendingOrders .orderStatus span::before,
-  #root #myOrdersMain .pendingOrders .orderStatus span::before {
+  #pendingOrdersMain .pendingOrders .orderStatus span::before,
+  #myOrdersMain .pendingOrders .orderStatus span::before {
     content: "Status:   ";
   }
-  #root #pendingOrdersMain .pendingOrders .completeButton,
-  #root #myOrdersMain .pendingOrders .completeButton {
+  #pendingOrdersMain .pendingOrders .completeButton,
+  #myOrdersMain .pendingOrders .completeButton {
     margin-top: 16px;
     align-self: center;
   }

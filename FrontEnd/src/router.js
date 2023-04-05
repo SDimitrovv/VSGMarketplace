@@ -4,8 +4,8 @@ import Marketplace from "../pages/Marketplace.js";
 import MyOrders from "../pages/MyOrders.js";
 import PendingOrders from "../pages/PendingOrders.js";
 import { navStyling } from "./global.js";
+import { hamburgerApp } from "./headerApp.js";
 
-const root = document.getElementById("root");
 const head = document.querySelector('head');
 const routes = {
   "/": Home,
@@ -15,44 +15,52 @@ const routes = {
   "my-orders": MyOrders,
 };
 
-export const router = () => {
+const navigateTo = (url) => {
+  history.pushState(null, null, url);
+  removeSPAEventHandlers();
+  router();
+};
+
+const router = () => {
   const path = window.location.hash.replace('#', '') || '/';
   const page = routes[path];
   head.querySelectorAll('script').forEach(e => e.remove());
   document.querySelector("header").style.display = "flex";
-  root.innerHTML = page();
-};
+  document.querySelector('#closeMenu').style.display = "none";
 
-const navigateTo = (url) => {
-  history.pushState(null, null, url);
-  removeSPALinkHandlers();
-  router();
+  if (window.innerWidth < 769) {
+    document.querySelector("#hamburger").style.display = "block";
+  }
+  page();
+
+  if (path !== '/') {
+    hamburgerApp();
+  }
+
   handleSPALinks();
   navStyling();
 };
 
-const onClickSpaLink = (e) => {
+export const handleSPALinks = () => {
+  document.querySelectorAll("a[spa]").forEach((link) => {
+    link.addEventListener("click", onClickSPALink);
+  });
+};
+
+const removeSPAEventHandlers = () => {
+  document.querySelectorAll("a[spa]").forEach((link) => {
+    link.removeEventListener("click", onClickSPALink);
+  });
+};
+
+const onClickSPALink = (e) => {
   e.preventDefault();
   const state = e.target.getAttribute("state");
   navigateTo(e.target.href, state || {});
 };
 
-const removeSPALinkHandlers = () => {
-  document.querySelectorAll("a[spa]").forEach((link) => {
-    link.removeEventListener("click", onClickSpaLink);
-  });
-};
-
-const handleSPALinks = () => {
-  document.querySelectorAll("a[spa]").forEach((link) => {
-    link.addEventListener("click", onClickSpaLink);
-  });
-};
-
 window.addEventListener("load", () => {
   router();
-  handleSPALinks();
-  navStyling();
 });
 
 window.addEventListener("popstate", router);

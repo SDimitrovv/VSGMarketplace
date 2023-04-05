@@ -24,7 +24,7 @@ export function addButtons() {
 }
 
 export function closeModal() {
-    document.querySelectorAll('.closeModal')?.forEach(b =>
+    document.querySelectorAll('.closeModal').forEach(b =>
         b.addEventListener('click', e => {
             e.preventDefault();
             let overlay = document.querySelector('#overlay');

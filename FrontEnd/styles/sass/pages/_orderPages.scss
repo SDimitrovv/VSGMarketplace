@@ -109,117 +109,114 @@
 }
 
 @media screen and (max-width: 768px) {
-    #root {
-        height: 93%;
 
-        #pendingOrdersMain,
-        #myOrdersMain {
-            flex-wrap: nowrap;
-            margin: 16px;
-            padding: 0px;
-            width: 92%;
-            height: 100%;
+    #pendingOrdersMain,
+    #myOrdersMain {
+        flex-wrap: nowrap;
+        margin: 16px;
+        padding: 0px;
+        width: 92%;
+        height: 100%;
 
-            #headingSection {
-                display: none;
+        #headingSection {
+            display: none;
+        }
+
+        .pendingOrders {
+            @include flex-align(column, center);
+            align-self: center;
+            width: 76%;
+            min-height: 200px;
+            height: 28%;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            padding: 0px 10px;
+
+            .cancelOrderContainer {
+                @include pop-up(120%, -6%);
             }
 
-            .pendingOrders {
-                @include flex-align(column, center);
-                align-self: center;
-                width: 76%;
-                min-height: 200px;
-                height: 28%;
-                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-                padding: 0px 10px;
+            .cancelOrderContainer::before {
+                @include triangle(90%);
+            }
 
-                .cancelOrderContainer {
-                    @include pop-up(120%, -6%);
-                }
+            span {
+                width: 100%;
+                padding: 10px 0px;
+            }
 
-                .cancelOrderContainer::before {
-                    @include triangle(90%);
-                }
+            .firstThree,
+            .firstTwo,
+            .orderedByColumn,
+            .orderDateColumn,
+            .nameColumn {
+                width: 100%;
+                border-bottom: 1px solid $border-gray;
+                border-spacing: 0;
+                border-collapse: collapse;
+            }
+
+            .orderStatus {
+                align-self: flex-start;
+                margin: 0;
+                width: 100%;
+                padding-top: 24px;
 
                 span {
-                    width: 100%;
-                    padding: 10px 0px;
+                    padding: 0;
                 }
+            }
 
-                .firstThree,
-                .firstTwo,
-                .orderedByColumn,
-                .orderDateColumn,
-                .nameColumn {
-                    width: 100%;
-                    border-bottom: 1px solid $border-gray;
-                    border-spacing: 0;
-                    border-collapse: collapse;
+            .nameColumn,
+            .codeColumn,
+            .qtyColumn,
+            .priceColumn,
+            .orderedByColumn,
+            .orderDateColumn,
+            .orderStatus>span {
+                &::before {
+                    font-weight: 700;
                 }
+            }
 
-                .orderStatus {
-                    align-self: flex-start;
-                    margin: 0;
-                    width: 100%;
-                    padding-top: 24px;
-
-                    span {
-                        padding: 0;
-                    }
+            .codeColumn,
+            .qtyColumn,
+            .priceColumn {
+                &::before {
+                    display: block;
                 }
+            }
 
-                .nameColumn,
-                .codeColumn,
-                .qtyColumn,
-                .priceColumn,
-                .orderedByColumn,
-                .orderDateColumn,
-                .orderStatus>span {
-                    &::before {
-                        font-weight: 700;
-                    }
-                }
+            .nameColumn::before {
+                content: 'Name:   ';
+            }
 
-                .codeColumn,
-                .qtyColumn,
-                .priceColumn {
-                    &::before {
-                        display: block;
-                    }
-                }
+            .codeColumn::before {
+                content: 'Code   ';
+            }
 
-                .nameColumn::before {
-                    content: 'Name:   ';
-                }
+            .qtyColumn::before {
+                content: 'Qty   ';
+            }
 
-                .codeColumn::before {
-                    content: 'Code   ';
-                }
+            .priceColumn::before {
+                content: 'Price   ';
+            }
 
-                .qtyColumn::before {
-                    content: 'Qty   ';
-                }
+            .orderedByColumn::before {
+                content: 'Ordered by:   ';
+            }
 
-                .priceColumn::before {
-                    content: 'Price   ';
-                }
+            .orderDateColumn::before {
+                content: 'Order date:   ';
+            }
 
-                .orderedByColumn::before {
-                    content: 'Ordered by:   ';
-                }
+            .orderStatus span::before {
+                content: 'Status:   ';
+            }
 
-                .orderDateColumn::before {
-                    content: 'Order date:   ';
-                }
-
-                .orderStatus span::before {
-                    content: 'Status:   ';
-                }
-
-                .completeButton {
-                    margin-top: 16px;
-                    align-self: center;
-                }
+            .completeButton {
+                margin-top: 16px;
+                align-self: center;
             }
         }
     }

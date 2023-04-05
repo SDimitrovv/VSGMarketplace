@@ -1,7 +1,12 @@
 export const navbar = `
-<aside id='marketplaceAside'>
+<aside>
+<div class="profileGreet profileGreet2">
+<img src="../../images/profile-image.png" alt="Profile-picture">
+<span>Hi, User </span>
+</div>
         <nav>
             <ul>
+
                 <li>
                     <a class="navButton" href="#marketplace" spa>
                         <svg class="icon" width="14" height="14" viewBox="0 0 14 14" fill="none"

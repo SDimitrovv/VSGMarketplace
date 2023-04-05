@@ -1,9 +1,8 @@
 import { navbar } from "../components/navbar.js";
+import { inventoryApp } from "../src/inventoryApp.js";
 
 const Inventory = () => {
-    setPageScripts(['src/inventoryApp.js']);
-
-    return `
+    document.querySelector('#root').innerHTML = `
     ${navbar}
     <main id="inventoryMain">
     <div id="searchSpace">
@@ -192,6 +191,8 @@ This is the description of the product.
 </form>
 </div>
 `;
+    inventoryApp();
+    // setPageScripts(['src/inventoryApp.js']);
 }
 
 export default Inventory;

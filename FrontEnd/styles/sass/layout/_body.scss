@@ -11,6 +11,7 @@ small {
 img {
     height: auto;
     max-width: 100%;
+    pointer-events: none;
 }
 
 .closeModal {
@@ -49,6 +50,7 @@ body {
 @media screen and (max-width: 768px) {
     #root {
         @include flex-align(column, center);
+        height: 93%;
 
         aside {
             display: none;

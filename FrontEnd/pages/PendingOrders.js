@@ -1,7 +1,8 @@
 import { navbar } from "../components/navbar.js";
+import { ordersApp } from "../src/ordersApp.js";
 
 const PendingOrders = () => {
-    return `
+    document.querySelector('#root').innerHTML = `
     ${navbar}
 <main id="pendingOrdersMain">
     <div id="headingSection">
@@ -44,6 +45,8 @@ const PendingOrders = () => {
     </div>
 </main>
 `;
+
+    ordersApp();
 };
 
 export default PendingOrders;

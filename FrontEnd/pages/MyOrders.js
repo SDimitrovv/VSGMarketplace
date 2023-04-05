@@ -1,10 +1,8 @@
 import { navbar } from "../components/navbar.js";
-
+import { ordersApp } from "../src/ordersApp.js";
 
 const MyOrders = () => {
-    setPageScripts(['src/ordersApp.js']);
-    
-    return `
+    document.querySelector('#root').innerHTML = `
     ${navbar}
     <main id="myOrdersMain">
     <div id="headingSection">
@@ -70,6 +68,8 @@ const MyOrders = () => {
 </main>
 <script src="src/orders.js"></script>
 `;
+    ordersApp();
+    setPageScripts(['src/ordersApp.js']);
 };
 
 export default MyOrders;
