@@ -10,7 +10,7 @@ public interface IItemRepository
 
     public Task<CreateItemDto> Create(CreateItemDto item);
 
-    public Task Update(GetItemDto item);
+    public Task Update(int id, GetItemDto item);
 
     public Task Delete(int id);
 } 
