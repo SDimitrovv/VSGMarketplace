@@ -1,21 +1,18 @@
 #landingMain {
+    @include flex-align(row, center);
+    justify-content: center;
     margin: 0;
     padding: 0;
     height: 100vh;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
     background: url('../images/home/landing-background.png') center fixed;
     background-repeat: no-repeat;
     background-size: cover;
 
     #loginButton {
-        display: flex;
-        align-self: center;
+        @include flex-align(row, center);
         justify-content: center;
-        align-items: center;
         background-color: $main-color;
         border-color: $main-color;
         font-size: 2rem;

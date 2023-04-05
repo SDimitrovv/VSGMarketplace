@@ -21,8 +21,7 @@
         padding: 14px;
 
         .price {
-            display: flex;
-            flex-direction: column;
+            @include flex-align(column, flex-start);
 
             span {
                 line-height: 22px;
@@ -88,10 +87,9 @@
 
 .buttons {
     display: flex;
-    flex-direction: row;
+    align-self: flex-end;
     margin: 16px 0px;
     justify-content: center;
-    align-self: flex-end;
 
     button {
         cursor: pointer;
@@ -183,8 +181,6 @@
             }
 
             #modalFrameOne {
-                height: 90%;
-
                 #modalFrameTwo {
                     @include flex-align(column, flex-start);
                     width: 100%;

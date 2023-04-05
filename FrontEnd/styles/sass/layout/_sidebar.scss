@@ -25,8 +25,9 @@ aside {
         display: none;
         margin: 0px 14px;
         margin-top: 20px;
-        span{
-            margin-left:10px;
+
+        span {
+            margin-left: 10px;
         }
     }
 
@@ -35,18 +36,20 @@ aside {
         width: 100%;
 
         ul {
+            @include flex-align(column, flex-start);
             list-style: none;
-            display: flex;
-            flex-direction: column;
             height: 94%;
             margin-top: 7%;
 
+            li {
+                width: 100%;
+            }
+
             .navButton {
+                @include flex-align(row, center);
+                justify-content: flex-start;
                 margin: 6px 14px;
                 font-weight: 400;
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
                 background: $general-white;
                 color: $general-black;
                 height: 46px;

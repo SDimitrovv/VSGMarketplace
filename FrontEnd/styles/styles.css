@@ -59,14 +59,14 @@ body #root {
   }
 }
 header {
+  display: flex;
+  justify-content: space-between;
   background-color: #FFF;
   font-family: "Montserrat";
   box-sizing: border-box;
   width: 100%;
   padding: 12px 16px;
   height: 54px;
-  display: flex;
-  justify-content: space-between;
 }
 header #logo {
   width: 30px;
@@ -144,18 +144,25 @@ aside nav {
   width: 100%;
 }
 aside nav ul {
-  list-style: none;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  list-style: none;
   height: 94%;
   margin-top: 7%;
 }
+aside nav ul li {
+  width: 100%;
+}
 aside nav ul .navButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   margin: 6px 14px;
   font-weight: 400;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   background: #FFF;
   color: #000;
   height: 46px;
@@ -207,13 +214,15 @@ aside nav ul #logout {
   }
 }
 #landingMain {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
   margin: 0;
   padding: 0;
   height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   background: url("../images/home/landing-background.png") center fixed;
   background-repeat: no-repeat;
@@ -221,9 +230,10 @@ aside nav ul #logout {
 }
 #landingMain #loginButton {
   display: flex;
-  align-self: center;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
   background-color: #ED1C25;
   border-color: #ED1C25;
   font-size: 2rem;
@@ -273,6 +283,8 @@ aside nav ul #logout {
 .product .productContent .price {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 .product .productContent .price span {
   line-height: 22px;
@@ -371,10 +383,9 @@ aside nav ul #logout {
 
 .buttons {
   display: flex;
-  flex-direction: row;
+  align-self: flex-end;
   margin: 16px 0px;
   justify-content: center;
-  align-self: flex-end;
 }
 .buttons button {
   cursor: pointer;
@@ -417,6 +428,8 @@ aside nav ul #logout {
 #overlay #modalContent {
   display: flex;
   flex-direction: column;
+  align-items: space-between;
+  flex-wrap: wrap;
   height: 620px;
   width: 600px;
   background: #FFF;
@@ -473,6 +486,8 @@ aside nav ul #logout {
   #overlay #modalContent {
     display: flex;
     flex-direction: column;
+    align-items: space-between;
+    flex-wrap: wrap;
     height: 90%;
     width: 92%;
     background: #FFF;
@@ -482,9 +497,6 @@ aside nav ul #logout {
   #overlay #modalContent .closeModal {
     top: 1%;
     left: 92%;
-  }
-  #overlay #modalContent #modalFrameOne {
-    height: 90%;
   }
   #overlay #modalContent #modalFrameOne #modalFrameTwo {
     display: flex;
@@ -648,6 +660,8 @@ aside nav ul #logout {
 #addItemOverlay2 .modalContent {
   display: flex;
   flex-direction: column;
+  align-items: space-between;
+  flex-wrap: wrap;
   height: 700px;
   width: 600px;
   background: #FFF;
@@ -658,9 +672,9 @@ aside nav ul #logout {
 }
 #addItemOverlay .modalContent .row,
 #addItemOverlay2 .modalContent .row {
-  margin-top: 8%;
   display: flex;
   justify-content: center;
+  margin-top: 8%;
 }
 #addItemOverlay .modalContent .row .leftModal,
 #addItemOverlay2 .modalContent .row .leftModal {
@@ -834,6 +848,8 @@ aside nav ul #logout {
   #addItemOverlay2 .modalContent {
     display: flex;
     flex-direction: column;
+    align-items: space-between;
+    flex-wrap: wrap;
     height: 96%;
     width: 92%;
     background: #FFF;
@@ -916,7 +932,7 @@ aside nav ul #logout {
   flex-wrap: wrap;
   width: 97%;
   margin-top: 20px;
-  background: #DADCDD;
+  background: #dadcdd;
   border-radius: 10px;
   font-family: "Roboto";
   font-style: normal;
@@ -928,7 +944,7 @@ aside nav ul #logout {
 #pendingOrdersMain .pendingOrders,
 #myOrdersMain .pendingOrders {
   position: relative;
-  border: 1px solid #DADCDD;
+  border: 1px solid #dadcdd;
   background-color: #FFF;
   border-radius: 10px;
   font-weight: 400;

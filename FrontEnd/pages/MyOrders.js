@@ -69,7 +69,7 @@ const MyOrders = () => {
 <script src="src/orders.js"></script>
 `;
     ordersApp();
-    setPageScripts(['src/ordersApp.js']);
+    // setPageScripts(['src/ordersApp.js']);
 };
 
 export default MyOrders;

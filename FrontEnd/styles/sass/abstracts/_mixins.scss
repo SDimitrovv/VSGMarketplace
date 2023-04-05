@@ -45,8 +45,7 @@
 }
 
 @mixin modal($height, $width) {
-    display: flex;
-    flex-direction: column;
+    @include flex-align(column, space-between);
     height: $height;
     width: $width;
     background: $general-white;

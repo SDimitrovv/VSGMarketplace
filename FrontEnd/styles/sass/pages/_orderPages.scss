@@ -8,9 +8,9 @@
         @include flex-align(row, center);
         width: 97%;
         margin-top: 20px;
-        background: #DADCDD;
+        background: #dadcdd;
         border-radius: 10px;
-        font-family: 'Roboto';
+        font-family: "Roboto";
         font-style: normal;
         font-weight: 700;
         font-size: 18px;
@@ -20,7 +20,7 @@
 
     .pendingOrders {
         position: relative;
-        border: 1px solid #DADCDD;
+        border: 1px solid #dadcdd;
         background-color: $general-white;
         border-radius: 10px;
         font-weight: 400;
@@ -49,7 +49,6 @@
         .orderStatus {
             display: flex;
             position: relative;
-
 
             .cancelOrder {
                 cursor: pointer;
@@ -187,31 +186,31 @@
             }
 
             .nameColumn::before {
-                content: 'Name:   ';
+                content: "Name:   ";
             }
 
             .codeColumn::before {
-                content: 'Code   ';
+                content: "Code   ";
             }
 
             .qtyColumn::before {
-                content: 'Qty   ';
+                content: "Qty   ";
             }
 
             .priceColumn::before {
-                content: 'Price   ';
+                content: "Price   ";
             }
 
             .orderedByColumn::before {
-                content: 'Ordered by:   ';
+                content: "Ordered by:   ";
             }
 
             .orderDateColumn::before {
-                content: 'Order date:   ';
+                content: "Order date:   ";
             }
 
             .orderStatus span::before {
-                content: 'Status:   ';
+                content: "Status:   ";
             }
 
             .completeButton {

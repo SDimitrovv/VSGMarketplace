@@ -3,10 +3,10 @@ import Inventory from "../pages/Inventory.js";
 import Marketplace from "../pages/Marketplace.js";
 import MyOrders from "../pages/MyOrders.js";
 import PendingOrders from "../pages/PendingOrders.js";
-import { navStyling } from "./global.js";
-import { hamburgerApp } from "./headerApp.js";
+import { headerUpdate, navStyling } from "./global.js";
+import { hamburgerApp } from "./hamburger.js";
 
-const head = document.querySelector('head');
+const head = document.querySelector("head");
 const routes = {
   "/": Home,
   marketplace: Marketplace,
@@ -22,23 +22,25 @@ const navigateTo = (url) => {
 };
 
 const router = () => {
-  const path = window.location.hash.replace('#', '') || '/';
+  const path = window.location.hash.replace("#", "") || "/";
+  headerUpdate(path);
   const page = routes[path];
-  head.querySelectorAll('script').forEach(e => e.remove());
+  head.querySelectorAll("script").forEach((e) => e.remove());
   document.querySelector("header").style.display = "flex";
-  document.querySelector('#closeMenu').style.display = "none";
+  document.querySelector("#closeMenu").style.display = "none";
 
   if (window.innerWidth < 769) {
     document.querySelector("#hamburger").style.display = "block";
   }
+  
   page();
 
-  if (path !== '/') {
+  if (path !== "/") {
     hamburgerApp();
   }
 
   handleSPALinks();
-  navStyling();
+  navStyling(path);
 };
 
 export const handleSPALinks = () => {
@@ -65,12 +67,12 @@ window.addEventListener("load", () => {
 
 window.addEventListener("popstate", router);
 
-window.setPageScripts = (scripts) => {
-  scripts.forEach((s) => {
-    const scriptEl = document.createElement('script');
-    scriptEl.setAttribute('src', s);
-    scriptEl.setAttribute('type', 'module');
-    scriptEl.setAttribute('defer', '');
-    head.appendChild(scriptEl);
-  })
-}
+// window.setPageScripts = (scripts) => {
+//   scripts.forEach((s) => {
+//     const scriptEl = document.createElement('script');
+//     scriptEl.setAttribute('src', s);
+//     scriptEl.setAttribute('type', 'module');
+//     scriptEl.setAttribute('defer', '');
+//     head.appendChild(scriptEl);
+//   })
+// }

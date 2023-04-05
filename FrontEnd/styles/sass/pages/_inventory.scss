@@ -109,9 +109,9 @@
         overflow-x: auto;
 
         .row {
-            margin-top: 8%;
             display: flex;
             justify-content: center;
+            margin-top: 8%;
 
             .leftModal {
                 @include flex-align(column, flex-start);
