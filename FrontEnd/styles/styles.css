@@ -15,10 +15,10 @@ img {
 }
 
 .closeModal {
+  cursor: pointer;
   position: absolute;
   left: 94%;
   top: 2%;
-  cursor: pointer;
   background: none;
 }
 
@@ -531,13 +531,12 @@ aside nav ul #logout {
 #inventoryMain {
   flex-direction: column;
 }
-
-#searchSpace {
+#inventoryMain #searchSpace {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
 }
-#searchSpace #input {
+#inventoryMain #searchSpace #input {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -545,15 +544,15 @@ aside nav ul #logout {
   width: 20%;
   border-bottom: 1px solid #000;
 }
-#searchSpace #input input {
+#inventoryMain #searchSpace #input input {
   outline: none;
   padding-bottom: 2px;
 }
-#searchSpace #input svg {
+#inventoryMain #searchSpace #input svg {
   padding-bottom: 6px;
   margin-right: 12px;
 }
-#searchSpace button {
+#inventoryMain #searchSpace button {
   cursor: pointer;
   margin-left: 20px;
   width: 120px;
@@ -563,56 +562,54 @@ aside nav ul #logout {
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
 }
-#searchSpace button svg {
+#inventoryMain #searchSpace button svg {
   margin-right: 6px;
 }
-
-#tableBorder {
+#inventoryMain #tableBorder {
   border: 1px solid #b3b3b3;
   border-radius: 4px;
   margin-top: 40px;
   height: calc(100% - 100px);
   overflow-x: auto;
 }
-#tableBorder table {
+#inventoryMain #tableBorder table {
   position: relative;
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
   text-align: left;
 }
-#tableBorder table tr th {
+#inventoryMain #tableBorder table tr th {
   padding: 22px;
   border-bottom: 1px solid #b3b3b3;
   padding-left: 20px;
 }
-#tableBorder table tr td {
+#inventoryMain #tableBorder table tr td {
   padding: 16px;
   border-bottom: 1px solid #b3b3b3;
   padding-left: 20px;
 }
-#tableBorder table th,
-#tableBorder table td {
+#inventoryMain #tableBorder table th,
+#inventoryMain #tableBorder table td {
   padding-left: 20px;
 }
-#tableBorder table th a,
-#tableBorder table td a {
+#inventoryMain #tableBorder table th a,
+#inventoryMain #tableBorder table td a {
   margin: 8px;
 }
-#tableBorder table .editDelete {
+#inventoryMain #tableBorder table .editDelete {
   position: relative;
   width: 60px;
 }
-#tableBorder table .editDelete .edit {
+#inventoryMain #tableBorder table .editDelete .edit {
   position: relative;
   cursor: pointer;
 }
-#tableBorder table .editDelete .delete {
+#inventoryMain #tableBorder table .editDelete .delete {
   position: relative;
   cursor: pointer;
 }
-
-.removeContainer {
+#inventoryMain .removeContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -630,8 +627,7 @@ aside nav ul #logout {
   border-radius: 4px;
   z-index: 99;
 }
-
-.removeContainer::before {
+#inventoryMain .removeContainer::before {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -708,7 +704,7 @@ aside nav ul #logout {
   border-bottom: 1px solid #9a9a9a;
   outline: none;
   margin-bottom: 30px;
-  height: 38px;
+  height: 30px;
   width: 240px;
 }
 #addItemOverlay .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal select::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal select::-moz-placeholder {
@@ -724,7 +720,7 @@ aside nav ul #logout {
 }
 #addItemOverlay .modalContent .row .leftModal textarea,
 #addItemOverlay2 .modalContent .row .leftModal textarea {
-  height: 100px;
+  height: 90px;
 }
 #addItemOverlay .modalContent .row .rightModal,
 #addItemOverlay2 .modalContent .row .rightModal {
@@ -979,10 +975,6 @@ aside nav ul #logout {
 #myOrdersMain .pendingOrders .orderStatus .cancelOrder {
   cursor: pointer;
   margin-left: 26px;
-}
-#pendingOrdersMain .pendingOrders .orderStatus .cancelOrder svg,
-#myOrdersMain .pendingOrders .orderStatus .cancelOrder svg {
-  pointer-events: none;
 }
 #pendingOrdersMain .pendingOrders .cancelOrderContainer,
 #myOrdersMain .pendingOrders .cancelOrderContainer {

@@ -1,4 +1,4 @@
-import { addButtons, closeModal } from "./global.js";
+import { addButtons, closeContainerHandler, closeModal, closeModalHandler } from "./global.js";
 
 export const inventoryApp = () => {
     closeModal();
@@ -18,13 +18,15 @@ export const inventoryApp = () => {
             const el = e.target.parentElement;
             el.appendChild(div);
             addButtons();
+            closeContainerHandler(div);
         });
     });
 
     document.querySelector('#addButton').addEventListener('click', e => {
         e.preventDefault();
-
-        document.querySelector('#addItemOverlay').style.display = 'flex';
+        const overlay = document.querySelector('#addItemOverlay')
+        overlay.style.display = 'flex';
+        closeModalHandler(overlay.firstElementChild);
     });
 
     const categorySelect = document.querySelectorAll('.category');
@@ -77,9 +79,10 @@ export const inventoryApp = () => {
     document.querySelectorAll('.edit').forEach(b =>
         b.addEventListener('click', e => {
             e.preventDefault();
-
             imagePreview[1].src = '/images/marketplace/product-image.png';
-            document.querySelector('#addItemOverlay2').style.display = 'flex';
+            const overlay = document.querySelector('#addItemOverlay2')
+            overlay.style.display = 'flex';
+            closeModalHandler(overlay.firstElementChild);
         })
     )
 }

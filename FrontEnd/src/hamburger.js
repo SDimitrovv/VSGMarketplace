@@ -1,4 +1,4 @@
-export const hamburgerApp = () => {
+export const hamburgerHandler = () => {
     const hamburger = document.querySelector("#hamburger");
     const closeMenu = document.querySelector("#closeMenu");
     const main = document.querySelector("main");

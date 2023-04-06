@@ -1,102 +1,102 @@
 #inventoryMain {
     flex-direction: column;
-}
 
-#searchSpace {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
+    #searchSpace {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
 
-    #input {
-        @include flex-align(row, flex-end);
-        width: 20%;
-        border-bottom: 1px solid #000;
+        #input {
+            @include flex-align(row, flex-end);
+            width: 20%;
+            border-bottom: 1px solid #000;
 
-        input {
-            outline: none;
-            padding-bottom: 2px;
+            input {
+                outline: none;
+                padding-bottom: 2px;
+            }
+
+            svg {
+                padding-bottom: 6px;
+                margin-right: 12px;
+            }
         }
 
-        svg {
-            padding-bottom: 6px;
-            margin-right: 12px;
+        button {
+            cursor: pointer;
+            margin-left: 20px;
+            width: 120px;
+            height: 36px;
+            color: $general-white;
+            background: $add-button;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+            border-radius: 4px;
+
+            svg {
+                margin-right: 6px;
+            }
         }
     }
 
-    button {
-        cursor: pointer;
-        margin-left: 20px;
-        width: 120px;
-        height: 36px;
-        color: $general-white;
-        background: $add-button;
-        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    #tableBorder {
+        border: 1px solid $border-gray;
         border-radius: 4px;
+        margin-top: 40px;
+        height: calc(100% - 100px);
+        overflow-x: auto;
 
-        svg {
-            margin-right: 6px;
-        }
-    }
-}
-
-#tableBorder {
-    border: 1px solid $border-gray;
-    border-radius: 4px;
-    margin-top: 40px;
-    height: calc(100% - 100px);
-    overflow-x: auto;
-
-    table {
-        position: relative;
-        width: 100%;
-        border-spacing: 0;
-        border-collapse: collapse;
-        text-align: left;
-
-        tr th {
-            padding: 22px;
-            border-bottom: 1px solid $border-gray;
-            padding-left: 20px;
-        }
-
-        tr td {
-            padding: 16px;
-            border-bottom: 1px solid $border-gray;
-            padding-left: 20px;
-        }
-
-        th,
-        td {
-            padding-left: 20px;
-
-            a {
-                margin: 8px;
-            }
-        }
-
-        .editDelete {
+        table {
             position: relative;
-            width: 60px;
+            width: 100%;
+            border-spacing: 0;
+            border-collapse: collapse;
+            text-align: left;
 
-            .edit {
-                position: relative;
-                cursor: pointer;
+            tr th {
+                padding: 22px;
+                border-bottom: 1px solid $border-gray;
+                padding-left: 20px;
             }
 
-            .delete {
+            tr td {
+                padding: 16px;
+                border-bottom: 1px solid $border-gray;
+                padding-left: 20px;
+            }
+
+            th,
+            td {
+                padding-left: 20px;
+
+                a {
+                    margin: 8px;
+                }
+            }
+
+            .editDelete {
                 position: relative;
-                cursor: pointer;
+                width: 60px;
+
+                .edit {
+                    position: relative;
+                    cursor: pointer;
+                }
+
+                .delete {
+                    position: relative;
+                    cursor: pointer;
+                }
             }
         }
     }
-}
 
-.removeContainer {
-    @include pop-up(150%, -295%);
-}
+    .removeContainer {
+        @include pop-up(150%, -295%);
+    }
 
-.removeContainer::before {
-    @include triangle(70%);
+    .removeContainer::before {
+        @include triangle(70%);
+    }
 }
 
 #addItemOverlay,
@@ -138,7 +138,7 @@
                     border-bottom: 1px solid $underline-gray;
                     outline: none;
                     margin-bottom: 30px;
-                    height: 38px;
+                    height: 30px;
                     width: 240px;
                 }
 
@@ -149,7 +149,7 @@
                 }
 
                 textarea {
-                    height: 100px;
+                    height: 90px;
                 }
             }
 

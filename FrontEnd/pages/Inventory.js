@@ -123,13 +123,13 @@ const Inventory = () => {
 </div>
 <div id="addItemOverlay">
 <form class="modalContent">
-    <button class="closeModal">
+    <a class="closeModal">
         <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M17.7305 1.75977L10.7578 8.5L17.7305 15.2402L15.9727 16.9395L9 10.1992L2.02734 16.9395L0.269531 15.2402L7.24219 8.5L0.269531 1.75977L2.02734 0.0605469L9 6.80078L15.9727 0.0605469L17.7305 1.75977Z"
                 fill="black" />
         </svg>
-    </button>
+    </a>
     <div class="row">
         <div class="leftModal">
             <h2>Add New Item</h2>
@@ -141,6 +141,7 @@ const Inventory = () => {
                 <option value="laptops">Laptops</option>
             </select>
             <input type="number" placeholder="Qty For Sale">
+            <input type="number" placeholder="Sale Price">
             <input type="number" required placeholder="Qty *">
         </div>
         <div class="rightModal">
@@ -156,13 +157,13 @@ const Inventory = () => {
 </div>
 <div id="addItemOverlay2">
 <form class="modalContent">
-    <button class="closeModal">
+    <a class="closeModal">
         <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M17.7305 1.75977L10.7578 8.5L17.7305 15.2402L15.9727 16.9395L9 10.1992L2.02734 16.9395L0.269531 15.2402L7.24219 8.5L0.269531 1.75977L2.02734 0.0605469L9 6.80078L15.9727 0.0605469L17.7305 1.75977Z"
                 fill="black" />
         </svg>
-    </button>
+    </a>
     <div class="row">
         <div class="leftModal">
             <h2>Modify Item</h2>
@@ -177,6 +178,7 @@ This is the description of the product.
                 <option value="laptops" selected>Laptops</option>
             </select>
             <input type="number" placeholder="Qty For Sale" value="0">
+            <input type="number" placeholder="Sale Price" value="0">
             <input type="number" required placeholder="Qty *" value="2">
         </div>
         <div class="rightModal">

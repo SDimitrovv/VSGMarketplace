@@ -37,17 +37,49 @@ export function addButtons() {
 }
 
 export function closeModal() {
-    document.querySelectorAll(".closeModal").forEach((b) =>
-        b.addEventListener("click", (e) => {
-            e.preventDefault();
-            let overlay = document.querySelector("#overlay");
-            if (!overlay) {
-                overlay = document.querySelector("#addItemOverlay");
-                const overlay2 = document.querySelector("#addItemOverlay2");
-                overlay2.style.display = "none";
-            }
+    document.querySelectorAll(".closeModal")
+        .forEach((b) => b.addEventListener("click", closing));
+}
 
-            overlay.style.display = "none";
-        })
-    );
+function closing(e) {
+    e?.preventDefault();
+    let overlay = document.querySelector("#overlay");
+    if (!overlay) {
+        overlay = document.querySelector("#addItemOverlay");
+        const overlay2 = document.querySelector("#addItemOverlay2");
+        overlay2.style.display = "none";
+    }
+
+    overlay.style.display = "none";
+};
+
+export function closeContainerHandler(container) {
+    container.querySelector('p').style.pointerEvents = 'none';
+    setTimeout(() => {
+        document.addEventListener("click", closeContainerClick);
+    }, "100");
+
+    function closeContainerClick(e) {
+        const isClickInsideContainer = container === e.target;
+        if (!isClickInsideContainer) {
+            container.remove();
+            document.removeEventListener("click", closeContainerClick);
+        }
+    };
+}
+
+export function closeModalHandler(modal) {
+    console.log(modal);
+    modal.querySelector('div').style.pointerEvents = 'none';
+    setTimeout(() => {
+        document.addEventListener("click", closeModalClick)
+    }, "100");
+
+    function closeModalClick(e) {
+        const isClickInsideModal = modal === e.target;
+        if (!isClickInsideModal) {
+            closing();
+            document.removeEventListener("click", closeModalClick);
+        }
+    };
 }

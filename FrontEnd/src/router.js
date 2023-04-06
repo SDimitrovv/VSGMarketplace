@@ -4,7 +4,7 @@ import Marketplace from "../pages/Marketplace.js";
 import MyOrders from "../pages/MyOrders.js";
 import PendingOrders from "../pages/PendingOrders.js";
 import { headerUpdate, navStyling } from "./global.js";
-import { hamburgerApp } from "./hamburger.js";
+import { hamburgerHandler } from "./hamburger.js";
 
 const head = document.querySelector("head");
 const routes = {
@@ -36,7 +36,7 @@ const router = () => {
   page();
 
   if (path !== "/") {
-    hamburgerApp();
+    hamburgerHandler();
   }
 
   handleSPALinks();

@@ -1,4 +1,4 @@
-import { addButtons } from "./global.js";
+import { addButtons, closeContainerHandler } from "./global.js";
 
 export const ordersApp = () => {
     document.querySelectorAll(".cancelOrder").forEach((b) => {
@@ -15,6 +15,7 @@ export const ordersApp = () => {
                 `;
             e.target.parentElement.appendChild(div);
             addButtons();
+            closeContainerHandler(div);
         });
     });
 
