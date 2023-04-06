@@ -32,7 +32,7 @@ const router = () => {
   if (window.innerWidth < 769) {
     document.querySelector("#hamburger").style.display = "block";
   }
-  
+
   page();
 
   if (path !== "/") {

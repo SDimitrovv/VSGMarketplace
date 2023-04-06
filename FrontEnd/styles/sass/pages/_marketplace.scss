@@ -13,6 +13,11 @@
 
     .productButton {
         cursor: pointer;
+        align-self: center;
+    }
+
+    img {
+        max-height: 150px;
     }
 
     .productContent {
@@ -130,6 +135,14 @@
 
         .closeModal {
             background: none;
+        }
+
+        #modalImage {
+            align-self: center;
+
+            img {
+                max-height: 320px;
+            }
         }
 
         #modalFrameOne {

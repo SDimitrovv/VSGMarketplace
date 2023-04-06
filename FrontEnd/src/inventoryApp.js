@@ -1,7 +1,15 @@
 import { addButtons, closeContainerHandler, closeModal, closeModalHandler } from "./global.js";
+import { addProduct } from "../components/addProductModal.js";
+import { editProduct } from "../components/editProductModal.js";
+import { loadProducts } from "./itemsService.js";
+import { createRow } from "../components/createRow.js";
 
-export const inventoryApp = () => {
-    closeModal();
+export const inventoryApp = async () => {
+    const products = await loadProducts();
+    products.forEach(p => {
+        createRow(p.id, p.title, p.image, p.category, p.price);
+    })
+
     const div = document.createElement('div');
     div.className = 'removeContainer';
     div.innerHTML = `
@@ -11,6 +19,15 @@ export const inventoryApp = () => {
         <button class='no'>No</button> 
     </div>
     `;
+
+    document.querySelector('#addButton').addEventListener('click', e => {
+        e.preventDefault();
+        addProduct();
+        const overlay = document.querySelector('#addItemOverlay')
+        overlay.style.display = 'flex';
+        // closeModalHandler(overlay.firstElementChild);
+        closeModal();
+    });
 
     document.querySelectorAll('.delete').forEach(b => {
         b.addEventListener('click', (e) => {
@@ -22,21 +39,14 @@ export const inventoryApp = () => {
         });
     });
 
-    document.querySelector('#addButton').addEventListener('click', e => {
-        e.preventDefault();
-        const overlay = document.querySelector('#addItemOverlay')
-        overlay.style.display = 'flex';
-        closeModalHandler(overlay.firstElementChild);
-    });
-
-    const categorySelect = document.querySelectorAll('.category');
-    categorySelect.forEach(c =>
-        c.addEventListener('change', e => {
-            if (e.target.value !== "") {
-                c.style.color = '#000';
-            }
-        })
-    );
+    // const categorySelect = document.querySelectorAll('.category');
+    // categorySelect.forEach(c =>
+    //     c.addEventListener('change', e => {
+    //         if (e.target.value !== "") {
+    //             c.style.color = '#000';
+    //         }
+    //     })
+    // );
 
     const imagePreview = document.querySelectorAll('.currentImg');
     document.querySelectorAll('.uploadImg').forEach(b =>
@@ -63,26 +73,29 @@ export const inventoryApp = () => {
         })
     );
 
-    const deleteButtons = document.querySelectorAll('.deleteImg');
-    deleteButtons[0].addEventListener('click', e => {
-        e.preventDefault();
+    // const deleteButtons = document.querySelectorAll('.deleteImg');
+    // deleteButtons[0].addEventListener('click', e => {
+    //     e.preventDefault();
 
-        imagePreview[0].src = '/images/inventory/no-image-placeholder.png';
-    })
+    //     imagePreview[0].src = '/images/inventory/no-image-placeholder.png';
+    // })
 
-    deleteButtons[1].addEventListener('click', e => {
-        e.preventDefault();
+    // deleteButtons[1].addEventListener('click', e => {
+    //     e.preventDefault();
 
-        imagePreview[1].src = '/images/inventory/no-image-placeholder.png';
-    })
+    //     imagePreview[1].src = '/images/inventory/no-image-placeholder.png';
+    // })
 
     document.querySelectorAll('.edit').forEach(b =>
         b.addEventListener('click', e => {
             e.preventDefault();
-            imagePreview[1].src = '/images/marketplace/product-image.png';
+            const id = e.target.parentElement.parentElement.parentElement.id
+            editProduct(id);
+            // imagePreview[1].src = '/images/marketplace/product-image.png';
             const overlay = document.querySelector('#addItemOverlay2')
             overlay.style.display = 'flex';
-            closeModalHandler(overlay.firstElementChild);
+            // closeModalHandler(overlay.firstElementChild);
+            closeModal();
         })
     )
 }

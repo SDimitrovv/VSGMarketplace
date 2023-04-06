@@ -274,6 +274,10 @@ aside nav ul #logout {
 }
 .product .productButton {
   cursor: pointer;
+  align-self: center;
+}
+.product img {
+  max-height: 150px;
 }
 .product .productContent {
   display: flex;
@@ -441,6 +445,12 @@ aside nav ul #logout {
 }
 #overlay #modalContent .closeModal {
   background: none;
+}
+#overlay #modalContent #modalImage {
+  align-self: center;
+}
+#overlay #modalContent #modalImage img {
+  max-height: 320px;
 }
 #overlay #modalContent #modalFrameOne {
   display: flex;

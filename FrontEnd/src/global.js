@@ -43,6 +43,8 @@ export function closeModal() {
 
 function closing(e) {
     e?.preventDefault();
+    e.target.parentElement.remove();
+    
     let overlay = document.querySelector("#overlay");
     if (!overlay) {
         overlay = document.querySelector("#addItemOverlay");
@@ -69,17 +71,17 @@ export function closeContainerHandler(container) {
 }
 
 export function closeModalHandler(modal) {
-    console.log(modal);
-    modal.querySelector('div').style.pointerEvents = 'none';
-    setTimeout(() => {
-        document.addEventListener("click", closeModalClick)
-    }, "100");
+    // modal.querySelector('div').style.pointerEvents = 'none';
+    // setTimeout(() => {
+    //     document.addEventListener("click", closeModalClick)
+    // }, "100");
 
-    function closeModalClick(e) {
-        const isClickInsideModal = modal === e.target;
-        if (!isClickInsideModal) {
-            closing();
-            document.removeEventListener("click", closeModalClick);
-        }
-    };
+    // function closeModalClick(e) {
+    //     const isClickInsideModal = modal === e.target;
+    //     if (!isClickInsideModal) {
+    //         modal.remove();
+    //         closing();
+    //         document.removeEventListener("click", closeModalClick);
+    //     }
+    // };
 }

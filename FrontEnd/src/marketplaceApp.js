@@ -1,7 +1,13 @@
 import { addButtons, closeContainerHandler, closeModalHandler, closeModal } from "./global.js";
+import { loadProducts } from "./itemsService.js";
+import { cardComponent } from "../components/cardComponent.js";
+import { createModal } from "../components/createModal.js";
 
-export const marketplaceApp = () => {
-    closeModal();
+export const marketplaceApp = async () => {
+    const products = await loadProducts();
+    products.forEach(p => {
+        cardComponent(p.id, p.image, p.category, p.price);
+    })
 
     const div = document.createElement('div');
     div.className = 'buyContainer';
@@ -23,13 +29,15 @@ export const marketplaceApp = () => {
     })
 
     document.querySelectorAll('.productButton').forEach(b => {
-        b.addEventListener('click', (e) => {
+        b.addEventListener('click', async (e) => {
             e.preventDefault();
+            const id = e.target.parentElement.id
+            const modal = await createModal(id);
             document.querySelector('#overlay').style.display = 'flex';
-            document.querySelector('#modalImage').style.pointerEvents = 'none';
-            document.querySelector('#modalFrameOne').style.pointerEvents = 'none';
-            const modal = document.querySelector('#modalContent');
-            closeModalHandler(modal);
+            modal.querySelector('#modalImage').style.pointerEvents = 'none';
+            modal.querySelector('#modalFrameOne').style.pointerEvents = 'none';
+            // closeModalHandler(modal);
+            closeModal();
         })
     });
 }
