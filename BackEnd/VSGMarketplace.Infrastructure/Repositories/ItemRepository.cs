@@ -4,19 +4,17 @@ using CloudinaryDotNet.Actions;
 using VSGMarketplace.Application.Models.ItemModels.DTOs;
 using VSGMarketplace.Application.Models.ItemModels.Interfaces;
 using VSGMarketplace.Infrastructure.Context;
+using System.Data.SqlClient;
+using VSGMarketplace.Application.Helpers;
 
 namespace VSGMarketplace.Infrastructure.Repositories
 {
     public class ItemRepository : IItemRepository
     {
-        private readonly DapperContext _context;
-
         private readonly Cloudinary _cloudinary;
 
-        public ItemRepository(DapperContext context)
+        public ItemRepository(IDapperContext dapperContext) : base(dapperContext)
         {
-            _context = context;
-
             var account = new Account(
                 "dwmtkp1d1",
                 "983881433641766",
@@ -30,8 +28,8 @@ namespace VSGMarketplace.Infrastructure.Repositories
         {
             var query = "SELECT i.*, c.Type, l.City, p.Image FROM Items i LEFT JOIN Categories c ON i.Id = c.ItemId LEFT JOIN Locations l ON i.Id = l.ItemId LEFT JOIN Pictures p ON i.Id = p.ItemId";
 
-            using var connection = _context.CreateConnection();
-            var items = await connection.QueryAsync<GetItemDto>(query);
+
+            var items = await Connection.QueryAsync<GetItemDto>(query);
 
             return items;
         }
@@ -40,8 +38,7 @@ namespace VSGMarketplace.Infrastructure.Repositories
         {
             var query = "SELECT i.*, c.Type, l.City, p.Image FROM Items i LEFT JOIN Categories c ON i.Id = c.ItemId LEFT JOIN Locations l ON i.Id = l.ItemId LEFT JOIN Pictures p ON i.Id = p.ItemId WHERE id = @Id";
 
-            using var connection = _context.CreateConnection();
-            var item = await connection.QueryFirstAsync<GetItemDto>(query, new { Id = id });
+            var item = await Connection.QueryFirstAsync<GetItemDto>(query, new { Id = id });
 
             return item;
         }
@@ -52,8 +49,7 @@ namespace VSGMarketplace.Infrastructure.Repositories
                           VALUES (@FullName, @Price, @Quantity, @QuantityForSale, @Description);
                           SELECT CAST(SCOPE_IDENTITY() AS int)";
 
-            using var connection = _context.CreateConnection();
-            var itemId = await connection.QuerySingleAsync<int>(query, item);
+            var itemId = await Connection.QuerySingleAsync<int>(query, item);
 
             var categoryQuery = "INSERT INTO Categories (Type, ItemId) VALUES (@Type, @ItemId)";
             var locationQuery = "INSERT INTO Locations (City, ItemId) VALUES (@City, @ItemId)";
@@ -61,12 +57,12 @@ namespace VSGMarketplace.Infrastructure.Repositories
 
             if (!string.IsNullOrWhiteSpace(item.Type))
             {
-                await connection.ExecuteAsync(categoryQuery, new { Type = item.Type, ItemId = itemId });
+                await Connection.ExecuteAsync(categoryQuery, new { Type = item.Type, ItemId = itemId });
             }
 
             if (!string.IsNullOrWhiteSpace(item.City))
             {
-                await connection.ExecuteAsync(locationQuery, new { City = item.City, ItemId = itemId });
+                await Connection.ExecuteAsync(locationQuery, new { City = item.City, ItemId = itemId });
             }
 
             if (item.Image.Length > 0)
@@ -78,7 +74,7 @@ namespace VSGMarketplace.Infrastructure.Repositories
                 };
                 var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-                await connection.ExecuteAsync(pictureQuery, new { Image = uploadResult.SecureUrl.AbsoluteUri, ItemId = itemId });
+                await Connection.ExecuteAsync(pictureQuery, new { Image = uploadResult.SecureUrl.AbsoluteUri, ItemId = itemId });
             }
 
             //var newItem = await GetById(itemId);
@@ -89,12 +85,45 @@ namespace VSGMarketplace.Infrastructure.Repositories
 
         public async Task Update(int id, GetItemDto item)
         {
-            throw new NotImplementedException();
+
         }
 
         public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            //    var getItemQuery = "SELECT Image FROM Pictures WHERE ItemId = @ItemId";
+
+            //    var deleteItemQuery = "DELETE FROM Items WHERE Id = @Id";
+            //    var deleteCategoryQuery = "DELETE FROM Categories WHERE ItemId = @ItemId";
+            //    var deleteLocationQuery = "DELETE FROM Locations WHERE ItemId = @ItemId";
+            //    var deletePictureQuery = "DELETE FROM Pictures WHERE ItemId = @ItemId";
+
+            //    await using var connection = (SqlConnection)_context.CreateConnection();
+            //    await using var transaction = await connection.BeginTransactionAsync();
+
+            //    try
+            //    {
+            //        var imageResult = await connection.QuerySingleOrDefaultAsync<string>(getItemQuery, new { ItemId = id });
+
+            //        if (imageResult != null)
+            //        {
+            //            var publicId = imageResult.Split('/').Last().Split('.').First();
+            //            var deleteParams = new DeletionParams(publicId);
+            //            await _cloudinary.DestroyAsync(deleteParams);
+            //        }
+
+            //        await connection.ExecuteAsync(deleteCategoryQuery, new { ItemId = id }, transaction);
+            //        await connection.ExecuteAsync(deleteLocationQuery, new { ItemId = id }, transaction);
+            //        await connection.ExecuteAsync(deletePictureQuery, new { ItemId = id }, transaction);
+            //        await connection.ExecuteAsync(deleteItemQuery, new { Id = id }, transaction);
+
+            //        await transaction.CommitAsync();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        await transaction.RollbackAsync();
+
+            //        throw;
+            //    }
         }
     }
 }

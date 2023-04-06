@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using VSGMarketplace.Domain.Enums;
 
 namespace VSGMarketplace.Domain.Entities
 {
@@ -7,9 +8,9 @@ namespace VSGMarketplace.Domain.Entities
     {
         public int Quantity { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
 
-        public string Status { get; set; }
+        public Status Status { get; set; } = Status.Pending;
 
         public int ItemId { get; set; }
     }
