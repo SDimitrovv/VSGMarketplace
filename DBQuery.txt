@@ -1,0 +1,35 @@
+CREATE DATABASE Marketplace
+
+GO
+
+USE Marketplace
+
+GO
+
+CREATE TABLE Products(
+	[Id] INT PRIMARY KEY IDENTITY(1,1),
+	[FullName] VARCHAR(100) NOT NULL,
+	[Price] DECIMAL(10,2) NOT NULL,
+	[Quantity] INT NOT NULL,
+	[QuantityForSale] INT NOT NULL DEFAULT 0,
+	[Description] VARCHAR(1000) NULL,
+	[Location] VARCHAR(100) NOT NULL,
+	[Category] VARCHAR(100) NOT NULL
+)
+
+CREATE TABLE Pictures(
+	[Id] INT PRIMARY KEY IDENTITY(1,1),
+	[ImageUrl] VARCHAR(1000) NOT NULL, 
+	[ImagePublicId] VARCHAR(1000) NOT NULL,
+	[ProductId] INT NOT NULL FOREIGN KEY REFERENCES Products(Id)
+)
+
+CREATE TABLE Orders(
+	[Id] INT PRIMARY KEY IDENTITY(1,1),
+	[Quantity] INT NOT NULL,
+	[Date] DATETIME NOT NULL,
+	[Status] VARCHAR(10) NOT NULL,
+	[ProductId] INT NOT NULL FOREIGN KEY REFERENCES Products(Id)
+)
+
+
