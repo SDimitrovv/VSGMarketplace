@@ -1,77 +1,87 @@
+//Marketplace page with the card items
+
 #marketplaceMain {
     @include flex-align(row, flex-start);
+    flex-wrap: wrap;
     align-content: flex-start;
     justify-content: space-evenly;
-}
 
-.product {
-    @include flex-align(column, space-between);
-    margin: 20px 10px;
-    width: 280px;
-    border-radius: 5px;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    //Card item
 
-    .productButton {
-        cursor: pointer;
-        align-self: center;
-    }
+    .product {
+        @include flex-align(column, space-between);
+        margin: 20px 10px;
+        width: 280px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
 
-    img {
-        max-height: 150px;
-    }
-
-    .productContent {
-        display: flex;
-        justify-content: space-between;
-        padding: 14px;
-
-        .price {
-            @include flex-align(column, flex-start);
-
-            span {
-                line-height: 22px;
-                font-weight: 600;
-            }
-
-            small {
-                font-size: 12px;
-            }
+        .productButton {
+            cursor: pointer;
+            align-self: center;
         }
 
-        form {
-            display: flex;
-            position: relative;
+        img {
+            max-height: 150px;
+        }
 
-            .quantity {
+        .productContent {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px;
+
+            .price {
                 @include flex-align(column, flex-start);
 
                 span {
-                    font-size: 10px;
-                    color: $border-gray;
+                    line-height: 22px;
+                    font-weight: 600;
                 }
 
-                select {
-                    cursor: pointer;
-                    border-bottom: 1px solid #000;
+                small {
+                    font-size: 12px;
                 }
             }
 
-            .buyButton {
-                cursor: pointer;
-                background: none;
-                width: 31px;
-                height: 31px;
-                margin-left: 4px;
+            form {
+                display: flex;
+                position: relative;
+
+                .quantity {
+                    @include flex-align(column, flex-start);
+
+                    span {
+                        font-size: 10px;
+                        color: $border-gray;
+                    }
+
+                    select {
+                        cursor: pointer;
+                        border-bottom: 1px solid #000;
+                    }
+                }
+
+                .buyButton {
+                    cursor: pointer;
+                    background: none;
+                    width: 31px;
+                    height: 31px;
+                    margin-left: 4px;
+                }
             }
         }
+    }
+
+    .buyContainer {
+        @include pop-up(140%, -160%);
+    }
+
+    .buyContainer::before {
+        @include triangle(48%);
     }
 }
 
 @media screen and (max-width: 768px) {
     #marketplaceMain {
-        width: 80%;
-        margin: 16px 0px;
-
         .buyContainer {
             @include pop-up(140%, -330%);
         }
@@ -82,42 +92,7 @@
     }
 }
 
-.buyContainer {
-    @include pop-up(140%, -160%);
-}
-
-.buyContainer::before {
-    @include triangle(48%);
-}
-
-.buttons {
-    display: flex;
-    align-self: flex-end;
-    margin: 16px 0px;
-    justify-content: center;
-
-    button {
-        cursor: pointer;
-        height: 22px;
-        width: 56px;
-        margin: 0px 6px;
-        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 4px;
-        border: 1px solid $main-color;
-    }
-
-    .no,
-    .yes:active {
-        background-color: $general-white;
-        color: $main-color;
-    }
-
-    .yes,
-    .no:active {
-        background-color: $main-color;
-        color: $general-white;
-    }
-}
+//Modal with more info for card item
 
 #overlay {
     @include overlay;

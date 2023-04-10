@@ -1,7 +1,7 @@
 export const navbar = `
 <aside>
 <div class="profileGreet profileGreet2">
-<img src="../../images/profile-image.png" alt="Profile-picture">
+<img src="/images/profile-image.png" alt="Profile-picture">
 <span>Hi, User </span>
 </div>
         <nav>

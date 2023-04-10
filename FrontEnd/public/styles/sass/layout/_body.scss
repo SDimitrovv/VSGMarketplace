@@ -4,6 +4,22 @@
     border: 0px;
 }
 
+body {
+    height: 100vh;
+    background-color: $body-background;
+    font-family: 'Roboto';
+
+    #root {
+        display: flex;
+        width: 100%;
+    }
+}
+
+main {
+    padding: 20px 26px;
+    width: 100%;
+}
+
 small {
     color: $border-gray;
 }
@@ -36,24 +52,9 @@ svg {
     pointer-events: none;
 }
 
-body {
-    height: 100vh;
-    background-color: $body-background;
-    font-family: 'Roboto';
-
-    #root {
-        display: flex;
-        width: 100%;
-    }
-}
-
 @media screen and (max-width: 768px) {
     #root {
         @include flex-align(column, center);
-        height: 93%;
-
-        aside {
-            display: none;
-        }
+        height: calc(100vh - 60px);
     }
 }

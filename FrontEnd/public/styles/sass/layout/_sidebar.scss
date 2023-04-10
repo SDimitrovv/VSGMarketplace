@@ -1,3 +1,5 @@
+//Sidebar with navigation
+
 aside,
 main {
     height: calc(100vh - 160px);
@@ -7,19 +9,12 @@ main {
     overflow-y: auto;
 }
 
-main {
-    padding: 20px 26px;
-    width: 100%;
-}
-
 aside {
     @include flex-align(column, flex-start);
     padding: 20px 8px;
     justify-content: space-evenly;
-    width: 30%;
-    max-width: 320px;
+    width: 24%;
     min-width: 160px;
-    flex-wrap: nowrap;
 
     .profileGreet2 {
         display: none;
@@ -93,11 +88,17 @@ aside {
 }
 
 @media screen and (max-width: 768px) {
-    aside {
-        width: 100%;
+
+    aside,
+    main {
         height: 100%;
+        width: 92%;
         margin: 16px 0px;
-        padding: 0px 20px;
+        padding: 0;
+    }
+
+    aside {
+        display: none;
 
         .profileGreet2 {
             @include flex-align(row, center);

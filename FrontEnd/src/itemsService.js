@@ -2,12 +2,8 @@ import { makeRequest } from "./makeRequest.js";
 
 export const loadProducts = async () => {
     try {
-        const data = await makeRequest({ path: "/products?limit=8" });
+        const data = await makeRequest({ path: "/products" });
         return data;
-
-        // data.forEach((product) => {
-        // cardComponent(product.image, product.title, product.price);
-        // });
     } catch (err) {
         console.error(err);
     }
@@ -27,7 +23,7 @@ export const createProduct = async (data) => {
         const res = await makeRequest({
             path: "/products",
             method: "POST",
-            data
+            data,
         });
 
         return res;
@@ -35,6 +31,3 @@ export const createProduct = async (data) => {
         console.error(err);
     }
 };
-
-// const createProductButton = document.querySelector("button");
-// createProductButton.addEventListener("click", createProduct);

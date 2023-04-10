@@ -1,8 +1,10 @@
 import { makeRequest } from "../src/makeRequest.js";
+import { closeModalHandler } from "../src/global.js";
+import { imageHandler } from "../src/inventoryApp.js";
 
 export const addProduct = () => {
     const modal = document.createElement('form');
-    modal.className = 'modalContent';
+    modal.className = 'addForm modalContent';
     modal.innerHTML = `
     <a class="closeModal">
         <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +28,8 @@ export const addProduct = () => {
             <input type="number" name="qty" required placeholder="Qty *">
         </div>
         <div class="rightModal">
-            <img class="currentImg" name="image" src="images/inventory/no-image-placeholder.png">
+            <img class="currentImg" src="/images/inventory/no-image-placeholder.png">
+            <input class="inputImage" accept="image/*" name="image" type="file">
             <div class="uploadDelete">
                 <button class="uploadImg">Upload</button>
                 <button class="deleteImg">Remove</button>
@@ -37,27 +40,42 @@ export const addProduct = () => {
 `;
     const overlay = document.querySelector('#addItemOverlay')
     overlay.appendChild(modal);
-
-    document.querySelector('.modalContent').addEventListener('submit', async e => {
+    closeModalHandler();
+    imageHandler();
+    modal.addEventListener('submit', async e => {
         e.preventDefault();
-
-        const itemData = Object.fromEntries(new FormData(e.target));
+        const formData = new FormData(e.target);
+        const itemData = Object.fromEntries(formData);
+        const image = formData.get("image");
+        formData.delete("image");
+        console.log(itemData);
+        console.log(image);
 
         // const user = JSON.parse(localStorage.getItem('user'));
         // if (!user) {
         //     alert("You are not logged in!");
         //     return;
         // }
+        if (image.name) {
+            const imgRes = await makeRequest({
+                path: "/products",
+                method: "POST",
+                image
+            });
 
-        console.log(itemData);
+            console.log("Image POST", imgRes);
+        } else {
+            return alert('Choose image!');
+        }
+
         const res = await makeRequest({
             path: "/products",
             method: "POST",
             itemData
         });
 
-        console.log(res);
-
+        console.log("POST", res);
+        modal.remove();
         overlay.style.display = 'none';
     });
 }

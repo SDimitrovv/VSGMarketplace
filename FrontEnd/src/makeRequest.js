@@ -4,7 +4,7 @@ export const makeRequest = async ({
     path,
     method = "GET",
     data = {},
-    headers = {}
+    headers = {},
 }) => {
     try {
         const token = localStorage.getItem("token");
@@ -13,8 +13,8 @@ export const makeRequest = async ({
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
-                ...headers
-            }
+                ...headers,
+            },
         };
 
         if (Object.keys(data).length > 0) {
@@ -23,7 +23,7 @@ export const makeRequest = async ({
 
         const res = await fetch(baseURL + path, {
             method,
-            ...options
+            ...options,
         });
 
         if (!res.ok) {

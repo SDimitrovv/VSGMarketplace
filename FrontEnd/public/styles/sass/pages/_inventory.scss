@@ -1,5 +1,9 @@
+//Inventory page
+
 #inventoryMain {
     flex-direction: column;
+
+    //Search
 
     #searchSpace {
         display: flex;
@@ -37,6 +41,8 @@
             }
         }
     }
+
+    //Table
 
     #tableBorder {
         border: 1px solid $border-gray;
@@ -99,6 +105,8 @@
     }
 }
 
+//Modals for adding and editing items
+
 #addItemOverlay,
 #addItemOverlay2 {
     @include overlay;
@@ -137,9 +145,10 @@
                     font-family: "Inter";
                     border-bottom: 1px solid $underline-gray;
                     outline: none;
-                    margin-bottom: 30px;
-                    height: 30px;
+                    margin-bottom: 4px;
                     width: 240px;
+                    height: 45px;
+                    padding: 8px 0px;
                 }
 
                 input::placeholder,
@@ -176,16 +185,20 @@
                 .deleteImg {
                     @include button($main-color);
                 }
+
+                .inputImage {
+                    display: none;
+                }
             }
         }
     }
 
     button[type="submit"] {
         cursor: pointer;
-        margin-top: 8%;
+        margin: 4% 0;
         align-self: center;
         width: 150px;
-        height: 36px;
+        min-height: 34px;
         background: $add-button;
         color: $general-white;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
@@ -198,9 +211,6 @@
 
 @media screen and (max-width: 768px) {
     #inventoryMain {
-        height: 100%;
-        width: 86%;
-        padding: 0px 4px;
 
         #searchSpace {
             @include flex-align(row, flex-end);
@@ -222,7 +232,7 @@
         }
 
         .removeContainer {
-            @include pop-up(150%, -398%);
+            @include pop-up(150%, -400%);
         }
 
         .removeContainer::before {
@@ -232,6 +242,7 @@
 
     #addItemOverlay,
     #addItemOverlay2 {
+
         .modalContent {
             @include modal(96%, 92%);
 
@@ -255,17 +266,13 @@
 
                     input,
                     select {
+                        height: 45px;
                         padding: 8px 0px;
-                        margin-bottom: 14px;
                         width: 96%;
                     }
 
                     textarea {
                         width: 96%;
-                    }
-
-                    img {
-                        margin-top: 16px;
                     }
 
                     .uploadDelete {

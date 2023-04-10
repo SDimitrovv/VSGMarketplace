@@ -1,0 +1,30 @@
+//Yes and no buttons styling for pop up containers
+
+.buttons {
+    display: flex;
+    align-self: flex-end;
+    margin: 16px 0px;
+    justify-content: center;
+
+    button {
+        cursor: pointer;
+        height: 22px;
+        width: 56px;
+        margin: 0px 6px;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+        border: 1px solid $main-color;
+    }
+
+    .no,
+    .yes:active {
+        background-color: $general-white;
+        color: $main-color;
+    }
+
+    .yes,
+    .no:active {
+        background-color: $main-color;
+        color: $general-white;
+    }
+}

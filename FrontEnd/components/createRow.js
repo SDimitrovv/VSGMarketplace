@@ -1,4 +1,4 @@
-export const createRow = (id, title, image, category, price) => {
+export const createRow = (id, title, category) => {
     const row = document.createElement("tr");
     row.id = id;
     row.innerHTML = `

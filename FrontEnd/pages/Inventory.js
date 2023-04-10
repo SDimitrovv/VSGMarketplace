@@ -46,7 +46,6 @@ const Inventory = () => {
 </div>
 `;
     inventoryApp();
-    // setPageScripts(['src/inventoryApp.js']);
 }
 
 export default Inventory;
