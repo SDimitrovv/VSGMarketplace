@@ -33,6 +33,6 @@ export const createModal = async (id) => {
 </div>
 `;
 
-    document.querySelector('#overlay').appendChild(modalContent);
+    document.querySelector('#addItemOverlay').appendChild(modalContent);
     return modalContent;
 }

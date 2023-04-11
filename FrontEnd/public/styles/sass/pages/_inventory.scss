@@ -12,7 +12,8 @@
 
         #input {
             @include flex-align(row, flex-end);
-            width: 20%;
+            width: 240px;
+            height: 36px;
             border-bottom: 1px solid #000;
 
             input {
@@ -72,6 +73,7 @@
 
             th,
             td {
+                white-space: nowrap;
                 padding-left: 20px;
 
                 a {
@@ -98,6 +100,7 @@
 
     .removeContainer {
         @include pop-up(150%, -295%);
+        white-space: break-spaces;
     }
 
     .removeContainer::before {

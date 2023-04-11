@@ -18,7 +18,7 @@ export const hamburgerHandler = () => {
         hamburger.style.display = "block";
     });
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', () => {   
         if (window.innerWidth < 769) {
             hamburger.style.display = "block";
             aside.style.display = "none";
@@ -31,4 +31,16 @@ export const hamburgerHandler = () => {
             aside.style.display = "flex";
         }
     })
+
+    if (window.innerWidth < 769) {
+        hamburger.style.display = "block";
+        aside.style.display = "none";
+    }
+
+    if (window.innerWidth > 768) {
+        closeMenu.style.display = "none";
+        hamburger.style.display = "none";
+        main.style.display = "flex";
+        aside.style.display = "flex";
+    }
 };

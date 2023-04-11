@@ -1,10 +1,9 @@
-import { navbar } from "../components/navbar.js";
 import { pendingOrdersApp } from "../src/pendingOrdersApp.js";
 
 const PendingOrders = () => {
-    document.querySelector('#root').innerHTML = `
-    ${navbar}
-<main id="pendingOrdersMain">
+    const main = document.querySelector('main');
+    main.id = "pendingOrdersMain";
+    main.innerHTML =  `
     <div id="headingSection">
         <span class="codeColumn">Code</span>
         <span class="qtyColumn">QTY</span>
@@ -13,7 +12,6 @@ const PendingOrders = () => {
         <span class="orderDateColumn">Order Date</span>
         <span class="actionColumn">Action</span>
     </div>
-</main>
 `;
 
     pendingOrdersApp();

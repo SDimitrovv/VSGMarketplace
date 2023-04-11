@@ -39,7 +39,7 @@ export const marketplaceApp = async () => {
             e.preventDefault();
             const id = e.target.parentElement.id;
             const modal = await createModal(id);
-            document.querySelector("#overlay").style.display = "flex";
+            document.querySelector("#addItemOverlay").style.display = "flex";
             modal.querySelector("#modalImage").style.pointerEvents = "none";
             modal.querySelector("#modalFrameOne").style.pointerEvents = "none";
             closeModalHandler();

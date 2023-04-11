@@ -36,6 +36,7 @@ header {
 
   #closeMenu,
   #hamburger {
+    cursor: pointer;
     color: $main-color;
     display: none;
     align-self: center;

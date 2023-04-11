@@ -1,7 +1,6 @@
 export function navStyling(path) {
     document.querySelectorAll(".navButton").forEach((n) => {
         const allPaths = n.textContent.trim().toLowerCase();
-
         if (path.includes("-")) {
             path = path.replace("-", " ");
         }
@@ -9,6 +8,9 @@ export function navStyling(path) {
         if (allPaths === path) {
             n.className += " active";
             n.querySelector("path").style.fill = "#F0F0F0";
+        } else {
+            n.className = "navButton";
+            n.querySelector("path").style.fill = "#ED1C25";
         }
     });
 }
@@ -52,14 +54,10 @@ function closing(e) {
     e?.preventDefault();
     e.target.parentElement.remove();
 
-    let overlay = document.querySelector("#overlay");
-    if (!overlay) {
-        overlay = document.querySelector("#addItemOverlay");
-        const overlay2 = document.querySelector("#addItemOverlay2");
-        overlay2.style.display = "none";
-    }
-
+    const overlay = document.querySelector("#addItemOverlay");
+    const overlay2 = document.querySelector("#addItemOverlay2");
     overlay.style.display = "none";
+    overlay2.style.display = "none";
 }
 
 export function closeContainerHandler(container) {

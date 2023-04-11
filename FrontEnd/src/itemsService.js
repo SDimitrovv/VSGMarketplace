@@ -2,7 +2,7 @@ import { makeRequest } from "./makeRequest.js";
 
 export const loadProducts = async () => {
     try {
-        const data = await makeRequest({ path: "/products" });
+        const data = await makeRequest({ path: "/products?limit=20" });
         return data;
     } catch (err) {
         console.error(err);

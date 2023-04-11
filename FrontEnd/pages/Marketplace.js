@@ -1,16 +1,10 @@
-import { navbar } from "../components/navbar.js";
 import { marketplaceApp } from "../src/marketplaceApp.js";
 
 const Marketplace = () => {
-    document.querySelector('#root').innerHTML = `
-    ${navbar}
-    <main id="marketplaceMain">
-    </main>
-    <div id="overlay">
-    </div>
-    `;
+    const main = document.querySelector('main');
+    main.id = "marketplaceMain";
+    main.innerHTML = '';
     marketplaceApp();
-    // setPageScripts(['src/marketplaceApp.js']);
 };
 
 export default Marketplace;

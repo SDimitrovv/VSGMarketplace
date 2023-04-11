@@ -12,16 +12,19 @@
         @include flex-align(column, space-between);
         margin: 20px 10px;
         width: 280px;
+        height: 260px;
         border-radius: 5px;
         box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
 
         .productButton {
             cursor: pointer;
             align-self: center;
+            margin: 10px;
+            height: 320px;
         }
 
         img {
-            max-height: 150px;
+            height: 150px;
         }
 
         .productContent {
@@ -94,7 +97,7 @@
 
 //Modal with more info for card item
 
-#overlay {
+#addItemOverlay {
     @include overlay;
 
     img {
@@ -103,7 +106,8 @@
     }
 
     #modalContent {
-        @include modal(620px, 600px);
+        @include modal(fit-content, 600px);
+        min-height: 620px;
         background-image: url("/images/marketplace/ellipse.png");
         background-position: bottom right;
         background-repeat: no-repeat;
@@ -114,19 +118,23 @@
 
         #modalImage {
             align-self: center;
+            margin: 30px;
 
             img {
+                height: auto;
                 max-height: 320px;
+                width: fit-content;
             }
         }
 
         #modalFrameOne {
             @include flex-align(column, space-between);
             margin: 20px;
-            overflow-y: auto;
+            flex-wrap: wrap;
 
             #modalFrameTwo {
                 display: flex;
+
                 justify-content: space-between;
 
                 #productName {
@@ -151,6 +159,7 @@
         }
 
         p {
+            overflow-y: auto;
             margin-top: 10px;
             width: 100%;
             font-weight: 500;
@@ -161,7 +170,7 @@
 
     @media screen and (max-width: 768px) {
         #modalContent {
-            @include modal(90%, 92%);
+            @include modal(fit-content, 92%);
 
             .closeModal {
                 top: 1%;

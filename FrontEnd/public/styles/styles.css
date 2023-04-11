@@ -92,6 +92,7 @@ header .profileGreet img {
 }
 header #closeMenu,
 header #hamburger {
+  cursor: pointer;
   color: #ED1C25;
   display: none;
   align-self: center;
@@ -289,15 +290,18 @@ aside nav ul #logout {
   align-items: space-between;
   margin: 20px 10px;
   width: 280px;
+  height: 260px;
   border-radius: 5px;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
 }
 #marketplaceMain .product .productButton {
   cursor: pointer;
   align-self: center;
+  margin: 10px;
+  height: 320px;
 }
 #marketplaceMain .product img {
-  max-height: 150px;
+  height: 150px;
 }
 #marketplaceMain .product .productContent {
   display: flex;
@@ -393,7 +397,7 @@ aside nav ul #logout {
     border-color: transparent transparent #FFF transparent;
   }
 }
-#overlay {
+#addItemOverlay {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -406,63 +410,70 @@ aside nav ul #logout {
   width: 100%;
   background: rgba(0, 0, 0, 0.5019607843);
 }
-#overlay img {
+#addItemOverlay img {
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
 }
-#overlay #modalContent {
+#addItemOverlay #modalContent {
   display: flex;
   flex-direction: column;
   align-items: space-between;
-  height: 620px;
+  height: -moz-fit-content;
+  height: fit-content;
   width: 600px;
   background-color: #FFF;
   border-radius: 20px;
   position: relative;
+  min-height: 620px;
   background-image: url("/images/marketplace/ellipse.png");
   background-position: bottom right;
   background-repeat: no-repeat;
 }
-#overlay #modalContent .closeModal {
+#addItemOverlay #modalContent .closeModal {
   background: none;
 }
-#overlay #modalContent #modalImage {
+#addItemOverlay #modalContent #modalImage {
   align-self: center;
+  margin: 30px;
 }
-#overlay #modalContent #modalImage img {
+#addItemOverlay #modalContent #modalImage img {
+  height: auto;
   max-height: 320px;
+  width: -moz-fit-content;
+  width: fit-content;
 }
-#overlay #modalContent #modalFrameOne {
+#addItemOverlay #modalContent #modalFrameOne {
   display: flex;
   flex-direction: column;
   align-items: space-between;
   margin: 20px;
-  overflow-y: auto;
+  flex-wrap: wrap;
 }
-#overlay #modalContent #modalFrameOne #modalFrameTwo {
+#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo {
   display: flex;
   justify-content: space-between;
 }
-#overlay #modalContent #modalFrameOne #modalFrameTwo #productName {
+#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo #productName {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 390px;
 }
-#overlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty {
+#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
-#overlay #modalContent #modalFrameOne #modalFrameTwo b {
+#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo b {
   font-weight: 700;
   font-size: 22px;
   line-height: 26px;
 }
-#overlay #modalContent #modalFrameOne #modalFrameTwo small {
+#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo small {
   padding: 4px 0px;
 }
-#overlay #modalContent p {
+#addItemOverlay #modalContent p {
+  overflow-y: auto;
   margin-top: 10px;
   width: 100%;
   font-weight: 500;
@@ -470,33 +481,34 @@ aside nav ul #logout {
   line-height: 19px;
 }
 @media screen and (max-width: 768px) {
-  #overlay #modalContent {
+  #addItemOverlay #modalContent {
     display: flex;
     flex-direction: column;
     align-items: space-between;
-    height: 90%;
+    height: -moz-fit-content;
+    height: fit-content;
     width: 92%;
     background-color: #FFF;
     border-radius: 20px;
     position: relative;
   }
-  #overlay #modalContent .closeModal {
+  #addItemOverlay #modalContent .closeModal {
     top: 1%;
     left: 92%;
   }
-  #overlay #modalContent #modalFrameOne #modalFrameTwo {
+  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
   }
-  #overlay #modalContent #modalFrameOne #modalFrameTwo #productName {
+  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo #productName {
     width: 100%;
   }
-  #overlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty {
+  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty {
     margin: 10px 0px;
   }
-  #overlay #modalContent #modalFrameOne #modalFrameTwo b {
+  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo b {
     width: 305px;
     font-family: "Roboto";
     font-style: normal;
@@ -504,11 +516,11 @@ aside nav ul #logout {
     font-size: 20px;
     line-height: 23px;
   }
-  #overlay #modalContent #modalFrameOne #modalFrameTwo small {
+  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo small {
     padding: 0px;
     align-self: flex-start;
   }
-  #overlay #modalContent #modalFrameOne p {
+  #addItemOverlay #modalContent #modalFrameOne p {
     text-overflow: ellipsis;
   }
 }
@@ -525,7 +537,8 @@ aside nav ul #logout {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  width: 20%;
+  width: 240px;
+  height: 36px;
   border-bottom: 1px solid #000;
 }
 #inventoryMain #searchSpace #input input {
@@ -575,6 +588,7 @@ aside nav ul #logout {
 }
 #inventoryMain #tableBorder table th,
 #inventoryMain #tableBorder table td {
+  white-space: nowrap;
   padding-left: 20px;
 }
 #inventoryMain #tableBorder table th a,
@@ -608,6 +622,7 @@ aside nav ul #logout {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   z-index: 99;
+  white-space: break-spaces;
 }
 #inventoryMain .removeContainer::before {
   content: "";
