@@ -26,7 +26,7 @@ export const marketplaceApp = async () => {
     document.querySelectorAll(".buyButton").forEach((b) => {
         b.addEventListener("click", (e) => {
             e.preventDefault();
-            const price = e.target.parentElement.parentElement.parentElement.querySelector(".price span").textContent;
+            const price = e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".price span").textContent;
             const div = createElement(price);
             e.target.parentElement.appendChild(div);
             addButtons();

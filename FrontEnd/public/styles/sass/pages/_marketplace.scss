@@ -75,7 +75,7 @@
     }
 
     .buyContainer {
-        @include pop-up(140%, -160%);
+        @include pop-up(42px, -135px);
     }
 
     .buyContainer::before {
@@ -86,7 +86,7 @@
 @media screen and (max-width: 768px) {
     #marketplaceMain {
         .buyContainer {
-            @include pop-up(140%, -330%);
+            @include pop-up(44px, -245px);
         }
 
         .buyContainer::before {
@@ -111,6 +111,7 @@
         background-image: url("/images/marketplace/ellipse.png");
         background-position: bottom right;
         background-repeat: no-repeat;
+        overflow-y: auto;
 
         .closeModal {
             background: none;

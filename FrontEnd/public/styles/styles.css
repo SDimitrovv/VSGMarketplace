@@ -51,6 +51,10 @@ svg {
   pointer-events: none;
 }
 
+#popupParent {
+  position: relative;
+}
+
 @media screen and (max-width: 768px) {
   #root {
     display: flex;
@@ -352,8 +356,8 @@ aside nav ul #logout {
   color: #000;
   width: 280px;
   height: 80px;
-  top: 140%;
-  left: -160%;
+  top: 42px;
+  left: -135px;
   padding: 14px;
   background-color: #FFF;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -379,8 +383,8 @@ aside nav ul #logout {
     color: #000;
     width: 280px;
     height: 80px;
-    top: 140%;
-    left: -330%;
+    top: 44px;
+    left: -245px;
     padding: 14px;
     background-color: #FFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -428,6 +432,7 @@ aside nav ul #logout {
   background-image: url("/images/marketplace/ellipse.png");
   background-position: bottom right;
   background-repeat: no-repeat;
+  overflow-y: auto;
 }
 #addItemOverlay #modalContent .closeModal {
   background: none;
@@ -964,8 +969,8 @@ aside nav ul #logout {
   color: #000;
   width: 280px;
   height: 80px;
-  top: 140%;
-  left: -210%;
+  top: 28px;
+  left: -236px;
   padding: 14px;
   background-color: #FFF;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -1056,8 +1061,8 @@ aside nav ul #logout {
     color: #000;
     width: 280px;
     height: 80px;
-    top: 90%;
-    left: -6%;
+    top: 26px;
+    left: -252px;
     padding: 14px;
     background-color: #FFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);

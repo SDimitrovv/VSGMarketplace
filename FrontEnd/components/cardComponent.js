@@ -18,6 +18,7 @@ export const cardComponent = (id, image, category, price) => {
                    <select class="randomNumberSelect">
                    </select>
                </div>
+               <div id="popupParent">
                <button class="buyButton">
                    <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                        <circle cx="15.5" cy="15.5" r="15.5" fill="#ED1C25" />
@@ -33,6 +34,7 @@ export const cardComponent = (id, image, category, price) => {
                        </defs>
                    </svg>
                </button>
+               </div>
            </form>
        </div>
    </div>

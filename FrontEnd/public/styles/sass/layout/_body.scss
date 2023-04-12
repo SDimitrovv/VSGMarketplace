@@ -52,6 +52,10 @@ svg {
     pointer-events: none;
 }
 
+#popupParent {
+    position: relative;
+}
+
 @media screen and (max-width: 768px) {
     #root {
         @include flex-align(column, center);

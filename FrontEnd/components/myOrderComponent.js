@@ -11,7 +11,7 @@ export const myOrderComponent = (id, title, price) => {
         <span class="orderDateColumn">2023-03-13 16:30</span>
         <div class="orderStatus">
             <span>Pending</span>
-            <div>
+            <div id="popupParent">
                 <a class="cancelOrder">
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
                         xmlns="http://www.w3.org/2000/svg">

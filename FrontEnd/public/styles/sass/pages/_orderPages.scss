@@ -59,7 +59,7 @@
         }
 
         .cancelOrderContainer {
-            @include pop-up(140%, -210%);
+            @include pop-up(28px, -236px);
             font-style: normal;
             font-weight: 400;
             font-size: 16px;
@@ -123,7 +123,7 @@
                 padding: 0px 10px;
 
                 .cancelOrderContainer {
-                    @include pop-up(90%, -6%);
+                    @include pop-up(26px, -252px);
                 }
 
                 .cancelOrderContainer::before {
@@ -150,7 +150,6 @@
                     margin: 0;
                     width: 100%;
                     padding: 10px 0;
-                    ;
 
                     span {
                         padding: 0;
