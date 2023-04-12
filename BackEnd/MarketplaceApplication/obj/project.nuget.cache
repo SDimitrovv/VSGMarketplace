@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Jm44HP5+w8bH6JRFnDxU+bHP6lOA/K1M+jqJS9MR623A6jlEJYN3BMnBl/0pvWNnW18D5F3enqxJABn7oyK/pQ==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\Marketplace\\MarketplaceApplication\\MarketplaceApplication.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\SDimitrov\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "C:\\Users\\SDimitrov\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

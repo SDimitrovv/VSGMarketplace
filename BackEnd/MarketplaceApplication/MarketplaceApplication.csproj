@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\OrderModels\DTOs\" />
+    <Folder Include="Models\OrderModels\Interfaces\" />
+    <Folder Include="Models\PictureModels\DTOs\" />
+    <Folder Include="Models\PictureModels\Interfaces\" />
+    <Folder Include="Models\ProductModels\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarketplaceDomain\MarketplaceDomain.csproj" />
+  </ItemGroup>
+
+</Project>
