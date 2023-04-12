@@ -1,0 +1,12 @@
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\bin\Debug\net6.0\VSGMarketplace.Domain.deps.json
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\bin\Debug\net6.0\VSGMarketplace.Domain.dll
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\bin\Debug\net6.0\VSGMarketplace.Domain.pdb
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\obj\Debug\net6.0\VSGMarketplace.Domain.csproj.AssemblyReference.cache
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\obj\Debug\net6.0\VSGMarketplace.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\obj\Debug\net6.0\VSGMarketplace.Domain.AssemblyInfoInputs.cache
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\obj\Debug\net6.0\VSGMarketplace.Domain.AssemblyInfo.cs
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\obj\Debug\net6.0\VSGMarketplace.Domain.csproj.CoreCompileInputs.cache
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\obj\Debug\net6.0\VSGMarketplace.Domain.dll
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\obj\Debug\net6.0\refint\VSGMarketplace.Domain.dll
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\obj\Debug\net6.0\VSGMarketplace.Domain.pdb
+C:\Projects\VSGMarketplace\VSGMarketplace.Domain\obj\Debug\net6.0\ref\VSGMarketplace.Domain.dll
