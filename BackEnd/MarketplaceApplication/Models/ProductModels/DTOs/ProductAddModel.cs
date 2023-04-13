@@ -14,8 +14,6 @@
 
         public string Description { get; set; }
 
-        public int Location { get; set; }
-
-        public int Category { get; set; }
+        public int CategoryId { get; set; }
     }
 }

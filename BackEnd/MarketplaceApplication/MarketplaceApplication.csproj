@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Models\LocationModels\DTOs\" />
     <Folder Include="Models\OrderModels\DTOs\" />
     <Folder Include="Models\OrderModels\Interfaces\" />
     <Folder Include="Models\PictureModels\DTOs\" />
