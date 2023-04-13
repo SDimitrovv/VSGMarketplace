@@ -20,7 +20,7 @@ namespace MarketplaceAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<IActionResult> Add([FromForm] ProductAddModel model, [FromForm] IFormFile picture)
+        public async Task<IActionResult> Add([FromForm] ProductAddModel model, IFormFile picture)
         {
             if (!ModelState.IsValid)
             {

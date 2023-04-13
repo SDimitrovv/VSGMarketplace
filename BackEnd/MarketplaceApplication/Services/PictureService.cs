@@ -26,13 +26,17 @@ namespace MarketplaceApplication.Services
 
         public async Task UploadPicture(IFormFile file, int productId)
         {
-            using var stream = new MemoryStream();
-            await file.CopyToAsync(stream);
+            byte[] bytes;
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                bytes = stream.ToArray();
+            }
 
             var uploadParams = new ImageUploadParams
             {
                 Folder = "Marketplace",
-                File = new FileDescription(file.FileName, stream),
+                File = new FileDescription(file.FileName, new MemoryStream(bytes)),
                 PublicId = $"product_{productId}_picture_{Guid.NewGuid()}"
             };
 
