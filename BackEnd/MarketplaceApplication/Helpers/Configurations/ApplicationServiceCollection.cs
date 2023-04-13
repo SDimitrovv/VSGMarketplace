@@ -1,7 +1,7 @@
 ﻿using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.PictureModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
-using MarketplaceApplication.Serivces;
+using MarketplaceApplication.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MarketplaceApplication.Helpers.Configurations

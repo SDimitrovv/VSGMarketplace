@@ -1,7 +1,6 @@
-﻿using MarketplaceApplication.Models.ProductModels.DTOs;
+﻿using MarketplaceApplication.Models.PictureModels.Interfaces;
+using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
-using MarketplaceApplication.Serivces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketplaceAPI.Controllers
@@ -11,10 +10,30 @@ namespace MarketplaceAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly IPictureService _pictureService;
 
-        public ProductController(IProductService productService) => _productService = productService;
+        public ProductController(IProductService productService, IPictureService pictureService)
+        {
+            _productService = productService;
+            _pictureService = pictureService;
+        }
 
+        [HttpPost]
+        [Route("Add")]
+        public async Task<IActionResult> Add([FromForm] ProductAddModel model, [FromForm] IFormFile picture)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var product = await _productService.Add(model);
+            var productId = product.Id;
+
+            await _pictureService.UploadPicture(picture, productId);
+            
+            return Ok();
+        }
 
         [HttpGet]
         [Route("Merketplace")]

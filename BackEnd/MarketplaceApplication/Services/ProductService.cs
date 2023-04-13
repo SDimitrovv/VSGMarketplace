@@ -1,7 +1,9 @@
 ﻿using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
+using MarketplaceDomain.Entities;
+using MarketplaceDomain.Enums;
 
-namespace MarketplaceApplication.Serivces
+namespace MarketplaceApplication.Services
 {
     public class ProductService : IProductService
     {
@@ -10,6 +12,26 @@ namespace MarketplaceApplication.Serivces
         public ProductService(IProductRepository repository)
         {
                 _repository = repository;
+        }
+
+        public async Task<Product> Add(ProductAddModel model)
+        {
+            var product = new Product
+            {
+                Code = model.Code,
+                FullName = model.FullName,
+                Price = model.Price,
+                Quantity = model.Quantity,
+                QuantityForSale = model.QuantityForSale,
+                Description = model.Description,
+                Location = (Location)model.Location,
+                Category = (Category)model.Category
+            };
+
+            var productId = await _repository.Create(product);
+            product.Id = productId;
+
+            return product;
         }
 
         public async Task<ProductGetDetailsModel> GetDetails(int id)
@@ -26,5 +48,6 @@ namespace MarketplaceApplication.Serivces
         {
             return await _repository.GetMarketplace();
         }
+
     }
 }

@@ -49,3 +49,5 @@ C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\runtimes\unix\lib\netcoreap
 C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\Dapper.dll
 C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\Dapper.SimpleCRUD.dll
+C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\CloudinaryDotNet.dll
+C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\Newtonsoft.Json.dll
