@@ -6,7 +6,7 @@ import { loadProducts } from "./itemsService.js";
 export const myOrdersApp = async () => {
     const myProducts = await loadProducts();
     myProducts.forEach((p) => {
-        myOrderComponent(p.id, p.title, p.price);
+        myOrderComponent(p.id, p.fullName, p.quantityForSale);
     });
 
     document.querySelectorAll(".cancelOrder").forEach((b) => {

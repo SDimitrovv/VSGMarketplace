@@ -18,19 +18,19 @@ export const editProduct = async (id) => {
 <div class="row">
     <div class="leftModal">
         <h2>Modify Item</h2>
-        <input type="number" name="code" required placeholder="Code *" value="${product.id}">
-        <input type="text" name="name" required placeholder="Name *" value="${product.title}">
+        <input type="text" name="code" required placeholder="Code *" value="${id}">
+        <input type="text" name="name" required placeholder="Name *" value="${product.fullName}">
         <textarea type="text" name="description" placeholder="Description">${product.description}</textarea>
         <select name="category" class="category">
             <option value="" disabled>Category *</option>
             <option value="${product.category}" selected>${product.category}</option>
         </select>
-        <input type="number" name="qtyForSale" placeholder="Qty For Sale" value="0">
-        <input type="number" name="price" placeholder="Sale Price" value="${product.price}">
+        <input type="number" name="qtyForSale" placeholder="Qty For Sale" value="${product.quantityForSale}">
+        <input type="number" name="price" placeholder="Sale Price" value="69">
         <input type="number" name="qty" required placeholder="Qty *" value="2">
     </div>
     <div class="rightModal">
-        <img class="currentImg" name="image" src="${product.image}">
+        <img class="currentImg" name="image" src="${product.imageUrl}">
         <input class="inputImage" accept="image/*" name="image"  type="file">
         <div class="uploadDelete">
             <button class="uploadImg">Upload</button>
@@ -48,15 +48,15 @@ export const editProduct = async (id) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const image = formData.get("image");
-        if (image.name) {
-            const res = await makeRequest({
-                path: "/products/" + id,
-                method: "PUT",
-                image,
-            });
+        // if (image.name) {
+        //     const res = await makeRequest({
+        //         path: "/products/" + id,
+        //         method: "PUT",
+        //         image,
+        //     });
 
-            console.log("IMAGE PUT", res);
-        }
+        //     console.log("IMAGE PUT", res);
+        // }
 
         formData.delete("image");
         const itemData = Object.fromEntries(formData);
@@ -68,13 +68,13 @@ export const editProduct = async (id) => {
         //     return;
         // }
 
-        const res = await makeRequest({
-            path: "/products/" + id,
-            method: "PUT",
-            itemData,
-        });
+        // const res = await makeRequest({
+        //     path: "/products/" + id,
+        //     method: "PUT",
+        //     itemData,
+        // });
 
-        console.log("PUT", res);
+        // console.log("PUT", res);
         modal.remove();
         overlay.style.display = "none";
     });

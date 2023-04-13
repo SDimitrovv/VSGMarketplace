@@ -6,7 +6,7 @@ import { createModal } from "../components/createModal.js";
 export const marketplaceApp = async () => {
     const products = await loadProducts();
     products.forEach((p) => {
-        cardComponent(p.id, p.image, p.category, p.price);
+        cardComponent(p.id, p.quantityForSale, p.category);
     });
 
     const createElement = (price) => {

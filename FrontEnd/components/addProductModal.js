@@ -16,7 +16,7 @@ export const addProduct = () => {
     <div class="row">
         <div class="leftModal">
             <h2>Add New Item</h2>
-            <input type="number" name="code" placeholder="Code *" required>
+            <input type="text" name="code" placeholder="Code *" required>
             <input type="text" name="name" placeholder="Name *" required>
             <textarea type="text" name="description" placeholder="Description"></textarea>
             <select name="category" class="category">
@@ -56,20 +56,20 @@ export const addProduct = () => {
         //     alert("You are not logged in!");
         //     return;
         // }
-        if (image.name) {
-            const imgRes = await makeRequest({
-                path: "/products",
-                method: "POST",
-                image
-            });
+        // if (image.name) {
+        //     const imgRes = await makeRequest({
+        //         path: "/Add",
+        //         method: "POST",
+        //         image
+        //     });
 
-            console.log("Image POST", imgRes);
-        } else {
-            return alert('Choose image!');
-        }
+        //     console.log("Image POST", imgRes);
+        // } else {
+        //     return alert('Choose image!');
+        // }
 
         const res = await makeRequest({
-            path: "/products",
+            path: "/Add",
             method: "POST",
             itemData
         });

@@ -1,12 +1,12 @@
-export const createRow = (id, title, category) => {
+export const createRow = (id, code, fullName, category, quantityForSale, quantity) => {
     const row = document.createElement("tr");
     row.id = id;
     row.innerHTML = `
-    <td>${id}</td>
-    <td>${title}</td>
+    <td>${code}</td>
+    <td>${fullName}</td>
     <td>${category}</td>
-    <td>2</td>
-    <td class="randomNumberSelect"></td>
+    <td>${quantityForSale}</td>
+    <td class="randomNumberSelect">${quantity}</td>
     <td>
         <div class="editDelete">
             <a class="edit">

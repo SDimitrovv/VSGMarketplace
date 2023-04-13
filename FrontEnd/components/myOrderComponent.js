@@ -1,12 +1,12 @@
-export const myOrderComponent = (id, title, price) => {
+export const myOrderComponent = (id, fullName, quantityForSale) => {
     const cardDiv = document.createElement("div");
     cardDiv.className = 'pendingOrders';
     cardDiv.id = id;
     cardDiv.innerHTML = `
-    <span class="nameColumn">${title}</span>
+    <span class="nameColumn">${fullName}</span>
     <div class="firstTwo">
-        <span class="qtyColumn"></span>
-        <span class="priceColumn">${price} BGN</span>
+        <span class="qtyColumn">${quantityForSale}</span>
+        <span class="priceColumn"></span>
         </div>
         <span class="orderDateColumn">2023-03-13 16:30</span>
         <div class="orderStatus">
@@ -24,19 +24,9 @@ export const myOrderComponent = (id, title, price) => {
         </div>
     `;
 
-    const qtyColumn = cardDiv.querySelector(".qtyColumn");
-    const randomNumber = Math.floor(Math.random() * 11) + 1;
-
-    for (let i = 1; i <= randomNumber; i++) {
-        const option = document.createElement("option");
-        option.value = i;
-        option.text = i;
-        if (i === 1) {
-            option.selected = true;
-        }
-
-        qtyColumn.textContent = randomNumber;
-    }
+    const price = cardDiv.querySelector(".priceColumn");
+    const randomNumber = Math.floor(Math.random() * 1000) + 1;
+    price.textContent = randomNumber + " BGN";
 
     const productsSections = document.querySelector('#myOrdersMain');
     productsSections.appendChild(cardDiv);

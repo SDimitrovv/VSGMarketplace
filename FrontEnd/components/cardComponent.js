@@ -1,14 +1,14 @@
-export const cardComponent = (id, image, category, price) => {
+export const cardComponent = (id, quantityForSale, category) => {
     const cardDiv = document.createElement("div");
     cardDiv.className = 'product';
     cardDiv.id = id;
     cardDiv.innerHTML = `
    <a class='productButton'>
-       <img src=${image} alt="Product-image">
+       <img src="/images/marketplace/product-image.png" alt="Product-image">
    </a>
    <div class="productContent">
        <div class="price">
-           <span>${price} BGN</span>
+           <span></span>
            <small>${category}</small>
        </div>
        <div class="quantityAndImg">
@@ -39,11 +39,13 @@ export const cardComponent = (id, image, category, price) => {
        </div>
    </div>
 `
-
+    const price = cardDiv.querySelector(".price span");
     const select = cardDiv.querySelector(".randomNumberSelect");
-    const randomNumber = Math.floor(Math.random() * 11) + 1;
+    const randomNumber = Math.floor(Math.random() * 1000) + 1;
+    price.textContent = randomNumber + " BGN";
 
-    for (let i = 1; i <= randomNumber; i++) {
+
+    for (let i = 1; i <= quantityForSale + 1; i++) {
         const option = document.createElement("option");
         option.value = i;
         option.text = i;
@@ -51,6 +53,10 @@ export const cardComponent = (id, image, category, price) => {
             option.selected = true;
         }
         select.appendChild(option);
+
+        if (i === 50) {
+            break;
+        }
     }
 
     const productsSections = document.querySelector('#marketplaceMain');

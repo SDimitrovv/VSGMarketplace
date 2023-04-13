@@ -13,16 +13,16 @@ export const createModal = async (id) => {
     </svg>
 </a>
 <a id="modalImage">
-<img src=${product.image}>
+<img src="/images/marketplace/product-image.png">
 </a>
 <div id="modalFrameOne">
     <div id="modalFrameTwo">
         <div id="productName">
-            <b>${product.title}</b>
+            <b>${product.fullName}</b>
             <small>${product.category}</small>
         </div>
         <div id="priceAndQty">
-            <b>${product.price} BGN</b>
+            <b></b>
             <small>Qty: 1</small>
         </div>
     </div>
@@ -32,6 +32,9 @@ export const createModal = async (id) => {
 </div>
 </div>
 `;
+    const price = modalContent.querySelector("#priceAndQty b");
+    const randomNumber = Math.floor(Math.random() * 1000) + 1;
+    price.textContent = randomNumber + " BGN";
 
     document.querySelector('#addItemOverlay').appendChild(modalContent);
     return modalContent;

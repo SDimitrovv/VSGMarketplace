@@ -4,7 +4,7 @@ import { loadProducts } from "./itemsService.js";
 export const pendingOrdersApp = async () => {
     const pendingProducts = await loadProducts();
     pendingProducts.forEach((p) => {
-        pendingOrderComponent(p.id, p.price);
+        pendingOrderComponent(p.id, p.code, p.quantityForSale);
     });
 
     document.querySelectorAll('.completeButton').forEach(b => {

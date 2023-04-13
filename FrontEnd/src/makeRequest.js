@@ -1,4 +1,4 @@
-const baseURL = "https://fakestoreapi.com";
+const baseURL = "https://localhost:7089/api/Product";
 
 export const makeRequest = async ({
     path,

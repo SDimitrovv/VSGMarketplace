@@ -39,7 +39,7 @@ export const inventoryApp = async () => {
 
     const products = await loadProducts();
     products.forEach((p) => {
-        createRow(p.id, p.title, p.category);
+        createRow(p.id, p.code, p.fullName, p.category, p.quantityForSale, p.quantity);
     });
     addEditDelete();
 
@@ -48,14 +48,14 @@ export const inventoryApp = async () => {
         document.querySelector("tbody").innerHTML = "";
         if (searchText) {
             const filteredProducts = products.filter((p) =>
-                p.title.toLowerCase().includes(searchText)
+                p.fullName.toLowerCase().includes(searchText)
             );
             filteredProducts.forEach((p) => {
-                createRow(p.id, p.title, p.category);
+                createRow(p.id, p.code, p.fullName, p.category, p.quantityForSale, p.quantity);
             });
         } else {
             products.forEach((p) => {
-                createRow(p.id, p.title, p.category);
+                createRow(p.id, p.code, p.fullName, p.category, p.quantityForSale, p.quantity);
             });
         }
 
