@@ -1,4 +1,5 @@
 ﻿using MarketplaceApplication.Models.GenericRepository;
+using MarketplaceApplication.Models.LocationModels.Interfaces;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.PictureModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
@@ -13,6 +14,7 @@ namespace MarketplaceInfrastructure.Configurations
         {
             services.AddScoped(typeof (IGenericRepository<>), typeof (GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IPictureRepository, PictureRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();

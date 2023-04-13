@@ -14,9 +14,10 @@ namespace MarketplaceInfrastructure.Repositories
 
         public async Task<ProductGetDetailsModel> GetDetails(int id)
         {
-            var query = @"SELECT p.Id, p.FullName, p.Price, p.QuantityForSale, p.Description, p.Category, pic.ImageUrl
+            var query = @"SELECT p.Id, p.Code, p.FullName, p.Price, p.Quantity, p.QuantityForSale, p.Description, c.Type, pic.ImageUrl
                         FROM Products AS p
                         LEFT JOIN Pictures AS pic ON pic.ProductId = p.Id
+                        LEFT JOIN Categories AS c ON c.Id = p.CategoryId
                         WHERE p.Id = @id";
 
             var details = await Connection.QueryFirstOrDefaultAsync<ProductGetDetailsModel>(query, new { id });
@@ -26,7 +27,9 @@ namespace MarketplaceInfrastructure.Repositories
 
         public async Task<IEnumerable<ProductGetInventoryModel>> GetInventory()
         {
-            var query = @"SELECT Id, Code, FullName, Quantity, QuantityForSale, Category FROM Products";
+            var query = @"SELECT p.Id, p.Code, p.FullName, p.Quantity, p.QuantityForSale, c.Type 
+                        FROM Products AS p
+                        LEFT JOIN Categories AS c ON c.Id = p.CategoryId";
 
             var products = await Connection.QueryAsync<ProductGetInventoryModel>(query);
 
@@ -35,9 +38,10 @@ namespace MarketplaceInfrastructure.Repositories
 
         public async Task<IEnumerable<ProductGetMarketplaceModel>> GetMarketplace()
         {
-            var query = @"SELECT p.Id, p.Price, p.QuantityForSale, p.Category, pic.ImageUrl
+            var query = @"SELECT p.Id, p.Price, p.QuantityForSale, c.Type, pic.ImageUrl
                         FROM Products AS p
                         LEFT JOIN Pictures AS pic ON pic.ProductId = p.Id
+                        LEFT JOIN Categories AS c ON c.Id = p.CategoryId
                         WHERE p.QuantityForSale > 0";
 
             var products = await Connection.QueryAsync<ProductGetMarketplaceModel>(query);

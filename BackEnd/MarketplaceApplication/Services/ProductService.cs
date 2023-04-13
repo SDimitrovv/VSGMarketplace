@@ -1,7 +1,6 @@
 ﻿using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
-using MarketplaceDomain.Enums;
 
 namespace MarketplaceApplication.Services
 {
@@ -24,8 +23,7 @@ namespace MarketplaceApplication.Services
                 Quantity = model.Quantity,
                 QuantityForSale = model.QuantityForSale,
                 Description = model.Description,
-                Location = (Location)model.Location,
-                Category = (Category)model.Category
+                CategoryId = model.CategoryId
             };
 
             var productId = await _repository.Create(product);

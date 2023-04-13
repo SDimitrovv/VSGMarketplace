@@ -6,15 +6,26 @@ USE Marketplace
 
 GO
 
+CREATE TABLE [Locations](
+	[Id] INT PRIMARY KEY IDENTITY(1,1),
+	[City] VARCHAR(100) NOT NULL, 
+)
+
+CREATE TABLE [Categories](
+	[Id] INT PRIMARY KEY IDENTITY(1,1),
+	[Type] VARCHAR(200) NOT NULL, 
+)
+
 CREATE TABLE Products(
 	[Id] INT PRIMARY KEY IDENTITY(1,1),
+	[Code] VARCHAR(100) NOT NULL,
 	[FullName] VARCHAR(100) NOT NULL,
 	[Price] DECIMAL(10,2) NOT NULL,
 	[Quantity] INT NOT NULL,
 	[QuantityForSale] INT NOT NULL DEFAULT 0,
 	[Description] VARCHAR(1000) NULL,
-	[Location] VARCHAR(100) NOT NULL,
-	[Category] VARCHAR(100) NOT NULL
+	[LocationId] INT NULL FOREIGN KEY REFERENCES [Locations](Id),
+	[CategoryId] INT NOT NULL FOREIGN KEY REFERENCES [Categories](Id)
 )
 
 CREATE TABLE Pictures(

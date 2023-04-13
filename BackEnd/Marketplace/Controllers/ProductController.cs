@@ -36,7 +36,7 @@ namespace MarketplaceAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Merketplace")]
+        [Route("Marketplace")]
         public async Task<IEnumerable<ProductGetMarketplaceModel>> GetMarketplace()
         {
             return await _productService.GetMarketplace();
