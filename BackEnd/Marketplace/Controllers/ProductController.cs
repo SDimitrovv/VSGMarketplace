@@ -18,23 +18,6 @@ namespace MarketplaceAPI.Controllers
             _pictureService = pictureService;
         }
 
-        [HttpPost]
-        [Route("Add")]
-        public async Task<IActionResult> Add([FromForm] ProductAddModel model, IFormFile picture)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var product = await _productService.Add(model);
-            var productId = product.Id;
-
-            await _pictureService.UploadPicture(picture, productId);
-            
-            return Ok();
-        }
-
         [HttpGet]
         [Route("Marketplace")]
         public async Task<IEnumerable<ProductGetMarketplaceModel>> GetMarketplace()
@@ -54,6 +37,31 @@ namespace MarketplaceAPI.Controllers
         public async Task<IEnumerable<ProductGetInventoryModel>> GetInventory()
         {
             return await _productService.GetInventory();
+        }
+
+        [HttpPost]
+        [Route("Add")]
+        public async Task<IActionResult> Add([FromForm] ProductAddModel model, IFormFile picture)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var product = await _productService.Add(model);
+            var productId = product.Id;
+
+            await _pictureService.UploadPicture(picture, productId);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task Delete(int id)
+        {
+            await _pictureService.DeletePicture(id);
+
+            await _productService.Delete(id);
         }
     }
 }

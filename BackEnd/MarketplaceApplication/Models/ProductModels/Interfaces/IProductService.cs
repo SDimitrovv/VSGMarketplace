@@ -9,4 +9,5 @@ public interface IProductService
     Task<IEnumerable<ProductGetInventoryModel>> GetInventory();
     Task<IEnumerable<ProductGetMarketplaceModel>> GetMarketplace();
     Task<Product> Add(ProductAddModel model);
+    Task Delete(int id);
 }

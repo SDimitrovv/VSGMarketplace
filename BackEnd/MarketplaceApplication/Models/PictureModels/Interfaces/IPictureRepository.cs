@@ -5,5 +5,5 @@ namespace MarketplaceApplication.Models.PictureModels.Interfaces;
 
 public interface IPictureRepository : IGenericRepository<Picture>
 {
-    
+    Task<Picture> GetPicture(int productId);
 }

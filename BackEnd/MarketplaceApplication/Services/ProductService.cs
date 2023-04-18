@@ -32,6 +32,11 @@ namespace MarketplaceApplication.Services
             return product;
         }
 
+        public async Task Delete(int id)
+        {
+            await _repository.Delete(id);
+        }
+
         public async Task<ProductGetDetailsModel> GetDetails(int id)
         {
             return await _repository.GetDetails(id);

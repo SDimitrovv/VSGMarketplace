@@ -43,4 +43,7 @@ CREATE TABLE Orders(
 	[ProductId] INT NOT NULL FOREIGN KEY REFERENCES Products(Id)
 )
 
+GO
 
+INSERT INTO Categories (Type)
+VALUES ('Laptop'), ('Monitor'), ('PC'), ('Mouse'), ('Keyboard');

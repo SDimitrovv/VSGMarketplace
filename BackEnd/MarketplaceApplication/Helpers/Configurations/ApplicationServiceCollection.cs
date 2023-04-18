@@ -1,4 +1,5 @@
-﻿using MarketplaceApplication.Models.LocationModels.Interfaces;
+﻿using MarketplaceApplication.Models.CategoryModels.Interfaces;
+using MarketplaceApplication.Models.LocationModels.Interfaces;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.PictureModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
@@ -11,6 +12,7 @@ namespace MarketplaceApplication.Helpers.Configurations
     {
         public static IServiceCollection AddApplicationServiceCollection(this IServiceCollection services)
         {
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IPictureService, PictureService>();
