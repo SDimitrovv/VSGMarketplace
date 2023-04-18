@@ -1,7 +1,6 @@
 ﻿using MarketplaceApplication.Models.PictureModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
-using MarketplaceDomain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketplaceAPI.Controllers

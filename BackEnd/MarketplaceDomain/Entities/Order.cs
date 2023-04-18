@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MarketplaceDomain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MarketplaceDomain.Enums;
 
 namespace MarketplaceDomain.Entities
 {
@@ -17,6 +12,8 @@ namespace MarketplaceDomain.Entities
 
         public Status Status { get; set; } = Status.Pending;
 
-        public int ItemId { get; set; }
+        public int ProductId { get; set; }
+
+        public string Email { get; set; }
     }
 }

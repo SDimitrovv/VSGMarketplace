@@ -10,10 +10,7 @@ namespace MarketplaceAPI.Controllers
     {
         private readonly IPictureService _pictureService;
 
-        public PictureController(IPictureService pictureService)
-        {
-            _pictureService = pictureService;
-        }
+        public PictureController(IPictureService pictureService) => _pictureService = pictureService;
 
         [HttpPost]
         public async Task<IActionResult> Add(int productId, IFormFile picture)

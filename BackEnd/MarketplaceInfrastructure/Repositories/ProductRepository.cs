@@ -48,5 +48,15 @@ namespace MarketplaceInfrastructure.Repositories
 
             return products;
         }
+
+        public async Task ReduceQuantity(int productId, int quantityReduce)
+        {
+            var query = @"UPDATE Products
+                        SET Quantity = Quantity - @QuantityReduce,
+                        QuantityForSale = QuantityForSale - @QuantityReduce
+                        WHERE Id = @ProductId";
+            
+            await Connection.ExecuteAsync(query, new { quantityReduce, productId });
+        }
     }
 }
