@@ -1,6 +1,6 @@
-import { makeRequest } from "../src/makeRequest.js";
 import { closeModalHandler } from "../src/global.js";
 import { imageHandler } from "../src/inventoryApp.js";
+import { createImage, createProduct } from "../src/itemsService.js";
 
 export const addProduct = () => {
     const modal = document.createElement('form');
@@ -17,19 +17,19 @@ export const addProduct = () => {
         <div class="leftModal">
             <h2>Add New Item</h2>
             <input type="text" name="code" placeholder="Code *" required>
-            <input type="text" name="name" placeholder="Name *" required>
+            <input type="text" name="fullName" placeholder="Name *" required>
             <textarea type="text" name="description" placeholder="Description"></textarea>
-            <select name="category" class="category">
+            <select name="categoryId" class="category">
                 <option value="" disabled selected>Category *</option>
-                <option value="laptops">Laptops</option>
+                <option value="1">Laptops</option>
             </select>
-            <input type="number" name="qtyForSale" placeholder="Qty For Sale">
+            <input type="number" name="quantityForSale" placeholder="Qty For Sale">
             <input type="number" name="price" placeholder="Sale Price">
-            <input type="number" name="qty" required placeholder="Qty *">
+            <input type="number" name="quantity" required placeholder="Qty *">
         </div>
         <div class="rightModal">
             <img class="currentImg" src="/images/inventory/no-image-placeholder.png">
-            <input class="inputImage" accept="image/*" name="image" type="file">
+            <input class="inputImage" accept="image/*" name="picture" type="file">
             <div class="uploadDelete">
                 <button class="uploadImg">Upload</button>
                 <button class="deleteImg">Remove</button>
@@ -45,9 +45,12 @@ export const addProduct = () => {
     modal.addEventListener('submit', async e => {
         e.preventDefault();
         const formData = new FormData(e.target);
+        const image = formData.get("picture");
+        formData.delete("picture");
+        const imageForm = new FormData();
+        imageForm.append("picture", image);
+
         const itemData = Object.fromEntries(formData);
-        const image = formData.get("image");
-        formData.delete("image");
         console.log(itemData);
         console.log(image);
 
@@ -56,25 +59,19 @@ export const addProduct = () => {
         //     alert("You are not logged in!");
         //     return;
         // }
-        // if (image.name) {
-        //     const imgRes = await makeRequest({
-        //         path: "/Add",
-        //         method: "POST",
-        //         image
-        //     });
 
-        //     console.log("Image POST", imgRes);
-        // } else {
-        //     return alert('Choose image!');
-        // }
+        const res = await createProduct(itemData);
+        const id = await res.json();
+        console.log("POST", id);
 
-        const res = await makeRequest({
-            path: "/Add",
-            method: "POST",
-            itemData
-        });
+        if (image.name) {
+            const imgRes = await createImage(id, imageForm);
 
-        console.log("POST", res);
+            console.log("Image POST", imgRes);
+        } else {
+            return alert('Choose image!');
+        }
+
         modal.remove();
         overlay.style.display = 'none';
     });

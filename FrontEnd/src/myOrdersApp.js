@@ -1,10 +1,10 @@
 
 import { myOrderComponent } from "../components/myOrderComponent.js";
 import { addButtons, closeContainerHandler } from "./global.js";
-import { loadProducts } from "./itemsService.js";
+import { loadInventory } from "./itemsService.js";
 
 export const myOrdersApp = async () => {
-    const myProducts = await loadProducts();
+    const myProducts = await loadInventory();
     myProducts.forEach((p) => {
         myOrderComponent(p.id, p.fullName, p.quantityForSale);
     });

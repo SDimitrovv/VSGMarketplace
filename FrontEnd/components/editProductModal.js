@@ -1,10 +1,10 @@
-import { makeRequest } from "../src/makeRequest.js";
-import { loadProduct } from "../src/itemsService.js";
+import { createImage, editImage, editProduct, loadProduct } from "../src/itemsService.js";
 import { closeModalHandler } from "../src/global.js";
 import { imageHandler } from "../src/inventoryApp.js";
 
-export const editProduct = async (id) => {
+export const editProductModal = async (id) => {
     const product = await loadProduct(id);
+    console.log(product);
     const modal = document.createElement("form");
     modal.className = "editForm modalContent";
     modal.innerHTML = `
@@ -18,20 +18,20 @@ export const editProduct = async (id) => {
 <div class="row">
     <div class="leftModal">
         <h2>Modify Item</h2>
-        <input type="text" name="code" required placeholder="Code *" value="${id}">
-        <input type="text" name="name" required placeholder="Name *" value="${product.fullName}">
+        <input type="text" name="code" required placeholder="Code *" value="${product.code}">
+        <input type="text" name="fullName" required placeholder="Name *" value="${product.fullName}">
         <textarea type="text" name="description" placeholder="Description">${product.description}</textarea>
-        <select name="category" class="category">
+        <select name="categoryId" class="category">
             <option value="" disabled>Category *</option>
-            <option value="${product.category}" selected>${product.category}</option>
+            <option value="${product.categoryId}" selected>${product.type}</option>
         </select>
-        <input type="number" name="qtyForSale" placeholder="Qty For Sale" value="${product.quantityForSale}">
-        <input type="number" name="price" placeholder="Sale Price" value="69">
-        <input type="number" name="qty" required placeholder="Qty *" value="2">
+        <input type="number" name="quantityForSale" placeholder="Qty For Sale" value="${product.quantityForSale}">
+        <input type="number" name="price" placeholder="Sale Price" value="${product.price}">
+        <input type="number" name="quantity" required placeholder="Qty *" value="${product.quantity}">
     </div>
     <div class="rightModal">
-        <img class="currentImg" name="image" src="${product.imageUrl}">
-        <input class="inputImage" accept="image/*" name="image"  type="file">
+        <img class="currentImg" src="${product.imageUrl}">
+        <input class="inputImage" accept="image/*" name="picture" type="file">
         <div class="uploadDelete">
             <button class="uploadImg">Upload</button>
             <button class="deleteImg">Remove</button>
@@ -47,20 +47,14 @@ export const editProduct = async (id) => {
     modal.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const image = formData.get("image");
-        // if (image.name) {
-        //     const res = await makeRequest({
-        //         path: "/products/" + id,
-        //         method: "PUT",
-        //         image,
-        //     });
+        const image = formData.get("picture");
+        formData.delete("picture");
+        const imageForm = new FormData();
+        imageForm.append("newPicture", image);
 
-        //     console.log("IMAGE PUT", res);
-        // }
-
-        formData.delete("image");
         const itemData = Object.fromEntries(formData);
         console.log(itemData);
+        console.log(image);
 
         // const user = JSON.parse(localStorage.getItem('user'));
         // if (!user) {
@@ -68,13 +62,16 @@ export const editProduct = async (id) => {
         //     return;
         // }
 
-        // const res = await makeRequest({
-        //     path: "/products/" + id,
-        //     method: "PUT",
-        //     itemData,
-        // });
+        const res = await editProduct(id, itemData);
+        console.log("PUT", res);
 
-        // console.log("PUT", res);
+        // if (image.name) {
+        //     const imgRes = await createImage(id, imageForm);
+        //     console.log("Image PUT", imgRes)
+        // } else {
+        //     return alert('Choose image!');
+        // }
+
         modal.remove();
         overlay.style.display = "none";
     });

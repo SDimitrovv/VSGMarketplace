@@ -10,9 +10,6 @@ export const landingApp = () => {
             sessionStorage.setItem("user", JSON.stringify(result.account));
             navigateTo("#marketplace");
             location.reload();
-            // if (window.innerWidth < 769) {
-            //     window.close();
-            // }
         } catch (error) {
             console.log(error);
             return error;

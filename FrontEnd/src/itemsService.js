@@ -1,8 +1,18 @@
 import { makeRequest } from "./makeRequest.js";
+const baseURL = "https://localhost:7089/api";
 
-export const loadProducts = async () => {
+export const loadMarketplace = async () => {
     try {
-        const data = await makeRequest({ path: "/Inventory" });
+        const data = await makeRequest({ path: "/Product/Marketplace" });
+        return data;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+export const loadInventory = async () => {
+    try {
+        const data = await makeRequest({ path: "/Product/Inventory" });
         return data;
     } catch (err) {
         console.error(err);
@@ -11,7 +21,7 @@ export const loadProducts = async () => {
 
 export const loadProduct = async (id) => {
     try {
-        const data = await makeRequest({ path: "/Details/" + id });
+        const data = await makeRequest({ path: "/Product/" + id });
         return data;
     } catch (err) {
         console.error(err);
@@ -20,10 +30,54 @@ export const loadProduct = async (id) => {
 
 export const createProduct = async (data) => {
     try {
-        const res = await makeRequest({
-            path: "/Product/Add",
+        const res = await fetch(baseURL + "/Product", {
             method: "POST",
-            data,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        return res;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+export const editProduct = async (id, data) => {
+    try {
+        const res = await fetch(baseURL + "/Product/" + id, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        return res;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+export const createImage = async (id, file) => {
+    try {
+        const res = await fetch(baseURL + "/Picture?productId=" + id, {
+            method: "POST",
+            body: file,
+        });
+
+        return res;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+export const editImage = async (id, file) => {
+    try {
+        const res = await fetch(baseURL + `/Picture/${1}?productId=${id}`, {
+            method: "PUT",
+            body: file,
         });
 
         return res;

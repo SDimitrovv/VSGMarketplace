@@ -1,15 +1,15 @@
-export const cardComponent = (id, quantityForSale, category) => {
+export const cardComponent = (id, price, quantityForSale, type, imageUrl) => {
     const cardDiv = document.createElement("div");
     cardDiv.className = 'product';
     cardDiv.id = id;
     cardDiv.innerHTML = `
    <a class='productButton'>
-       <img src="/images/marketplace/product-image.png" alt="Product-image">
+       <img src="${imageUrl}" alt="Product-image">
    </a>
    <div class="productContent">
        <div class="price">
-           <span></span>
-           <small>${category}</small>
+           <span>${price} BGN</span>
+           <small>${type}</small>
        </div>
        <div class="quantityAndImg">
            <form>
@@ -39,11 +39,8 @@ export const cardComponent = (id, quantityForSale, category) => {
        </div>
    </div>
 `
-    const price = cardDiv.querySelector(".price span");
     const select = cardDiv.querySelector(".randomNumberSelect");
-    const randomNumber = Math.floor(Math.random() * 1000) + 1;
-    price.textContent = randomNumber + " BGN";
-
+    // const randomNumber = Math.floor(Math.random() * 1000) + 1;
 
     for (let i = 1; i <= quantityForSale + 1; i++) {
         const option = document.createElement("option");

@@ -1,8 +1,8 @@
 import { pendingOrderComponent } from "../components/pendingOrderComponent.js";
-import { loadProducts } from "./itemsService.js";
+import { loadInventory } from "./itemsService.js";
 
 export const pendingOrdersApp = async () => {
-    const pendingProducts = await loadProducts();
+    const pendingProducts = await loadInventory();
     pendingProducts.forEach((p) => {
         pendingOrderComponent(p.id, p.code, p.quantityForSale);
     });

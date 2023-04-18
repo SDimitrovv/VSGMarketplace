@@ -2,8 +2,9 @@ import { loadProduct } from "../src/itemsService.js";
 
 export const createModal = async (id) => {
     const product = await loadProduct(id);
+    console.log(product);
     const modalContent = document.createElement("div");
-    modalContent.id = 'modalContent';
+    modalContent.id = "modalContent";
     modalContent.innerHTML = `
 <a class="closeModal">
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,17 +14,17 @@ export const createModal = async (id) => {
     </svg>
 </a>
 <a id="modalImage">
-<img src="/images/marketplace/product-image.png">
+<img src="${product.imageUrl}">
 </a>
 <div id="modalFrameOne">
     <div id="modalFrameTwo">
         <div id="productName">
             <b>${product.fullName}</b>
-            <small>${product.category}</small>
+            <small>${product.type}</small>
         </div>
         <div id="priceAndQty">
-            <b></b>
-            <small>Qty: 1</small>
+            <b>${product.price} BGN</b>
+            <small>Qty: ${product.quantityForSale}</small>
         </div>
     </div>
     <p>
@@ -32,10 +33,6 @@ export const createModal = async (id) => {
 </div>
 </div>
 `;
-    const price = modalContent.querySelector("#priceAndQty b");
-    const randomNumber = Math.floor(Math.random() * 1000) + 1;
-    price.textContent = randomNumber + " BGN";
-
-    document.querySelector('#addItemOverlay').appendChild(modalContent);
+    document.querySelector("#addItemOverlay").appendChild(modalContent);
     return modalContent;
-}
+};

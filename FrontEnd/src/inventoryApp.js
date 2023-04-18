@@ -1,45 +1,13 @@
 import { addButtons, closeContainerHandler } from "./global.js";
 import { addProduct } from "../components/addProductModal.js";
-import { editProduct } from "../components/editProductModal.js";
-import { loadProducts } from "./itemsService.js";
+import { editProductModal } from "../components/editProductModal.js";
+import { loadInventory } from "./itemsService.js";
 import { createRow } from "../components/createRow.js";
 
 export const inventoryApp = async () => {
-    const div = document.createElement("div");
-    div.className = "removeContainer";
-    div.innerHTML = `
-        <p>Are you sure you want to remove this item ?</p>
-        <div class="buttons">
-            <button class='yes'>Yes</button>
-            <button class='no'>No</button> 
-        </div>
-    `;
-
-    const addEditDelete = () => {
-        document.querySelectorAll(".edit").forEach((b) =>
-            b.addEventListener("click", (e) => {
-                e.preventDefault();
-                const id = e.target.parentElement.parentElement.parentElement.id;
-                editProduct(id);
-                const overlay = document.querySelector("#addItemOverlay2");
-                overlay.style.display = "flex";
-            })
-        );
-        document.querySelectorAll(".delete").forEach((b) => {
-            b.addEventListener("click", (e) => {
-                e.preventDefault();
-                const el = e.target.parentElement;
-                el.appendChild(div);
-                addButtons();
-                closeContainerHandler(div);
-                imageHandler();
-            });
-        });
-    };
-
-    const products = await loadProducts();
+    const products = await loadInventory();
     products.forEach((p) => {
-        createRow(p.id, p.code, p.fullName, p.category, p.quantityForSale, p.quantity);
+        createRow(p.id, p.code, p.fullName, p.type, p.quantityForSale, p.quantity);
     });
     addEditDelete();
 
@@ -51,11 +19,25 @@ export const inventoryApp = async () => {
                 p.fullName.toLowerCase().includes(searchText)
             );
             filteredProducts.forEach((p) => {
-                createRow(p.id, p.code, p.fullName, p.category, p.quantityForSale, p.quantity);
+                createRow(
+                    p.id,
+                    p.code,
+                    p.fullName,
+                    p.type,
+                    p.quantityForSale,
+                    p.quantity
+                );
             });
         } else {
             products.forEach((p) => {
-                createRow(p.id, p.code, p.fullName, p.category, p.quantityForSale, p.quantity);
+                createRow(
+                    p.id,
+                    p.code,
+                    p.fullName,
+                    p.type,
+                    p.quantityForSale,
+                    p.quantity
+                );
             });
         }
 
@@ -67,6 +49,36 @@ export const inventoryApp = async () => {
         addProduct();
         const overlay = document.querySelector("#addItemOverlay");
         overlay.style.display = "flex";
+    });
+};
+
+const addEditDelete = () => {
+    document.querySelectorAll(".edit").forEach((b) =>
+        b.addEventListener("click", (e) => {
+            e.preventDefault();
+            const id = e.target.parentElement.parentElement.parentElement.id;
+            editProductModal(id);
+            const overlay = document.querySelector("#addItemOverlay2");
+            overlay.style.display = "flex";
+        })
+    );
+    document.querySelectorAll(".delete").forEach((b) => {
+        b.addEventListener("click", (e) => {
+            e.preventDefault();
+            const div = document.createElement("div");
+            div.className = "removeContainer";
+            div.innerHTML = `
+                    <p>Are you sure you want to remove this item ?</p>
+                    <div class="buttons">
+                        <button class='yes'>Yes</button>
+                        <button class='no'>No</button> 
+                    </div>
+                `;
+            const el = e.target.parentElement;
+            el.appendChild(div);
+            addButtons();
+            closeContainerHandler(div);
+        });
     });
 };
 

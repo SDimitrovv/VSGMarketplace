@@ -1,4 +1,4 @@
-const baseURL = "https://localhost:7089/api/Product";
+const baseURL = "https://localhost:7089/api";
 
 export const makeRequest = async ({
     path,
@@ -17,9 +17,9 @@ export const makeRequest = async ({
             },
         };
 
-        if (Object.keys(data).length > 0) {
-            options.body = JSON.stringify(data);
-        }
+        // if (data) {
+        //     options.body = JSON.stringify(data);
+        // }
 
         const res = await fetch(baseURL + path, {
             method,

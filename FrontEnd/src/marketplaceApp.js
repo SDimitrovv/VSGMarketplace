@@ -1,12 +1,13 @@
 import { addButtons, closeContainerHandler, closeModalHandler, } from "./global.js";
-import { loadProducts } from "./itemsService.js";
+import { loadMarketplace } from "./itemsService.js";
 import { cardComponent } from "../components/cardComponent.js";
 import { createModal } from "../components/createModal.js";
 
 export const marketplaceApp = async () => {
-    const products = await loadProducts();
+    const products = await loadMarketplace();
+    console.log(products);
     products.forEach((p) => {
-        cardComponent(p.id, p.quantityForSale, p.category);
+        cardComponent(p.id, p.price, p.quantityForSale, p.type, p.imageUrl);
     });
 
     const createElement = (price) => {
