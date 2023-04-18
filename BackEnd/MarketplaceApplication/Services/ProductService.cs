@@ -1,6 +1,7 @@
 ﻿using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
+using System.Reflection;
 
 namespace MarketplaceApplication.Services
 {
@@ -30,6 +31,28 @@ namespace MarketplaceApplication.Services
             product.Id = productId;
 
             return product;
+        }
+
+        public async Task<Product> GetForUpdate(int id)
+        {
+            return await _repository.GetByID(id);
+        }
+
+        public async Task Update(int productId, ProductEditModel newProduct)
+        {
+            var product = new Product
+            {
+                Id = productId,
+                Code = newProduct.Code,
+                FullName = newProduct.FullName,
+                Price = newProduct.Price,
+                Quantity = newProduct.Quantity,
+                QuantityForSale = newProduct.QuantityForSale,
+                Description = newProduct.Description,
+                CategoryId = newProduct.CategoryId
+            };
+
+            await _repository.Update(product);
         }
 
         public async Task Delete(int id)

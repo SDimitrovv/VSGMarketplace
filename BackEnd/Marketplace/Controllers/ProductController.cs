@@ -1,6 +1,7 @@
 ﻿using MarketplaceApplication.Models.PictureModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
+using MarketplaceDomain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketplaceAPI.Controllers
@@ -26,7 +27,7 @@ namespace MarketplaceAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Details/{id}")]
+        [Route("{id}")]
         public async Task<ProductGetDetailsModel> GetProductDetails(int id)
         {
             return await _productService.GetDetails(id);
@@ -40,27 +41,23 @@ namespace MarketplaceAPI.Controllers
         }
 
         [HttpPost]
-        [Route("Add")]
-        public async Task<IActionResult> Add([FromForm] ProductAddModel model, IFormFile picture)
+        public async Task<IActionResult> Add([FromBody] ProductAddModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var product = await _productService.Add(model);
-            var productId = product.Id;
 
-            await _pictureService.UploadPicture(picture, productId);
+            return Ok(product.Id);
+        }
 
-            return Ok();
+        [HttpPut("{id}")]
+        public async Task Edit(int id, ProductEditModel newProduct)
+        {
+            await _productService.Update(id, newProduct);
         }
 
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
             await _pictureService.DeletePicture(id);
-
             await _productService.Delete(id);
         }
     }

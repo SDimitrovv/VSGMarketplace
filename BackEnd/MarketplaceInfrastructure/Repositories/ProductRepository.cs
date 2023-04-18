@@ -14,7 +14,7 @@ namespace MarketplaceInfrastructure.Repositories
 
         public async Task<ProductGetDetailsModel> GetDetails(int id)
         {
-            var query = @"SELECT p.Id, p.Code, p.FullName, p.Price, p.Quantity, p.QuantityForSale, p.Description, c.Type, pic.ImageUrl
+            var query = @"SELECT p.*, c.Id AS CategoryId, c.Type, pic.ImageUrl
                         FROM Products AS p
                         LEFT JOIN Pictures AS pic ON pic.ProductId = p.Id
                         LEFT JOIN Categories AS c ON c.Id = p.CategoryId
