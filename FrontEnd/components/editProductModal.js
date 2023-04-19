@@ -1,10 +1,9 @@
-import { createImage, editImage, editProduct, loadProduct } from "../src/itemsService.js";
+import { editImage, editProduct, loadProduct } from "../src/itemsService.js";
 import { closeModalHandler } from "../src/global.js";
-import { imageHandler } from "../src/inventoryApp.js";
+import { imageHandler } from "../src/global.js";
 
 export const editProductModal = async (id) => {
     const product = await loadProduct(id);
-    console.log(product);
     const modal = document.createElement("form");
     modal.className = "editForm modalContent";
     modal.innerHTML = `
@@ -14,8 +13,8 @@ export const editProductModal = async (id) => {
             d="M17.7305 1.75977L10.7578 8.5L17.7305 15.2402L15.9727 16.9395L9 10.1992L2.02734 16.9395L0.269531 15.2402L7.24219 8.5L0.269531 1.75977L2.02734 0.0605469L9 6.80078L15.9727 0.0605469L17.7305 1.75977Z"
             fill="black" />
     </svg>
-</a>
-<div class="row">
+    </a>
+    <div class="row">
     <div class="leftModal">
         <h2>Modify Item</h2>
         <input type="text" name="code" required placeholder="Code *" value="${product.code}">
@@ -37,13 +36,14 @@ export const editProductModal = async (id) => {
             <button class="deleteImg">Remove</button>
         </div>
     </div>
-</div>
-<button type="submit">Modify</button>
-`;
+    </div>
+    <button type="submit">Modify</button>
+    `;
+
     const overlay = document.querySelector("#addItemOverlay2");
     overlay.appendChild(modal);
     closeModalHandler();
-    imageHandler();
+    imageHandler(modal);
     modal.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -53,8 +53,6 @@ export const editProductModal = async (id) => {
         imageForm.append("newPicture", image);
 
         const itemData = Object.fromEntries(formData);
-        console.log(itemData);
-        console.log(image);
 
         // const user = JSON.parse(localStorage.getItem('user'));
         // if (!user) {
@@ -62,15 +60,16 @@ export const editProductModal = async (id) => {
         //     return;
         // }
 
-        const res = await editProduct(id, itemData);
-        console.log("PUT", res);
-
-        // if (image.name) {
-        //     const imgRes = await createImage(id, imageForm);
-        //     console.log("Image PUT", imgRes)
-        // } else {
-        //     return alert('Choose image!');
-        // }
+        if (!image.name) {
+            return alert("Choose an image!");
+        } else if (itemData.quantity < itemData.quantityForSale) {
+            return alert("Make sure that quantity is not less than quantity for sale!");
+        } else {
+            const res = await editProduct(id, itemData);
+            console.log("PUT", res);
+            const imgRes = await editImage(id, imageForm);
+            console.log("Image PUT", imgRes)
+        }
 
         modal.remove();
         overlay.style.display = "none";

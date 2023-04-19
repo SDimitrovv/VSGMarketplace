@@ -1,16 +1,17 @@
-export const myOrderComponent = (id, fullName, quantityForSale) => {
+import { closeContainerHandler } from "../src/global";
+
+export const myOrderComponent = (quantity, date, status, fullName, price) => {
     const cardDiv = document.createElement("div");
-    cardDiv.className = 'pendingOrders';
-    cardDiv.id = id;
+    cardDiv.className = "pendingOrders";
     cardDiv.innerHTML = `
     <span class="nameColumn">${fullName}</span>
     <div class="firstTwo">
-        <span class="qtyColumn">${quantityForSale}</span>
-        <span class="priceColumn"></span>
+        <span class="qtyColumn">${quantity}</span>
+        <span class="priceColumn">${price} BGN</span>
         </div>
-        <span class="orderDateColumn">2023-03-13 16:30</span>
+        <span class="orderDateColumn">${date.substring(0, 10)}</span>
         <div class="orderStatus">
-            <span>Pending</span>
+            <span>${status}</span>
             <div id="popupParent">
                 <a class="cancelOrder">
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
@@ -24,10 +25,21 @@ export const myOrderComponent = (id, fullName, quantityForSale) => {
         </div>
     `;
 
-    const price = cardDiv.querySelector(".priceColumn");
-    const randomNumber = Math.floor(Math.random() * 1000) + 1;
-    price.textContent = randomNumber + " BGN";
+    cardDiv.querySelector(".cancelOrder").addEventListener("click", (e) => {
+        e.preventDefault();
+        const div = document.createElement("div");
+        div.className = "cancelOrderContainer";
+        div.innerHTML = `
+                <p>Are you sure you want to reject this order ?</p>
+                <div class="buttons">
+                <button type="submit" class='yes'>Yes</button>
+                <button class='no'>No</button>
+                </div>
+                `;
+        e.target.parentElement.appendChild(div);
+        closeContainerHandler(div);
+    });
 
-    const productsSections = document.querySelector('#myOrdersMain');
+    const productsSections = document.querySelector("#myOrdersMain");
     productsSections.appendChild(cardDiv);
 };

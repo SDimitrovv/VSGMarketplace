@@ -1,6 +1,8 @@
-import { inventoryApp } from "../src/inventoryApp.js";
+import { addProduct } from "../components/addProductModal.js";
+import { createRow } from "../components/createRow.js";
+import { loadInventory } from "../src/itemsService.js";
 
-const Inventory = () => {
+const Inventory = async () => {
     const main = document.querySelector('main');
     main.id = "inventoryMain";
     main.innerHTML = `
@@ -37,9 +39,50 @@ const Inventory = () => {
             </tbody>
         </table>
     </div>
-</div>
-`;
-    inventoryApp();
-}
+    </div>
+    `;
+    const products = await loadInventory();
+    products.forEach((p) => {
+        createRow(p.id, p.code, p.fullName, p.type, p.quantityForSale, p.quantity);
+    });
+
+    main.querySelector("#searchText").addEventListener("input", (e) => {
+        const searchText = e.target.value.toLowerCase();
+        main.querySelector("tbody").innerHTML = "";
+        if (searchText) {
+            const filteredProducts = products.filter((p) =>
+                p.fullName.toLowerCase().includes(searchText)
+            );
+            filteredProducts.forEach((p) => {
+                createRow(
+                    p.id,
+                    p.code,
+                    p.fullName,
+                    p.type,
+                    p.quantityForSale,
+                    p.quantity
+                );
+            });
+        } else {
+            products.forEach((p) => {
+                createRow(
+                    p.id,
+                    p.code,
+                    p.fullName,
+                    p.type,
+                    p.quantityForSale,
+                    p.quantity
+                );
+            });
+        }
+    });
+
+    main.querySelector("#addButton").addEventListener("click", async (e) => {
+        e.preventDefault();
+        addProduct();
+        const overlay = document.querySelector("#addItemOverlay");
+        overlay.style.display = "flex";
+    });
+};
 
 export default Inventory;

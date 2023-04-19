@@ -1,4 +1,4 @@
-export function navStyling(path) {
+export const navStyling = (path) => {
     document.querySelectorAll(".navButton").forEach((n) => {
         const allPaths = n.textContent.trim().toLowerCase();
         if (path.includes("-")) {
@@ -15,7 +15,7 @@ export function navStyling(path) {
     });
 }
 
-export function headerUpdate(path) {
+export const headerUpdate = (path) => {
     const titleElement = document.querySelector("#pageTitle");
 
     if (path.includes("-")) {
@@ -35,22 +35,13 @@ export function headerUpdate(path) {
     }
 }
 
-export function addButtons() {
-    document.querySelectorAll(".buttons button").forEach((b) => {
-        b.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.target.parentElement.parentElement.remove();
-        });
-    });
-}
-
-export function closeModalHandler() {
+export const closeModalHandler = () => {
     document
         .querySelectorAll(".closeModal")
         .forEach((b) => b.addEventListener("click", closing));
 }
 
-function closing(e) {
+const closing = (e) => {
     e?.preventDefault();
     e.target.parentElement.remove();
 
@@ -60,7 +51,7 @@ function closing(e) {
     overlay2.style.display = "none";
 }
 
-export function closeContainerHandler(container) {
+export const closeContainerHandler = (container) => {
     container.querySelector("p").style.pointerEvents = "none";
     setTimeout(() => {
         document.addEventListener("click", closeContainerClick);
@@ -74,3 +65,30 @@ export function closeContainerHandler(container) {
         }
     }
 }
+
+export const imageHandler = (modal) => {
+    const imagePreview = document.querySelector(".currentImg");
+    modal.querySelector(".uploadImg").addEventListener("click", e => {
+        e.preventDefault();
+        const input = modal.querySelector(".inputImage");
+        input.addEventListener("change", () => {
+            const file = input.files[0];
+            const reader = new FileReader();
+
+            reader.onload = e => {
+                imagePreview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        input.click();
+    })
+
+    modal.querySelector(".deleteImg").addEventListener("click", (e) => {
+        e.preventDefault();
+        modal.querySelector(".currentImg").src =
+            "/images/inventory/no-image-placeholder.png";
+        modal.querySelector(".inputImage").value = "";
+    })
+};

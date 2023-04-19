@@ -1,10 +1,11 @@
 import { closeModalHandler } from "../src/global.js";
-import { imageHandler } from "../src/inventoryApp.js";
+import { imageHandler } from "../src/global.js";
 import { createImage, createProduct } from "../src/itemsService.js";
+import { createRow } from "./createRow.js";
 
 export const addProduct = () => {
-    const modal = document.createElement('form');
-    modal.className = 'addForm modalContent';
+    const modal = document.createElement("form");
+    modal.className = "addForm modalContent";
     modal.innerHTML = `
     <a class="closeModal">
         <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,12 +38,14 @@ export const addProduct = () => {
         </div>
     </div>
     <button type="submit">Add</button>
-`;
-    const overlay = document.querySelector('#addItemOverlay')
+    `;
+
+    const overlay = document.querySelector("#addItemOverlay");
     overlay.appendChild(modal);
     closeModalHandler();
-    imageHandler();
-    modal.addEventListener('submit', async e => {
+    imageHandler(modal);
+
+    modal.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const image = formData.get("picture");
@@ -50,7 +53,7 @@ export const addProduct = () => {
         const imageForm = new FormData();
         imageForm.append("picture", image);
 
-        const itemData = Object.fromEntries(formData);
+        let itemData = Object.fromEntries(formData);
         console.log(itemData);
         console.log(image);
 
@@ -60,19 +63,30 @@ export const addProduct = () => {
         //     return;
         // }
 
-        const res = await createProduct(itemData);
-        const id = await res.json();
-        console.log("POST", id);
-
-        if (image.name) {
-            const imgRes = await createImage(id, imageForm);
-
-            console.log("Image POST", imgRes);
+        if (!image.name) {
+            return alert("Choose an image!");
+        } else if (itemData.quantity < itemData.quantityForSale) {
+            return alert("Make sure that quantity is not less than quantity for sale!");
         } else {
-            return alert('Choose image!');
+            const res = await createProduct(itemData);
+            const id = await res.json();
+            itemData.id = id;
+            itemData.type = "Laptop";
+            console.log("POST", id);
+            const imgRes = await createImage(id, imageForm);
+            console.log("Image POST", imgRes);
         }
 
         modal.remove();
-        overlay.style.display = 'none';
+        overlay.style.display = "none";
+
+        createRow(
+            itemData.id,
+            itemData.code,
+            itemData.fullName,
+            itemData.type,
+            itemData.quantityForSale,
+            itemData.quantity
+        );
     });
-}
+};

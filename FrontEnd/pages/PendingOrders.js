@@ -1,9 +1,10 @@
-import { pendingOrdersApp } from "../src/pendingOrdersApp.js";
+import { pendingOrderComponent } from "../components/pendingOrderComponent.js";
+import { loadPendingOrders } from "../src/itemsService.js";
 
-const PendingOrders = () => {
+const PendingOrders = async () => {
     const main = document.querySelector('main');
     main.id = "pendingOrdersMain";
-    main.innerHTML =  `
+    main.innerHTML = `
     <div id="headingSection">
         <span class="codeColumn">Code</span>
         <span class="qtyColumn">QTY</span>
@@ -12,9 +13,18 @@ const PendingOrders = () => {
         <span class="orderDateColumn">Order Date</span>
         <span class="actionColumn">Action</span>
     </div>
-`;
+    `;
 
-    pendingOrdersApp();
+    const pendingProducts = await loadPendingOrders();
+    pendingProducts.forEach((p) => {
+        pendingOrderComponent(p.id, p.code, p.quantity, p.price, p.email, p.date, p.status);
+    });
+
+    document.querySelectorAll('.completeButton').forEach(b => {
+        b.addEventListener('click', e => {
+            e.target.parentElement.remove();
+        })
+    })
 };
 
 export default PendingOrders;

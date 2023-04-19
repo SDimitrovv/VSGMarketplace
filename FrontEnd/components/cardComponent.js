@@ -1,6 +1,10 @@
+import { closeContainerHandler, closeModalHandler } from "../src/global";
+import { createOrder } from "../src/itemsService";
+import { createModal } from "./createModal";
+
 export const cardComponent = (id, price, quantityForSale, type, imageUrl) => {
     const cardDiv = document.createElement("div");
-    cardDiv.className = 'product';
+    cardDiv.className = "product";
     cardDiv.id = id;
     cardDiv.innerHTML = `
    <a class='productButton'>
@@ -38,24 +42,59 @@ export const cardComponent = (id, price, quantityForSale, type, imageUrl) => {
            </form>
        </div>
    </div>
-`
-    const select = cardDiv.querySelector(".randomNumberSelect");
-    // const randomNumber = Math.floor(Math.random() * 1000) + 1;
+    `;
 
+    const select = cardDiv.querySelector(".randomNumberSelect");
     for (let i = 1; i <= quantityForSale + 1; i++) {
         const option = document.createElement("option");
         option.value = i;
         option.text = i;
-        if (i === 1) {
-            option.selected = true;
-        }
         select.appendChild(option);
-
-        if (i === 50) {
+        if (i > 50) {
             break;
         }
     }
 
-    const productsSections = document.querySelector('#marketplaceMain');
+    const createContainer = (amount) => {
+        const buyContainer = document.createElement("div");
+        buyContainer.className = "buyContainer";
+        buyContainer.innerHTML = `
+        <p>Are you sure you want to buy <b>${amount}</b> item for <b>${price * amount} BGN</b>?</p>
+        <div class="buttons">
+            <button type="submit" class='yes'>Yes</button>
+            <button class='no'>No</button>
+        </div>
+        `;
+
+        closeContainerHandler(buyContainer);
+        return buyContainer;
+    };
+
+    cardDiv.querySelector(".buyButton").addEventListener("click", (e) => {
+        e.preventDefault();
+        const buyContainer = createContainer(select.value);
+        e.target.parentElement.appendChild(buyContainer);
+        buyContainer.querySelector(".yes").addEventListener("click", async (e) => {
+            e.preventDefault();
+            const user = sessionStorage.getItem("user");
+            const email = user ? user.username : "eredzhepov@vsgbg.com";
+            const order = { quantity: select.value, productId: id, email: email };
+            const res = await createOrder(order);
+            console.log(await res.json());
+        });
+    });
+
+    cardDiv
+        .querySelector(".productButton")
+        .addEventListener("click", async (e) => {
+            e.preventDefault();
+            const modal = await createModal(id);
+            document.querySelector("#addItemOverlay").style.display = "flex";
+            modal.querySelector("#modalImage").style.pointerEvents = "none";
+            modal.querySelector("#modalFrameOne").style.pointerEvents = "none";
+            closeModalHandler();
+        });
+
+    const productsSections = document.querySelector("#marketplaceMain");
     productsSections.appendChild(cardDiv);
 };
