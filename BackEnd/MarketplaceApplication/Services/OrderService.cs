@@ -2,6 +2,7 @@
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
+using MarketplaceDomain.Enums;
 
 namespace MarketplaceApplication.Services
 {
@@ -26,19 +27,21 @@ namespace MarketplaceApplication.Services
             return await _orderRepository.GetMyOrders(email);
         }
 
-        public async Task<Order> CreateOrder(int productId, AddOrderModel model)
+        public async Task<Order> CreateOrder(AddOrderModel model)
         {
             var order = new Order
             {
                 Quantity = model.Quantity,
-                ProductId = productId,
+                Date = DateTime.Now,
+                Status = Status.Pending.ToString(),
+                ProductId = model.ProductId,
                 Email = model.Email
             };
 
             var orderId = await _orderRepository.Create(order);
             order.Id = orderId;
 
-            await _productRepository.ReduceQuantity(productId, order.Quantity);
+            await _productRepository.ReduceQuantity(order.ProductId, order.Quantity);
 
             return order;
         }

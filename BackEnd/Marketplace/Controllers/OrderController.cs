@@ -1,7 +1,5 @@
 ﻿using MarketplaceApplication.Models.OrderModels.DTOs;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
-using MarketplaceApplication.Models.ProductModels.DTOs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketplaceAPI.Controllers
@@ -29,10 +27,9 @@ namespace MarketplaceAPI.Controllers
         }
 
         [HttpPost]
-        [Route("{productId}")]
-        public async Task<IActionResult> Add(int productId, [FromBody] AddOrderModel model)
+        public async Task<IActionResult> Add([FromBody] AddOrderModel model)
         {
-            var order = await _orderService.CreateOrder(productId, model);
+            var order = await _orderService.CreateOrder(model);
 
             return Ok(order);
         }

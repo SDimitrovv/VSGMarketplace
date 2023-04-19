@@ -8,9 +8,9 @@ namespace MarketplaceDomain.Entities
     {
         public int Quantity { get; set; }
 
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; } 
 
-        public Status Status { get; set; } = Status.Pending;
+        public string Status { get; set; } 
 
         public int ProductId { get; set; }
 

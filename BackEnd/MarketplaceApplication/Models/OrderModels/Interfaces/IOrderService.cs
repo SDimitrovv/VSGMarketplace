@@ -7,5 +7,5 @@ public interface IOrderService
 {
     Task<IEnumerable<PendingOrdersGetModel>> GetPendingOrders();
     Task<IEnumerable<MyOrdersGetModel>> GetMyOrders(string email);
-    Task<Order> CreateOrder(int productId, AddOrderModel model);
+    Task<Order> CreateOrder(AddOrderModel model);
 }
