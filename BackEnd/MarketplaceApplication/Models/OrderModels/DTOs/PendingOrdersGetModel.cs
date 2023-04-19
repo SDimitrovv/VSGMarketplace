@@ -4,6 +4,8 @@ namespace MarketplaceApplication.Models.OrderModels.DTOs
 {
     public class PendingOrdersGetModel
     {
+        public int Id { get; set; }
+
         public int Quantity { get; set; }
 
         public string FormattedDate => Date.ToString("yyyy-MM-dd HH:mm:ss");
