@@ -22,10 +22,10 @@ namespace MarketplaceAPI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task Edit(int productId, IFormFile newPicture)
+        public async Task Edit(int id, IFormFile newPicture)
         {
-            await _pictureService.DeletePicture(productId);
-            await _pictureService.UploadPicture(newPicture, productId);
+            await _pictureService.DeletePicture(id);
+            await _pictureService.UploadPicture(newPicture, id);
         }
     }
 }
