@@ -58,5 +58,15 @@ namespace MarketplaceInfrastructure.Repositories
             
             await Connection.ExecuteAsync(query, new { quantityReduce, productId });
         }
+
+        public async Task ReturnQuantity(int productId, int quantityReturn)
+        {
+            var query = @"UPDATE Products
+                        SET Quantity = Quantity + @QuantityReturn,
+                        QuantityForSale = QuantityForSale + @QuantityReturn
+                        WHERE Id = @ProductId";
+
+            await Connection.ExecuteAsync(query, new { quantityReturn, productId });
+        }
     }
 }

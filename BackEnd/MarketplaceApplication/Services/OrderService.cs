@@ -45,5 +45,23 @@ namespace MarketplaceApplication.Services
 
             return order;
         }
+
+        public async Task UpdateComplete(int id)
+        {
+            var newOrder = await _orderRepository.GetByID(id);
+            newOrder.Status = Status.Finished.ToString();
+
+            await _orderRepository.Update(newOrder);
+        }
+
+        public async Task UpdateReject(int id)
+        {
+            var newOrder = await _orderRepository.GetByID(id);
+            newOrder.Status = Status.Decline.ToString();
+
+            await _orderRepository.Update(newOrder);
+
+            await _productRepository.ReturnQuantity(newOrder.ProductId, newOrder.Quantity);
+        }
     }
 }

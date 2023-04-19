@@ -34,5 +34,18 @@ namespace MarketplaceAPI.Controllers
             return Ok(order);
         }
 
+        [HttpPut]
+        [Route("Complete{id}")]
+        public async Task EditComplete(int id)
+        {
+            await _orderService.UpdateComplete(id);
+        }
+
+        [HttpPut]
+        [Route("Reject{id}")]
+        public async Task EditReject(int id)
+        {
+            await _orderService.UpdateReject(id);
+        }
     }
 }
