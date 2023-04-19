@@ -33,7 +33,7 @@ namespace MarketplaceInfrastructure.Repositories
                         ON o.ProductId = p.Id
                         WHERE o.Email = @email";
 
-            var orders = await Connection.QueryAsync<MyOrdersGetModel>(query);
+            var orders = await Connection.QueryAsync<MyOrdersGetModel>(query, new {email});
 
             return orders;
         }

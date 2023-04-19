@@ -1,6 +1,4 @@
-﻿using MarketplaceDomain.Enums;
-
-namespace MarketplaceApplication.Models.OrderModels.DTOs
+﻿namespace MarketplaceApplication.Models.OrderModels.DTOs
 {
     public class MyOrdersGetModel
     {
