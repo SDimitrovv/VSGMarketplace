@@ -2,15 +2,15 @@ import { closeContainerHandler } from "../src/global";
 import { deleteProduct } from "../src/itemsService";
 import { editProductModal } from "./editProductModal";
 
-export const createRow = (id, code, fullName, type, quantityForSale, quantity) => {
+export const createRow = (product) => {
     const row = document.createElement("tr");
-    row.id = id;
+    row.id = product.id;
     row.innerHTML = `
-    <td>${code}</td>
-    <td>${fullName}</td>
-    <td>${type}</td>
-    <td>${quantityForSale}</td>
-    <td>${quantity}</td>
+    <td>${product.code}</td>
+    <td>${product.fullName}</td>
+    <td>${product.type}</td>
+    <td>${product.quantityForSale}</td>
+    <td>${product.quantity}</td>
     <td>
         <div class="editDelete">
             <a class="edit">
@@ -35,7 +35,7 @@ export const createRow = (id, code, fullName, type, quantityForSale, quantity) =
 
     row.querySelector(".edit").addEventListener("click", (e) => {
         e.preventDefault();
-        editProductModal(id);
+        editProductModal(product);
         const overlay = document.querySelector("#addItemOverlay2");
         overlay.style.display = "flex";
     })
@@ -54,7 +54,7 @@ export const createRow = (id, code, fullName, type, quantityForSale, quantity) =
 
         div.querySelector('.yes').addEventListener('click', async e => {
             e.preventDefault();
-            const res = await deleteProduct(id);
+            const res = await deleteProduct(product.id);
             console.log(res);
             row.remove();
         });

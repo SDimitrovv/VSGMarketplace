@@ -301,7 +301,6 @@ aside nav ul #logout {
 #marketplaceMain .product .productButton {
   cursor: pointer;
   align-self: center;
-  margin: 10px;
   height: 320px;
 }
 #marketplaceMain .product img {
@@ -414,17 +413,13 @@ aside nav ul #logout {
   width: 100%;
   background: rgba(0, 0, 0, 0.5019607843);
 }
-#addItemOverlay img {
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-}
 #addItemOverlay #modalContent {
   display: flex;
   flex-direction: column;
   align-items: space-between;
   height: -moz-fit-content;
   height: fit-content;
-  width: 600px;
+  width: auto;
   background-color: #FFF;
   border-radius: 20px;
   position: relative;
@@ -439,7 +434,6 @@ aside nav ul #logout {
 }
 #addItemOverlay #modalContent #modalImage {
   align-self: center;
-  margin: 30px;
 }
 #addItemOverlay #modalContent #modalImage img {
   height: auto;

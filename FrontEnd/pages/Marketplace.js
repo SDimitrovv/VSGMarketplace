@@ -6,8 +6,8 @@ const Marketplace = async () => {
     main.id = "marketplaceMain";
     main.innerHTML = '';
     const products = await loadMarketplace();
-    products.forEach((p) => {
-        cardComponent(p.id, p.price, p.quantityForSale, p.type, p.imageUrl);
+    products.forEach(p => {
+        cardComponent(p);
     });
 };
 

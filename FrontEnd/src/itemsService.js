@@ -1,10 +1,9 @@
 import { makeRequest } from "./makeRequest.js";
-const baseURL = "https://localhost:7089/api";
 
 export const loadPendingOrders = async () => {
     try {
-        const data = await makeRequest({ path: "/Order/PendingOrders" });
-        return data;
+        const res = await makeRequest({ path: "/Order/PendingOrders" });
+        return await res.json();
     } catch (err) {
         console.error(err);
     }
@@ -12,8 +11,8 @@ export const loadPendingOrders = async () => {
 
 export const loadMyOrders = async (email) => {
     try {
-        const data = await makeRequest({ path: "/Order/MyOrders?email=" + email });
-        return data;
+        const res = await makeRequest({ path: "/Order/MyOrders?email=" + email });
+        return await res.json();
     } catch (err) {
         console.error(err);
     }
@@ -21,12 +20,10 @@ export const loadMyOrders = async (email) => {
 
 export const createOrder = async (data) => {
     try {
-        const res = await fetch(baseURL + "/Order", {
+        const res = await makeRequest({
+            path: "/Order",
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
+            data
         })
 
         return res;
@@ -37,8 +34,8 @@ export const createOrder = async (data) => {
 
 export const loadMarketplace = async () => {
     try {
-        const data = await makeRequest({ path: "/Product/Marketplace" });
-        return data;
+        const res = await makeRequest({ path: "/Product/Marketplace" });
+        return await res.json();
     } catch (err) {
         console.error(err);
     }
@@ -46,8 +43,8 @@ export const loadMarketplace = async () => {
 
 export const loadInventory = async () => {
     try {
-        const data = await makeRequest({ path: "/Product/Inventory" });
-        return data;
+        const res = await makeRequest({ path: "/Product/Inventory" });
+        return await res.json();
     } catch (err) {
         console.error(err);
     }
@@ -55,8 +52,8 @@ export const loadInventory = async () => {
 
 export const loadProduct = async (id) => {
     try {
-        const data = await makeRequest({ path: "/Product/" + id });
-        return data;
+        const res = await makeRequest({ path: "/Product/" + id });
+        return await res.json();
     } catch (err) {
         console.error(err);
     }
@@ -64,15 +61,13 @@ export const loadProduct = async (id) => {
 
 export const createProduct = async (data) => {
     try {
-        const res = await fetch(baseURL + "/Product", {
+        const res = await makeRequest({
+            path: "/Product",
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+            data,
         });
 
-        return res;
+        return await res.json();
     } catch (err) {
         console.error(err);
     }
@@ -80,12 +75,10 @@ export const createProduct = async (data) => {
 
 export const editProduct = async (id, data) => {
     try {
-        const res = await fetch(baseURL + "/Product/" + id, {
+        const res = await makeRequest({
+            path: "/Product/" + id,
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+            data,
         });
 
         return res;
@@ -96,7 +89,8 @@ export const editProduct = async (id, data) => {
 
 export const deleteProduct = async (id) => {
     try {
-        const res = await fetch(baseURL + "/Product/" + id, {
+        const res = await makeRequest({
+            path: "/Product/" + id,
             method: "DELETE"
         });
 
@@ -106,28 +100,38 @@ export const deleteProduct = async (id) => {
     }
 };
 
-export const createImage = async (id, file) => {
+export const completeOrder = async (id) => {
     try {
-        const res = await fetch(baseURL + "/Picture?productId=" + id, {
-            method: "POST",
-            body: file,
+        const res = await makeRequest({
+            path: "/Order/Complete/" + id,
+            method: "PUT"
         });
 
         return res;
     } catch (err) {
         console.error(err);
     }
-};
+}
 
-export const editImage = async (id, file) => {
+export const rejectOrder = async (id) => {
     try {
-        const res = await fetch(baseURL + `/Picture/${id}`, {
+        const res = await makeRequest({
+            path: `/Order/Reject/${id}`,
             method: "PUT",
-            body: file,
         });
 
         return res;
     } catch (err) {
         console.error(err);
     }
-};
+}
+
+export const loadCategories = async () => {
+    try {
+        const res = await makeRequest({ path: `/Category` });
+
+        return await res.json();
+    } catch (err) {
+        console.error(err);
+    }
+}

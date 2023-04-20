@@ -16,9 +16,9 @@ const MyOrders = async () => {
 
     const user = sessionStorage.getItem("user")
     const email = user ? user.username : "eredzhepov@vsgbg.com";
-    const myProducts = await loadMyOrders(email);
-    myProducts.forEach((p) => {
-        myOrderComponent(p.quantity, p.date, p.status, p.fullName, p.price);
+    const orders = await loadMyOrders(email);
+    orders.forEach((p) => {
+        myOrderComponent(p.id, p.quantity, p.date, p.status, p.fullName, p.price);
     });
 };
 

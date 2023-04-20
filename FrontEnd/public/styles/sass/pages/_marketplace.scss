@@ -19,7 +19,6 @@
         .productButton {
             cursor: pointer;
             align-self: center;
-            margin: 10px;
             height: 320px;
         }
 
@@ -100,13 +99,8 @@
 #addItemOverlay {
     @include overlay;
 
-    img {
-        border-top-right-radius: 20px;
-        border-top-left-radius: 20px;
-    }
-
     #modalContent {
-        @include modal(fit-content, 600px);
+        @include modal(fit-content, auto);
         min-height: 620px;
         background-image: url("/images/marketplace/ellipse.png");
         background-position: bottom right;
@@ -119,7 +113,6 @@
 
         #modalImage {
             align-self: center;
-            margin: 30px;
 
             img {
                 height: auto;

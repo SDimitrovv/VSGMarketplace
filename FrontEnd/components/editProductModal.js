@@ -1,9 +1,9 @@
-import { editImage, editProduct, loadProduct } from "../src/itemsService.js";
+import { editProduct, loadCategories } from "../src/itemsService.js";
 import { closeModalHandler } from "../src/global.js";
 import { imageHandler } from "../src/global.js";
+import { editImage } from "../src/pictureService.js";
 
-export const editProductModal = async (id) => {
-    const product = await loadProduct(id);
+export const editProductModal = async (product) => {
     const modal = document.createElement("form");
     modal.className = "editForm modalContent";
     modal.innerHTML = `
@@ -44,6 +44,18 @@ export const editProductModal = async (id) => {
     overlay.appendChild(modal);
     closeModalHandler();
     imageHandler(modal);
+
+    const select = modal.querySelector('.category');
+    const categories = await loadCategories();
+    categories.forEach(c => {
+        if (product.type !== c.type) {
+            const option = document.createElement('option');
+            option.value = c.id;
+            option.textContent = c.type;
+            select.appendChild(option)
+        }
+    })
+
     modal.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -54,21 +66,16 @@ export const editProductModal = async (id) => {
 
         const itemData = Object.fromEntries(formData);
 
-        // const user = JSON.parse(localStorage.getItem('user'));
-        // if (!user) {
-        //     alert("You are not logged in!");
-        //     return;
-        // }
+        if (image.name) {
+            const imgRes = await editImage(product.id, imageForm);
+            console.log("Image PUT", imgRes)
+        }
 
-        if (!image.name) {
-            return alert("Choose an image!");
-        } else if (itemData.quantity < itemData.quantityForSale) {
+        if (itemData.quantity < itemData.quantityForSale && quantity < 1) {
             return alert("Make sure that quantity is not less than quantity for sale!");
         } else {
-            const res = await editProduct(id, itemData);
+            const res = await editProduct(product.id, itemData);
             console.log("PUT", res);
-            const imgRes = await editImage(id, imageForm);
-            console.log("Image PUT", imgRes)
         }
 
         modal.remove();
