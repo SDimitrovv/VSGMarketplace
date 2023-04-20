@@ -37,7 +37,7 @@ namespace MarketplaceApplication.Services
             return await _repository.GetByID(id);
         }
 
-        public async Task Update(int productId, ProductEditModel newProduct)
+        public async Task<Product> Update(int productId, ProductEditModel newProduct)
         {
             var product = new Product
             {
@@ -52,6 +52,8 @@ namespace MarketplaceApplication.Services
             };
 
             await _repository.Update(product);
+
+            return product;
         }
 
         public async Task Delete(int id)

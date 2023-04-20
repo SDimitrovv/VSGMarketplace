@@ -44,13 +44,15 @@ namespace MarketplaceAPI.Controllers
         {
             var product = await _productService.Add(model);
 
-            return Ok(product.Id);
+            return Ok(product);
         }
 
         [HttpPut("{id}")]
-        public async Task Edit(int id, ProductEditModel newProduct)
+        public async Task<IActionResult> Edit(int id, ProductEditModel newProduct)
         {
-            await _productService.Update(id, newProduct);
+            var editedProduct = await _productService.Update(id, newProduct);
+
+            return Ok(editedProduct);
         }
 
         [HttpDelete("{id}")]

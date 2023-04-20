@@ -57,9 +57,12 @@ namespace MarketplaceApplication.Services
         {
             var pictureForDelete = await _pictureRepository.GetPicture(productId);
 
-            await _cloudinary.DeleteResourcesAsync(pictureForDelete.ImagePublicId);
+            if (pictureForDelete != null)
+            {
+                await _cloudinary.DeleteResourcesAsync(pictureForDelete.ImagePublicId);
 
-            await _pictureRepository.Delete(pictureForDelete.Id);
+                await _pictureRepository.Delete(pictureForDelete.Id);
+            }
         }
     }
 }
