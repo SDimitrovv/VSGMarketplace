@@ -20,7 +20,7 @@ namespace MarketplaceInfrastructure.Repositories
                         ON o.ProductId = p.Id
                         WHERE o.Status = 'Pending'";
 
-            var orders = await Connection.QueryAsync<PendingOrdersGetModel>(query);
+            var orders = await Connection.QueryAsync<PendingOrdersGetModel>(query, null, Transaction);
 
             return orders;
         }
@@ -33,7 +33,7 @@ namespace MarketplaceInfrastructure.Repositories
                         ON o.ProductId = p.Id
                         WHERE o.Email = @email";
 
-            var orders = await Connection.QueryAsync<MyOrdersGetModel>(query, new {email});
+            var orders = await Connection.QueryAsync<MyOrdersGetModel>(query, new {email}, Transaction);
 
             return orders;
         }

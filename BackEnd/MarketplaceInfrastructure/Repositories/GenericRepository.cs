@@ -16,6 +16,8 @@ namespace MarketplaceInfrastructure.Repositories
 
         public IDbConnection Connection => _unitOfWork.Connection;
 
+        public IDbTransaction Transaction => _unitOfWork.Transaction;
+
         public async Task<IEnumerable<T>> GetAll()
         {
             var collection = await Connection.GetListAsync<T>();

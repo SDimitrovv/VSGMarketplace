@@ -20,7 +20,7 @@ namespace MarketplaceInfrastructure.Repositories
                         LEFT JOIN Categories AS c ON c.Id = p.CategoryId
                         WHERE p.Id = @id";
 
-            var details = await Connection.QueryFirstOrDefaultAsync<ProductGetDetailsModel>(query, new { id });
+            var details = await Connection.QueryFirstOrDefaultAsync<ProductGetDetailsModel>(query, new { id }, Transaction);
 
             return details;
         }
@@ -31,7 +31,7 @@ namespace MarketplaceInfrastructure.Repositories
                         FROM Products AS p
                         LEFT JOIN Categories AS c ON c.Id = p.CategoryId";
 
-            var products = await Connection.QueryAsync<ProductGetInventoryModel>(query);
+            var products = await Connection.QueryAsync<ProductGetInventoryModel>(query, null, Transaction);
 
             return products;
         }
@@ -44,7 +44,7 @@ namespace MarketplaceInfrastructure.Repositories
                         LEFT JOIN Categories AS c ON c.Id = p.CategoryId
                         WHERE p.QuantityForSale > 0";
 
-            var products = await Connection.QueryAsync<ProductGetMarketplaceModel>(query);
+            var products = await Connection.QueryAsync<ProductGetMarketplaceModel>(query, null, Transaction);
 
             return products;
         }
@@ -56,7 +56,7 @@ namespace MarketplaceInfrastructure.Repositories
                         QuantityForSale = QuantityForSale - @QuantityReduce
                         WHERE Id = @ProductId";
             
-            await Connection.ExecuteAsync(query, new { quantityReduce, productId });
+            await Connection.ExecuteAsync(query, new { quantityReduce, productId }, Transaction);
         }
 
         public async Task ReturnQuantity(int productId, int quantityReturn)
@@ -66,7 +66,7 @@ namespace MarketplaceInfrastructure.Repositories
                         QuantityForSale = QuantityForSale + @QuantityReturn
                         WHERE Id = @ProductId";
 
-            await Connection.ExecuteAsync(query, new { quantityReturn, productId });
+            await Connection.ExecuteAsync(query, new { quantityReturn, productId }, Transaction);
         }
     }
 }

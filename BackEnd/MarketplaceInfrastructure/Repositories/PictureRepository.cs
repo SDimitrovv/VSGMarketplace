@@ -17,7 +17,7 @@ namespace MarketplaceInfrastructure.Repositories
                           FROM Pictures 
                           WHERE ProductId = @productId";
 
-            return await Connection.QueryFirstOrDefaultAsync<Picture>(query, new { productId });
+            return await Connection.QueryFirstOrDefaultAsync<Picture>(query, new { productId }, Transaction);
         }
     }
 }
