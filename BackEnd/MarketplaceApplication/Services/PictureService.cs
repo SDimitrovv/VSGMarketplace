@@ -3,6 +3,7 @@ using CloudinaryDotNet.Actions;
 using MarketplaceApplication.Models.PictureModels.Interfaces;
 using MarketplaceDomain.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace MarketplaceApplication.Services
 {
@@ -11,14 +12,14 @@ namespace MarketplaceApplication.Services
         private readonly IPictureRepository _pictureRepository;
         private readonly Cloudinary _cloudinary;
 
-        public PictureService(IPictureRepository pictureRepository)
+        public PictureService(IPictureRepository pictureRepository, IConfiguration configuration)
         {
             _pictureRepository = pictureRepository;
 
             var account = new Account(
-                "dwmtkp1d1",
-                "983881433641766",
-                "03sMbu4hUUs6UjW8-QwhL5TWLu4"
+                configuration["Cloudinary:CloudName"],
+                configuration["Cloudinary:ApiKey"],
+                configuration["Cloudinary:ApiSecret"]
             );
 
             _cloudinary = new Cloudinary(account);

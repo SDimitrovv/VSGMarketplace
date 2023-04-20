@@ -1,7 +1,6 @@
 ﻿using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
-using System.Reflection;
 
 namespace MarketplaceApplication.Services
 {

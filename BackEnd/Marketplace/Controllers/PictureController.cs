@@ -1,5 +1,4 @@
 ﻿using MarketplaceApplication.Models.PictureModels.Interfaces;
-using MarketplaceDomain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketplaceAPI.Controllers
