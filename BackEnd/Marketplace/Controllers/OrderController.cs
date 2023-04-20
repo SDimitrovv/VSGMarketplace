@@ -35,14 +35,14 @@ namespace MarketplaceAPI.Controllers
         }
 
         [HttpPut]
-        [Route("Complete{id}")]
+        [Route("Complete/{id}")]
         public async Task EditComplete(int id)
         {
             await _orderService.UpdateComplete(id);
         }
 
         [HttpPut]
-        [Route("Reject{id}")]
+        [Route("Reject/{id}")]
         public async Task EditReject(int id)
         {
             await _orderService.UpdateReject(id);

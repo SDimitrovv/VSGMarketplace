@@ -14,7 +14,7 @@ namespace MarketplaceInfrastructure.Repositories
 
         public async Task<IEnumerable<PendingOrdersGetModel>> GetPendingOrders()
         {
-            var query = @"SELECT o.Quantity, o.Date, o.Status, o.Email, p.Code, (o.Quantity * p.Price) AS Price
+            var query = @"SELECT o.Id, o.Quantity, o.Date, o.Status, o.Email, p.Code, (o.Quantity * p.Price) AS Price
                         FROM Orders AS o
                         LEFT JOIN Products AS p
                         ON o.ProductId = p.Id
@@ -27,7 +27,7 @@ namespace MarketplaceInfrastructure.Repositories
 
         public async Task<IEnumerable<MyOrdersGetModel>> GetMyOrders(string email)
         {
-            var query = @"SELECT o.Quantity, o.Date, o.Status, p.FullName, (o.Quantity * p.Price) AS Price
+            var query = @"SELECT o.Id, o.Quantity, o.Date, o.Status, p.FullName, (o.Quantity * p.Price) AS Price
                         FROM Orders AS o
                         LEFT JOIN Products AS p
                         ON o.ProductId = p.Id
