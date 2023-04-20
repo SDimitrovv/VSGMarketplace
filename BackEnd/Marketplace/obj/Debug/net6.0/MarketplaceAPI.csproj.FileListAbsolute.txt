@@ -52,3 +52,6 @@ C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\Dapper.SimpleCRUD.dll
 C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\CloudinaryDotNet.dll
 C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\Microsoft.Extensions.Configuration.UserSecrets.dll
+C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Projects\Marketplace\Marketplace\bin\Debug\net6.0\Microsoft.Extensions.Options.dll

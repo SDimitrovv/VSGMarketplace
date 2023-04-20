@@ -1,5 +1,6 @@
 using System.Configuration;
 using MarketplaceApplication.Helpers.Configurations;
+using MarketplaceApplication.Helpers.Middleware;
 using MarketplaceInfrastructure.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +41,8 @@ app.UseHttpsRedirection();
 app.UseCors("CORSPolicy");
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
 app.MapControllers();
 
