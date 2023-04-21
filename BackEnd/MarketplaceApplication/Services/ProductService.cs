@@ -48,11 +48,6 @@ namespace MarketplaceApplication.Services
             return addedProduct;
         }
 
-        public async Task<Product> GetForUpdate(int id)
-        {
-            return await _repository.GetByID(id);
-        }
-
         public async Task<Product> Update(int productId, ProductEditModel newProduct)
         {
             var product = new Product
