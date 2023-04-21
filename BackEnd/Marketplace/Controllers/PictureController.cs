@@ -14,24 +14,28 @@ namespace MarketplaceAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(int productId, IFormFile picture)
         {
-            await _pictureService.UploadPicture(picture, productId);
+            var imageUrl = await _pictureService.UploadPicture(picture, productId);
 
-            return Ok();
+            return Ok(imageUrl);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task Edit(int id, IFormFile newPicture)
+        public async Task<IActionResult> Edit(int id, IFormFile newPicture)
         {
             await _pictureService.DeletePicture(id);
-            await _pictureService.UploadPicture(newPicture, id);
+            var imageUrl = await _pictureService.UploadPicture(newPicture, id);
+
+            return Ok(imageUrl);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _pictureService.DeletePicture(id);
+
+            return Ok();
         }
     }
 }

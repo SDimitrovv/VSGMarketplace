@@ -25,7 +25,7 @@ namespace MarketplaceApplication.Services
             _cloudinary = new Cloudinary(account);
         }
 
-        public async Task UploadPicture(IFormFile file, int productId)
+        public async Task<string> UploadPicture(IFormFile file, int productId)
         {
             byte[] bytes;
             using (var stream = new MemoryStream())
@@ -51,6 +51,8 @@ namespace MarketplaceApplication.Services
             };
 
             await _pictureRepository.Create(picture);
+
+            return picture.ImageUrl;
         }
 
         public async Task DeletePicture(int productId)
