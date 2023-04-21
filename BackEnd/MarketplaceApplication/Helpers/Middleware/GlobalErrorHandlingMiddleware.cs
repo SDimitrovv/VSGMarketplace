@@ -31,7 +31,7 @@ namespace MarketplaceApplication.Helpers.Middleware
             {
                 unitOfWork.Transaction.Rollback();
 
-                //await HandleException(context, ex);
+                //await HandleExceptionAsync(context, ex);
             }
         }
     }

@@ -26,5 +26,12 @@ namespace MarketplaceAPI.Controllers
             await _pictureService.DeletePicture(id);
             await _pictureService.UploadPicture(newPicture, id);
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task Delete(int id)
+        {
+            await _pictureService.DeletePicture(id);
+        }
     }
 }

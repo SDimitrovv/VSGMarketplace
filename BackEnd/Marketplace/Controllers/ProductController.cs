@@ -47,7 +47,8 @@ namespace MarketplaceAPI.Controllers
             return Ok(product);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
+        [Route("{id}")]
         public async Task<IActionResult> Edit(int id, ProductEditModel newProduct)
         {
             var editedProduct = await _productService.Update(id, newProduct);
@@ -55,7 +56,8 @@ namespace MarketplaceAPI.Controllers
             return Ok(editedProduct);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("{id}")]
         public async Task Delete(int id)
         {
             await _pictureService.DeletePicture(id);
