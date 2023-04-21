@@ -15,16 +15,10 @@ const PendingOrders = async () => {
     </div>
     `;
 
-    const pendingProducts = await loadPendingOrders();
-    pendingProducts.forEach((p) => {
+    const orders = await loadPendingOrders();
+    orders.forEach(p => {
         pendingOrderComponent(p.id, p.code, p.quantity, p.price, p.email, p.date, p.status);
     });
-
-    document.querySelectorAll('.completeButton').forEach(b => {
-        b.addEventListener('click', e => {
-            e.target.parentElement.remove();
-        })
-    })
 };
 
 export default PendingOrders;

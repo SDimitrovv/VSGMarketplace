@@ -1,19 +1,20 @@
 import { closeContainerHandler, closeModalHandler } from "../src/global";
 import { createOrder } from "../src/itemsService";
-import { createModal } from "./createModal";
+import { navigateTo } from "../src/router";
+import { productModal } from "./productModal";
 
-export const cardComponent = (id, price, quantityForSale, type, imageUrl) => {
+export const cardComponent = (product) => {
     const cardDiv = document.createElement("div");
     cardDiv.className = "product";
-    cardDiv.id = id;
+    cardDiv.id = product.id;
     cardDiv.innerHTML = `
    <a class='productButton'>
-       <img src="${imageUrl}" alt="Product-image">
+       <img src="${product.imageUrl}" alt="Product-image">
    </a>
    <div class="productContent">
        <div class="price">
-           <span>${price} BGN</span>
-           <small>${type}</small>
+           <span>${product.price} BGN</span>
+           <small>${product.type}</small>
        </div>
        <div class="quantityAndImg">
            <form>
@@ -45,7 +46,7 @@ export const cardComponent = (id, price, quantityForSale, type, imageUrl) => {
     `;
 
     const select = cardDiv.querySelector(".randomNumberSelect");
-    for (let i = 1; i <= quantityForSale + 1; i++) {
+    for (let i = 1; i <= product.quantityForSale + 1; i++) {
         const option = document.createElement("option");
         option.value = i;
         option.text = i;
@@ -59,7 +60,7 @@ export const cardComponent = (id, price, quantityForSale, type, imageUrl) => {
         const buyContainer = document.createElement("div");
         buyContainer.className = "buyContainer";
         buyContainer.innerHTML = `
-        <p>Are you sure you want to buy <b>${amount}</b> item for <b>${price * amount} BGN</b>?</p>
+        <p>Are you sure you want to buy <b>${amount}</b> item for <b>${product.price * amount} BGN</b>?</p>
         <div class="buttons">
             <button type="submit" class='yes'>Yes</button>
             <button class='no'>No</button>
@@ -78,9 +79,10 @@ export const cardComponent = (id, price, quantityForSale, type, imageUrl) => {
             e.preventDefault();
             const user = sessionStorage.getItem("user");
             const email = user ? user.username : "eredzhepov@vsgbg.com";
-            const order = { quantity: select.value, productId: id, email: email };
+            const order = { quantity: select.value, productId: product.id, email: email };
             const res = await createOrder(order);
-            console.log(await res.json());
+            console.log(res);
+            navigateTo('#my-orders');
         });
     });
 
@@ -88,7 +90,7 @@ export const cardComponent = (id, price, quantityForSale, type, imageUrl) => {
         .querySelector(".productButton")
         .addEventListener("click", async (e) => {
             e.preventDefault();
-            const modal = await createModal(id);
+            const modal = await productModal(product);
             document.querySelector("#addItemOverlay").style.display = "flex";
             modal.querySelector("#modalImage").style.pointerEvents = "none";
             modal.querySelector("#modalFrameOne").style.pointerEvents = "none";

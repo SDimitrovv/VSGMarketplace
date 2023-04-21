@@ -4,33 +4,30 @@ export const makeRequest = async ({
     path,
     method = "GET",
     data = {},
-    headers = {},
+    headers = {}
 }) => {
     try {
-        const token = localStorage.getItem("token");
-
         const options = {
             headers: {
-                Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
-                ...headers,
-            },
+                ...headers
+            }
         };
 
-        // if (data) {
-        //     options.body = JSON.stringify(data);
-        // }
+        if (Object.keys(data).length > 0) {
+            options.body = JSON.stringify(data);
+        }
 
         const res = await fetch(baseURL + path, {
             method,
-            ...options,
+            ...options
         });
 
         if (!res.ok) {
-            return Promise.reject("Something went wrong!");
+            return Promise.reject();
         }
 
-        return res.json();
+        return res;
     } catch (err) {
         throw Error(err);
     }
