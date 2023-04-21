@@ -3,6 +3,7 @@
 #marketplaceMain {
     @include flex-align(row, flex-start);
     flex-wrap: wrap;
+    gap:20px;
     align-content: flex-start;
     justify-content: space-evenly;
 
@@ -11,7 +12,7 @@
     .product {
         @include flex-align(column, space-between);
         margin: 20px 10px;
-        width: 280px;
+        width: 256px;
         height: 260px;
         border-radius: 5px;
         box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);

@@ -4,6 +4,10 @@ import { navigateTo } from "../src/router";
 import { productModal } from "./productModal";
 
 export const cardComponent = (product) => {
+    if (!product.imageUrl) {
+        product.imageUrl = '/images/inventory/no-image-placeholder.png'
+    }
+
     const cardDiv = document.createElement("div");
     cardDiv.className = "product";
     cardDiv.id = product.id;
@@ -86,15 +90,14 @@ export const cardComponent = (product) => {
         });
     });
 
-    cardDiv
-        .querySelector(".productButton")
+    cardDiv.querySelector(".productButton")
         .addEventListener("click", async (e) => {
             e.preventDefault();
             const modal = await productModal(product);
             document.querySelector("#addItemOverlay").style.display = "flex";
             modal.querySelector("#modalImage").style.pointerEvents = "none";
             modal.querySelector("#modalFrameOne").style.pointerEvents = "none";
-            closeModalHandler();
+            closeModalHandler(modal);
         });
 
     const productsSections = document.querySelector("#marketplaceMain");

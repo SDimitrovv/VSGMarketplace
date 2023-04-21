@@ -4,14 +4,14 @@ export const makeRequest = async ({
     path,
     method = "GET",
     data = {},
-    headers = {}
+    headers = {},
 }) => {
     try {
         const options = {
             headers: {
                 "Content-Type": "application/json",
-                ...headers
-            }
+                ...headers,
+            },
         };
 
         if (Object.keys(data).length > 0) {
@@ -20,7 +20,7 @@ export const makeRequest = async ({
 
         const res = await fetch(baseURL + path, {
             method,
-            ...options
+            ...options,
         });
 
         if (!res.ok) {

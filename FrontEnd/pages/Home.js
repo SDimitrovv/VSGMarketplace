@@ -1,4 +1,5 @@
 import { instance, loginRequest } from "../authConfig";
+import { navigateTo } from "../src/router";
 
 const Home = () => {
     document.querySelector("header").style.display = "none";

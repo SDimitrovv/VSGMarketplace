@@ -1,9 +1,13 @@
 import { editProduct, loadCategories } from "../src/itemsService.js";
 import { closeModalHandler } from "../src/global.js";
 import { imageHandler } from "../src/global.js";
-import { editImage } from "../src/pictureService.js";
+import { deleteImage, editImage } from "../src/pictureService.js";
 
 export const editProductModal = async (product) => {
+    if (!product.imageUrl) {
+        product.imageUrl = '/images/inventory/no-image-placeholder.png';
+    }
+
     const modal = document.createElement("form");
     modal.className = "editForm modalContent";
     modal.innerHTML = `
@@ -21,8 +25,6 @@ export const editProductModal = async (product) => {
         <input type="text" name="fullName" required placeholder="Name *" value="${product.fullName}">
         <textarea type="text" name="description" placeholder="Description">${product.description}</textarea>
         <select name="categoryId" class="category">
-            <option value="" disabled>Category *</option>
-            <option value="${product.categoryId}" selected>${product.type}</option>
         </select>
         <input type="number" name="quantityForSale" placeholder="Qty For Sale" value="${product.quantityForSale}">
         <input type="number" name="price" placeholder="Sale Price" value="${product.price}">
@@ -42,18 +44,20 @@ export const editProductModal = async (product) => {
 
     const overlay = document.querySelector("#addItemOverlay2");
     overlay.appendChild(modal);
-    closeModalHandler();
+    closeModalHandler(modal);
     imageHandler(modal);
 
     const select = modal.querySelector('.category');
     const categories = await loadCategories();
     categories.forEach(c => {
-        if (product.type !== c.type) {
-            const option = document.createElement('option');
-            option.value = c.id;
-            option.textContent = c.type;
-            select.appendChild(option)
+        const option = document.createElement('option');
+        option.value = c.id;
+        option.textContent = c.type;
+        if (product.type === c.type) {
+            option.selected = 'selected';
         }
+
+        select.appendChild(option);
     })
 
     modal.addEventListener("submit", async (e) => {
@@ -64,17 +68,24 @@ export const editProductModal = async (product) => {
         const imageForm = new FormData();
         imageForm.append("newPicture", image);
 
+        const currentImg = modal.querySelector('.currentImg').src;
         const itemData = Object.fromEntries(formData);
 
         if (image.name) {
             const imgRes = await editImage(product.id, imageForm);
             console.log("Image PUT", imgRes)
+            product.imageUrl = imgRes;
+        } else if (currentImg !== product.imageUrl) {
+            const res = await deleteImage(product.id);
+            product.imageUrl = '/images/inventory/no-image-placeholder.png';
+            console.log("Image DELETE", res);
         }
 
         if (itemData.quantity < itemData.quantityForSale && quantity < 1) {
             return alert("Make sure that quantity is not less than quantity for sale!");
         } else {
             const res = await editProduct(product.id, itemData);
+            product = res;
             console.log("PUT", res);
         }
 

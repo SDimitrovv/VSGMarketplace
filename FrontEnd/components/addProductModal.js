@@ -42,7 +42,7 @@ export const addProduct = async () => {
 
     const overlay = document.querySelector("#addItemOverlay");
     overlay.appendChild(modal);
-    closeModalHandler();
+    closeModalHandler(modal);
     imageHandler(modal);
 
     const select = modal.querySelector('.category');
@@ -64,15 +64,16 @@ export const addProduct = async () => {
         imageForm.append("picture", image);
         const itemData = Object.fromEntries(formData);
 
-        if (!image.name) {
-            return alert("Choose an image!");
-        } else if (itemData.quantity < itemData.quantityForSale && quantity < 1) {
+        if (itemData.quantity < itemData.quantityForSale && quantity < 1) {
             return alert("Make sure that quantity is not less than quantity for sale!");
         } else {
             const response = await createProduct(itemData);
             console.log("POST", response);
-            const imgRes = await createImage(response.id, imageForm);
-            console.log("Image POST", imgRes);
+            if (image.name) {
+                const imgRes = await createImage(response.id, imageForm);
+                console.log("Image POST", imgRes);
+                response.imageUrl = imgRes
+            }
             createRow(response);
         }
 

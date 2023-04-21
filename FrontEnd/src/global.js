@@ -1,3 +1,5 @@
+export const imagePlaceholder = '/images/inventory/no-image-placeholder.png'
+
 export const navStyling = (path) => {
     document.querySelectorAll(".navButton").forEach((n) => {
         const allPaths = n.textContent.trim().toLowerCase();
@@ -17,6 +19,7 @@ export const navStyling = (path) => {
 
 export const headerUpdate = (path) => {
     const titleElement = document.querySelector("#pageTitle");
+    const root = document.querySelector("#root");
 
     if (path.includes("-")) {
         let [name1, name2] = path.split("-");
@@ -29,51 +32,49 @@ export const headerUpdate = (path) => {
     }
 
     if (path === "/") {
-        document.querySelector("#root").style.height = "100vh";
+        root.style.height = "100vh";
     } else {
-        document.querySelector("#root").style.height = "calc(100vh - 60px)";
+        root.style.height = "calc(100vh - 60px)";
     }
 }
 
-export const closeModalHandler = () => {
-    document
-        .querySelectorAll(".closeModal")
-        .forEach((b) => b.addEventListener("click", closing));
-}
+export const closeModalHandler = (modal) => {
+    const overlay = modal.parentElement;
+    overlay.addEventListener('mousedown', e => {
+        if (e.target === overlay) {
+            closing();
+        }
+    }, true);
 
-const closing = (e) => {
-    e?.preventDefault();
-    e.target.parentElement.remove();
+    modal.querySelector(".closeModal").addEventListener("click", closing, true);
 
-    const overlay = document.querySelector("#addItemOverlay");
-    const overlay2 = document.querySelector("#addItemOverlay2");
-    overlay.style.display = "none";
-    overlay2.style.display = "none";
+    function closing() {
+        modal.remove();
+        overlay.style.display = "none";
+    }
 }
 
 export const closeContainerHandler = (container) => {
     container.querySelector("p").style.pointerEvents = "none";
-    setTimeout(() => {
-        document.addEventListener("click", closeContainerClick);
-    }, "100");
+    document.addEventListener("mousedown", closeContainerClick, true);
 
     function closeContainerClick(e) {
-        const isClickInsideContainer = container === e.target;
-        if (!isClickInsideContainer) {
+        if (container !== e.target) {
             container.remove();
-            document.removeEventListener("click", closeContainerClick);
+            document.removeEventListener("mousedown", closeContainerClick);
         }
     }
 }
 
 export const imageHandler = (modal) => {
     const imagePreview = document.querySelector(".currentImg");
+    const input = modal.querySelector(".inputImage");
+
     modal.querySelector(".uploadImg").addEventListener("click", e => {
         e.preventDefault();
-        const input = modal.querySelector(".inputImage");
         input.addEventListener("change", () => {
-            const file = input.files[0];
             const reader = new FileReader();
+            const file = input.files[0];
 
             reader.onload = e => {
                 imagePreview.src = e.target.result;
@@ -83,12 +84,11 @@ export const imageHandler = (modal) => {
         });
 
         input.click();
-    })
+    });
 
     modal.querySelector(".deleteImg").addEventListener("click", (e) => {
         e.preventDefault();
-        modal.querySelector(".currentImg").src =
-            "/images/inventory/no-image-placeholder.png";
-        modal.querySelector(".inputImage").value = "";
+        imagePreview.src = imagePlaceholder;
+        input.value = "";
     })
 };

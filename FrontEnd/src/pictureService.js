@@ -1,3 +1,5 @@
+import { makeRequest } from "./makeRequest";
+
 const baseURL = "https://localhost:7089/api/Picture";
 
 export const createImage = async (id, file) => {
@@ -6,8 +8,7 @@ export const createImage = async (id, file) => {
             method: "POST",
             body: file,
         });
-
-        return res;
+        return res.text();
     } catch (err) {
         console.error(err);
     }
@@ -19,9 +20,16 @@ export const editImage = async (id, file) => {
             method: "PUT",
             body: file,
         });
-
-        return res;
+        return res.text();
     } catch (err) {
         console.error(err);
     }
 };
+
+export const deleteImage = async (id) => {
+    const res = await makeRequest({
+        path: '/Picture/' + id,
+        method: "DELETE",
+    });
+    return res;
+}
