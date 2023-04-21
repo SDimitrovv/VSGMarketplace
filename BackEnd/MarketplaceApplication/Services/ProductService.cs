@@ -1,4 +1,5 @@
-﻿using MarketplaceApplication.Models.ProductModels.DTOs;
+﻿using MarketplaceApplication.Models.CategoryModels.Interfaces;
+using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
 
@@ -7,13 +8,15 @@ namespace MarketplaceApplication.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _repository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public ProductService(IProductRepository repository)
+        public ProductService(IProductRepository repository, ICategoryRepository categoryRepository)
         {
                 _repository = repository;
+                _categoryRepository = categoryRepository;
         }
 
-        public async Task<Product> Add(ProductAddModel model)
+        public async Task<ProductAddedModel> Add(ProductAddModel model)
         {
             var product = new Product
             {
@@ -27,9 +30,22 @@ namespace MarketplaceApplication.Services
             };
 
             var productId = await _repository.Create(product);
-            product.Id = productId;
+            var categoryType = await _categoryRepository.GetByID(product.CategoryId);
 
-            return product;
+            var addedProduct = new ProductAddedModel
+            {
+                Id = productId,
+                Code = product.Code,
+                FullName = product.FullName,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                QuantityForSale = product.QuantityForSale,
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                Type = categoryType.Type
+            };
+            
+            return addedProduct;
         }
 
         public async Task<Product> GetForUpdate(int id)
