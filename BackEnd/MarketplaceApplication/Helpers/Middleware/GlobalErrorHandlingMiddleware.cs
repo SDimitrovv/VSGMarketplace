@@ -3,6 +3,7 @@ using MarketplaceApplication.Models.GenericRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using FluentValidation;
 
 namespace MarketplaceApplication.Helpers.Middleware
 {
@@ -45,7 +46,13 @@ namespace MarketplaceApplication.Helpers.Middleware
                         ErrorMessage = httpException.Message
                     });
                     break;
-                //case ValidationException validationException:
+                case ValidationException validationException:
+                    errors.AddRange(validationException.Errors.Select(e => new ErrorModel
+                    {
+                        Code = 400,
+                        ErrorMessage = ex.Message
+                    }));
+                    break;
                 default:
                     errors.Add(new ErrorModel
                     {

@@ -1,4 +1,5 @@
-﻿using MarketplaceApplication.Models.OrderModels.DTOs;
+﻿using FluentValidation;
+using MarketplaceApplication.Models.OrderModels.DTOs;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +10,13 @@ namespace MarketplaceAPI.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly IValidator<AddOrderModel> _addOrderValidator;
 
-        public OrderController(IOrderService orderService) => _orderService = orderService;
+        public OrderController(IOrderService orderService, IValidator<AddOrderModel> addOrderValidator)
+        {
+            _orderService = orderService;
+            _addOrderValidator = addOrderValidator;
+        }
 
         [HttpGet]
         [Route("PendingOrders")]
@@ -29,6 +35,8 @@ namespace MarketplaceAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] AddOrderModel model)
         {
+            await _addOrderValidator.ValidateAndThrowAsync(model);
+
             var order = await _orderService.CreateOrder(model);
 
             return Ok(order);
