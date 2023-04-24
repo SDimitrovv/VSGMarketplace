@@ -27,27 +27,6 @@ namespace MarketplaceAPI.Controllers
             _productEditValidator = productEditValidator;
         }
 
-        [HttpGet]
-        [Route("Marketplace")]
-        public async Task<IEnumerable<ProductGetMarketplaceModel>> GetMarketplace()
-        {
-            return await _productService.GetMarketplace();
-        }
-
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<ProductGetDetailsModel> GetProductDetails(int id)
-        {
-            return await _productService.GetDetails(id);
-        }
-
-        [HttpGet]
-        [Route("Inventory")]
-        public async Task<IEnumerable<ProductGetInventoryModel>> GetInventory()
-        {
-            return await _productService.GetInventory();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ProductAddModel model)
         {
@@ -56,6 +35,13 @@ namespace MarketplaceAPI.Controllers
             var product = await _productService.Add(model);
 
             return Ok(product);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ProductGetDetailsModel> GetProductDetails(int id)
+        {
+            return await _productService.GetDetails(id);
         }
 
         [HttpPut]
@@ -75,6 +61,20 @@ namespace MarketplaceAPI.Controllers
         {
             await _pictureService.DeletePicture(id);
             await _productService.Delete(id);
+        }
+
+        [HttpGet]
+        [Route("Marketplace")]
+        public async Task<IEnumerable<ProductGetMarketplaceModel>> GetMarketplace()
+        {
+            return await _productService.GetMarketplace();
+        }
+
+        [HttpGet]
+        [Route("Inventory")]
+        public async Task<IEnumerable<ProductGetInventoryModel>> GetInventory()
+        {
+            return await _productService.GetInventory();
         }
     }
 }

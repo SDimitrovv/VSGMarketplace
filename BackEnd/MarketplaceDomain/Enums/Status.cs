@@ -4,5 +4,5 @@ public enum Status
 {
     Pending,
     Finished,
-    Decline
+    Declined
 }

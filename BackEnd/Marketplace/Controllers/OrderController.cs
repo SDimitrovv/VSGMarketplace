@@ -18,20 +18,6 @@ namespace MarketplaceAPI.Controllers
             _addOrderValidator = addOrderValidator;
         }
 
-        [HttpGet]
-        [Route("PendingOrders")]
-        public async Task<IEnumerable<PendingOrdersGetModel>> GetPendingOrders()
-        {
-            return await _orderService.GetPendingOrders();
-        }
-
-        [HttpGet]
-        [Route("MyOrders")]
-        public async Task<IEnumerable<MyOrdersGetModel>> GetMyOrders(string email)
-        {
-            return await _orderService.GetMyOrders(email);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] AddOrderModel model)
         {
@@ -54,6 +40,20 @@ namespace MarketplaceAPI.Controllers
         public async Task EditReject(int id)
         {
             await _orderService.UpdateReject(id);
+        }
+
+        [HttpGet]
+        [Route("PendingOrders")]
+        public async Task<IEnumerable<PendingOrdersGetModel>> GetPendingOrders()
+        {
+            return await _orderService.GetPendingOrders();
+        }
+
+        [HttpGet]
+        [Route("MyOrders")]
+        public async Task<IEnumerable<MyOrdersGetModel>> GetMyOrders(string email)
+        {
+            return await _orderService.GetMyOrders(email);
         }
     }
 }

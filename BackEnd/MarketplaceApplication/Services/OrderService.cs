@@ -57,7 +57,7 @@ namespace MarketplaceApplication.Services
         public async Task UpdateReject(int id)
         {
             var newOrder = await _orderRepository.GetByID(id);
-            newOrder.Status = Status.Decline.ToString();
+            newOrder.Status = Status.Declined.ToString();
 
             await _orderRepository.Update(newOrder);
 

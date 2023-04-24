@@ -1,7 +1,8 @@
-using System.Configuration;
 using MarketplaceApplication.Helpers.Configurations;
 using MarketplaceApplication.Helpers.Middleware;
 using MarketplaceInfrastructure.Configurations;
+using MarketplaceInfrastructure.Migrations;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddApplicationServiceCollection();
 builder.Services.AddInfrastructureServiceCollection();
+builder.Services.AddMigrationsConfigurations();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -35,6 +37,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+CreateDatabase.Create(app.Services.GetRequiredService<IConfiguration>());
+
+app.MigrateUpDatabase();
 
 app.UseHttpsRedirection();
 
