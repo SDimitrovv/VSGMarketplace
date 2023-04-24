@@ -16,7 +16,7 @@ namespace MarketplaceInfrastructure.Migrations
             Create.Table("Orders")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity()
                 .WithColumn("Quantity").AsInt32().NotNullable()
-                .WithColumn("Date").AsDateTime().NotNullable()
+                .WithColumn("Date").AsString(100).NotNullable()
                 .WithColumn("Status").AsString(10).NotNullable()
                 .WithColumn("ProductId").AsInt32().NotNullable().ForeignKey("Products", "Id")
                 .WithColumn("Email").AsString(255).NotNullable();
