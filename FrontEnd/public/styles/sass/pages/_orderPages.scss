@@ -179,7 +179,7 @@
                 }
 
                 .nameColumn::before {
-                    content: "Name";
+                    content: "Name: ";
                 }
 
                 .codeColumn::before {
@@ -195,15 +195,16 @@
                 }
 
                 .orderedByColumn::before {
-                    content: "Ordered by";
+                    content: "Ordered by: ";
                 }
 
                 .orderDateColumn::before {
-                    content: "Order date";
+                    content: "Order date: ";
                 }
 
                 .orderStatus::before {
-                    content: "Status";
+                    content: "Status: ";
+                    margin-right: 4px;
                 }
 
                 .completeButton {

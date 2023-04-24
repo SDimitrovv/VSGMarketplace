@@ -10,8 +10,8 @@ export const pendingOrderComponent = (id, code, quantity, price, email, date) =>
         <span class="qtyColumn">${quantity}</span>
         <span class="priceColumn">${price} BGN</span>
     </div>
-    <span class="orderedByColumn">: ${email}</span>
-    <span class="orderDateColumn">: ${date.substring(0, 16)}</span>
+    <span class="orderedByColumn">${email}</span>
+    <span class="orderDateColumn">${date.substring(0, 16)}</span>
     <button class="actionColumn completeButton">Complete</button>
     `;
 
