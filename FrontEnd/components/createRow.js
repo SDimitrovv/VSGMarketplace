@@ -59,9 +59,8 @@ export const createRow = (product) => {
             row.remove();
         });
 
-        const el = e.target.parentElement;
-        el.appendChild(div);
         closeContainerHandler(div);
+        e.target.parentElement.appendChild(div);
     });
 
     const tbody = document.querySelector('tbody');

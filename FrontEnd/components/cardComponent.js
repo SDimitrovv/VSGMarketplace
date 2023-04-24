@@ -71,6 +71,15 @@ export const cardComponent = (product) => {
         </div>
         `;
 
+        buyContainer.querySelector(".yes").addEventListener('click', async e => {
+            const user = sessionStorage.getItem("user");
+            const email = user ? user.username : "eredzhepov@vsgbg.com";
+            const order = { quantity: select.value, productId: product.id, email: email };
+            const res = await createOrder(order);
+            console.log(res);
+            navigateTo('#my-orders');
+        })
+
         closeContainerHandler(buyContainer);
         return buyContainer;
     };
@@ -79,15 +88,6 @@ export const cardComponent = (product) => {
         e.preventDefault();
         const buyContainer = createContainer(select.value);
         e.target.parentElement.appendChild(buyContainer);
-        buyContainer.querySelector(".yes").addEventListener("click", async (e) => {
-            e.preventDefault();
-            const user = sessionStorage.getItem("user");
-            const email = user ? user.username : "eredzhepov@vsgbg.com";
-            const order = { quantity: select.value, productId: product.id, email: email };
-            const res = await createOrder(order);
-            console.log(res);
-            navigateTo('#my-orders');
-        });
     });
 
     cardDiv.querySelector(".productButton")

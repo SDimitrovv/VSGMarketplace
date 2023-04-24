@@ -1,3 +1,6 @@
+import { createOrder } from "./itemsService";
+import { navigateTo } from "./router";
+
 export const imagePlaceholder = '/images/inventory/no-image-placeholder.png'
 
 export const navStyling = (path) => {
@@ -55,13 +58,14 @@ export const closeModalHandler = (modal) => {
 }
 
 export const closeContainerHandler = (container) => {
+    const yes = container.querySelector("yes");
     container.querySelector("p").style.pointerEvents = "none";
-    document.addEventListener("mousedown", closeContainerClick, true);
+    document.addEventListener("click", closeContainerClick, true);
 
-    function closeContainerClick(e) {
-        if (container !== e.target) {
+    async function closeContainerClick(e) {
+        if (yes !== e.target && container !== e.target) {
             container.remove();
-            document.removeEventListener("mousedown", closeContainerClick);
+            document.removeEventListener("click", closeContainerClick);
         }
     }
 }

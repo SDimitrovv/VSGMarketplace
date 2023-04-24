@@ -3,7 +3,7 @@
 #marketplaceMain {
     @include flex-align(row, flex-start);
     flex-wrap: wrap;
-    gap:20px;
+    gap: 20px;
     align-content: flex-start;
     justify-content: space-evenly;
 
@@ -103,6 +103,7 @@
     #modalContent {
         @include modal(fit-content, auto);
         min-height: 620px;
+        max-width: 600px;
         background-image: url("/images/marketplace/ellipse.png");
         background-position: bottom right;
         background-repeat: no-repeat;

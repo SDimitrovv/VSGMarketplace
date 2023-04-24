@@ -164,7 +164,7 @@
                 .priceColumn,
                 .orderedByColumn,
                 .orderDateColumn,
-                .orderStatus>span {
+                .orderStatus {
                     &::before {
                         font-weight: 700;
                     }
@@ -179,36 +179,36 @@
                 }
 
                 .nameColumn::before {
-                    content: "Name:   ";
+                    content: "Name";
                 }
 
                 .codeColumn::before {
-                    content: "Code   ";
+                    content: "Code";
                 }
 
                 .qtyColumn::before {
-                    content: "Qty   ";
+                    content: "Qty";
                 }
 
                 .priceColumn::before {
-                    content: "Price   ";
+                    content: "Price";
                 }
 
                 .orderedByColumn::before {
-                    content: "Ordered by:   ";
+                    content: "Ordered by";
                 }
 
                 .orderDateColumn::before {
-                    content: "Order date:   ";
+                    content: "Order date";
                 }
 
-                .orderStatus span::before {
-                    content: "Status:   ";
+                .orderStatus::before {
+                    content: "Status";
                 }
 
                 .completeButton {
                     margin-top: 14px;
-                    margin-bottom:14px;
+                    margin-bottom: 14px;
                     align-self: center;
                 }
             }

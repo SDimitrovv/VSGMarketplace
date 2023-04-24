@@ -42,8 +42,6 @@ export const addProduct = async () => {
 
     const overlay = document.querySelector("#addItemOverlay");
     overlay.appendChild(modal);
-    closeModalHandler(modal);
-    imageHandler(modal);
 
     const select = modal.querySelector('.category');
     const categories = await loadCategories();
@@ -80,4 +78,7 @@ export const addProduct = async () => {
         modal.remove();
         overlay.style.display = "none";
     });
+
+    closeModalHandler(modal);
+    imageHandler(modal);
 };

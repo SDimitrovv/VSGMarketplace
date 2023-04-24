@@ -257,17 +257,19 @@ aside nav ul #logout {
 .buttons {
   display: flex;
   align-self: flex-end;
-  margin: 16px 0px;
   justify-content: center;
+  margin-top: 16px;
 }
 .buttons button {
   cursor: pointer;
   height: 22px;
   width: 56px;
-  margin: 0px 6px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   border: 1px solid #ED1C25;
+}
+.buttons .yes {
+  margin-right: 10px;
 }
 .buttons .no,
 .buttons .yes:active {
@@ -425,6 +427,7 @@ aside nav ul #logout {
   border-radius: 20px;
   position: relative;
   min-height: 620px;
+  max-width: 600px;
   background-image: url("/images/marketplace/ellipse.png");
   background-position: bottom right;
   background-repeat: no-repeat;
@@ -1117,14 +1120,14 @@ aside nav ul #logout {
   #root #pendingOrdersMain .pendingOrders .priceColumn::before,
   #root #pendingOrdersMain .pendingOrders .orderedByColumn::before,
   #root #pendingOrdersMain .pendingOrders .orderDateColumn::before,
-  #root #pendingOrdersMain .pendingOrders .orderStatus > span::before,
+  #root #pendingOrdersMain .pendingOrders .orderStatus::before,
   #root #myOrdersMain .pendingOrders .nameColumn::before,
   #root #myOrdersMain .pendingOrders .codeColumn::before,
   #root #myOrdersMain .pendingOrders .qtyColumn::before,
   #root #myOrdersMain .pendingOrders .priceColumn::before,
   #root #myOrdersMain .pendingOrders .orderedByColumn::before,
   #root #myOrdersMain .pendingOrders .orderDateColumn::before,
-  #root #myOrdersMain .pendingOrders .orderStatus > span::before {
+  #root #myOrdersMain .pendingOrders .orderStatus::before {
     font-weight: 700;
   }
   #root #pendingOrdersMain .pendingOrders .codeColumn::before,
@@ -1137,31 +1140,31 @@ aside nav ul #logout {
   }
   #root #pendingOrdersMain .pendingOrders .nameColumn::before,
   #root #myOrdersMain .pendingOrders .nameColumn::before {
-    content: "Name:   ";
+    content: "Name";
   }
   #root #pendingOrdersMain .pendingOrders .codeColumn::before,
   #root #myOrdersMain .pendingOrders .codeColumn::before {
-    content: "Code   ";
+    content: "Code";
   }
   #root #pendingOrdersMain .pendingOrders .qtyColumn::before,
   #root #myOrdersMain .pendingOrders .qtyColumn::before {
-    content: "Qty   ";
+    content: "Qty";
   }
   #root #pendingOrdersMain .pendingOrders .priceColumn::before,
   #root #myOrdersMain .pendingOrders .priceColumn::before {
-    content: "Price   ";
+    content: "Price";
   }
   #root #pendingOrdersMain .pendingOrders .orderedByColumn::before,
   #root #myOrdersMain .pendingOrders .orderedByColumn::before {
-    content: "Ordered by:   ";
+    content: "Ordered by";
   }
   #root #pendingOrdersMain .pendingOrders .orderDateColumn::before,
   #root #myOrdersMain .pendingOrders .orderDateColumn::before {
-    content: "Order date:   ";
+    content: "Order date";
   }
-  #root #pendingOrdersMain .pendingOrders .orderStatus span::before,
-  #root #myOrdersMain .pendingOrders .orderStatus span::before {
-    content: "Status:   ";
+  #root #pendingOrdersMain .pendingOrders .orderStatus::before,
+  #root #myOrdersMain .pendingOrders .orderStatus::before {
+    content: "Status";
   }
   #root #pendingOrdersMain .pendingOrders .completeButton,
   #root #myOrdersMain .pendingOrders .completeButton {
