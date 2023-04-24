@@ -2,8 +2,8 @@ import { addProduct } from "../components/addProductModal.js";
 import { createRow } from "../components/createRow.js";
 import { loadInventory } from "../src/itemsService.js";
 
-const Inventory = async () => {
-    const main = document.querySelector('main');
+const Inventory = async (): Promise<void> => {
+    const main = document.querySelector("main") as HTMLElement;
     main.id = "inventoryMain";
     main.innerHTML = `
     <div id="searchSpace">
@@ -41,32 +41,49 @@ const Inventory = async () => {
     </div>
     </div>
     `;
-    const products = await loadInventory();
-    products.forEach(p => {
+
+    type Product = {
+        categoryId: number;
+        code: String;
+        description: String;
+        fullName: String;
+        id: number;
+        imageUrl: String;
+        price: number;
+        quantity: number;
+        quantityForSale: number;
+        type: String;
+    };
+
+    const products: Product[] = await loadInventory();
+    products.forEach((p: Product) => {
         createRow(p);
     });
 
-    main.querySelector("#searchText").addEventListener("input", (e) => {
-        const searchText = e.target.value.toLowerCase();
-        main.querySelector("tbody").innerHTML = "";
-        if (searchText) {
-            const filteredProducts = products.filter((p) =>
-                p.fullName.toLowerCase().includes(searchText)
-            );
-            filteredProducts.forEach((p) => {
-                createRow(p);
-            });
-        } else {
-            products.forEach((p) => {
-                createRow(p);
-            });
+    (main.querySelector("#searchText") as HTMLElement).addEventListener(
+        "input",
+        (e: Event) => {
+            const searchText: string = (e.target as HTMLInputElement).value.toLowerCase();
+            (main.querySelector("tbody") as HTMLElement).innerHTML = "";
+            if (searchText) {
+                const filteredProducts = products.filter((p: Product) =>
+                    p.fullName.toLowerCase().includes(searchText)
+                );
+                filteredProducts.forEach((p: Product) => {
+                    createRow(p);
+                });
+            } else {
+                products.forEach((p: Product) => {
+                    createRow(p);
+                });
+            }
         }
-    });
+    );
 
-    main.querySelector("#addButton").addEventListener("click", async (e) => {
+    (main.querySelector("#addButton") as HTMLElement).addEventListener("click", async (e) => {
         e.preventDefault();
         addProduct();
-        const overlay = document.querySelector("#addItemOverlay");
+        const overlay = document.querySelector("#addItemOverlay") as HTMLElement;
         overlay.style.display = "flex";
     });
 };

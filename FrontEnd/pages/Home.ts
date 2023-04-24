@@ -1,10 +1,11 @@
+import { AccountInfo, AuthenticationResult } from "@azure/msal-browser";
 import { instance, loginRequest } from "../authConfig";
 import { navigateTo } from "../src/router";
 
 const Home = () => {
-    document.querySelector("header").style.display = "none";
-    document.querySelector("aside").style.display = "none";
-    const main = document.querySelector('main');
+    (document.querySelector("header") as HTMLElement).style.display = "none";
+    (document.querySelector("aside") as HTMLElement).style.display = "none";
+    const main = document.querySelector('main') as HTMLElement;
     main.id = "landingMain";
     main.innerHTML = `
         <img id="marketplaceLogo" src="/images/home/vsg-marketplace-logo.png" alt="Marketplace-logo">
@@ -17,10 +18,11 @@ const Home = () => {
     `;
 
     sessionStorage.clear();
-    const handleLogin = async () => {
+    const handleLogin = async (): Promise<void | Error> => {
         try {
-            const result = await instance.loginPopup(loginRequest);
-            sessionStorage.setItem("user", JSON.stringify(result.account));
+            const result: AuthenticationResult = await instance.loginPopup(loginRequest);
+            const user = result.account as AccountInfo;
+            sessionStorage.setItem("user", JSON.stringify(user));
             navigateTo("#marketplace");
             location.reload();
         } catch (error) {
@@ -29,7 +31,7 @@ const Home = () => {
         }
     };
 
-    main.querySelector("#loginButton").addEventListener("click", handleLogin);
+    (main.querySelector("#loginButton") as HTMLElement).addEventListener("click", handleLogin);
 };
 
 export default Home;

@@ -1,12 +1,12 @@
-import Home from "../pages/Home.js";
-import Inventory from "../pages/Inventory.js";
-import Marketplace from "../pages/Marketplace.js";
-import MyOrders from "../pages/MyOrders.js";
-import NotFound from "../pages/NotFound.js";
-import PendingOrders from "../pages/PendingOrders.js";
-import { headerUpdate, navStyling } from "./global.js";
-import { hamburgerHandler } from "./hamburger.js";
-import { navbar } from "./navbar.js";
+import Home from "../pages/Home";
+import Inventory from "../pages/Inventory";
+import Marketplace from "../pages/Marketplace";
+import MyOrders from "../pages/MyOrders";
+import NotFound from "../pages/NotFound";
+import PendingOrders from "../pages/PendingOrders";
+import { headerUpdate, navStyling } from "./global";
+import { hamburgerHandler } from "./hamburger";
+import { navbar } from "./navbar";
 
 const routes = {
   "/": Home,
@@ -50,12 +50,6 @@ export const handleSPALinks = () => {
     link.addEventListener("click", onClickSPALink);
   });
 };
-
-// const removeSPAEventHandlers = () => {
-//   document.querySelectorAll("a[spa]").forEach((link) => {
-//     link.removeEventListener("click", onClickSPALink);
-//   });
-// };
 
 const onClickSPALink = (e) => {
   e.preventDefault();

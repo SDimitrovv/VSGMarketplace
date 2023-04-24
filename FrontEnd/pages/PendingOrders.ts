@@ -1,8 +1,8 @@
 import { pendingOrderComponent } from "../components/pendingOrderComponent.js";
 import { loadPendingOrders } from "../src/itemsService.js";
 
-const PendingOrders = async () => {
-    const main = document.querySelector('main');
+const PendingOrders = async (): Promise<void> => {
+    const main = document.querySelector('main') as HTMLElement;
     main.id = "pendingOrdersMain";
     main.innerHTML = `
     <div id="headingSection">
@@ -15,9 +15,18 @@ const PendingOrders = async () => {
     </div>
     `;
 
-    const orders = await loadPendingOrders();
-    orders.forEach(p => {
-        pendingOrderComponent(p.id, p.code, p.quantity, p.price, p.email, p.date, p.status);
+    type Order = {
+        id: number;
+        code: String;
+        quantity: number;
+        price: number;
+        email: string
+        date: string;
+        status: string;
+    };
+    const orders: Order[] = await loadPendingOrders();
+    orders.forEach((p: Order) => {
+        pendingOrderComponent(p);
     });
 };
 

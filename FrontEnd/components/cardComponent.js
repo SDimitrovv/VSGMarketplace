@@ -1,6 +1,6 @@
 import { closeContainerHandler, closeModalHandler } from "../src/global";
 import { createOrder } from "../src/itemsService";
-import { navigateTo } from "../src/router";
+import { navigateTo } from "../src/router.js";
 import { productModal } from "./productModal";
 
 export const cardComponent = (product) => {

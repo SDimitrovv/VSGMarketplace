@@ -1,25 +1,25 @@
 import { closeContainerHandler } from "../src/global.js";
 import { rejectOrder } from "../src/itemsService.js";
 
-export const myOrderComponent = (id, quantity, date, status, fullName, price) => {
+export const myOrderComponent = (product) => {
     const cardDiv = document.createElement("div");
     cardDiv.className = "pendingOrders";
-    cardDiv.id = id;
+    cardDiv.id = product.id;
     cardDiv.innerHTML = `
-    <span class="nameColumn">${fullName}</span>
+    <span class="nameColumn">${product.fullName}</span>
     <div class="firstTwo">
-        <span class="qtyColumn">${quantity}</span>
-        <span class="priceColumn">${price} BGN</span>
+        <span class="qtyColumn">${product.quantity}</span>
+        <span class="priceColumn">${product.price} BGN</span>
         </div>
-        <span class="orderDateColumn">${date.substring(0, 16)}</span>
+        <span class="orderDateColumn">${product.date}</span>
         <div class="orderStatus">
-            <span>${status}</span>
+            <span>${product.status}</span>
             <div id="popupParent">
             </div>
         </div>
     `;
 
-    if (status === "Pending") {
+    if (product.status === "Pending") {
         const popupParent = cardDiv.querySelector('#popupParent');
         const cancelOrderButton = document.createElement("a");
         cancelOrderButton.className = 'cancelOrder';
@@ -46,10 +46,9 @@ export const myOrderComponent = (id, quantity, date, status, fullName, price) =>
 
             div.querySelector('.yes').addEventListener('click', async e => {
                 e.preventDefault();
-
-                const res = await rejectOrder(id);
+                const res = await rejectOrder(product.id);
                 console.log(res);
-                cardDiv.querySelector('.orderStatus').textContent = ": Decline";
+                cardDiv.querySelector('.orderStatus').textContent = "Decline";
                 cancelOrderButton.remove();
             });
 
