@@ -23,12 +23,11 @@ namespace MarketplaceApplication.Helpers.Middleware
             {
                 await _next(context);
                 unitOfWork.Transaction.Commit();
-
             }
             catch (Exception ex)
             {
                 unitOfWork.Transaction.Rollback();
-
+                _logger.LogError(ex.ToString());
                 await HandleExceptionAsync(context, ex);
             }
         }

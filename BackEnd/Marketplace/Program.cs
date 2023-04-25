@@ -2,11 +2,17 @@ using MarketplaceApplication.Helpers.Configurations;
 using MarketplaceApplication.Helpers.Middleware;
 using MarketplaceInfrastructure.Configurations;
 using MarketplaceInfrastructure.Migrations;
-using Microsoft.Extensions.Configuration;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Host.ConfigureLogging(logging =>
+    {
+        logging.ClearProviders();
+    })
+    .UseNLog();
 
 builder.Services.AddControllers();
 
