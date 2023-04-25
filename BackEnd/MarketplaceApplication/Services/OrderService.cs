@@ -32,7 +32,7 @@ namespace MarketplaceApplication.Services
             var order = new Order
             {
                 Quantity = model.Quantity,
-                Date = DateTime.Now.ToString("HH:mm dd/MM/yyyy"),
+                Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
                 Status = Status.Pending.ToString(),
                 ProductId = model.ProductId,
                 Email = model.Email

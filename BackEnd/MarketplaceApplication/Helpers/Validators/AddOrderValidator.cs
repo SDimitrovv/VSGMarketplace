@@ -9,7 +9,7 @@ namespace MarketplaceApplication.Helpers.Validators
         {
             RuleFor(c => c.Quantity)
                 .NotNull().WithMessage("Quantity can't be null")
-                .GreaterThan(-1).WithMessage("Quantity must be positive number!");
+                .GreaterThan(0).WithMessage("Quantity must be positive number!");
 
             RuleFor(c => c.ProductId)
                 .NotNull().WithMessage("ProductId can't be null")
