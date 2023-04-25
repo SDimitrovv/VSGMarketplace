@@ -1,5 +1,7 @@
-export const productModal = async (product) => {
-    const modalContent = document.createElement("div");
+import { Product } from "../src/types";
+
+export const productModal = (product: Product): HTMLElement => {
+    const modalContent = document.createElement("div") as HTMLElement;
     modalContent.id = "modalContent";
     modalContent.className = "modalContent";
     modalContent.innerHTML = `
@@ -31,6 +33,6 @@ export const productModal = async (product) => {
     </div>
     `;
 
-    document.querySelector("#addItemOverlay").appendChild(modalContent);
+    (document.querySelector("#addItemOverlay") as HTMLElement).appendChild(modalContent);
     return modalContent;
 };

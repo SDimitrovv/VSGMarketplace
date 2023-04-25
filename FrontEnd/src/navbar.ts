@@ -1,4 +1,4 @@
-import { instance } from "../authConfig.js";
+import { instance } from "../authConfig.ts";
 
 export const navbar = () => {
     const user = JSON.parse(sessionStorage.getItem("user"));

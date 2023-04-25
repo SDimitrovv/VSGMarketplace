@@ -1,8 +1,8 @@
-import { closeModalHandler } from "../src/global.js";
-import { imageHandler } from "../src/global.js";
-import { createProduct, loadCategories } from "../src/itemsService.js";
-import { createImage } from "../src/pictureService.js";
-import { createRow } from "./createRow.js";
+import { closeModalHandler } from "../src/global.ts";
+import { imageHandler } from "../src/global.ts";
+import { createProduct, loadCategories } from "../src/itemsService.ts";
+import { createImage } from "../src/pictureService.ts";
+import { rowComponent } from "./rowComponent.ts";
 
 export const addProduct = async () => {
     const modal = document.createElement("form");
@@ -30,9 +30,9 @@ export const addProduct = async () => {
         </div>
         <div class="rightModal">
             <img class="currentImg" src="/images/inventory/no-image-placeholder.png">
-            <input class="inputImage" accept="image/*" name="picture" type="file">
+            <input id="uploadInput" class="inputImage" accept="image/*" name="picture" type="file">
             <div class="uploadDelete">
-                <button class="uploadImg">Upload</button>
+                <label for="uploadInput" class="uploadImg">Upload</label>
                 <button class="deleteImg">Remove</button>
             </div>
         </div>
@@ -54,9 +54,11 @@ export const addProduct = async () => {
 
     modal.addEventListener("submit", async (e) => {
         e.preventDefault();
+        console.log(e.target);
         const formData = new FormData(e.target);
         const image = formData.get("picture");
         formData.delete("picture");
+        console.log(image);
 
         const imageForm = new FormData();
         imageForm.append("picture", image);
@@ -72,7 +74,7 @@ export const addProduct = async () => {
                 console.log("Image POST", imgRes);
                 response.imageUrl = imgRes
             }
-            createRow(response);
+            rowComponent(response);
         }
 
         modal.remove();

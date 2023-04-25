@@ -1,5 +1,5 @@
 import { myOrderComponent } from "../components/myOrderComponent.js";
-import { loadMyOrders } from "../src/itemsService.js";
+import { loadMyOrders } from "../src/itemsService.ts";
 
 const MyOrders = async (): Promise<void> => {
     const main = document.querySelector("main") as HTMLElement;

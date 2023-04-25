@@ -1,6 +1,6 @@
-import { PublicClientApplication } from "@azure/msal-browser";
+import { PublicClientApplication, Configuration } from "@azure/msal-browser";
 
-export const msalConfig = {
+export const msalConfig: Configuration = {
     auth: {
         clientId: "86ceffd4-8632-4677-bbb6-e7badafa26ec",
         authority: "https://login.microsoftonline.com/50ae1bf7-d359-4aff-91ac-b084dc52111e",
@@ -13,7 +13,11 @@ export const msalConfig = {
     },
 };
 
-export const loginRequest = {
+interface LoginRequest {
+    scopes: string[];
+};
+
+export const loginRequest: LoginRequest = {
     scopes: ["User.Read"],
 };
 

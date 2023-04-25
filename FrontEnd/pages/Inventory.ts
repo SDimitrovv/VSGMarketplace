@@ -1,6 +1,7 @@
 import { addProduct } from "../components/addProductModal.js";
-import { createRow } from "../components/createRow.js";
-import { loadInventory } from "../src/itemsService.js";
+import { rowComponent } from "../components/rowComponent.ts";
+import { loadInventory } from "../src/itemsService.ts";
+import { InventoryProduct } from "../src/types.ts";
 
 const Inventory = async (): Promise<void> => {
     const main = document.querySelector("main") as HTMLElement;
@@ -42,22 +43,9 @@ const Inventory = async (): Promise<void> => {
     </div>
     `;
 
-    type Product = {
-        categoryId: number;
-        code: String;
-        description: String;
-        fullName: String;
-        id: number;
-        imageUrl: String;
-        price: number;
-        quantity: number;
-        quantityForSale: number;
-        type: String;
-    };
-
-    const products: Product[] = await loadInventory();
-    products.forEach((p: Product) => {
-        createRow(p);
+    const products: InventoryProduct[] = await loadInventory();
+    products.forEach((p: InventoryProduct) => {
+        rowComponent(p);
     });
 
     (main.querySelector("#searchText") as HTMLElement).addEventListener(
@@ -66,15 +54,15 @@ const Inventory = async (): Promise<void> => {
             const searchText: string = (e.target as HTMLInputElement).value.toLowerCase();
             (main.querySelector("tbody") as HTMLElement).innerHTML = "";
             if (searchText) {
-                const filteredProducts = products.filter((p: Product) =>
+                const filteredProducts = products.filter((p: InventoryProduct) =>
                     p.fullName.toLowerCase().includes(searchText)
                 );
-                filteredProducts.forEach((p: Product) => {
-                    createRow(p);
+                filteredProducts.forEach((p: InventoryProduct) => {
+                    rowComponent(p);
                 });
             } else {
-                products.forEach((p: Product) => {
-                    createRow(p);
+                products.forEach((p: InventoryProduct) => {
+                    rowComponent(p);
                 });
             }
         }

@@ -1,5 +1,5 @@
 import { pendingOrderComponent } from "../components/pendingOrderComponent.js";
-import { loadPendingOrders } from "../src/itemsService.js";
+import { loadPendingOrders } from "../src/itemsService.ts";
 
 const PendingOrders = async (): Promise<void> => {
     const main = document.querySelector('main') as HTMLElement;

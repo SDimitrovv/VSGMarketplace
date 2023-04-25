@@ -1,5 +1,5 @@
 import { AccountInfo, AuthenticationResult } from "@azure/msal-browser";
-import { instance, loginRequest } from "../authConfig";
+import { instance, loginRequest } from "../authConfig.ts";
 import { navigateTo } from "../src/router";
 
 const Home = () => {
@@ -18,7 +18,7 @@ const Home = () => {
     `;
 
     sessionStorage.clear();
-    const handleLogin = async (): Promise<void | Error> => {
+    const handleLogin = async (): Promise<void> => {
         try {
             const result: AuthenticationResult = await instance.loginPopup(loginRequest);
             const user = result.account as AccountInfo;
@@ -27,7 +27,6 @@ const Home = () => {
             location.reload();
         } catch (error) {
             console.log(error);
-            return error;
         }
     };
 

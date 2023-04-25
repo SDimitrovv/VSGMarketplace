@@ -1,5 +1,5 @@
-import { closeContainerHandler } from "../src/global.js";
-import { rejectOrder } from "../src/itemsService.js";
+import { closeContainerHandler } from "../src/global.ts";
+import { rejectOrder } from "../src/itemsService.ts";
 
 export const myOrderComponent = (product) => {
     const cardDiv = document.createElement("div");
@@ -48,7 +48,7 @@ export const myOrderComponent = (product) => {
                 e.preventDefault();
                 const res = await rejectOrder(product.id);
                 console.log(res);
-                cardDiv.querySelector('.orderStatus').textContent = "Decline";
+                cardDiv.querySelector('.orderStatus').textContent = "Declined";
                 cancelOrderButton.remove();
             });
 

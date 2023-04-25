@@ -1,10 +1,11 @@
 import { closeContainerHandler } from "../src/global";
 import { deleteProduct } from "../src/itemsService";
-import { editProductModal } from "./editProductModal";
+import { InventoryProduct } from "../src/types";
+import { editProductModal } from "./editProductModal.ts";
 
-export const createRow = (product) => {
+export const rowComponent = (product: InventoryProduct) => {
     const row = document.createElement("tr");
-    row.id = product.id;
+    row.id = `${product.id}`;
     row.innerHTML = `
     <td>${product.code}</td>
     <td>${product.fullName}</td>
@@ -33,14 +34,14 @@ export const createRow = (product) => {
     </td>
     `;
 
-    row.querySelector(".edit").addEventListener("click", (e) => {
+    (row.querySelector(".edit") as HTMLElement).addEventListener("click", (e) => {
         e.preventDefault();
         editProductModal(product);
-        const overlay = document.querySelector("#addItemOverlay2");
+        const overlay = document.querySelector("#addItemOverlay2") as HTMLElement;
         overlay.style.display = "flex";
-    })
+    });
 
-    row.querySelector(".delete").addEventListener("click", (e) => {
+    (row.querySelector(".delete") as HTMLElement).addEventListener("click", (e) => {
         e.preventDefault();
         const div = document.createElement("div");
         div.className = "removeContainer";
@@ -52,7 +53,7 @@ export const createRow = (product) => {
             </div>
         `;
 
-        div.querySelector('.yes').addEventListener('click', async e => {
+        (div.querySelector('.yes') as HTMLElement).addEventListener('click', async e => {
             e.preventDefault();
             const res = await deleteProduct(product.id);
             console.log(res);
@@ -60,9 +61,11 @@ export const createRow = (product) => {
         });
 
         closeContainerHandler(div);
-        e.target.parentElement.appendChild(div);
+        const target = e.target as HTMLElement;
+        const parentTarget = target.parentElement as HTMLElement;
+        parentTarget.appendChild(div);
     });
 
-    const tbody = document.querySelector('tbody');
+    const tbody = document.querySelector('tbody') as HTMLElement;
     tbody.appendChild(row);
 };

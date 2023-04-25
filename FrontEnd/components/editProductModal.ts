@@ -1,9 +1,10 @@
-import { editProduct, loadCategories } from "../src/itemsService.js";
-import { closeModalHandler } from "../src/global.js";
-import { imageHandler } from "../src/global.js";
-import { deleteImage, editImage } from "../src/pictureService.js";
+import { editProduct, loadCategories } from "../src/itemsService.ts";
+import { closeModalHandler } from "../src/global.ts";
+import { imageHandler } from "../src/global.ts";
+import { deleteImage, editImage } from "../src/pictureService.ts";
+import { InventoryProduct } from "../src/types.ts";
 
-export const editProductModal = async (product) => {
+export const editProductModal = async (product: InventoryProduct): Promise<void> => {
     if (!product.imageUrl) {
         product.imageUrl = '/images/inventory/no-image-placeholder.png';
     }
@@ -42,19 +43,19 @@ export const editProductModal = async (product) => {
     <button type="submit">Modify</button>
     `;
 
-    const overlay = document.querySelector("#addItemOverlay2");
+    const overlay = document.querySelector("#addItemOverlay2") as HTMLElement;
     overlay.appendChild(modal);
     closeModalHandler(modal);
     imageHandler(modal);
 
-    const select = modal.querySelector('.category');
+    const select = modal.querySelector('.category') as HTMLSelectElement;
     const categories = await loadCategories();
-    categories.forEach(c => {
-        const option = document.createElement('option');
-        option.value = c.id;
+    categories.forEach((c) => {
+        const option = document.createElement('option') as HTMLOptionElement;
+        option.value = `${c.id}`;
         option.textContent = c.type;
         if (product.type === c.type) {
-            option.selected = 'selected';
+            option.selected = true;
         }
 
         select.appendChild(option);
@@ -62,30 +63,30 @@ export const editProductModal = async (product) => {
 
     modal.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        const image = formData.get("picture");
+        const data = e.target as HTMLFormElement;
+        const formData = new FormData(data);
+        const image = formData.get("picture") as File;
         formData.delete("picture");
         const imageForm = new FormData();
         imageForm.append("newPicture", image);
 
-        const currentImg = modal.querySelector('.currentImg').src;
+        const currentImg = modal.querySelector('.currentImg') as HTMLImageElement;
         const itemData = Object.fromEntries(formData);
 
         if (image.name) {
             const imgRes = await editImage(product.id, imageForm);
             console.log("Image PUT", imgRes)
-            product.imageUrl = imgRes;
-        } else if (currentImg !== product.imageUrl) {
+            product.imageUrl = imgRes as string;
+        } else if (currentImg.src !== product.imageUrl) {
             const res = await deleteImage(product.id);
             product.imageUrl = '/images/inventory/no-image-placeholder.png';
             console.log("Image DELETE", res);
         }
 
-        if (itemData.quantity < itemData.quantityForSale && quantity < 1) {
+        if (itemData.quantity < itemData.quantityForSale && product.quantity < 1) {
             return alert("Make sure that quantity is not less than quantity for sale!");
         } else {
             const res = await editProduct(product.id, itemData);
-            product = res;
             console.log("PUT", res);
         }
 
