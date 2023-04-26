@@ -12,7 +12,7 @@ export const makeRequest = async <T>({
     method = "GET",
     data = {},
     headers = { "Content-Type": "application/json" },
-}: RequestParams): Promise<T[]> => {
+}: RequestParams): Promise<T> => {
 
     const options: { headers: Record<string, string>; body?: string } = {
         headers,
@@ -35,7 +35,7 @@ export const makeRequest = async <T>({
         const contentType = response.headers.get("content-type");
         return contentType ? await response.json() : response;
     } catch (error) {
-        const responseError = error as T[];
+        const responseError = error as T;
         // if (responseError.ErrorMessage) {
         //     console.error(`Error: ${responseError.ErrorMessage}`);
         // }

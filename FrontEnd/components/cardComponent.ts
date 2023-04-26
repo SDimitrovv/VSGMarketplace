@@ -1,22 +1,26 @@
-import { closeContainerHandler, closeModalHandler } from "../src/global.ts";
+import { closeContainerHandler, closeModalHandler, imagePlaceholder, } from "../src/global.ts";
 import { createOrder } from "../src/itemsService.ts";
 import { navigateTo } from "../src/router.ts";
 import { productModal } from "./productModal.ts";
-import { MarketplaceProduct } from "../src/types.ts";
+import { IProduct } from "../src/types.ts";
 
-export const cardComponent = (product: MarketplaceProduct) => {
+export const cardComponent = (product: IProduct) => {
+    if (!product.quantityForSale) {
+        return;
+    }
+
     if (!product.imageUrl) {
-        product.imageUrl = '/images/inventory/no-image-placeholder.png';
+        product.imageUrl = imagePlaceholder;
     }
 
     const cardDiv = document.createElement("div") as HTMLDivElement;
     cardDiv.className = "product";
     cardDiv.id = `${product.id}`;
     cardDiv.innerHTML = `
-   <a class='productButton'>
+    <a class='productButton'>
        <img src="${product.imageUrl}" alt="Product-image">
-   </a>
-   <div class="productContent">
+    </a>
+    <div class="productContent">
        <div class="price">
            <span>${product.price} BGN</span>
            <small>${product.type}</small>
@@ -47,10 +51,11 @@ export const cardComponent = (product: MarketplaceProduct) => {
                </div>
            </form>
        </div>
-   </div>
+    </div>
     `;
 
     const select = cardDiv.querySelector(".randomNumberSelect") as HTMLSelectElement;
+
     for (let i = 1; i <= product.quantityForSale + 1; i++) {
         const option = document.createElement("option") as HTMLOptionElement;
         option.value = `${i}`;
@@ -72,36 +77,42 @@ export const cardComponent = (product: MarketplaceProduct) => {
         </div>
         `;
 
-        (buyContainer.querySelector(".yes") as HTMLElement).addEventListener('click', async e => {
+        (buyContainer.querySelector(".yes") as HTMLElement).addEventListener("click", async () => {
             const user = JSON.parse(sessionStorage.getItem("user") as string);
             const email = user ? user.username : "eredzhepov@vsgbg.com";
-            const order = { quantity: select.value, productId: product.id, email: email };
+            const order = {
+                quantity: select.value,
+                productId: product.id,
+                email: email,
+            };
             const res = await createOrder(order);
             console.log(res);
-            navigateTo('#my-orders');
+            navigateTo("#my-orders");
         });
 
         closeContainerHandler(buyContainer);
         return buyContainer;
     };
 
-    (cardDiv.querySelector(".buyButton") as HTMLElement).addEventListener("click", (e: Event) => {
-        e.preventDefault();
-        const buyContainer = createContainer(Number(select.value));
-        const element = e.target as HTMLElement;
-        const popupParent = element.parentElement as HTMLElement;
-        popupParent.appendChild(buyContainer);
-    });
+    (cardDiv.querySelector(".buyButton") as HTMLElement).addEventListener(
+        "click",
+        (e: MouseEvent) => {
+            e.preventDefault();
+            const buyContainer = createContainer(Number(select.value));
+            const element = e.target as HTMLElement;
+            const popupParent = element.parentElement as HTMLElement;
+            popupParent.appendChild(buyContainer);
+        }
+    );
 
     (cardDiv.querySelector(".productButton") as HTMLElement).addEventListener("click", async (e) => {
         e.preventDefault();
-        const modal = await productModal(product);
+        const modal = productModal(product);
         (document.querySelector("#addItemOverlay") as HTMLElement).style.display = "flex";
         (modal.querySelector("#modalImage") as HTMLImageElement).style.pointerEvents = "none";
         (modal.querySelector("#modalFrameOne") as HTMLElement).style.pointerEvents = "none";
         closeModalHandler(modal);
     });
 
-    const productsSections = document.querySelector("#marketplaceMain") as HTMLElement;
-    productsSections.appendChild(cardDiv);
+    (document.querySelector("#marketplaceMain") as HTMLElement).appendChild(cardDiv);
 };

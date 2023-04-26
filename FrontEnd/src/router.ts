@@ -1,17 +1,11 @@
+import { headerUpdate, navStyling, hamburgerHandler, navbar } from "./global.ts";
+import { Route, Routes } from "./types.ts";
 import Home from "../pages/Home.ts";
 import Inventory from "../pages/Inventory.ts";
 import Marketplace from "../pages/Marketplace.ts";
 import MyOrders from "../pages/MyOrders.ts";
 import NotFound from "../pages/NotFound.ts";
 import PendingOrders from "../pages/PendingOrders.ts";
-import { headerUpdate, navStyling, hamburgerHandler } from "./global.ts";
-import { navbar } from "./navbar.ts";
-
-type Route = () => void;
-
-type Routes = {
-  [key: string]: Route;
-};
 
 const routes: Routes = {
   "/": Home,

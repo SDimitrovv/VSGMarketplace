@@ -1,5 +1,6 @@
 import { myOrderComponent } from "../components/myOrderComponent.js";
 import { loadMyOrders } from "../src/itemsService.ts";
+import { IOrder } from "../src/types.ts";
 
 const MyOrders = async (): Promise<void> => {
     const main = document.querySelector("main") as HTMLElement;
@@ -15,20 +16,10 @@ const MyOrders = async (): Promise<void> => {
     `;
 
     const user: string | null = sessionStorage.getItem("user");
-    const email: string = user
-        ? JSON.parse(user).username
-        : "eredzhepov@vsgbg.com";
+    const email: string = user ? JSON.parse(user).username : "eredzhepov@vsgbg.com";
 
-    type Order = {
-        id: number;
-        quantity: number;
-        date: string;
-        status: string;
-        fullName: string;
-        price: number;
-    };
-    const orders: Order[] = await loadMyOrders(email);
-    orders.forEach((p: Order) => {
+    const orders = await loadMyOrders(email);
+    orders.forEach((p: IOrder) => {
         myOrderComponent(p);
     });
 };

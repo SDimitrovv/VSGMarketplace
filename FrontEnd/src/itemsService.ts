@@ -1,72 +1,72 @@
 import { makeRequest } from "./makeRequest.ts";
-import { MarketplaceProduct, InventoryProduct } from "./types.ts";
+import { IProduct, ICategory, IOrder } from "./types.ts";
 
-export const loadMarketplace = async (): Promise<MarketplaceProduct[]> => {
-    return makeRequest<MarketplaceProduct>({ path: "/Product/Marketplace" });
+export const loadMarketplace = () => {
+    return makeRequest<IProduct[]>({ path: "/Product/Marketplace" });
 };
 
-export const loadInventory = async (): Promise<InventoryProduct[]> => {
-    return makeRequest<InventoryProduct>({ path: "/Product/Inventory" });
+export const loadInventory = () => {
+    return makeRequest<IProduct[]>({ path: "/Product/Inventory" })
 };
 
-export const loadPendingOrders = async (): Promise<object[]> => {
-    return makeRequest<object>({ path: "/Order/PendingOrders" });
+export const loadPendingOrders = async () => {
+    return makeRequest<IOrder[]>({ path: "/Order/PendingOrders" });
 };
 
-export const loadMyOrders = async (email: string): Promise<object[]> => {
-    return makeRequest<object>({ path: "/Order/MyOrders?email=" + email });
+export const loadMyOrders = async (email: string) => {
+    return makeRequest<IOrder[]>({ path: "/Order/MyOrders?email=" + email });
 };
 
-export const loadProduct = async (id: number): Promise<object> => {
-    return makeRequest<object>({ path: "/Product/" + id });
+export const loadProduct = async (id: number) => {
+    return makeRequest<IProduct>({ path: "/Product/" + id });
 };
 
-export const createProduct = async (data: object): Promise<object> => {
-    return makeRequest<object>({
+export const createProduct = async (data: object) => {
+    return makeRequest<IProduct>({
         path: "/Product",
         method: "POST",
         data,
     });
 };
 
-export const editProduct = async (id: number, data: object): Promise<object> => {
-    return makeRequest<object>({
+export const editProduct = async (id: number, data: object) => {
+    return makeRequest<IProduct>({
         path: "/Product/" + id,
         method: "PUT",
         data,
     });
 };
 
-export const deleteProduct = async (id: number): Promise<object> => {
-    return makeRequest<object>({
+export const deleteProduct = async (id: number) => {
+    return makeRequest<IProduct>({
         path: "/Product/" + id,
         method: "DELETE",
     });
 };
 
-export const createOrder = async (data: object): Promise<object> => {
-    return makeRequest<object>({
+export const createOrder = async (data: object) => {
+    return makeRequest<IOrder>({
         path: "/Order",
         method: "POST",
         data,
     });
 };
 
-export const completeOrder = async (id: number): Promise<object> => {
-    return makeRequest<object>({
+export const completeOrder = async (id: number) => {
+    return makeRequest<IOrder>({
         path: "/Order/Complete/" + id,
         method: "PUT",
         headers: { "content-type": "text/plain" }
     });
 };
 
-export const rejectOrder = async (id: number): Promise<object> => {
-    return makeRequest<object>({
+export const rejectOrder = async (id: number) => {
+    return makeRequest<IOrder>({
         path: `/Order/Reject/${id}`,
         method: "PUT",
     });
 };
 
-export const loadCategories = async (): Promise<object[]> => {
-    return makeRequest<object>({ path: `/Category` });
+export const loadCategories = async () => {
+    return makeRequest<ICategory[]>({ path: `/Category` });
 };

@@ -2,10 +2,11 @@ import { closeModalHandler } from "../src/global.ts";
 import { imageHandler } from "../src/global.ts";
 import { createProduct, loadCategories } from "../src/itemsService.ts";
 import { createImage } from "../src/pictureService.ts";
+import { IProduct } from "../src/types.ts";
 import { rowComponent } from "./rowComponent.ts";
 
-export const addProduct = async () => {
-    const modal = document.createElement("form");
+export const addProduct = async (): Promise<void> => {
+    const modal = document.createElement("form") as HTMLFormElement;
     modal.className = "addForm modalContent";
     modal.innerHTML = `
     <a class="closeModal">
@@ -40,42 +41,44 @@ export const addProduct = async () => {
     <button type="submit">Add</button>
     `;
 
-    const overlay = document.querySelector("#addItemOverlay");
+    const overlay = document.querySelector("#addItemOverlay") as HTMLElement;
     overlay.appendChild(modal);
 
-    const select = modal.querySelector('.category');
+    const select = modal.querySelector('.category') as HTMLSelectElement;
     const categories = await loadCategories();
     categories.forEach(c => {
-        const option = document.createElement('option');
-        option.value = c.id;
+        const option = document.createElement('option') as HTMLOptionElement;
+        option.value = `${c.id}`;
         option.textContent = c.type;
-        select.appendChild(option)
-    })
+        select.appendChild(option);
+    });
 
-    modal.addEventListener("submit", async (e) => {
+    modal.addEventListener("submit", async (e: SubmitEvent) => {
         e.preventDefault();
-        console.log(e.target);
-        const formData = new FormData(e.target);
-        const image = formData.get("picture");
+        const formData = new FormData(e.target as HTMLFormElement);
+        const image = formData.get("picture") as File;
         formData.delete("picture");
-        console.log(image);
 
         const imageForm = new FormData();
         imageForm.append("picture", image);
-        const itemData = Object.fromEntries(formData);
+        const itemData = Object.fromEntries(formData) as unknown as IProduct;
 
-        if (itemData.quantity < itemData.quantityForSale && quantity < 1) {
-            return alert("Make sure that quantity is not less than quantity for sale!");
-        } else {
-            const response = await createProduct(itemData);
-            console.log("POST", response);
-            if (image.name) {
-                const imgRes = await createImage(response.id, imageForm);
-                console.log("Image POST", imgRes);
-                response.imageUrl = imgRes
+        if (itemData.quantityForSale) {
+            if (itemData.quantity < itemData.quantityForSale && itemData.quantity < 0) {
+                return alert("Make sure that quantity is not less than quantity for sale!");
             }
-            rowComponent(response);
         }
+
+        const response = await createProduct(itemData);
+        console.log("POST", response);
+        if (image.name) {
+            console.log(image);
+            const imgRes = await createImage(response.id, imageForm) as string;
+            console.log("Image POST", imgRes);
+            response.imageUrl = imgRes;
+        }
+
+        rowComponent(response);
 
         modal.remove();
         overlay.style.display = "none";

@@ -100,7 +100,7 @@
 #addItemOverlay {
     @include overlay;
 
-    #modalContent {
+    #productModal {
         @include modal(fit-content, auto);
         min-height: 620px;
         max-width: 600px;
@@ -165,7 +165,7 @@
     }
 
     @media screen and (max-width: 768px) {
-        #modalContent {
+        #productModal {
             @include modal(fit-content, 92%);
 
             .closeModal {

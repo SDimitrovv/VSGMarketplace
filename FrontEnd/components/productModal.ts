@@ -1,8 +1,8 @@
-import { Product } from "../src/types";
+import { IProduct } from "../src/types";
 
-export const productModal = (product: Product): HTMLElement => {
+export const productModal = (product: IProduct): HTMLElement => {
     const modalContent = document.createElement("div") as HTMLElement;
-    modalContent.id = "modalContent";
+    modalContent.id = "productModal";
     modalContent.className = "modalContent";
     modalContent.innerHTML = `
     <a class="closeModal">

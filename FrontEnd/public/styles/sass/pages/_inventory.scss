@@ -183,6 +183,8 @@
 
                 .uploadImg {
                     @include button($upload-image);
+                    @include flex-align(column, center);
+                    justify-content: center;
                 }
 
                 .deleteImg {

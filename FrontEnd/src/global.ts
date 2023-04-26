@@ -1,23 +1,23 @@
-export const imagePlaceholder: string = "/images/inventory/no-image-placeholder.png";
+import { instance } from "../authConfig.ts";
+
+export const imagePlaceholder = "/images/inventory/no-image-placeholder.png";
 
 export const navStyling = (path: string) => {
-    (document.querySelectorAll(".navButton") as E<HTMLAnchorElement>).forEach(
-        (n) => {
-            const allPaths: string = n.textContent.trim().toLowerCase();
-            if (path.includes("-")) {
-                path = path.replace("-", " ");
-            }
-
-            const navItem = n.querySelector("path") as SVGPathElement;
-            if (allPaths === path) {
-                n.className += " active";
-                navItem.style.fill = "#F0F0F0";
-            } else {
-                n.className = "navButton";
-                navItem.style.fill = "#ED1C25";
-            }
+    (document.querySelectorAll(".navButton") as NodeListOf<HTMLAnchorElement>).forEach((n: HTMLAnchorElement) => {
+        const navPath = n.textContent?.trim().toLowerCase();
+        if (path.includes("-")) {
+            path = path.replace("-", " ");
         }
-    );
+
+        const navItem = n.querySelector("path") as SVGPathElement;
+        if (navPath === path) {
+            n.className += " active";
+            navItem.style.fill = "#F0F0F0";
+        } else {
+            n.className = "navButton";
+            navItem.style.fill = "#ED1C25";
+        }
+    });
 };
 
 export const headerUpdate = (path: string) => {
@@ -43,21 +43,13 @@ export const headerUpdate = (path: string) => {
 
 export const closeModalHandler = (modal: HTMLElement) => {
     const overlay = modal.parentElement as HTMLElement;
-    overlay.addEventListener(
-        "mousedown",
-        (e: MouseEvent) => {
-            if (e.target === overlay) {
-                closing();
-            }
-        },
-        true
-    );
+    overlay.addEventListener("mousedown", (e: MouseEvent) => {
+        if (e.target === overlay) {
+            closing();
+        }
+    }, true);
 
-    (modal.querySelector(".closeModal") as HTMLElement).addEventListener(
-        "click",
-        closing,
-        true
-    );
+    (modal.querySelector(".closeModal") as HTMLElement).addEventListener("click", closing, true);
 
     function closing() {
         modal.remove();
@@ -70,7 +62,7 @@ export const closeContainerHandler = (container: HTMLElement) => {
     (container.querySelector("p") as HTMLElement).style.pointerEvents = "none";
     document.addEventListener("click", closeContainerClick, true);
 
-    async function closeContainerClick(e: MouseEvent) {
+    function closeContainerClick(e: MouseEvent) {
         if (yes !== e.target && container !== e.target) {
             container.remove();
             document.removeEventListener("click", closeContainerClick);
@@ -89,15 +81,13 @@ export const imageHandler = (modal: HTMLElement) => {
         imagePreview.src = image;
     });
 
-    (modal.querySelector(".deleteImg") as HTMLElement).addEventListener(
-        "click",
-        (e: MouseEvent) => {
-            e.preventDefault();
-            imagePreview.src = imagePlaceholder;
-            input.value = "";
-        }
-    );
+    (modal.querySelector(".deleteImg") as HTMLElement).addEventListener("click", (e: MouseEvent) => {
+        e.preventDefault();
+        imagePreview.src = imagePlaceholder;
+        input.value = "";
+    });
 };
+
 export const hamburgerHandler = () => {
     const hamburger = document.querySelector("#hamburger") as HTMLElement;
     const closeMenu = document.querySelector("#closeMenu") as HTMLElement;
@@ -143,4 +133,17 @@ export const hamburgerHandler = () => {
         main.style.display = "flex";
         aside.style.display = "flex";
     }
+};
+
+export const navbar = () => {
+    const user = JSON.parse(sessionStorage.getItem("user") as string);
+    const name = user ? user.name.split(" ")[0] : "User";
+    (document.querySelector(".profileGreet span") as HTMLElement).textContent = `Hi, ${name} `;
+    (document.querySelector(".profileGreet2 span") as HTMLElement).textContent = `Hi, ${name}`;
+    (document.querySelector("#logout .navButton") as HTMLElement).addEventListener("click", async (e) => {
+        e.preventDefault();
+        await instance.logoutRedirect({
+            postLogoutRedirectUri: "/",
+        });
+    });
 };

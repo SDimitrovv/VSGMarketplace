@@ -1,9 +1,9 @@
 import { closeContainerHandler } from "../src/global";
 import { deleteProduct } from "../src/itemsService";
-import { InventoryProduct } from "../src/types";
+import { IProduct } from "../src/types";
 import { editProductModal } from "./editProductModal.ts";
 
-export const rowComponent = (product: InventoryProduct) => {
+export const rowComponent = (product: IProduct) => {
     const row = document.createElement("tr");
     row.id = `${product.id}`;
     row.innerHTML = `
@@ -66,6 +66,5 @@ export const rowComponent = (product: InventoryProduct) => {
         parentTarget.appendChild(div);
     });
 
-    const tbody = document.querySelector('tbody') as HTMLElement;
-    tbody.appendChild(row);
+    (document.querySelector('tbody') as HTMLElement).appendChild(row);
 };

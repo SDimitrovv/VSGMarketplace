@@ -1,7 +1,7 @@
-import { addProduct } from "../components/addProductModal.js";
+import { addProduct } from "../components/addProductModal.ts";
 import { rowComponent } from "../components/rowComponent.ts";
 import { loadInventory } from "../src/itemsService.ts";
-import { InventoryProduct } from "../src/types.ts";
+import { IProduct } from "../src/types.ts";
 
 const Inventory = async (): Promise<void> => {
     const main = document.querySelector("main") as HTMLElement;
@@ -43,8 +43,8 @@ const Inventory = async (): Promise<void> => {
     </div>
     `;
 
-    const products: InventoryProduct[] = await loadInventory();
-    products.forEach((p: InventoryProduct) => {
+    const products: IProduct[] = await loadInventory();
+    products.forEach((p: IProduct) => {
         rowComponent(p);
     });
 
@@ -54,14 +54,14 @@ const Inventory = async (): Promise<void> => {
             const searchText: string = (e.target as HTMLInputElement).value.toLowerCase();
             (main.querySelector("tbody") as HTMLElement).innerHTML = "";
             if (searchText) {
-                const filteredProducts = products.filter((p: InventoryProduct) =>
+                const filteredProducts = products.filter((p: IProduct) =>
                     p.fullName.toLowerCase().includes(searchText)
                 );
-                filteredProducts.forEach((p: InventoryProduct) => {
+                filteredProducts.forEach((p: IProduct) => {
                     rowComponent(p);
                 });
             } else {
-                products.forEach((p: InventoryProduct) => {
+                products.forEach((p: IProduct) => {
                     rowComponent(p);
                 });
             }

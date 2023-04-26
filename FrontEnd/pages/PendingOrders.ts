@@ -1,5 +1,6 @@
-import { pendingOrderComponent } from "../components/pendingOrderComponent.js";
+import { pendingOrderComponent } from "../components/pendingOrderComponent.ts";
 import { loadPendingOrders } from "../src/itemsService.ts";
+import { IOrder } from "../src/types.ts";
 
 const PendingOrders = async (): Promise<void> => {
     const main = document.querySelector('main') as HTMLElement;
@@ -15,17 +16,8 @@ const PendingOrders = async (): Promise<void> => {
     </div>
     `;
 
-    type Order = {
-        id: number;
-        code: String;
-        quantity: number;
-        price: number;
-        email: string
-        date: string;
-        status: string;
-    };
-    const orders: Order[] = await loadPendingOrders();
-    orders.forEach((p: Order) => {
+    const orders = await loadPendingOrders();
+    orders.forEach((p: IOrder) => {
         pendingOrderComponent(p);
     });
 };

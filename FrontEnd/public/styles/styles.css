@@ -416,7 +416,7 @@ aside nav ul #logout {
   width: 100%;
   background: rgba(0, 0, 0, 0.5019607843);
 }
-#addItemOverlay #modalContent {
+#addItemOverlay #productModal {
   display: flex;
   flex-direction: column;
   align-items: space-between;
@@ -433,49 +433,49 @@ aside nav ul #logout {
   background-repeat: no-repeat;
   overflow-y: auto;
 }
-#addItemOverlay #modalContent .closeModal {
+#addItemOverlay #productModal .closeModal {
   background: none;
 }
-#addItemOverlay #modalContent #modalImage {
+#addItemOverlay #productModal #modalImage {
   align-self: center;
 }
-#addItemOverlay #modalContent #modalImage img {
+#addItemOverlay #productModal #modalImage img {
   height: auto;
   max-height: 320px;
   width: -moz-fit-content;
   width: fit-content;
 }
-#addItemOverlay #modalContent #modalFrameOne {
+#addItemOverlay #productModal #modalFrameOne {
   display: flex;
   flex-direction: column;
   align-items: space-between;
   margin: 20px;
   flex-wrap: wrap;
 }
-#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo {
+#addItemOverlay #productModal #modalFrameOne #modalFrameTwo {
   display: flex;
   justify-content: space-between;
 }
-#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo #productName {
+#addItemOverlay #productModal #modalFrameOne #modalFrameTwo #productName {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 390px;
 }
-#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty {
+#addItemOverlay #productModal #modalFrameOne #modalFrameTwo #priceAndQty {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
-#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo b {
+#addItemOverlay #productModal #modalFrameOne #modalFrameTwo b {
   font-weight: 700;
   font-size: 22px;
   line-height: 26px;
 }
-#addItemOverlay #modalContent #modalFrameOne #modalFrameTwo small {
+#addItemOverlay #productModal #modalFrameOne #modalFrameTwo small {
   padding: 4px 0px;
 }
-#addItemOverlay #modalContent p {
+#addItemOverlay #productModal p {
   overflow-y: auto;
   margin-top: 10px;
   width: 100%;
@@ -484,7 +484,7 @@ aside nav ul #logout {
   line-height: 19px;
 }
 @media screen and (max-width: 768px) {
-  #addItemOverlay #modalContent {
+  #addItemOverlay #productModal {
     display: flex;
     flex-direction: column;
     align-items: space-between;
@@ -495,23 +495,23 @@ aside nav ul #logout {
     border-radius: 20px;
     position: relative;
   }
-  #addItemOverlay #modalContent .closeModal {
+  #addItemOverlay #productModal .closeModal {
     top: 1%;
     left: 92%;
   }
-  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo {
+  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
   }
-  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo #productName {
+  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo #productName {
     width: 100%;
   }
-  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo #priceAndQty {
+  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo #priceAndQty {
     margin: 10px 0px;
   }
-  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo b {
+  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo b {
     width: 305px;
     font-family: "Roboto";
     font-style: normal;
@@ -519,11 +519,11 @@ aside nav ul #logout {
     font-size: 20px;
     line-height: 23px;
   }
-  #addItemOverlay #modalContent #modalFrameOne #modalFrameTwo small {
+  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo small {
     padding: 0px;
     align-self: flex-start;
   }
-  #addItemOverlay #modalContent #modalFrameOne p {
+  #addItemOverlay #productModal #modalFrameOne p {
     text-overflow: ellipsis;
   }
 }
@@ -754,6 +754,10 @@ aside nav ul #logout {
   font-size: 18px;
   line-height: 24px;
   background: #ed6c02;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 #addItemOverlay .modalContent .row .rightModal .deleteImg,
 #addItemOverlay2 .modalContent .row .rightModal .deleteImg {

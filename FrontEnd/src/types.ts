@@ -1,35 +1,43 @@
-export interface MarketplaceProduct {
-    categoryId: number;
-    code: string;
-    description: string;
-    fullName: string;
+export interface IProduct {
     id: number;
-    imageUrl: string;
+    code: string;
+    fullName: string;
     price: number;
     quantity: number;
-    quantityForSale: number;
+    quantityForSale?: number;
+    description?: string;
+    categoryId: number;
     type: string;
-};
+    imageUrl?: string;
+}
 
-export interface ErrorResponse {
+export interface IOrder {
+    id: number;
+    quantity: number;
+    date: string;
+    status: string;
+    fullName: string;
+    email: string;
+    code: string;
+    price: number;
+}
+
+export interface IErrorResponse {
     Code: number;
     ErrorMessage: string;
 }
 
-export interface Response<T> {
-    Product: T,
-    Error: ErrorResponse
+export interface IResponse<T> {
+    Product: T;
+    Error: IErrorResponse;
 }
 
-export interface InventoryProduct {
-    categoryId: number;
-    code: string;
-    description: string;
-    fullName: string;
-    id: number;
-    imageUrl: string;
-    price: number;
-    quantity: number;
-    quantityForSale: number;
+export interface ICategory {
     type: string;
+    id: number;
+}
+
+export type Route = () => void;
+export type Routes = {
+    [key: string]: Route;
 };
