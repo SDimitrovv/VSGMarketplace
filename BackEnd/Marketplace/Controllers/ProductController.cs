@@ -57,10 +57,12 @@ namespace MarketplaceAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _pictureService.DeletePicture(id);
             await _productService.Delete(id);
+
+            return Ok();
         }
 
         [HttpGet]
