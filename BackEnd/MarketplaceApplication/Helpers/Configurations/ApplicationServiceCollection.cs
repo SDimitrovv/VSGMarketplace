@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MarketplaceApplication.Helpers.AutoMapper;
 using MarketplaceApplication.Helpers.Validators;
 using MarketplaceApplication.Models.CategoryModels.Interfaces;
 using MarketplaceApplication.Models.LocationModels.Interfaces;
@@ -16,6 +17,8 @@ namespace MarketplaceApplication.Helpers.Configurations
     {
         public static IServiceCollection AddApplicationServiceCollection(this IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(CategoryMapper).Assembly);
+
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IProductService, ProductService>();

@@ -12,11 +12,5 @@ namespace MarketplaceApplication.Services
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Location>> GetLocations()
-        {
-            var locations = await _repository.GetAll();
-
-            return locations;
-        }
     }
 }

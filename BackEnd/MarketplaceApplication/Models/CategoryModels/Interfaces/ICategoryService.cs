@@ -1,8 +1,8 @@
-﻿using MarketplaceDomain.Entities;
+﻿using MarketplaceApplication.Models.CategoryModels.DTOs;
 
 namespace MarketplaceApplication.Models.CategoryModels.Interfaces;
 
 public interface ICategoryService
 {
-    public Task<IEnumerable<Category>> GetCategories();
+    public Task<IEnumerable<GetAllCategoryModel>> GetCategories();
 }

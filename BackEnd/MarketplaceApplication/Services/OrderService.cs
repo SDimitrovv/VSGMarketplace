@@ -1,4 +1,5 @@
-﻿using MarketplaceApplication.Models.OrderModels.DTOs;
+﻿using AutoMapper;
+using MarketplaceApplication.Models.OrderModels.DTOs;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
@@ -10,11 +11,13 @@ namespace MarketplaceApplication.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
 
-        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository)
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository,IMapper mapper)
         {
                 _orderRepository = orderRepository;
                 _productRepository = productRepository;
+                _mapper = mapper;
         }
 
         public async Task<IEnumerable<PendingOrdersGetModel>> GetPendingOrders()
@@ -27,23 +30,18 @@ namespace MarketplaceApplication.Services
             return await _orderRepository.GetMyOrders(email);
         }
 
-        public async Task<Order> CreateOrder(AddOrderModel model)
+        public async Task<AddedOrderModel> CreateOrder(AddOrderModel model)
         {
-            var order = new Order
-            {
-                Quantity = model.Quantity,
-                Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
-                Status = Status.Pending.ToString(),
-                ProductId = model.ProductId,
-                Email = model.Email
-            };
+            var order = _mapper.Map<Order>(model);
 
             var orderId = await _orderRepository.Create(order);
             order.Id = orderId;
 
             await _productRepository.ReduceQuantity(order.ProductId, order.Quantity);
 
-            return order;
+            var newOrder = _mapper.Map<AddedOrderModel>(order);
+
+            return newOrder;
         }
 
         public async Task UpdateComplete(int id)

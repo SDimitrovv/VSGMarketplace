@@ -9,7 +9,7 @@ namespace MarketplaceDomain.Entities
 
         public string Date { get; set; } 
 
-        public string Status { get; set; } 
+        public string Status { get; set; }
 
         public int ProductId { get; set; }
 

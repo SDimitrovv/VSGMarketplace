@@ -1,7 +1,9 @@
-﻿using MarketplaceApplication.Models.CategoryModels.Interfaces;
+﻿using AutoMapper;
+using MarketplaceApplication.Models.CategoryModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
+using System.Reflection;
 
 namespace MarketplaceApplication.Services
 {
@@ -9,43 +11,27 @@ namespace MarketplaceApplication.Services
     {
         private readonly IProductRepository _repository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
 
-        public ProductService(IProductRepository repository, ICategoryRepository categoryRepository)
+        public ProductService(IProductRepository repository, ICategoryRepository categoryRepository, IMapper mapper)
         {
                 _repository = repository;
                 _categoryRepository = categoryRepository;
+                _mapper = mapper;
         }
 
         public async Task<ProductAddedModel> Add(ProductAddModel model)
         {
-            var product = new Product
-            {
-                Code = model.Code,
-                FullName = model.FullName,
-                Price = model.Price,
-                Quantity = model.Quantity,
-                QuantityForSale = model.QuantityForSale,
-                Description = model.Description,
-                CategoryId = model.CategoryId
-            };
+            var product = _mapper.Map<Product>(model);
 
             var productId = await _repository.Create(product);
             var categoryType = await _categoryRepository.GetByID(product.CategoryId);
 
-            var addedProduct = new ProductAddedModel
-            {
-                Id = productId,
-                Code = product.Code,
-                FullName = product.FullName,
-                Price = product.Price,
-                Quantity = product.Quantity,
-                QuantityForSale = product.QuantityForSale,
-                Description = product.Description,
-                CategoryId = product.CategoryId,
-                Type = categoryType.Type
-            };
-            
-            return addedProduct;
+            var newProduct = _mapper.Map<ProductAddedModel>(product);
+            newProduct.Id = productId;
+            newProduct.Type = categoryType.Type;
+
+            return newProduct;
         }
 
         public async Task<ProductGetDetailsModel> GetDetails(int id)
@@ -53,23 +39,16 @@ namespace MarketplaceApplication.Services
             return await _repository.GetDetails(id);
         }
 
-        public async Task<Product> Update(int productId, ProductEditModel newProduct)
+        public async Task<ProductEditedModel> Update(int productId, ProductEditModel newProduct)
         {
-            var product = new Product
-            {
-                Id = productId,
-                Code = newProduct.Code,
-                FullName = newProduct.FullName,
-                Price = newProduct.Price,
-                Quantity = newProduct.Quantity,
-                QuantityForSale = newProduct.QuantityForSale,
-                Description = newProduct.Description,
-                CategoryId = newProduct.CategoryId
-            };
+            var product = _mapper.Map<Product>(newProduct);
+            product.Id = productId;
 
             await _repository.Update(product);
 
-            return product;
+            var editedProduct = _mapper.Map<ProductEditedModel>(product);
+
+            return editedProduct;
         }
 
         public async Task Delete(int id)

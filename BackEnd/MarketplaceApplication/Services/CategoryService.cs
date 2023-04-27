@@ -1,4 +1,6 @@
-﻿using MarketplaceApplication.Models.CategoryModels.Interfaces;
+﻿using AutoMapper;
+using MarketplaceApplication.Models.CategoryModels.DTOs;
+using MarketplaceApplication.Models.CategoryModels.Interfaces;
 using MarketplaceDomain.Entities;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -9,19 +11,21 @@ namespace MarketplaceApplication.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _repository;
+        private readonly IMapper _mapper;
         private readonly IConfiguration _config;
-        private const string CacheKey = "categories";
-        private static ConnectionMultiplexer _redis;
-        private readonly IDatabase _db;
-        public CategoryService(ICategoryRepository repository, IConfiguration config)
+        //private const string CacheKey = "categories";
+        //private static ConnectionMultiplexer _redis;
+        //private readonly IDatabase _db;
+        public CategoryService(ICategoryRepository repository, IMapper mapper, IConfiguration config)
         {
             _repository = repository;
+            _mapper = mapper;
             _config = config;
-            _redis = ConnectionMultiplexer.Connect(_config.GetConnectionString("RedisConnection"));
-            _db = _redis.GetDatabase();
+            //_redis = ConnectionMultiplexer.Connect(_config.GetConnectionString("RedisConnection"));
+            //_db = _redis.GetDatabase();
         }
 
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<IEnumerable<GetAllCategoryModel>> GetCategories()
         {
             //var cachedData = await _db.StringGetAsync(CacheKey);
             //if (!String.IsNullOrEmpty(cachedData))
@@ -31,10 +35,11 @@ namespace MarketplaceApplication.Services
             //}
 
             var categoriesFromDb = await _repository.GetAll();
+            var categoriesModel = _mapper.Map<IEnumerable<GetAllCategoryModel>>(categoriesFromDb);
 
             //await _db.StringSetAsync(CacheKey, JsonConvert.SerializeObject(categoriesFromDb));
 
-            return categoriesFromDb;
+            return categoriesModel;
         }
     }
 }
