@@ -27,7 +27,7 @@ const Inventory = async (): Promise<void> => {
     <div id="tableBorder">
         <table>
             <thead>
-                <tr>
+                <tr id="headingRow">
                     <th>Code</th>
                     <th>Name</th>
                     <th>Category</th>
@@ -43,10 +43,13 @@ const Inventory = async (): Promise<void> => {
     </div>
     `;
 
-    const products: IProduct[] = await loadInventory();
-    products.forEach((p: IProduct) => {
-        rowComponent(p);
-    });
+    (document.querySelector('tr') as HTMLElement).style.opacity = "1";
+    const products = await loadInventory();
+    for (let i = 0; i < products.length; i++) {
+        setTimeout(() => {
+            rowComponent(products[i]);
+        }, i * 50);
+    }
 
     (main.querySelector("#searchText") as HTMLElement).addEventListener(
         "input",
@@ -73,6 +76,9 @@ const Inventory = async (): Promise<void> => {
         addProduct();
         const overlay = document.querySelector("#addItemOverlay") as HTMLElement;
         overlay.style.display = "flex";
+        setTimeout(() => {
+            overlay.style.opacity = "1";
+        }, 10);
     });
 };
 

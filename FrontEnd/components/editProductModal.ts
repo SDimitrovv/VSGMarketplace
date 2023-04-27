@@ -92,6 +92,11 @@ export const editProductModal = async (product: IProduct): Promise<void> => {
         console.log("PUT", res);
 
         modal.remove();
+
         overlay.style.display = "none";
     });
+
+    setTimeout(() => {
+        modal.style.opacity = "1";
+    }, 10);
 };

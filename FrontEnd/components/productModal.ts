@@ -34,5 +34,9 @@ export const productModal = (product: IProduct): HTMLElement => {
     `;
 
     (document.querySelector("#addItemOverlay") as HTMLElement).appendChild(modalContent);
+    setTimeout(() => {
+        (document.querySelector("#addItemOverlay") as HTMLElement)
+        modalContent.style.opacity = "1";
+    }, 10);
     return modalContent;
 };

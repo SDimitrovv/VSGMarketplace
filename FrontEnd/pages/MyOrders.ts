@@ -1,6 +1,5 @@
 import { myOrderComponent } from "../components/myOrderComponent.js";
 import { loadMyOrders } from "../src/itemsService.ts";
-import { IOrder } from "../src/types.ts";
 
 const MyOrders = async (): Promise<void> => {
     const main = document.querySelector("main") as HTMLElement;
@@ -18,10 +17,14 @@ const MyOrders = async (): Promise<void> => {
     const user: string | null = sessionStorage.getItem("user");
     const email: string = user ? JSON.parse(user).username : "eredzhepov@vsgbg.com";
 
+    (document.querySelector("#headingSection") as HTMLElement).style.opacity = '1'
+
     const orders = await loadMyOrders(email);
-    orders.forEach((p: IOrder) => {
-        myOrderComponent(p);
-    });
+    for (let i = 0; i < orders.length; i++) {
+        setTimeout(() => {
+            myOrderComponent(orders[i]);
+        }, i * 50);
+    }
 };
 
 export default MyOrders;

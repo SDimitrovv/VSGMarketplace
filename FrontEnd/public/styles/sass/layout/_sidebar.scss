@@ -88,18 +88,20 @@ aside {
 }
 
 @media screen and (max-width: 768px) {
-
     aside,
     main {
-        height: 100%;
+        position: fixed;
+        right: 0;
+        height: 90%;
         width: 92%;
-        margin: 16px 0px;
+        margin: 4%;
         padding: 0;
+        transition: 0.3s;
     }
-
+    
     aside {
-        display: none;
 
+        left: -100%;
         .profileGreet2 {
             @include flex-align(row, center);
         }

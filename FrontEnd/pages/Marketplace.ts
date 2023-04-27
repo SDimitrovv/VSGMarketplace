@@ -1,6 +1,5 @@
 import { cardComponent } from "../components/cardComponent.ts";
 import { loadMarketplace } from "../src/itemsService.ts";
-import { IProduct } from "../src/types.ts";
 
 const Marketplace = async (): Promise<void> => {
     const main = document.querySelector("main") as HTMLElement;
@@ -8,9 +7,12 @@ const Marketplace = async (): Promise<void> => {
     main.innerHTML = "";
 
     const products = await loadMarketplace();
-    products.forEach((p: IProduct) => {
-        cardComponent(p);
-    });
+
+    for (let i = 0; i < products.length; i++) {
+        setTimeout(() => {
+            cardComponent(products[i]);
+        }, i * 10);
+    }
 };
 
 export default Marketplace;

@@ -18,6 +18,8 @@
         font-size: 18px;
         line-height: 20px;
         padding: 20px 20px;
+        opacity: 0;
+        transition: 0.3s;
 
         .orderStatus {
             display: flex;

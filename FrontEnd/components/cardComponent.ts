@@ -4,7 +4,7 @@ import { navigateTo } from "../src/router.ts";
 import { productModal } from "./productModal.ts";
 import { IProduct } from "../src/types.ts";
 
-export const cardComponent = (product: IProduct) => {
+export const cardComponent = (product: IProduct): HTMLDivElement | void => {
     if (!product.quantityForSale) {
         return;
     }
@@ -102,17 +102,27 @@ export const cardComponent = (product: IProduct) => {
             const element = e.target as HTMLElement;
             const popupParent = element.parentElement as HTMLElement;
             popupParent.appendChild(buyContainer);
+            setTimeout(() => {
+                buyContainer.style.opacity = '1';
+            }, 10)
         }
     );
 
     (cardDiv.querySelector(".productButton") as HTMLElement).addEventListener("click", async (e) => {
         e.preventDefault();
+        const overlay = document.querySelector("#addItemOverlay") as HTMLElement;
+        overlay.style.display = "flex";
+        setTimeout(() => {
+            overlay.style.opacity = "1";
+        }, 10);
         const modal = productModal(product);
-        (document.querySelector("#addItemOverlay") as HTMLElement).style.display = "flex";
         (modal.querySelector("#modalImage") as HTMLImageElement).style.pointerEvents = "none";
         (modal.querySelector("#modalFrameOne") as HTMLElement).style.pointerEvents = "none";
         closeModalHandler(modal);
     });
 
     (document.querySelector("#marketplaceMain") as HTMLElement).appendChild(cardDiv);
+    setTimeout(() => {
+        cardDiv.style.opacity = "1";
+    }, 100);
 };

@@ -16,6 +16,8 @@
         height: 260px;
         border-radius: 5px;
         box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+        transition: 1s;
+        opacity: 0;
 
         .productButton {
             cursor: pointer;
@@ -97,113 +99,104 @@
 
 //Modal with more info for card item
 
-#addItemOverlay {
-    @include overlay;
+#productModal {
+    @include modal(fit-content, auto);
+    min-height: 620px;
+    max-width: 600px;
+    background-image: url("/images/marketplace/ellipse.png");
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    overflow-y: auto;
 
-    #productModal {
-        @include modal(fit-content, auto);
-        min-height: 620px;
-        max-width: 600px;
-        background-image: url("/images/marketplace/ellipse.png");
-        background-position: bottom right;
-        background-repeat: no-repeat;
-        overflow-y: auto;
+    .closeModal {
+        background: none;
+    }
 
-        .closeModal {
-            background: none;
-        }
+    #modalImage {
+        align-self: center;
 
-        #modalImage {
-            align-self: center;
-
-            img {
-                height: auto;
-                max-height: 320px;
-                width: fit-content;
-            }
-        }
-
-        #modalFrameOne {
-            @include flex-align(column, space-between);
-            margin: 20px;
-            flex-wrap: wrap;
-
-            #modalFrameTwo {
-                display: flex;
-
-                justify-content: space-between;
-
-                #productName {
-                    @include flex-align(column, flex-start);
-                    width: 390px;
-                }
-
-                #priceAndQty {
-                    @include flex-align(column, flex-end);
-                }
-
-                b {
-                    font-weight: 700;
-                    font-size: 22px;
-                    line-height: 26px;
-                }
-
-                small {
-                    padding: 4px 0px;
-                }
-            }
-        }
-
-        p {
-            overflow-y: auto;
-            margin-top: 10px;
-            width: 100%;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 19px;
+        img {
+            height: auto;
+            max-height: 320px;
+            width: fit-content;
         }
     }
 
-    @media screen and (max-width: 768px) {
-        #productModal {
-            @include modal(fit-content, 92%);
+    #modalFrameOne {
+        @include flex-align(column, space-between);
+        margin: 20px;
+        flex-wrap: wrap;
 
-            .closeModal {
-                top: 1%;
-                left: 92%;
+        #modalFrameTwo {
+            display: flex;
+
+            justify-content: space-between;
+
+            #productName {
+                @include flex-align(column, flex-start);
+                width: 390px;
             }
 
-            #modalFrameOne {
-                #modalFrameTwo {
-                    @include flex-align(column, flex-start);
+            #priceAndQty {
+                @include flex-align(column, flex-end);
+            }
+
+            b {
+                font-weight: 700;
+                font-size: 22px;
+                line-height: 26px;
+            }
+
+            small {
+                padding: 4px 0px;
+            }
+        }
+    }
+
+    p {
+        overflow-y: auto;
+        margin-top: 10px;
+        width: 100%;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #productModal {
+        @include modal(fit-content, 92%);
+
+        #modalFrameOne {
+            #modalFrameTwo {
+                @include flex-align(column, flex-start);
+                width: 100%;
+
+                #productName {
                     width: 100%;
-
-                    #productName {
-                        width: 100%;
-                    }
-
-                    #priceAndQty {
-                        margin: 10px 0px;
-                    }
-
-                    b {
-                        width: 305px;
-                        font-family: "Roboto";
-                        font-style: normal;
-                        font-weight: 700;
-                        font-size: 20px;
-                        line-height: 23px;
-                    }
-
-                    small {
-                        padding: 0px;
-                        align-self: flex-start;
-                    }
                 }
 
-                p {
-                    text-overflow: ellipsis;
+                #priceAndQty {
+                    margin: 10px 0px;
                 }
+
+                b {
+                    width: 305px;
+                    font-family: "Roboto";
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 20px;
+                    line-height: 23px;
+                }
+
+                small {
+                    padding: 0px;
+                    align-self: flex-start;
+                }
+            }
+
+            p {
+                text-overflow: ellipsis;
             }
         }
     }

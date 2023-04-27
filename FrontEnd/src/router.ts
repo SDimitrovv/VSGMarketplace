@@ -1,4 +1,4 @@
-import { headerUpdate, navStyling, hamburgerHandler, navbar } from "./global.ts";
+import { headerUpdate, navStyling, responsiveHandler } from "./global.ts";
 import { Route, Routes } from "./types.ts";
 import Home from "../pages/Home.ts";
 import Inventory from "../pages/Inventory.ts";
@@ -17,31 +17,23 @@ const routes: Routes = {
 };
 
 export const navigateTo = (url: string) => {
+  (document.querySelector('aside') as HTMLElement).style.left = '-100%';
+  (document.querySelector('main') as HTMLElement).style.right = '0';
+  (document.querySelector('#closeMenu') as HTMLElement).style.display = 'none';
   history.pushState(null, "", url);
   router();
 };
 
 const router = () => {
   const path: string = window.location.hash.replace("#", "") || "/";
-  headerUpdate(path);
   const page: Route = routes[path];
-  (document.querySelector("header") as HTMLElement).style.display = "flex";
-  (document.querySelector("#closeMenu") as HTMLElement).style.display = "none";
-  (document.querySelector("aside") as HTMLElement).style.display = "flex";
-  (document.querySelector("main") as HTMLElement).style.display = "flex";
+  headerUpdate(path);
 
-  if (window.innerWidth < 769) {
-    (document.querySelector("#hamburger") as HTMLElement).style.display = "block";
-  }
   page();
-
-  if (path !== "/") {
-    navbar();
-    hamburgerHandler();
-  }
 
   handleSPALinks();
   navStyling(path);
+  responsiveHandler(path);
 };
 
 export const handleSPALinks = () => {

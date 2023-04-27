@@ -86,4 +86,7 @@ export const addProduct = async (): Promise<void> => {
 
     closeModalHandler(modal);
     imageHandler(modal);
+    setTimeout(() => {
+        modal.style.opacity = "1";
+    }, 10);
 };

@@ -6,6 +6,7 @@ import { editProductModal } from "./editProductModal.ts";
 export const rowComponent = (product: IProduct) => {
     const row = document.createElement("tr");
     row.id = `${product.id}`;
+    row.className = 'productRow';
     row.innerHTML = `
     <td>${product.code}</td>
     <td>${product.fullName}</td>
@@ -34,14 +35,17 @@ export const rowComponent = (product: IProduct) => {
     </td>
     `;
 
-    (row.querySelector(".edit") as HTMLElement).addEventListener("click", (e) => {
+    (row.querySelector(".edit") as HTMLElement).addEventListener("click", (e: MouseEvent) => {
         e.preventDefault();
         editProductModal(product);
         const overlay = document.querySelector("#addItemOverlay2") as HTMLElement;
         overlay.style.display = "flex";
+        setTimeout(() => {
+            overlay.style.opacity = "1";
+        }, 10);
     });
 
-    (row.querySelector(".delete") as HTMLElement).addEventListener("click", (e) => {
+    (row.querySelector(".delete") as HTMLElement).addEventListener("click", (e: MouseEvent) => {
         e.preventDefault();
         const div = document.createElement("div");
         div.className = "removeContainer";
@@ -53,7 +57,7 @@ export const rowComponent = (product: IProduct) => {
             </div>
         `;
 
-        (div.querySelector('.yes') as HTMLElement).addEventListener('click', async e => {
+        (div.querySelector('.yes') as HTMLElement).addEventListener('click', async (e: MouseEvent) => {
             e.preventDefault();
             const res = await deleteProduct(product.id);
             console.log(res);
@@ -64,7 +68,13 @@ export const rowComponent = (product: IProduct) => {
         const target = e.target as HTMLElement;
         const parentTarget = target.parentElement as HTMLElement;
         parentTarget.appendChild(div);
+        setTimeout(() => {
+            div.style.opacity = '1';
+        }, 10)
     });
 
     (document.querySelector('tbody') as HTMLElement).appendChild(row);
+    setTimeout(() => {
+        row.style.opacity = "1";
+    }, 300);
 };

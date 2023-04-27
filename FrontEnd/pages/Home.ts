@@ -3,8 +3,6 @@ import { instance, loginRequest } from "../authConfig.ts";
 import { navigateTo } from "../src/router";
 
 const Home = () => {
-    (document.querySelector("header") as HTMLElement).style.display = "none";
-    (document.querySelector("aside") as HTMLElement).style.display = "none";
     const main = document.querySelector('main') as HTMLElement;
     main.id = "landingMain";
     main.innerHTML = `
@@ -18,6 +16,7 @@ const Home = () => {
     `;
 
     sessionStorage.clear();
+
     const handleLogin = async (): Promise<void> => {
         try {
             const result: AuthenticationResult = await instance.loginPopup(loginRequest);

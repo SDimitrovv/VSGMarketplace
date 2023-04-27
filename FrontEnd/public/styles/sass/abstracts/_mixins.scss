@@ -8,6 +8,8 @@
 
 @mixin pop-up($top, $left) {
     @include flex-align(column, center);
+    opacity: 0;
+    transition: 0.3s;
     position: absolute;
     color: $general-black;
     width: 280px;
@@ -45,7 +47,8 @@
     height: 100%;
     width: 100%;
     background: #00000080;
-
+    opacity: 0;
+    transition: 0.3s;
 }
 
 //Modals styling
@@ -57,6 +60,8 @@
     background-color: $general-white;
     border-radius: 20px;
     position: relative;
+    opacity: 0;
+    transition: 0.3s;
 }
 
 //General button styling

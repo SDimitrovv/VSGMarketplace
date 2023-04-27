@@ -1,6 +1,5 @@
 import { pendingOrderComponent } from "../components/pendingOrderComponent.ts";
 import { loadPendingOrders } from "../src/itemsService.ts";
-import { IOrder } from "../src/types.ts";
 
 const PendingOrders = async (): Promise<void> => {
     const main = document.querySelector('main') as HTMLElement;
@@ -16,10 +15,14 @@ const PendingOrders = async (): Promise<void> => {
     </div>
     `;
 
+    (document.querySelector("#headingSection") as HTMLElement).style.opacity = '1'
+
     const orders = await loadPendingOrders();
-    orders.forEach((p: IOrder) => {
-        pendingOrderComponent(p);
-    });
+    for (let i = 0; i < orders.length; i++) {
+        setTimeout(() => {
+            pendingOrderComponent(orders[i]);
+        }, i * 50);
+    }
 };
 
 export default PendingOrders;

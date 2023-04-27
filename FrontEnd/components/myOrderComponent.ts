@@ -54,10 +54,16 @@ export const myOrderComponent = (product: IOrder) => {
 
             closeContainerHandler(div);
             popupParent.appendChild(div);
+            setTimeout(() => {
+                div.style.opacity = '1';
+            }, 10)
         });
 
         popupParent.appendChild(cancelOrderButton);
     }
 
     (document.querySelector("#myOrdersMain") as HTMLElement).appendChild(cardDiv);
+    setTimeout(() => {
+        cardDiv.style.opacity = "1";
+    }, 300);
 };

@@ -30,4 +30,8 @@ export const pendingOrderComponent = (product: IOrder) => {
     );
 
     (document.querySelector("#pendingOrdersMain") as HTMLElement).appendChild(cardDiv);
+    setTimeout(() => {
+        cardDiv.style.opacity = "1";
+        (document.querySelector("#headingSection") as HTMLElement).style.opacity = '1'
+    }, 300);
 };

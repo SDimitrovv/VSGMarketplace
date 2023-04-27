@@ -52,8 +52,12 @@ export const closeModalHandler = (modal: HTMLElement) => {
     (modal.querySelector(".closeModal") as HTMLElement).addEventListener("click", closing, true);
 
     function closing() {
-        modal.remove();
-        overlay.style.display = "none";
+        modal.style.opacity = '0';
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            modal.remove();
+            overlay.style.display = "none";
+        }, 500)
     }
 };
 
@@ -63,8 +67,13 @@ export const closeContainerHandler = (container: HTMLElement) => {
     document.addEventListener("click", closeContainerClick, true);
 
     function closeContainerClick(e: MouseEvent) {
+        e.preventDefault();
         if (yes !== e.target && container !== e.target) {
-            container.remove();
+            container.style.opacity = "0";
+            setTimeout(() => {
+                container.remove();
+            }, 500)
+
             document.removeEventListener("click", closeContainerClick);
         }
     }
@@ -75,8 +84,7 @@ export const imageHandler = (modal: HTMLElement) => {
     const input = modal.querySelector(".inputImage") as HTMLInputElement;
 
     input.addEventListener("change", (e: Event) => {
-        const target = e.target as HTMLInputElement;
-        const files = target.files as FileList;
+        const files = (e.target as HTMLInputElement).files as FileList;
         const image = URL.createObjectURL(files[0]);
         imagePreview.src = image;
     });
@@ -88,54 +96,67 @@ export const imageHandler = (modal: HTMLElement) => {
     });
 };
 
-export const hamburgerHandler = () => {
+export const responsiveHandler = (path: string) => {
+    const header = document.querySelector('header') as HTMLElement;
     const hamburger = document.querySelector("#hamburger") as HTMLElement;
     const closeMenu = document.querySelector("#closeMenu") as HTMLElement;
     const main = document.querySelector("main") as HTMLElement;
     const aside = document.querySelector("aside") as HTMLElement;
 
+    if (path === '/') {
+        header.style.display = 'none';
+        aside.style.position = 'fixed';
+        aside.style.left = '-100%';
+        return;
+    }
+
+    sidebar();
+    header.style.display = 'flex';
+    aside.style.position = 'static';
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth < 769) {
+            mobileStyling();
+        } else {
+            webStyling();
+        }
+    });
+
     hamburger.addEventListener("click", () => {
         hamburger.style.display = "none";
-        aside.style.display = "flex";
-        main.style.display = "none";
         closeMenu.style.display = "block";
+        main.style.right = '-100%';
+        aside.style.left = '0';
     });
 
     closeMenu.addEventListener("click", () => {
         closeMenu.style.display = "none";
-        main.style.display = "flex";
-        aside.style.display = "none";
         hamburger.style.display = "block";
-    });
-
-    window.addEventListener("resize", () => {
-        if (window.innerWidth < 769) {
-            hamburger.style.display = "block";
-            aside.style.display = "none";
-        }
-
-        if (window.innerWidth > 768) {
-            closeMenu.style.display = "none";
-            hamburger.style.display = "none";
-            main.style.display = "flex";
-            aside.style.display = "flex";
-        }
+        aside.style.left = '-100%';
+        main.style.right = '0';
     });
 
     if (window.innerWidth < 769) {
-        hamburger.style.display = "block";
-        aside.style.display = "none";
+        mobileStyling();
+    } else {
+        webStyling();
     }
 
-    if (window.innerWidth > 768) {
-        closeMenu.style.display = "none";
+    function mobileStyling() {
+        hamburger.style.display = "block";
+        aside.style.position = 'fixed';
+        aside.style.left = "-100%";
+    }
+
+    function webStyling() {
         hamburger.style.display = "none";
-        main.style.display = "flex";
-        aside.style.display = "flex";
+        closeMenu.style.display = "none";
+        aside.style.left = "-100%";
+        aside.style.position = 'static';
     }
 };
 
-export const navbar = () => {
+export const sidebar = () => {
     const user = JSON.parse(sessionStorage.getItem("user") as string);
     const name = user ? user.name.split(" ")[0] : "User";
     (document.querySelector(".profileGreet span") as HTMLElement).textContent = `Hi, ${name} `;

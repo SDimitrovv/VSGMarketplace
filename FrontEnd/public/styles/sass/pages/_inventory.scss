@@ -52,12 +52,18 @@
         height: calc(100% - 100px);
         overflow-x: auto;
 
+
         table {
             position: relative;
             width: 100%;
             border-spacing: 0;
             border-collapse: collapse;
             text-align: left;
+
+            .productRow {
+                opacity: 0;
+                transition: 0.3s;
+            }
 
             tr th {
                 padding: 22px;

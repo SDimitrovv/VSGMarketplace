@@ -108,6 +108,9 @@ header #hamburger {
   header .profileGreet {
     display: none;
   }
+  header #hamburger {
+    display: block;
+  }
 }
 
 aside,
@@ -194,13 +197,16 @@ aside nav ul #logout {
 @media screen and (max-width: 768px) {
   aside,
   main {
-    height: 100%;
+    position: fixed;
+    right: 0;
+    height: 90%;
     width: 92%;
-    margin: 16px 0px;
+    margin: 4%;
     padding: 0;
+    transition: 0.3s;
   }
   aside {
-    display: none;
+    left: -100%;
   }
   aside .profileGreet2 {
     display: flex;
@@ -300,6 +306,8 @@ aside nav ul #logout {
   height: 260px;
   border-radius: 5px;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  transition: 1s;
+  opacity: 0;
 }
 #marketplaceMain .product .productButton {
   cursor: pointer;
@@ -354,6 +362,8 @@ aside nav ul #logout {
   display: flex;
   flex-direction: column;
   align-items: center;
+  opacity: 0;
+  transition: 0.3s;
   position: absolute;
   color: #000;
   width: 280px;
@@ -381,6 +391,8 @@ aside nav ul #logout {
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0;
+    transition: 0.3s;
     position: absolute;
     color: #000;
     width: 280px;
@@ -403,20 +415,7 @@ aside nav ul #logout {
     border-color: transparent transparent #FFF transparent;
   }
 }
-#addItemOverlay {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  display: none;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.5019607843);
-}
-#addItemOverlay #productModal {
+#productModal {
   display: flex;
   flex-direction: column;
   align-items: space-between;
@@ -426,6 +425,8 @@ aside nav ul #logout {
   background-color: #FFF;
   border-radius: 20px;
   position: relative;
+  opacity: 0;
+  transition: 0.3s;
   min-height: 620px;
   max-width: 600px;
   background-image: url("/images/marketplace/ellipse.png");
@@ -433,49 +434,49 @@ aside nav ul #logout {
   background-repeat: no-repeat;
   overflow-y: auto;
 }
-#addItemOverlay #productModal .closeModal {
+#productModal .closeModal {
   background: none;
 }
-#addItemOverlay #productModal #modalImage {
+#productModal #modalImage {
   align-self: center;
 }
-#addItemOverlay #productModal #modalImage img {
+#productModal #modalImage img {
   height: auto;
   max-height: 320px;
   width: -moz-fit-content;
   width: fit-content;
 }
-#addItemOverlay #productModal #modalFrameOne {
+#productModal #modalFrameOne {
   display: flex;
   flex-direction: column;
   align-items: space-between;
   margin: 20px;
   flex-wrap: wrap;
 }
-#addItemOverlay #productModal #modalFrameOne #modalFrameTwo {
+#productModal #modalFrameOne #modalFrameTwo {
   display: flex;
   justify-content: space-between;
 }
-#addItemOverlay #productModal #modalFrameOne #modalFrameTwo #productName {
+#productModal #modalFrameOne #modalFrameTwo #productName {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 390px;
 }
-#addItemOverlay #productModal #modalFrameOne #modalFrameTwo #priceAndQty {
+#productModal #modalFrameOne #modalFrameTwo #priceAndQty {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
-#addItemOverlay #productModal #modalFrameOne #modalFrameTwo b {
+#productModal #modalFrameOne #modalFrameTwo b {
   font-weight: 700;
   font-size: 22px;
   line-height: 26px;
 }
-#addItemOverlay #productModal #modalFrameOne #modalFrameTwo small {
+#productModal #modalFrameOne #modalFrameTwo small {
   padding: 4px 0px;
 }
-#addItemOverlay #productModal p {
+#productModal p {
   overflow-y: auto;
   margin-top: 10px;
   width: 100%;
@@ -483,8 +484,9 @@ aside nav ul #logout {
   font-size: 16px;
   line-height: 19px;
 }
+
 @media screen and (max-width: 768px) {
-  #addItemOverlay #productModal {
+  #productModal {
     display: flex;
     flex-direction: column;
     align-items: space-between;
@@ -494,24 +496,22 @@ aside nav ul #logout {
     background-color: #FFF;
     border-radius: 20px;
     position: relative;
+    opacity: 0;
+    transition: 0.3s;
   }
-  #addItemOverlay #productModal .closeModal {
-    top: 1%;
-    left: 92%;
-  }
-  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo {
+  #productModal #modalFrameOne #modalFrameTwo {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
   }
-  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo #productName {
+  #productModal #modalFrameOne #modalFrameTwo #productName {
     width: 100%;
   }
-  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo #priceAndQty {
+  #productModal #modalFrameOne #modalFrameTwo #priceAndQty {
     margin: 10px 0px;
   }
-  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo b {
+  #productModal #modalFrameOne #modalFrameTwo b {
     width: 305px;
     font-family: "Roboto";
     font-style: normal;
@@ -519,15 +519,14 @@ aside nav ul #logout {
     font-size: 20px;
     line-height: 23px;
   }
-  #addItemOverlay #productModal #modalFrameOne #modalFrameTwo small {
+  #productModal #modalFrameOne #modalFrameTwo small {
     padding: 0px;
     align-self: flex-start;
   }
-  #addItemOverlay #productModal #modalFrameOne p {
+  #productModal #modalFrameOne p {
     text-overflow: ellipsis;
   }
 }
-
 #inventoryMain {
   flex-direction: column;
 }
@@ -579,6 +578,10 @@ aside nav ul #logout {
   border-collapse: collapse;
   text-align: left;
 }
+#inventoryMain #tableBorder table .productRow {
+  opacity: 0;
+  transition: 0.3s;
+}
 #inventoryMain #tableBorder table tr th {
   padding: 22px;
   border-bottom: 1px solid #b3b3b3;
@@ -614,6 +617,8 @@ aside nav ul #logout {
   display: flex;
   flex-direction: column;
   align-items: center;
+  opacity: 0;
+  transition: 0.3s;
   position: absolute;
   color: #000;
   width: 280px;
@@ -650,6 +655,8 @@ aside nav ul #logout {
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.5019607843);
+  opacity: 0;
+  transition: 0.3s;
 }
 #addItemOverlay .modalContent,
 #addItemOverlay2 .modalContent {
@@ -661,6 +668,8 @@ aside nav ul #logout {
   background-color: #FFF;
   border-radius: 20px;
   position: relative;
+  opacity: 0;
+  transition: 0.3s;
   overflow-y: auto;
   overflow-x: auto;
 }
@@ -815,6 +824,8 @@ aside nav ul #logout {
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0;
+    transition: 0.3s;
     position: absolute;
     color: #000;
     width: 280px;
@@ -846,6 +857,8 @@ aside nav ul #logout {
     background-color: #FFF;
     border-radius: 20px;
     position: relative;
+    opacity: 0;
+    transition: 0.3s;
   }
   #addItemOverlay .modalContent .closeModal,
   #addItemOverlay2 .modalContent .closeModal {
@@ -922,6 +935,8 @@ aside nav ul #logout {
   font-size: 18px;
   line-height: 20px;
   padding: 20px 20px;
+  opacity: 0;
+  transition: 0.3s;
 }
 #pendingOrdersMain #headingSection .orderStatus,
 #pendingOrdersMain .pendingOrders .orderStatus,
@@ -973,6 +988,8 @@ aside nav ul #logout {
   display: flex;
   flex-direction: column;
   align-items: center;
+  opacity: 0;
+  transition: 0.3s;
   position: absolute;
   color: #000;
   width: 280px;
@@ -1066,6 +1083,8 @@ aside nav ul #logout {
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0;
+    transition: 0.3s;
     position: absolute;
     color: #000;
     width: 280px;
