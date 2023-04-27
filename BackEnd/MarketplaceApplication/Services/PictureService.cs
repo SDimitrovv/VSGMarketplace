@@ -1,6 +1,7 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using MarketplaceApplication.Models.PictureModels.Interfaces;
+using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -10,11 +11,13 @@ namespace MarketplaceApplication.Services
     public class PictureService : IPictureService
     {
         private readonly IPictureRepository _pictureRepository;
+        private readonly IProductRepository _productRepository;
         private readonly Cloudinary _cloudinary;
 
-        public PictureService(IPictureRepository pictureRepository, IConfiguration configuration)
+        public PictureService(IPictureRepository pictureRepository, IProductRepository productRepository, IConfiguration configuration)
         {
             _pictureRepository = pictureRepository;
+            _productRepository = productRepository;
 
             var account = new Account(
                 configuration["Cloudinary:CloudName"],
@@ -27,6 +30,8 @@ namespace MarketplaceApplication.Services
 
         public async Task<string> UploadPicture(IFormFile file, int productId)
         {
+            await ExceptionService.ThrowExceptionWhenIdNotFound(productId, _productRepository);
+
             byte[] bytes;
             using (var stream = new MemoryStream())
             {
@@ -57,6 +62,8 @@ namespace MarketplaceApplication.Services
 
         public async Task DeletePicture(int productId)
         {
+            await ExceptionService.ThrowExceptionWhenIdNotFound(productId, _productRepository);
+
             var pictureForDelete = await _pictureRepository.GetPicture(productId);
 
             if (pictureForDelete != null)

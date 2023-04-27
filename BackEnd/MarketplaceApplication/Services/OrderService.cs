@@ -47,6 +47,8 @@ namespace MarketplaceApplication.Services
 
         public async Task UpdateComplete(int id)
         {
+            await ExceptionService.ThrowExceptionWhenIdNotFound(id, _orderRepository);
+
             var newOrder = await _orderRepository.GetByID(id);
             newOrder.Status = Status.Finished.ToString();
 
@@ -55,6 +57,8 @@ namespace MarketplaceApplication.Services
 
         public async Task UpdateReject(int id)
         {
+            await ExceptionService.ThrowExceptionWhenIdNotFound(id, _orderRepository);
+
             var newOrder = await _orderRepository.GetByID(id);
             newOrder.Status = Status.Declined.ToString();
 

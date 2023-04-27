@@ -3,7 +3,6 @@ using MarketplaceApplication.Models.CategoryModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
-using System.Reflection;
 
 namespace MarketplaceApplication.Services
 {
@@ -22,6 +21,8 @@ namespace MarketplaceApplication.Services
 
         public async Task<ProductAddedModel> Add(ProductAddModel model)
         {
+            await ExceptionService.ThrowExceptionWhenIdNotFound(model.CategoryId, _categoryRepository);
+
             var product = _mapper.Map<Product>(model);
 
             var productId = await _repository.Create(product);
@@ -36,11 +37,15 @@ namespace MarketplaceApplication.Services
 
         public async Task<ProductGetDetailsModel> GetDetails(int id)
         {
+            await ExceptionService.ThrowExceptionWhenIdNotFound(id, _repository);
+
             return await _repository.GetDetails(id);
         }
 
         public async Task<ProductEditedModel> Update(int productId, ProductEditModel newProduct)
         {
+            await ExceptionService.ThrowExceptionWhenIdNotFound(productId, _repository);
+
             var product = _mapper.Map<Product>(newProduct);
             product.Id = productId;
 
@@ -53,6 +58,8 @@ namespace MarketplaceApplication.Services
 
         public async Task Delete(int id)
         {
+            await ExceptionService.ThrowExceptionWhenIdNotFound(id, _repository);
+
             await _repository.Delete(id);
         }
 
