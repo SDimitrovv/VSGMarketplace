@@ -1,5 +1,4 @@
 ﻿using MarketplaceApplication.Models.LocationModels.Interfaces;
-using MarketplaceDomain.Entities;
 
 namespace MarketplaceApplication.Services
 {
