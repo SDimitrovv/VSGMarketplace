@@ -14,6 +14,12 @@ namespace MarketplaceApplication.Services
                 throw new HttpException($"{typeof(T).Name} id not found!", HttpStatusCode.NotFound);
         }
 
-
+        public static void ThrowExceptionWhenNotEnoughQuantityForSale(int saleQty, int orderQty)
+        {
+            if (orderQty > saleQty)
+            {
+                throw new HttpException("Not enough quantity for sale!", HttpStatusCode.BadRequest);
+            }
+        }
     }
 }
