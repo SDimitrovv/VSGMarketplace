@@ -17,9 +17,13 @@ namespace MarketplaceApplication.Services
         public static void ThrowExceptionWhenNotEnoughQuantityForSale(int saleQty, int orderQty)
         {
             if (orderQty > saleQty)
-            {
                 throw new HttpException("Not enough quantity for sale!", HttpStatusCode.BadRequest);
-            }
+        }
+
+        public static void ThrowExceptionWhenOrderIsNotPending(string status)
+        {
+            if (status != "Pending")
+                throw new HttpException("Order is not pending!", HttpStatusCode.BadRequest);
         }
     }
 }

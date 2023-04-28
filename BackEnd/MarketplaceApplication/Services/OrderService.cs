@@ -54,6 +54,9 @@ namespace MarketplaceApplication.Services
             await ExceptionService.ThrowExceptionWhenIdNotFound(id, _orderRepository);
 
             var newOrder = await _orderRepository.GetByID(id);
+
+            ExceptionService.ThrowExceptionWhenOrderIsNotPending(newOrder.Status);
+
             newOrder.Status = Status.Finished.ToString();
 
             await _orderRepository.Update(newOrder);
@@ -64,6 +67,9 @@ namespace MarketplaceApplication.Services
             await ExceptionService.ThrowExceptionWhenIdNotFound(id, _orderRepository);
 
             var newOrder = await _orderRepository.GetByID(id);
+
+            ExceptionService.ThrowExceptionWhenOrderIsNotPending(newOrder.Status);
+
             newOrder.Status = Status.Declined.ToString();
 
             await _orderRepository.Update(newOrder);
