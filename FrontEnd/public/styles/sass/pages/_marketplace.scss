@@ -13,7 +13,7 @@
         @include flex-align(column, space-between);
         margin: 20px 10px;
         width: 256px;
-        height: 260px;
+        height: 224px;
         border-radius: 5px;
         box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
         transition: 1s;
@@ -22,7 +22,7 @@
         .productButton {
             cursor: pointer;
             align-self: center;
-            height: 320px;
+            height: 100%;
         }
 
         img {

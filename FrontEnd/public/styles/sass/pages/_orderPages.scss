@@ -19,7 +19,7 @@
         line-height: 20px;
         padding: 20px 20px;
         opacity: 0;
-        transition: 0.3s;
+        transition: 0.5s;
 
         .orderStatus {
             display: flex;
@@ -29,7 +29,6 @@
 
             .cancelOrder {
                 cursor: pointer;
-                margin-left: 26px;
             }
         }
     }
@@ -127,7 +126,7 @@
                 padding: 0px 10px;
 
                 .cancelOrderContainer {
-                    @include pop-up(26px, -252px);
+                    @include pop-up(26px, -278px);
                 }
 
                 .cancelOrderContainer::before {

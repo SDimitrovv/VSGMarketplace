@@ -62,7 +62,7 @@
 
             .productRow {
                 opacity: 0;
-                transition: 0.3s;
+                transition: 0.5s;
             }
 
             tr th {
@@ -121,7 +121,8 @@
     @include overlay;
 
     .modalContent {
-        @include modal(700px, 600px);
+        @include modal(700px, fit-content);
+        max-width: 600px;
         overflow-y: auto;
         overflow-x: auto;
 
