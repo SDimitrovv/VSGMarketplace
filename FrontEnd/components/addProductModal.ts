@@ -41,7 +41,7 @@ export const addProduct = async (): Promise<void> => {
     <button type="submit">Add</button>
     `;
 
-    const overlay = document.querySelector("#addItemOverlay") as HTMLElement;
+    const overlay = document.querySelector("#overlay") as HTMLElement;
     overlay.appendChild(modal);
 
     const select = modal.querySelector('.category') as HTMLSelectElement;
@@ -72,7 +72,6 @@ export const addProduct = async (): Promise<void> => {
         const response = await createProduct(itemData);
         console.log("POST", response);
         if (image.name) {
-            console.log(image);
             const imgRes = await createImage(response.id, imageForm) as string;
             console.log("Image POST", imgRes);
             response.imageUrl = imgRes;

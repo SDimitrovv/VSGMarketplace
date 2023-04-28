@@ -20,12 +20,13 @@ export const pendingOrderComponent = (product: IOrder) => {
         "click",
         async (e) => {
             e.preventDefault();
-
             const res = await completeOrder(product.id);
             console.log(res);
-            const currentElement = e.target as HTMLElement;
-            const parentElement = currentElement.parentElement as HTMLElement;
-            parentElement.remove();
+            const parentElement = (e.target as HTMLElement).parentElement as HTMLElement;
+            parentElement.style.opacity = "0";
+            setTimeout(() => {
+                parentElement.remove();
+            }, 500);
         }
     );
 

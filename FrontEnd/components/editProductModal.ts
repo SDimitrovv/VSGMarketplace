@@ -43,7 +43,7 @@ export const editProductModal = async (product: IProduct): Promise<void> => {
     <button type="submit">Modify</button>
     `;
 
-    const overlay = document.querySelector("#addItemOverlay2") as HTMLElement;
+    const overlay = document.querySelector("#overlay") as HTMLElement;
     overlay.appendChild(modal);
     closeModalHandler(modal);
     imageHandler(modal);

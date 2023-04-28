@@ -116,15 +116,17 @@
 
 //Modals for adding and editing items
 
-#addItemOverlay,
-#addItemOverlay2 {
+#overlay {
     @include overlay;
 
-    .modalContent {
+    .addForm,
+    .editForm {
         @include modal(700px, fit-content);
         max-width: 600px;
         overflow-y: auto;
         overflow-x: auto;
+        width: 600px;
+        height: 700px;
 
         .row {
             display: flex;
@@ -179,6 +181,7 @@
                 margin-top: 14%;
 
                 img {
+                    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
                     max-width: 260px;
                     max-height: 150px;
                 }
@@ -252,8 +255,7 @@
         }
     }
 
-    #addItemOverlay,
-    #addItemOverlay2 {
+    #overlay {
 
         .modalContent {
             @include modal(96%, 92%);
@@ -263,12 +265,12 @@
             }
 
             .row {
-                margin-top: 16px;
                 @include flex-align(column, center);
+                margin-top: 16px;
 
                 .leftModal,
                 .rightModal {
-                    margin: 0px;
+                    margin: 8px;
                     padding: 0px 16px;
                     width: 90%;
 

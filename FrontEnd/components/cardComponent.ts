@@ -110,7 +110,7 @@ export const cardComponent = (product: IProduct): HTMLDivElement | void => {
 
     (cardDiv.querySelector(".productButton") as HTMLElement).addEventListener("click", async (e) => {
         e.preventDefault();
-        const overlay = document.querySelector("#addItemOverlay") as HTMLElement;
+        const overlay = document.querySelector("#overlay") as HTMLElement;
         overlay.style.display = "flex";
         setTimeout(() => {
             overlay.style.opacity = "1";

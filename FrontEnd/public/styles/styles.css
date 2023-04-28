@@ -642,8 +642,7 @@ aside nav ul #logout {
   border-color: transparent transparent #FFF transparent;
 }
 
-#addItemOverlay,
-#addItemOverlay2 {
+#overlay {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -658,8 +657,8 @@ aside nav ul #logout {
   opacity: 0;
   transition: 0.5s;
 }
-#addItemOverlay .modalContent,
-#addItemOverlay2 .modalContent {
+#overlay .addForm,
+#overlay .editForm {
   display: flex;
   flex-direction: column;
   align-items: space-between;
@@ -674,15 +673,17 @@ aside nav ul #logout {
   max-width: 600px;
   overflow-y: auto;
   overflow-x: auto;
+  width: 600px;
+  height: 700px;
 }
-#addItemOverlay .modalContent .row,
-#addItemOverlay2 .modalContent .row {
+#overlay .addForm .row,
+#overlay .editForm .row {
   display: flex;
   justify-content: center;
   margin-top: 8%;
 }
-#addItemOverlay .modalContent .row .leftModal,
-#addItemOverlay2 .modalContent .row .leftModal {
+#overlay .addForm .row .leftModal,
+#overlay .editForm .row .leftModal {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -694,19 +695,19 @@ aside nav ul #logout {
   width: 40%;
   margin-left: 8%;
 }
-#addItemOverlay .modalContent .row .leftModal h2,
-#addItemOverlay2 .modalContent .row .leftModal h2 {
+#overlay .addForm .row .leftModal h2,
+#overlay .editForm .row .leftModal h2 {
   font-weight: 700;
   font-size: 24px;
   line-height: 29px;
   margin-bottom: 40px;
 }
-#addItemOverlay .modalContent .row .leftModal input,
-#addItemOverlay .modalContent .row .leftModal textarea,
-#addItemOverlay .modalContent .row .leftModal select,
-#addItemOverlay2 .modalContent .row .leftModal input,
-#addItemOverlay2 .modalContent .row .leftModal textarea,
-#addItemOverlay2 .modalContent .row .leftModal select {
+#overlay .addForm .row .leftModal input,
+#overlay .addForm .row .leftModal textarea,
+#overlay .addForm .row .leftModal select,
+#overlay .editForm .row .leftModal input,
+#overlay .editForm .row .leftModal textarea,
+#overlay .editForm .row .leftModal select {
   resize: none;
   font-family: "Inter";
   border-bottom: 1px solid #9a9a9a;
@@ -716,23 +717,23 @@ aside nav ul #logout {
   height: 45px;
   padding: 8px 0px;
 }
-#addItemOverlay .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay .modalContent .row .leftModal select::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal input::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal textarea::-moz-placeholder, #addItemOverlay2 .modalContent .row .leftModal select::-moz-placeholder {
+#overlay .addForm .row .leftModal input::-moz-placeholder, #overlay .addForm .row .leftModal textarea::-moz-placeholder, #overlay .addForm .row .leftModal select::-moz-placeholder, #overlay .editForm .row .leftModal input::-moz-placeholder, #overlay .editForm .row .leftModal textarea::-moz-placeholder, #overlay .editForm .row .leftModal select::-moz-placeholder {
   color: #9a9a9a;
 }
-#addItemOverlay .modalContent .row .leftModal input::placeholder,
-#addItemOverlay .modalContent .row .leftModal textarea::placeholder,
-#addItemOverlay .modalContent .row .leftModal select::placeholder,
-#addItemOverlay2 .modalContent .row .leftModal input::placeholder,
-#addItemOverlay2 .modalContent .row .leftModal textarea::placeholder,
-#addItemOverlay2 .modalContent .row .leftModal select::placeholder {
+#overlay .addForm .row .leftModal input::placeholder,
+#overlay .addForm .row .leftModal textarea::placeholder,
+#overlay .addForm .row .leftModal select::placeholder,
+#overlay .editForm .row .leftModal input::placeholder,
+#overlay .editForm .row .leftModal textarea::placeholder,
+#overlay .editForm .row .leftModal select::placeholder {
   color: #9a9a9a;
 }
-#addItemOverlay .modalContent .row .leftModal textarea,
-#addItemOverlay2 .modalContent .row .leftModal textarea {
+#overlay .addForm .row .leftModal textarea,
+#overlay .editForm .row .leftModal textarea {
   height: 90px;
 }
-#addItemOverlay .modalContent .row .rightModal,
-#addItemOverlay2 .modalContent .row .rightModal {
+#overlay .addForm .row .rightModal,
+#overlay .editForm .row .rightModal {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -740,20 +741,21 @@ aside nav ul #logout {
   justify-content: center;
   margin-top: 14%;
 }
-#addItemOverlay .modalContent .row .rightModal img,
-#addItemOverlay2 .modalContent .row .rightModal img {
+#overlay .addForm .row .rightModal img,
+#overlay .editForm .row .rightModal img {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
   max-width: 260px;
   max-height: 150px;
 }
-#addItemOverlay .modalContent .row .rightModal .uploadDelete,
-#addItemOverlay2 .modalContent .row .rightModal .uploadDelete {
+#overlay .addForm .row .rightModal .uploadDelete,
+#overlay .editForm .row .rightModal .uploadDelete {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
 }
-#addItemOverlay .modalContent .row .rightModal .uploadImg,
-#addItemOverlay2 .modalContent .row .rightModal .uploadImg {
+#overlay .addForm .row .rightModal .uploadImg,
+#overlay .editForm .row .rightModal .uploadImg {
   cursor: pointer;
   margin-top: 20px;
   color: #FFF;
@@ -770,8 +772,8 @@ aside nav ul #logout {
   align-items: center;
   justify-content: center;
 }
-#addItemOverlay .modalContent .row .rightModal .deleteImg,
-#addItemOverlay2 .modalContent .row .rightModal .deleteImg {
+#overlay .addForm .row .rightModal .deleteImg,
+#overlay .editForm .row .rightModal .deleteImg {
   cursor: pointer;
   margin-top: 20px;
   color: #FFF;
@@ -784,12 +786,11 @@ aside nav ul #logout {
   line-height: 24px;
   background: #ED1C25;
 }
-#addItemOverlay .modalContent .row .rightModal .inputImage,
-#addItemOverlay2 .modalContent .row .rightModal .inputImage {
+#overlay .addForm .row .rightModal .inputImage,
+#overlay .editForm .row .rightModal .inputImage {
   display: none;
 }
-#addItemOverlay button[type=submit],
-#addItemOverlay2 button[type=submit] {
+#overlay button[type=submit] {
   cursor: pointer;
   margin: 4% 0;
   align-self: center;
@@ -849,8 +850,7 @@ aside nav ul #logout {
     border-width: 0 7px 10px 7px;
     border-color: transparent transparent #FFF transparent;
   }
-  #addItemOverlay .modalContent,
-  #addItemOverlay2 .modalContent {
+  #overlay .modalContent {
     display: flex;
     flex-direction: column;
     align-items: space-between;
@@ -862,53 +862,39 @@ aside nav ul #logout {
     opacity: 0;
     transition: 0.5s;
   }
-  #addItemOverlay .modalContent .closeModal,
-  #addItemOverlay2 .modalContent .closeModal {
+  #overlay .modalContent .closeModal {
     left: 90%;
   }
-  #addItemOverlay .modalContent .row,
-  #addItemOverlay2 .modalContent .row {
-    margin-top: 16px;
+  #overlay .modalContent .row {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 16px;
   }
-  #addItemOverlay .modalContent .row .leftModal,
-  #addItemOverlay .modalContent .row .rightModal,
-  #addItemOverlay2 .modalContent .row .leftModal,
-  #addItemOverlay2 .modalContent .row .rightModal {
-    margin: 0px;
+  #overlay .modalContent .row .leftModal,
+  #overlay .modalContent .row .rightModal {
+    margin: 8px;
     padding: 0px 16px;
     width: 90%;
   }
-  #addItemOverlay .modalContent .row .leftModal h2,
-  #addItemOverlay .modalContent .row .rightModal h2,
-  #addItemOverlay2 .modalContent .row .leftModal h2,
-  #addItemOverlay2 .modalContent .row .rightModal h2 {
+  #overlay .modalContent .row .leftModal h2,
+  #overlay .modalContent .row .rightModal h2 {
     margin: 0px;
   }
-  #addItemOverlay .modalContent .row .leftModal input,
-  #addItemOverlay .modalContent .row .leftModal select,
-  #addItemOverlay .modalContent .row .rightModal input,
-  #addItemOverlay .modalContent .row .rightModal select,
-  #addItemOverlay2 .modalContent .row .leftModal input,
-  #addItemOverlay2 .modalContent .row .leftModal select,
-  #addItemOverlay2 .modalContent .row .rightModal input,
-  #addItemOverlay2 .modalContent .row .rightModal select {
+  #overlay .modalContent .row .leftModal input,
+  #overlay .modalContent .row .leftModal select,
+  #overlay .modalContent .row .rightModal input,
+  #overlay .modalContent .row .rightModal select {
     height: 45px;
     padding: 8px 0px;
     width: 96%;
   }
-  #addItemOverlay .modalContent .row .leftModal textarea,
-  #addItemOverlay .modalContent .row .rightModal textarea,
-  #addItemOverlay2 .modalContent .row .leftModal textarea,
-  #addItemOverlay2 .modalContent .row .rightModal textarea {
+  #overlay .modalContent .row .leftModal textarea,
+  #overlay .modalContent .row .rightModal textarea {
     width: 96%;
   }
-  #addItemOverlay .modalContent .row .leftModal .uploadDelete,
-  #addItemOverlay .modalContent .row .rightModal .uploadDelete,
-  #addItemOverlay2 .modalContent .row .leftModal .uploadDelete,
-  #addItemOverlay2 .modalContent .row .rightModal .uploadDelete {
+  #overlay .modalContent .row .leftModal .uploadDelete,
+  #overlay .modalContent .row .rightModal .uploadDelete {
     flex-direction: row;
     width: 100%;
   }
@@ -954,6 +940,7 @@ aside nav ul #logout {
 #myOrdersMain #headingSection .orderStatus .cancelOrder,
 #myOrdersMain .pendingOrders .orderStatus .cancelOrder {
   cursor: pointer;
+  margin-left: 28px;
 }
 #pendingOrdersMain .pendingOrders,
 #myOrdersMain .pendingOrders {
@@ -1078,6 +1065,10 @@ aside nav ul #logout {
     min-height: fit-content;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     padding: 0px 10px;
+  }
+  #root #pendingOrdersMain .pendingOrders .cancelOrder,
+  #root #myOrdersMain .pendingOrders .cancelOrder {
+    margin: 0px;
   }
   #root #pendingOrdersMain .pendingOrders .cancelOrderContainer,
   #root #myOrdersMain .pendingOrders .cancelOrderContainer {

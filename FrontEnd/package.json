@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^2.35.0",
+    "create-vite": "^4.3.1",
     "typescript": "^5.0.4"
   }
 }

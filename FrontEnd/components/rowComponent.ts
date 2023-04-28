@@ -38,7 +38,7 @@ export const rowComponent = (product: IProduct) => {
     (row.querySelector(".edit") as HTMLElement).addEventListener("click", (e: MouseEvent) => {
         e.preventDefault();
         editProductModal(product);
-        const overlay = document.querySelector("#addItemOverlay2") as HTMLElement;
+        const overlay = document.querySelector("#overlay") as HTMLElement;
         overlay.style.display = "flex";
         setTimeout(() => {
             overlay.style.opacity = "1";
@@ -61,7 +61,10 @@ export const rowComponent = (product: IProduct) => {
             e.preventDefault();
             const res = await deleteProduct(product.id);
             console.log(res);
-            row.remove();
+            row.style.opacity = '0';
+            setTimeout(() => {
+                row.remove();
+            }, 500);
         });
 
         closeContainerHandler(div);
@@ -70,7 +73,7 @@ export const rowComponent = (product: IProduct) => {
         parentTarget.appendChild(div);
         setTimeout(() => {
             div.style.opacity = '1';
-        }, 10)
+        }, 10);
     });
 
     (document.querySelector('tbody') as HTMLElement).appendChild(row);

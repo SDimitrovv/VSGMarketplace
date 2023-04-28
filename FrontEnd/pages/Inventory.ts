@@ -74,7 +74,7 @@ const Inventory = async (): Promise<void> => {
     (main.querySelector("#addButton") as HTMLElement).addEventListener("click", async (e) => {
         e.preventDefault();
         addProduct();
-        const overlay = document.querySelector("#addItemOverlay") as HTMLElement;
+        const overlay = document.querySelector("#overlay") as HTMLElement;
         overlay.style.display = "flex";
         setTimeout(() => {
             overlay.style.opacity = "1";
