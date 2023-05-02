@@ -1,4 +1,6 @@
 using AutoMapper;
+using MarketplaceApplication.Helpers.AutoMapper;
+using MarketplaceApplication.Models.ExceptionModels;
 using MarketplaceApplication.Models.OrderModels.DTOs;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
@@ -13,119 +15,87 @@ namespace MarketplaceTests
     [TestFixture]
     public class Tests
     {
-        private readonly Mock<IOrderRepository> _orderRepositoryMock = new Mock<IOrderRepository>();
-        private readonly Mock<IProductRepository> _productRepositoryMock = new Mock<IProductRepository>();
-        private readonly Mock<IMapper> _mapperMock = new Mock<IMapper>();
+        private Mock<IOrderRepository> _orderRepository;
+        private Mock<IProductRepository> _productRepository;
+        private IMapper _mapper;
+        private IOrderService _orderService;
 
-        [Test]
-        public async Task GetPendingOrders_ReturnsExpectedResult()
+        [SetUp]
+        public void Setup()
         {
-            var expected = new List<PendingOrdersGetModel>
+            _orderRepository = new Mock<IOrderRepository>();
+            _productRepository = new Mock<IProductRepository>();
+            _mapper = new Mapper(new MapperConfiguration(c =>
             {
-                new PendingOrdersGetModel(),
-                new PendingOrdersGetModel(),
-                new PendingOrdersGetModel()
-            };
-
-            _orderRepositoryMock.Setup(x => x.GetPendingOrders())
-                                .ReturnsAsync(expected);
-
-            var service = new OrderService(_orderRepositoryMock.Object,
-                                            _productRepositoryMock.Object,
-                                            _mapperMock.Object);
-
-            var result = await service.GetPendingOrders();
-
-            Assert.AreEqual(expected, result);
+                c.AddProfile<OrderMapper>();
+            }));
+            _orderService = new OrderService(_orderRepository.Object, _productRepository.Object, _mapper);
         }
 
         [Test]
-        public async Task GetMyOrders_ReturnsExpectedResult()
+        public async Task UpdateComplete_WhenOrderIsPending_ShouldUpdateStatusToFinished()
         {
-            var expected = new List<MyOrdersGetModel>
-            {
-                new MyOrdersGetModel(),
-                new MyOrdersGetModel(),
-                new MyOrdersGetModel()
-            };
-
-            const string email = "test@example.com";
-
-            _orderRepositoryMock.Setup(x => x.GetMyOrders(email))
-                                .ReturnsAsync(expected);
-
-            var service = new OrderService(_orderRepositoryMock.Object,
-                                            _productRepositoryMock.Object,
-                                            _mapperMock.Object);
-
-            var result = await service.GetMyOrders(email);
-
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public async Task CreateOrder_ReturnsExpectedResult()
-        {
-            var addModel = new AddOrderModel();
-            var order = new Order { ProductId = 1, Quantity = 2 };
-            const int orderId = 3;
-            var expected = new AddedOrderModel();
-
-            _mapperMock.Setup(x => x.Map<Order>(addModel))
-                        .Returns(order);
-
-            _orderRepositoryMock.Setup(x => x.Create(order))
-                                .ReturnsAsync(orderId);
-
-            _productRepositoryMock.Setup(x => x.ReduceQuantity(order.ProductId, order.Quantity))
-                                    .Returns(Task.CompletedTask);
-
-            _mapperMock.Setup(x => x.Map<AddedOrderModel>(order))
-                        .Returns(expected);
-
-            var service = new OrderService(_orderRepositoryMock.Object,
-                                            _productRepositoryMock.Object,
-                                            _mapperMock.Object);
-
-            var result = await service.CreateOrder(addModel);
-
-            Assert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public async Task UpdateComplete_ShouldUpdateOrderStatusToFinished()
-        {
-            const int orderId = 1;
+            var orderId = 1;
             var order = new Order { Id = orderId, Status = Status.Pending.ToString() };
-            _orderRepositoryMock.Setup(x => x.GetByID(orderId)).ReturnsAsync(order);
-            _orderRepositoryMock.Setup(x => x.Update(order)).Returns(Task.CompletedTask);
+            _orderRepository.Setup(r => r.GetByID(orderId)).ReturnsAsync(order);
 
-            var service = new OrderService(_orderRepositoryMock.Object, _productRepositoryMock.Object, _mapperMock.Object);
+            await _orderService.UpdateComplete(orderId);
 
-            await service.UpdateComplete(orderId);
-
-            Assert.AreEqual(Status.Finished.ToString(), order.Status);
-            _orderRepositoryMock.Verify(x => x.Update(order), Times.Once);
+            _orderRepository.Verify(r => r.Update(It.Is<Order>(o => o.Id == orderId && o.Status == Status.Finished.ToString())), Times.Once);
         }
 
         [Test]
-        public async Task UpdateReject_ShouldUpdateOrderStatusToDeclinedAndReturnProductQuantity()
+        public async Task UpdateReject_WhenOrderIsPending_ShouldUpdateOrderStatusToDeclined_AndReturnProductQuantity()
         {
-            const int orderId = 1;
-            const int productId = 2;
-            const int quantity = 3;
-            var order = new Order { Id = orderId, ProductId = productId, Quantity = quantity, Status = Status.Pending.ToString() };
-            _orderRepositoryMock.Setup(x => x.GetByID(orderId)).ReturnsAsync(order);
-            _orderRepositoryMock.Setup(x => x.Update(order)).Returns(Task.CompletedTask);
-            _productRepositoryMock.Setup(x => x.ReturnQuantity(productId, quantity)).Returns(Task.CompletedTask);
+            var orderId = 1;
+            var productId = 2;
+            var orderQuantity = 3;
+            var order = new Order { Id = orderId, Status = Status.Pending.ToString(), ProductId = productId, Quantity = orderQuantity };
+            _orderRepository.Setup(r => r.GetByID(orderId)).ReturnsAsync(order);
 
-            var service = new OrderService(_orderRepositoryMock.Object, _productRepositoryMock.Object, _mapperMock.Object);
+            await _orderService.UpdateReject(orderId);
 
-            await service.UpdateReject(orderId);
+            _orderRepository.Verify(r => r.Update(It.Is<Order>(o => o.Id == orderId && o.Status == Status.Declined.ToString())), Times.Once);
+            _productRepository.Verify(r => r.ReturnQuantity(productId, orderQuantity), Times.Once);
+        }
 
-            Assert.AreEqual(Status.Declined.ToString(), order.Status);
-            _orderRepositoryMock.Verify(x => x.Update(order), Times.Once);
-            _productRepositoryMock.Verify(x => x.ReturnQuantity(productId, quantity), Times.Once);
+        [Test]
+        public async Task CreateOrder_WhenEnoughQuantityForSale_ShouldCreateOrder_AndReduceProductQuantity()
+        {
+            var productId = 1;
+            var productQuantityForSale = 5;
+            var addOrderModel = new AddOrderModel { ProductId = productId, Quantity = 3 };
+            var product = new Product { Id = productId, QuantityForSale = productQuantityForSale };
+            _productRepository.Setup(r => r.GetByID(productId)).ReturnsAsync(product);
+
+            var result = await _orderService.CreateOrder(addOrderModel);
+
+            _orderRepository.Verify(r => r.Create(It.IsAny<Order>()), Times.Once);
+            _productRepository.Verify(r => r.ReduceQuantity(productId, addOrderModel.Quantity), Times.Once);
+            Assert.AreEqual(result.ProductId, productId);
+            Assert.AreEqual(result.Quantity, addOrderModel.Quantity);
+        }
+
+        [Test]
+        public void CreateOrder_WhenProductIdNotFound_ShouldThrowException()
+        {
+            var productId = 1;
+            var addOrderModel = new AddOrderModel { ProductId = productId, Quantity = 3 };
+            _productRepository.Setup(r => r.GetByID(productId))!.ReturnsAsync(null as Product);
+
+            Assert.ThrowsAsync<HttpException>(async () => await _orderService.CreateOrder(addOrderModel));
+        }
+
+        [Test]
+        public void CreateOrder_WhenNotEnoughQuantityForSale_ShouldThrowException()
+        {
+            var productId = 1;
+            var productQuantityForSale = 5;
+            var addOrderModel = new AddOrderModel { ProductId = productId, Quantity = 7 };
+            var product = new Product { Id = productId, QuantityForSale = productQuantityForSale };
+            _productRepository.Setup(r => r.GetByID(productId)).ReturnsAsync(product);
+
+            Assert.ThrowsAsync<HttpException>(async () => await _orderService.CreateOrder(addOrderModel));
         }
     }
 }
