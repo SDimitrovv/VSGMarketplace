@@ -36,8 +36,3 @@ export interface ICategory {
     type: string;
     id: number;
 }
-
-export type Route = () => void;
-export type Routes = {
-    [key: string]: Route;
-};

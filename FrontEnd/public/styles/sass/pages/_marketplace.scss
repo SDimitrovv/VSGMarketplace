@@ -75,61 +75,35 @@
             }
         }
     }
-
-    .buyContainer {
-        @include pop-up(42px, -135px);
-    }
-
-    .buyContainer::before {
-        @include triangle(48%);
-    }
-}
-
-@media screen and (max-width: 768px) {
-    #marketplaceMain {
-        .buyContainer {
-            @include pop-up(44px, -245px);
-        }
-
-        .buyContainer::before {
-            @include triangle(84%);
-        }
-    }
 }
 
 //Modal with more info for card item
 
 #productModal {
-    @include modal(fit-content, auto);
-    min-height: 620px;
-    max-width: 600px;
+    @include flex-align(column, space-between);
     background-image: url("/images/marketplace/ellipse.png");
     background-position: bottom right;
     background-repeat: no-repeat;
+    min-height: 620px;
+    max-width: 640px;
+    width: 100%;
     overflow-y: auto;
-
-    .closeModal {
-        background: none;
-    }
 
     #modalImage {
         align-self: center;
-
-        img {
-            height: auto;
-            max-height: 320px;
-            width: fit-content;
-        }
+        height: auto;
+        max-height: 320px;
+        width: fit-content;
     }
 
     #modalFrameOne {
         @include flex-align(column, space-between);
-        margin: 20px;
+        margin-top: 20px;
+        margin-left: 20px;
         flex-wrap: wrap;
 
         #modalFrameTwo {
             display: flex;
-
             justify-content: space-between;
 
             #productName {
@@ -139,6 +113,7 @@
 
             #priceAndQty {
                 @include flex-align(column, flex-end);
+                margin-right: 20px;
             }
 
             b {
@@ -151,22 +126,21 @@
                 padding: 4px 0px;
             }
         }
-    }
 
-    p {
-        overflow-y: auto;
-        margin-top: 10px;
-        width: 100%;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 19px;
+        p {
+            overflow-y: auto;
+            margin-top: 10px;
+            width: 100%;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+        }
     }
 }
 
+
 @media screen and (max-width: 768px) {
     #productModal {
-        @include modal(fit-content, 92%);
-
         #modalFrameOne {
             #modalFrameTwo {
                 @include flex-align(column, flex-start);
@@ -177,11 +151,10 @@
                 }
 
                 #priceAndQty {
-                    margin: 10px 0px;
+                    margin: 10px 0;
                 }
 
                 b {
-                    width: 305px;
                     font-family: "Roboto";
                     font-style: normal;
                     font-weight: 700;

@@ -1,0 +1,15 @@
+.popup {
+    @include flex-align(column, center);
+    color: $general-black;
+    width: 280px;
+    height: 80px;
+    padding: 14px;
+    background-color: $general-white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    margin-top: 4px;
+    z-index: 1;
+    margin-top: 8px;
+    transition: 0.3s;
+    opacity: 0;
+}

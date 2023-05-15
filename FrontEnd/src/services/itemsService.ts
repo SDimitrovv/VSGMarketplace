@@ -1,5 +1,5 @@
 import { makeRequest } from "./makeRequest.ts";
-import { IProduct, ICategory, IOrder } from "./types.ts";
+import { IProduct, ICategory, IOrder } from "../types/types.ts";
 
 export const loadMarketplace = () => {
     return makeRequest<IProduct[]>({ path: "/Product/Marketplace" });
@@ -26,6 +26,7 @@ export const createProduct = async (data: object) => {
         path: "/Product",
         method: "POST",
         data,
+        headers: { "Content-Type": "application/json" },
     });
 };
 
@@ -34,6 +35,7 @@ export const editProduct = async (id: number, data: object) => {
         path: "/Product/" + id,
         method: "PUT",
         data,
+        headers: { "Content-Type": "application/json" },
     });
 };
 
@@ -49,6 +51,7 @@ export const createOrder = async (data: object) => {
         path: "/Order",
         method: "POST",
         data,
+        headers: { "Content-Type": "application/json" },
     });
 };
 
@@ -56,7 +59,6 @@ export const completeOrder = async (id: number) => {
     return makeRequest<IOrder>({
         path: "/Order/Complete/" + id,
         method: "PUT",
-        headers: { "content-type": "text/plain" }
     });
 };
 

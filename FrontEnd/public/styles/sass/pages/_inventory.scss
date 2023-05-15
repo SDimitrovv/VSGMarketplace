@@ -1,298 +1,181 @@
 //Inventory page
 
-#inventoryMain {
-    flex-direction: column;
+//Search
 
-    //Search
+#searchSpace {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    opacity: 0;
+    transition: 0.3s;
 
-    #searchSpace {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 10px;
+    #input {
+        @include flex-align(row, flex-end);
+        width: 240px;
+        height: 36px;
+        border-bottom: 1px solid #000;
 
-        #input {
-            @include flex-align(row, flex-end);
-            width: 240px;
-            height: 36px;
-            border-bottom: 1px solid #000;
-
-            input {
-                outline: none;
-                padding-bottom: 2px;
-            }
-
-            svg {
-                padding-bottom: 6px;
-                margin-right: 12px;
-            }
+        input {
+            outline: none;
+            padding-bottom: 2px;
         }
 
-        button {
-            cursor: pointer;
-            margin-left: 20px;
-            width: 120px;
-            height: 36px;
-            color: $general-white;
-            background: $add-button;
-            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-            border-radius: 4px;
-
-            svg {
-                margin-right: 6px;
-            }
+        svg {
+            padding-bottom: 6px;
+            margin-right: 10px;
         }
     }
 
-    //Table
-
-    #tableBorder {
-        border: 1px solid $border-gray;
+    button {
+        cursor: pointer;
+        margin-left: 20px;
+        width: 120px;
+        height: 36px;
+        color: $general-white;
+        background: $add-button;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
         border-radius: 4px;
-        margin-top: 40px;
-        height: calc(100% - 100px);
-        overflow-x: auto;
 
-
-        table {
-            position: relative;
-            width: 100%;
-            border-spacing: 0;
-            border-collapse: collapse;
-            text-align: left;
-
-            .productRow {
-                opacity: 0;
-                transition: 0.5s;
-            }
-
-            tr th {
-                padding: 22px;
-                border-bottom: 1px solid $border-gray;
-                padding-left: 20px;
-            }
-
-            tr td {
-                padding: 16px;
-                border-bottom: 1px solid $border-gray;
-                padding-left: 20px;
-            }
-
-            th,
-            td {
-                white-space: nowrap;
-                padding-left: 20px;
-
-                a {
-                    margin: 8px;
-                }
-            }
-
-            .editDelete {
-                position: relative;
-                width: 60px;
-
-                .edit {
-                    position: relative;
-                    cursor: pointer;
-                }
-
-                .delete {
-                    position: relative;
-                    cursor: pointer;
-                }
-            }
+        svg {
+            margin-right: 6px;
         }
-    }
-
-    .removeContainer {
-        @include pop-up(150%, -295%);
-        white-space: break-spaces;
-    }
-
-    .removeContainer::before {
-        @include triangle(70%);
     }
 }
 
-//Modals for adding and editing items
+//Table
 
-#overlay {
-    @include overlay;
+#tableBorder {
+    opacity: 0;
+    transition: 0.3s;
+    border: 1px solid $border-gray;
+    border-radius: 4px;
+    margin-top: 40px;
+    width: 99%;
+    height: 88%;
 
-    .addForm,
-    .editForm {
-        @include modal(700px, fit-content);
-        max-width: 600px;
-        overflow-y: auto;
-        overflow-x: auto;
-        width: 600px;
-        height: 700px;
-
-        .row {
-            display: flex;
-            justify-content: center;
-            margin-top: 8%;
-
-            .leftModal {
-                @include flex-align(column, flex-start);
-                font-family: "Inter";
-                font-style: normal;
-                font-weight: 400;
-                font-size: 14px;
-                line-height: 17px;
-                width: 40%;
-                margin-left: 8%;
-
-                h2 {
-                    font-weight: 700;
-                    font-size: 24px;
-                    line-height: 29px;
-                    margin-bottom: 40px;
-                }
-
-                input,
-                textarea,
-                select {
-                    resize: none;
-                    font-family: "Inter";
-                    border-bottom: 1px solid $underline-gray;
-                    outline: none;
-                    margin-bottom: 4px;
-                    width: 240px;
-                    height: 45px;
-                    padding: 8px 0px;
-                }
-
-                input::placeholder,
-                textarea::placeholder,
-                select::placeholder {
-                    color: $underline-gray;
-                }
-
-                textarea {
-                    height: 90px;
-                }
-            }
-
-            .rightModal {
-                @include flex-align(column, center);
-                width: 50%;
-                justify-content: center;
-                margin-top: 14%;
-
-                img {
-                    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-                    max-width: 260px;
-                    max-height: 150px;
-                }
-
-                .uploadDelete {
-                    @include flex-align(column, center);
-                    justify-content: space-evenly;
-                }
-
-                .uploadImg {
-                    @include button($upload-image);
-                    @include flex-align(column, center);
-                    justify-content: center;
-                }
-
-                .deleteImg {
-                    @include button($main-color);
-                }
-
-                .inputImage {
-                    display: none;
-                }
-            }
-        }
+    .edit {
+        cursor: pointer;
+        color: $upload-image;
     }
 
-    button[type="submit"] {
+    .delete {
         cursor: pointer;
-        margin: 4% 0;
-        align-self: center;
-        width: 150px;
-        min-height: 34px;
-        background: $add-button;
-        color: $general-white;
-        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 4px;
-        font-weight: 700;
-        font-size: 18px;
-        line-height: 24px;
+        margin-left: 10px;
+        color: $delete-image;
+    }
+}
+
+
+//Modals for adding and editing items
+
+.addForm,
+.editForm {
+    @include flex-align(column, space-between);
+    background-color: $general-white;
+    overflow-y: auto;
+    overflow-x: auto;
+
+    .row {
+        display: flex;
+        justify-content: center;
+        margin-top: 8%;
+
+        .leftModal {
+            @include flex-align(column, flex-start);
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 17px;
+            width: 40%;
+            margin-left: 8%;
+
+            h2 {
+                font-weight: 700;
+                font-size: 24px;
+                line-height: 29px;
+                margin-bottom: 40px;
+            }
+        }
+
+        .rightModal {
+            @include flex-align(column, center);
+            width: 50%;
+            justify-content: center;
+            margin-top: 14%;
+
+            img {
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+                max-width: 260px;
+                max-height: 150px;
+            }
+
+            .uploadDelete {
+                @include flex-align(column, center);
+                justify-content: space-evenly;
+            }
+
+            .uploadImg {
+                @include button($upload-image);
+                @include flex-align(column, center);
+                justify-content: center;
+            }
+
+            .deleteImg {
+                @include button($main-color);
+            }
+
+            .inputImage {
+                display: none;
+            }
+        }
     }
 }
 
 @media screen and (max-width: 768px) {
-    #inventoryMain {
+    #searchSpace {
+        @include flex-align(row, flex-end);
+        justify-content: space-between;
+        margin: 20px 10px;
 
-        #searchSpace {
-            @include flex-align(row, flex-end);
-            justify-content: space-between;
-            margin: 20px 10px;
+        #input {
+            width: 46%;
 
-            #input {
-                width: 46%;
-
-                input {
-                    width: 50%;
-                }
+            input {
+                width: 50%;
             }
-        }
-
-        #tableBorder {
-            margin-top: 20px;
-            margin: 20px 10px;
-        }
-
-        .removeContainer {
-            @include pop-up(150%, -400%);
-        }
-
-        .removeContainer::before {
-            @include triangle(90%);
         }
     }
 
-    #overlay {
+    #tableBorder {
+        margin-top: 20px;
+        margin: 20px 10px;
+        width: auto;
+        height: auto;
+    }
 
-        .modalContent {
-            @include modal(96%, 92%);
+    .addForm,
+    .editForm {
+        @include modal(100%, 100%);
 
-            .closeModal {
-                left: 90%;
-            }
+        .row {
+            @include flex-align(column, center);
+            margin-top: 16px;
 
-            .row {
-                @include flex-align(column, center);
-                margin-top: 16px;
+            .leftModal,
+            .rightModal {
+                margin: 8px;
+                width: 90%;
 
-                .leftModal,
-                .rightModal {
-                    margin: 8px;
-                    padding: 0px 16px;
-                    width: 90%;
+                h2 {
+                    margin-bottom: 28px;
+                }
 
-                    h2 {
-                        margin: 0px;
-                    }
-
-                    input,
-                    select {
-                        height: 45px;
-                        padding: 8px 0px;
-                        width: 96%;
-                    }
-
-                    textarea {
-                        width: 96%;
-                    }
-
-                    .uploadDelete {
-                        flex-direction: row;
-                        width: 100%;
-                    }
+                .uploadDelete {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    width: 100%;
                 }
             }
         }

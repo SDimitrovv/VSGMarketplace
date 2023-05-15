@@ -4,12 +4,14 @@
     border: 0px;
 }
 
+@include responsive-desktop;
+
 body {
     height: 100vh;
     background-color: $body-background;
     font-family: 'Roboto';
 
-    #root {
+    #asideMain {
         display: flex;
         width: 100%;
     }
@@ -52,13 +54,11 @@ svg {
     pointer-events: none;
 }
 
-#popupParent {
-    position: relative;
-}
-
 @media screen and (max-width: 768px) {
-    #root {
+    #asideMain {
         @include flex-align(column, center);
         height: calc(100vh - 60px);
     }
+
+    @include responsive-mobile;
 }

@@ -6,7 +6,7 @@
     align-content: center;
 
     #headingSection,
-    .pendingOrders {
+    .order {
         @include flex-align(row, center);
         width: 97%;
         margin-top: 20px;
@@ -34,7 +34,7 @@
         }
     }
 
-    .pendingOrders {
+    .order {
         position: relative;
         border: 1px solid #dadcdd;
         background-color: $general-white;
@@ -60,18 +60,6 @@
             span {
                 width: 50%;
             }
-        }
-
-        .cancelOrderContainer {
-            @include pop-up(28px, -236px);
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 19px;
-        }
-
-        .cancelOrderContainer::before {
-            @include triangle(85%);
         }
     }
 
@@ -110,7 +98,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    #root {
+    #asideMain {
 
         #pendingOrdersMain,
         #myOrdersMain {
@@ -118,7 +106,7 @@
                 display: none;
             }
 
-            .pendingOrders {
+            .order {
                 @include flex-align(column, center);
                 align-self: center;
                 width: 76%;
@@ -128,13 +116,6 @@
 
                 .cancelOrder {
                     margin: 0px;
-                }
-                .cancelOrderContainer {
-                    @include pop-up(26px, -278px);
-                }
-
-                .cancelOrderContainer::before {
-                    @include triangle(90%);
                 }
 
                 span {
