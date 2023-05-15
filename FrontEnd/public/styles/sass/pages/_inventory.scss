@@ -6,8 +6,6 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
-    opacity: 0;
-    transition: 0.3s;
 
     #input {
         @include flex-align(row, flex-end);
@@ -45,8 +43,6 @@
 //Table
 
 #tableBorder {
-    opacity: 0;
-    transition: 0.3s;
     border: 1px solid $border-gray;
     border-radius: 4px;
     margin-top: 40px;

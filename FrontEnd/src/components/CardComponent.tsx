@@ -15,10 +15,6 @@ const CardComponent = ({ product }: CardComponentProps) => {
     const selectValue = useRef(1);
     const [showProductModal, setShowProductModal] = useState(false);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    const [opacity, setOpacity] = useState(0);
-    setTimeout(() => {
-        setOpacity(1);
-    }, 300);
 
     if (!product.quantityForSale) {
         product.quantityForSale = 1;
@@ -56,17 +52,17 @@ const CardComponent = ({ product }: CardComponentProps) => {
     };
 
     const str = `Are you sure you want to buy ${selectValue.current} item for
-    ${product.price * selectValue.current} BGN?`;
+    ${product.price * selectValue.current} BGN ?`;
 
     return (
         <>
             {showProductModal && (
                 <ProductModal
                     product={product}
-                    onClose={() => setShowProductModal(false)}
-                />
+                    showProductModal={showProductModal}
+                    setShowProductModal={setShowProductModal} />
             )}
-            <div id={`${product.id}`} className="product" style={{ opacity }}>
+            <div id={`${product.id}`} className="product">
                 <a className="productButton" onClick={() => setShowProductModal(true)}>
                     <img src={product.imageUrl} alt="Product-image" />
                 </a>

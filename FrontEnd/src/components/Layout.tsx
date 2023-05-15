@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 
@@ -12,7 +12,9 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
             <Header />
             <div id="asideMain">
                 <Sidebar />
-                {children}
+                <Suspense>
+                    {children}
+                </Suspense>
             </div>
         </>
     );

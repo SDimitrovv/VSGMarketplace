@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableFooter, styled } from "@mui/material";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { tableCellClasses } from '@mui/material/TableCell';
 import { IProduct } from "../types/types.ts";
 import RowComponent from "./RowComponent.tsx";
@@ -21,13 +21,8 @@ type InventoryTableProps = {
 
 const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [opacity, setOpacity] = useState(0);
     const [page, setPage] = useState(0);
     const tableRef = useRef<HTMLDivElement>(null);
-    setTimeout(() => {
-        setOpacity(1);
-        (tableRef.current as HTMLDivElement).style.opacity = `${opacity}`;
-    }, 300);
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(Number(event.target.value));

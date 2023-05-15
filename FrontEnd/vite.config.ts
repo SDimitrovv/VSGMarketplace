@@ -1,14 +1,16 @@
 import { defineConfig } from 'vite';
-import { liveReload } from "vite-plugin-live-reload";
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  output: {
-    path: __dirname + "/dist",
-  },
   build: {
+    outDir: 'build',
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        chunkFileNames: 'chunks/[name].js',
+        entryFileNames: '[name].js',
+      }
+    }
   },
-  plugins: [liveReload(), react()],
-})
+  plugins: [react()],
+});

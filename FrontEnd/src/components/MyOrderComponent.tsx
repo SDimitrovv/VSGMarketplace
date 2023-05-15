@@ -9,12 +9,7 @@ type MyOrderProps = {
 }
 
 const MyOrderComponent = ({ order }: MyOrderProps) => {
-    const [opacity, setOpacity] = useState(0);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    setTimeout(() => {
-        setOpacity(1);
-    }, 500);
-
     const handleCancel = (e: React.MouseEvent<HTMLAnchorElement>) => {
         setAnchorEl(e.currentTarget)
     }
@@ -30,7 +25,7 @@ const MyOrderComponent = ({ order }: MyOrderProps) => {
 
     return (
         <>
-            <div id={`${order.id}`} className="order" style={{ opacity }}>
+            <div id={`${order.id}`} className="order" >
                 <span className="nameColumn">{order.fullName}</span>
                 <div className="firstTwo">
                     <span className="qtyColumn">{order.quantity}</span>

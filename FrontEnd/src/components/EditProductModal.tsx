@@ -1,10 +1,6 @@
-import CloseIcon from "@mui/icons-material/Close";
-import { useState, forwardRef, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { editProduct, loadCategories } from "../services/itemsService.ts";
 import {
-    IconButton,
-    Slide,
-    Dialog,
     TextField,
     FormControl,
     InputLabel,
@@ -14,18 +10,8 @@ import {
 import { deleteImage, editImage } from "../services/pictureService.ts";
 import { ICategory, IProduct } from "../types/types.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
-import { TransitionProps } from "@mui/material/transitions";
 import { uploadImage } from "../utils/uploadImage.ts";
-
-const modalStyle = {
-    borderRadius: "20px",
-    margin: 0,
-    width: "92%",
-    maxHeight: "740px",
-    "@media screen and (max-width: 768px)": {
-        maxHeight: "96%",
-    }
-}
+import Modal from "./Modal.tsx";
 
 const inputStyle = {
     color: "#9A9A9A",
@@ -42,21 +28,13 @@ const inputStyle = {
     },
 };
 
-const Transition = forwardRef(function Transition(
-    props: TransitionProps & {
-        children: React.ReactElement<any, any>;
-    },
-    ref: React.Ref<unknown>
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
-type RowComponentProps = {
+type EditModalProps = {
     product: IProduct;
-    onClose: () => void;
+    showEditModal: boolean;
+    setShowEditModal: Dispatch<SetStateAction<boolean>>;
 };
 
-const EditProductModal = ({ product, onClose }: RowComponentProps) => {
+const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModalProps) => {
     if (!product.imageUrl) {
         product.imageUrl = imagePlaceholder;
     }
@@ -64,12 +42,6 @@ const EditProductModal = ({ product, onClose }: RowComponentProps) => {
     const [image, setImage] = useState(product.imageUrl);
     const [categories, setCategories] = useState<ICategory[]>();
     const [option, setOption] = useState(``);
-    const [open, setOpen] = useState(true);
-    if (!open) {
-        setTimeout(() => {
-            onClose();
-        }, 100);
-    }
 
     useEffect(() => {
         loadCategories().then((result) => setCategories(result));
@@ -114,26 +86,12 @@ const EditProductModal = ({ product, onClose }: RowComponentProps) => {
 
         const res = await editProduct(product.id as number, itemData);
         console.log("PUT", res);
-        setOpen(false);
+        setShowEditModal(false);
     };
 
     return (
-        <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={() => setOpen(false)}
-            PaperProps={{
-                sx: { ...modalStyle },
-            }}
-        >
+        <Modal showModal={showEditModal} setShowModal={setShowEditModal} >
             <form className="editForm modalContent" onSubmit={onSubmit}>
-                <IconButton
-                    onClick={() => setOpen(false)}
-                    sx={{ position: "absolute", right: 0, top: 0 }}
-                >
-                    <CloseIcon sx={{ color: "#000" }} />
-                </IconButton>
                 <div className="row">
                     <div className="leftModal">
                         <h2>Modify Item</h2>
@@ -261,7 +219,7 @@ const EditProductModal = ({ product, onClose }: RowComponentProps) => {
                 </div>
                 <button type="submit">Modify</button>
             </form>
-        </Dialog>
+        </Modal>
     );
 };
 

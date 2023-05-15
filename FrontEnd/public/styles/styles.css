@@ -234,7 +234,6 @@ aside nav ul #logout {
     width: 92%;
     margin: 4%;
     padding: 0;
-    transition: 0.5s;
   }
   aside {
     left: -100%;
@@ -287,11 +286,8 @@ aside nav ul #logout {
   background-color: #FFF;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 4px;
-  margin-top: 4px;
   z-index: 1;
-  margin-top: 8px;
-  transition: 0.3s;
-  opacity: 0;
+  margin: 4px;
 }
 
 button[type=submit] {
@@ -370,8 +366,6 @@ button[type=submit] {
   height: 224px;
   border-radius: 5px;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
-  transition: 1s;
-  opacity: 0;
 }
 #marketplaceMain .product .productButton {
   cursor: pointer;
@@ -515,8 +509,6 @@ button[type=submit] {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-  opacity: 0;
-  transition: 0.3s;
 }
 #searchSpace #input {
   display: flex;
@@ -549,8 +541,6 @@ button[type=submit] {
 }
 
 #tableBorder {
-  opacity: 0;
-  transition: 0.3s;
   border: 1px solid #b3b3b3;
   border-radius: 4px;
   margin-top: 40px;
@@ -745,8 +735,6 @@ button[type=submit] {
   font-size: 18px;
   line-height: 20px;
   padding: 20px 20px;
-  opacity: 0;
-  transition: 0.5s;
 }
 #pendingOrdersMain #headingSection .orderStatus,
 #pendingOrdersMain .order .orderStatus,

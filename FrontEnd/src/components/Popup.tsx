@@ -1,21 +1,27 @@
-import { useRef, useState } from "react";
-import { Box, Popper, ClickAwayListener } from "@mui/material";
+import { useRef } from "react";
+import { Box, Popper, ClickAwayListener, Fade, styled } from "@mui/material";
 import { Dispatch, SetStateAction } from 'react';
 
+const StyledPopper = styled(Popper)(() => ({
+    '&[data-popper-placement*="bottom"] .arrow': {
+        top: 0,
+        left: 0,
+    },
+    '&[data-popper-placement*="top"] .arrow': {
+        bottom: -2,
+        left: 0,
+    }
+}));
+
 const arrow = {
-    position: "relative",
+    position: "absolute",
     "&::before": {
         backgroundColor: "white",
         content: '""',
         display: "block",
-        position: "absolute",
-        mt: "4px",
         width: 14,
         height: 14,
-        top: "-22px",
         transform: "rotate(45deg)",
-        left: "-7px",
-        zIndex: 99
     }
 }
 
@@ -28,28 +34,18 @@ type PopupProps = {
 
 const Popup = ({ string, onYes, anchorEl, setAnchorEl }: PopupProps) => {
     const popupRef = useRef<HTMLDivElement>(null);
-    const [opacity, setOpacity] = useState(0);
-    setTimeout(() => {
-        setOpacity(1);
-    }, 300);
-
-    if (popupRef.current) {
-        popupRef.current.style.opacity = `${opacity}`;
-    }
 
     const onBuyClose = () => {
-        setOpacity(0);
-        setTimeout(() => {
-            setAnchorEl(null);
-        }, 300);
+        setAnchorEl(null);
     }
 
     return (
-        <Popper
+        <StyledPopper
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             placement="bottom"
             disablePortal={false}
+            transition
             modifiers={[
                 {
                     name: 'flip',
@@ -79,23 +75,27 @@ const Popup = ({ string, onYes, anchorEl, setAnchorEl }: PopupProps) => {
                     }
                 }
             ]}>
-            <ClickAwayListener onClickAway={onBuyClose}>
-                <div className="popup" ref={popupRef}>
-                    <Box component="span" className="arrow" sx={arrow} />
-                    <p>
-                        {string}
-                    </p>
-                    <div className="buttons">
-                        <button className="yes" onClick={onYes}>
-                            Yes
-                        </button>
-                        <button className="no" onClick={onBuyClose}>
-                            No
-                        </button>
-                    </div>
-                </div>
-            </ClickAwayListener>
-        </Popper >
+            {({ TransitionProps }) => (
+                <ClickAwayListener onClickAway={onBuyClose}>
+                    <Fade {...TransitionProps} timeout={500} >
+                        <div className="popup" ref={popupRef}>
+                            <Box component="span" className="arrow" sx={arrow} />
+                            <p>
+                                {string}
+                            </p>
+                            <div className="buttons">
+                                <button className="yes" onClick={onYes}>
+                                    Yes
+                                </button>
+                                <button className="no" onClick={onBuyClose}>
+                                    No
+                                </button>
+                            </div>
+                        </div>
+                    </Fade>
+                </ClickAwayListener>
+            )}
+        </StyledPopper >
     )
 }
 

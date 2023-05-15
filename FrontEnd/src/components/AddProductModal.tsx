@@ -1,27 +1,16 @@
-import CloseIcon from '@mui/icons-material/Close';
-import { useState, useEffect, forwardRef } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import {
-    IconButton, Slide, Dialog, TextField, FormControl,
+    TextField, FormControl,
     InputLabel,
     Select,
     MenuItem
 } from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
 import { createProduct, loadCategories } from "../services/itemsService.ts";
 import { createImage } from "../services/pictureService.ts";
 import { ICategory, IProduct } from "../types/types.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { uploadImage } from '../utils/uploadImage.ts';
-
-const modalStyle = {
-    borderRadius: "20px",
-    margin: 0,
-    width: "92%",
-    maxHeight: "740px",
-    "@media screen and (max-width: 768px)": {
-        maxHeight: "96%",
-    }
-}
+import Modal from './Modal.tsx';
 
 const inputStyle = {
     color: "#9A9A9A",
@@ -38,30 +27,16 @@ const inputStyle = {
     },
 };
 
-const Transition = forwardRef(function Transition(
-    props: TransitionProps & {
-        children: React.ReactElement<any, any>;
-    },
-    ref: React.Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
-type RowComponentProps = {
-    setProducts: React.Dispatch<React.SetStateAction<IProduct[]>>;
-    onClose: () => void;
+type AddModalProps = {
+    setProducts: Dispatch<SetStateAction<IProduct[]>>;
+    showAddModal: boolean;
+    setShowAddModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const AddProductModal = ({ setProducts, onClose }: RowComponentProps) => {
+const AddProductModal = ({ setProducts, showAddModal, setShowAddModal }: AddModalProps) => {
     const [categories, setCategories] = useState<ICategory[]>();
     const [image, setImage] = useState(imagePlaceholder);
     const [option, setOption] = useState('');
-    const [open, setOpen] = useState(true);
-    if (!open) {
-        setTimeout(() => {
-            onClose();
-        }, 100)
-    }
 
     useEffect(() => {
         loadCategories().then(result => setCategories(result))
@@ -92,21 +67,12 @@ const AddProductModal = ({ setProducts, onClose }: RowComponentProps) => {
         }
 
         setProducts(oldProducts => [...oldProducts, response]);
-        setOpen(false);
+        setShowAddModal(false);
     };
 
     return (
-        <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={() => setOpen(false)}
-            PaperProps={{ sx: { ...modalStyle } }}
-        >
+        <Modal showModal={showAddModal} setShowModal={setShowAddModal} >
             <form className="addForm modalContent" onSubmit={onSubmit}>
-                <IconButton onClick={() => setOpen(false)} sx={{ position: 'absolute', right: 0, top: 0 }}>
-                    <CloseIcon sx={{ color: '#000' }} />
-                </IconButton>
                 <div className="row">
                     <div className="leftModal">
                         <h2>Add New Item</h2>
@@ -215,7 +181,7 @@ const AddProductModal = ({ setProducts, onClose }: RowComponentProps) => {
                 </div>
                 <button type="submit">Add</button>
             </form>
-        </Dialog >
+        </Modal>
     );
 };
 
