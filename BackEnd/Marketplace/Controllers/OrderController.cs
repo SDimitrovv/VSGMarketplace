@@ -27,7 +27,7 @@ namespace MarketplaceAPI.Controllers
 
             var order = await _orderService.CreateOrder(model);
 
-            return Ok(order);
+            return CreatedAtAction(null, order);
         }
 
         [HttpPut]

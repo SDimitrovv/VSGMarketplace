@@ -36,7 +36,7 @@ namespace MarketplaceAPI.Controllers
 
             var product = await _productService.Add(model);
 
-            return Ok(product);
+            return CreatedAtAction(null, product);
         }
 
         [HttpGet]

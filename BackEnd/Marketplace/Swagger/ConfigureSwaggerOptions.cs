@@ -11,7 +11,6 @@ namespace MarketplaceAPI.Swagger
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
-                Description = "Provide valid token!",
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
                 BearerFormat = "JWT",

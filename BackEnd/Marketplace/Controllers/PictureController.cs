@@ -18,7 +18,7 @@ namespace MarketplaceAPI.Controllers
         {
             var imageUrl = await _pictureService.UploadPicture(picture, productId);
 
-            return Ok(imageUrl);
+            return CreatedAtAction(null, imageUrl);
         }
 
         [HttpPut]
