@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { loadInventory } from '../../services/itemsService.ts';
+import { useGetInventoryQuery } from '../../services/productsService';
+import { useState, useEffect, useRef } from 'react';
 import { IProduct } from "../../types/types.ts";
 import AddProductModal from "../../components/AddProductModal.tsx";
 import InventoryTable from '../../components/Table.tsx';
@@ -7,18 +7,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 
 const Inventory = () => {
+    const { data } = useGetInventoryQuery("/Product/Inventory");
     const [products, setProducts] = useState<IProduct[]>([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [searchString, setSearchString] = useState("");
+    // const filteredProducts = useRef<IProduct[] | null>(null);
+    // const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
 
     useEffect(() => {
-        loadInventory().then((result: IProduct[]) => {
-            setProducts(result);
-        });
-    }, []);
-
-    const filteredProducts = products.filter((p: IProduct) =>
-        p.fullName.toLowerCase().includes(searchString));
+        if (data) {
+            const newData = data.filter((p: IProduct) =>
+                p.fullName.toLowerCase().includes(searchString))
+            setProducts(newData);
+        }
+    }, [data]);
 
     return (
         <>
@@ -41,7 +43,7 @@ const Inventory = () => {
                         </div>
                     </button>
                 </div>
-                <InventoryTable setProducts={setProducts} filteredProducts={filteredProducts} />
+                {products.length > 0 && <InventoryTable setProducts={setProducts} filteredProducts={products} />}
             </main>
         </>
     );

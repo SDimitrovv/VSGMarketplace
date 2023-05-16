@@ -1,18 +1,11 @@
-import { useEffect, useState } from "react";
-import { loadMyOrders } from "../../services/itemsService.ts";
+import { useGetMyOrdersQuery } from "../../services/ordersService.ts";
 import { IOrder } from "../../types/types.ts";
 import MyOrderComponent from "../../components/MyOrderComponent.tsx";
-const MyOrders = () => {
-    const [orders, setOrders] = useState<IOrder[]>([]);
 
+const MyOrders = () => {
     const user = JSON.parse(sessionStorage.getItem("user") as string);
     const email = user.email;
-
-    useEffect(() => {
-        loadMyOrders(email).then(result => {
-            setOrders(result);
-        });
-    }, []);
+    const { data: orders } = useGetMyOrdersQuery(email);
 
     return (
         <main id='myOrdersMain'>
@@ -23,7 +16,7 @@ const MyOrders = () => {
                 <span className="orderDateColumn">Order Date</span>
                 <span className="orderStatus">Status</span>
             </div>
-            {orders.length > 0
+            {orders
                 ? orders.map((order: IOrder) => <MyOrderComponent order={order} key={order.id} />)
                 : <div className="order" >No orders</div>}
         </main>

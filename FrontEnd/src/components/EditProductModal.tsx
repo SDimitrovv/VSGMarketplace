@@ -1,5 +1,3 @@
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { editProduct, loadCategories } from "../services/itemsService.ts";
 import {
     TextField,
     FormControl,
@@ -7,12 +5,14 @@ import {
     Select,
     MenuItem,
 } from "@mui/material";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { deleteImage, editImage } from "../services/pictureService.ts";
+import { useGetCategoriesQuery } from "../services/categoriesService.ts";
 import { ICategory, IProduct } from "../types/types.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
+import { editProduct } from "../services/itemsService.ts";
 import { uploadImage } from "../utils/uploadImage.ts";
 import { useForm } from 'react-hook-form';
-
 import Modal from "./Modal.tsx";
 
 const inputStyle = {
@@ -48,13 +48,9 @@ type EditModalProps = {
 };
 
 const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModalProps) => {
-    const [imageUrl, setImageUrl] = useState(product.imageUrl);
-    const [categories, setCategories] = useState<ICategory[]>();
+    const { data: categories } = useGetCategoriesQuery('/Category');
+    const [imageUrl, setImageUrl] = useState(product.imageUrl ? product.imageUrl : imagePlaceholder);
     const [option, setOption] = useState(``);
-
-    if (!product.imageUrl) {
-        product.imageUrl = imagePlaceholder;
-    }
 
     const {
         register,
@@ -67,18 +63,17 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
             fullName: product.fullName,
             description: product.description,
             categoryId: product.categoryId,
-            quantityForSale: product.quantityForSale,
-            price: product.price,
+            quantityForSale: product.quantityForSale ? product.quantityForSale : null,
+            price: product.price ? product.price : null,
             quantity: product.quantity,
             image: ""
         },
     });
 
     useEffect(() => {
-        loadCategories().then((result) => setCategories(result));
         setTimeout(() => {
             setOption(`${product.categoryId}`);
-        }, 100);
+        }, 150);
     }, []);
 
     const onSubmit = async (data: FormInputs): Promise<void> => {
@@ -101,10 +96,10 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
             imageForm.append("newPicture", image as File);
             const imgRes = await editImage(product.id as number, imageForm);
             console.log("Image PUT", imgRes);
-            product.imageUrl = imgRes as string;
+            setImageUrl(imgRes as string);
         } else if (currentImg.src !== product.imageUrl) {
             const res = await deleteImage(product.id as number);
-            product.imageUrl = imagePlaceholder;
+            setImageUrl(imagePlaceholder);
             console.log("Image DELETE", res);
         }
 

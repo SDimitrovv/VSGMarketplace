@@ -1,19 +1,13 @@
-import { useEffect, useState } from "react";
-import { loadMarketplace } from "../../services/itemsService";
+import { useGetMarketplaceQuery } from '../../services/productsService';
 import { IProduct } from "../../types/types";
 import CardComponent from "../../components/CardComponent";
 
 const Marketplace = () => {
-    const [products, setProducts] = useState<IProduct[]>([]);
-    useEffect(() => {
-        loadMarketplace().then(result => {
-            setProducts(result);
-        })
-    }, []);
+    const { data: products } = useGetMarketplaceQuery("");
 
     return (
         <main id='marketplaceMain'>
-            {products.length > 0
+            {products
                 ? products.map((product: IProduct) => <CardComponent product={product} key={product.id} />)
                 : <div>No products</div>}
         </main>

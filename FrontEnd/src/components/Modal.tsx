@@ -1,7 +1,6 @@
 import { Fade, Dialog, IconButton } from '@mui/material';
-import { Dispatch, SetStateAction, forwardRef } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
 
 const modalStyle = {
     borderRadius: "20px",

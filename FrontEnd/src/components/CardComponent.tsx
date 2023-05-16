@@ -21,9 +21,9 @@ const CardComponent = ({ product }: CardComponentProps) => {
         product.quantityForSale = 1;
     }
 
-    if (!product.imageUrl) {
-        product.imageUrl = imagePlaceholder;
-    }
+    // if (!product.imageUrl) {
+    //     product.imageUrl = imagePlaceholder;
+    // }
 
     const options = [];
     for (let i = 1; i <= product.quantityForSale + 1; i++) {

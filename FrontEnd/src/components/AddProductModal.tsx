@@ -6,13 +6,14 @@ import {
     MenuItem,
     FormHelperText,
 } from "@mui/material";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { createProduct, loadCategories } from "../services/itemsService.ts";
+import { useState, Dispatch, SetStateAction } from "react";
+import { useCreateProductMutation } from "../services/productsService.ts";
+import { useGetCategoriesQuery } from "../services/categoriesService.ts";
 import { ICategory, IProduct } from "../types/types.ts";
-import { useForm } from "react-hook-form";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { createImage } from "../services/pictureService.ts";
 import { uploadImage } from "../utils/uploadImage.ts";
+import { useForm } from "react-hook-form";
 import Modal from "./Modal.tsx";
 
 const inputStyle = {
@@ -47,12 +48,17 @@ type AddModalProps = {
     setShowAddModal: Dispatch<SetStateAction<boolean>>;
 };
 
+type CreatedProduct = {
+    data: IProduct;
+}
+
 const AddProductModal = ({
     setProducts,
     showAddModal,
     setShowAddModal,
 }: AddModalProps) => {
-    const [categories, setCategories] = useState<ICategory[]>();
+    const [createProduct] = useCreateProductMutation();
+    const { data: categories } = useGetCategoriesQuery('/Category');
     const [imageUrl, setImageUrl] = useState(imagePlaceholder);
     const [option, setOption] = useState("");
 
@@ -67,24 +73,17 @@ const AddProductModal = ({
             fullName: "",
             description: "",
             categoryId: "",
-            quantityForSale: "",
-            price: "",
+            quantityForSale: null,
+            price: null,
             quantity: "",
             image: "",
         },
-        mode: "all",
-        reValidateMode: "onChange",
     });
-
-    useEffect(() => {
-        loadCategories().then((result) => setCategories(result));
-    }, []);
 
     const onSubmit = async (data: FormInputs): Promise<void> => {
         let image: { name: string } | File = { name: "" };
         if (data.image) {
             image = data.image[0];
-            delete data.image;
         }
 
         if (data.quantityForSale) {
@@ -95,17 +94,18 @@ const AddProductModal = ({
             }
         }
 
-        const response = await createProduct(data);
-        console.log("POST", response);
+        const response = await createProduct(data) as CreatedProduct;
+        const responseData = response.data;
+        console.log("POST", responseData);
         if (image.name) {
             const imageFormData = new FormData();
             imageFormData.set("picture", image as File);
-            const imgRes = await createImage(response.id, imageFormData) as string;
+            const imgRes = await createImage(responseData.id, imageFormData) as string;
             console.log("Image POST", imgRes);
-            response.imageUrl = imgRes;
+            responseData.imageUrl = imgRes;
         }
 
-        setProducts((oldProducts) => [...oldProducts, response]);
+        setProducts((oldProducts) => [...oldProducts, responseData]);
         setShowAddModal(false);
     };
 

@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
-import { loadPendingOrders } from "../../services/itemsService.ts";
+import { useGetPendingOrdersQuery } from '../../services/ordersService.ts';
 import { IOrder } from "../../types/types.ts";
 import PendingOrderComponent from "../../components/PendingOrderComponent.tsx";
 
 const PendingOrders = () => {
-    const [orders, setOrders] = useState<IOrder[]>([]);
-
-    useEffect(() => {
-        loadPendingOrders().then(result => {
-            setOrders(result);
-        });
-    }, []);
+    const { data: orders } = useGetPendingOrdersQuery("/Order/PendingOrders");
 
     return (
         <main id='pendingOrdersMain'>
@@ -22,7 +15,7 @@ const PendingOrders = () => {
                 <span className="orderDateColumn">Order Date</span>
                 <span className="actionColumn">Action</span>
             </div>
-            {orders.length > 0
+            {orders
                 ? orders.map((order: IOrder) => <PendingOrderComponent order={order} key={order.id} />)
                 : <div className="order" >No orders</div>}
         </main>
