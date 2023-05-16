@@ -11,6 +11,8 @@ import { deleteImage, editImage } from "../services/pictureService.ts";
 import { ICategory, IProduct } from "../types/types.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { uploadImage } from "../utils/uploadImage.ts";
+import { useForm } from 'react-hook-form';
+
 import Modal from "./Modal.tsx";
 
 const inputStyle = {
@@ -28,6 +30,17 @@ const inputStyle = {
     },
 };
 
+type FormInputs = {
+    code: string,
+    fullName: string,
+    description?: string,
+    categoryId: number,
+    quantityForSale?: string,
+    price?: string,
+    quantity: string,
+    image?: FileList
+};
+
 type EditModalProps = {
     product: IProduct;
     showEditModal: boolean;
@@ -35,13 +48,31 @@ type EditModalProps = {
 };
 
 const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModalProps) => {
+    const [imageUrl, setImageUrl] = useState(product.imageUrl);
+    const [categories, setCategories] = useState<ICategory[]>();
+    const [option, setOption] = useState(``);
+
     if (!product.imageUrl) {
         product.imageUrl = imagePlaceholder;
     }
 
-    const [image, setImage] = useState(product.imageUrl);
-    const [categories, setCategories] = useState<ICategory[]>();
-    const [option, setOption] = useState(``);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        control,
+    } = useForm({
+        defaultValues: {
+            code: product.code,
+            fullName: product.fullName,
+            description: product.description,
+            categoryId: product.categoryId,
+            quantityForSale: product.quantityForSale,
+            price: product.price,
+            quantity: product.quantity,
+            image: ""
+        },
+    });
 
     useEffect(() => {
         loadCategories().then((result) => setCategories(result));
@@ -50,31 +81,24 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
         }, 100);
     }, []);
 
-    const onSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const formData = new FormData(e.target as HTMLFormElement);
-        const image = formData.get("picture") as File;
-        formData.delete("picture");
-        const imageForm = new FormData();
-        imageForm.append("newPicture", image);
+    const onSubmit = async (data: FormInputs): Promise<void> => {
+        let image: { name: string } | File = { name: '' };
+        if (data.image) {
+            image = data.image[0];
+            delete data.image;
+        }
 
-        const currentImg = document.querySelector(
-            ".currentImg"
-        ) as HTMLImageElement;
-        const itemData = Object.fromEntries(formData) as unknown as IProduct;
-
-        if (itemData.quantityForSale) {
-            if (
-                itemData.quantity < itemData.quantityForSale &&
-                itemData.quantity < 0
-            ) {
-                return alert(
-                    "Make sure that quantity is not less than quantity for sale!"
-                );
+        if (data.quantityForSale) {
+            if (data.quantity < data.quantityForSale && Number(data.quantity) < 0) {
+                return alert("Make sure that quantity is not less than quantity for sale!");
             }
         }
 
+        const currentImg = document.querySelector(".currentImg") as HTMLImageElement;
+
         if (image.name) {
+            const imageForm = new FormData();
+            imageForm.append("newPicture", image as File);
             const imgRes = await editImage(product.id as number, imageForm);
             console.log("Image PUT", imgRes);
             product.imageUrl = imgRes as string;
@@ -84,44 +108,45 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
             console.log("Image DELETE", res);
         }
 
-        const res = await editProduct(product.id as number, itemData);
+        const res = await editProduct(product.id as number, data);
         console.log("PUT", res);
+
         setShowEditModal(false);
     };
 
     return (
         <Modal showModal={showEditModal} setShowModal={setShowEditModal} >
-            <form className="editForm modalContent" onSubmit={onSubmit}>
+            <form className="editForm modalContent" onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                     <div className="leftModal">
                         <h2>Modify Item</h2>
                         <TextField
                             sx={inputStyle}
                             type="text"
-                            label="Code"
-                            name="code"
+                            label="Code *"
                             variant="standard"
-                            required
-                            defaultValue={product.code}
                             InputLabelProps={{
                                 style: {
                                     color: "#9A9A9A",
                                 },
                             }}
+                            error={Boolean(errors.code)}
+                            helperText={errors.code?.message}
+                            {...register('code', { required: 'Code field is required' })}
                         />
                         <TextField
                             sx={inputStyle}
                             type="text"
-                            label="Name"
-                            name="fullName"
+                            label="Name *"
                             variant="standard"
-                            required
-                            defaultValue={product.fullName}
                             InputLabelProps={{
                                 style: {
                                     color: "#9A9A9A",
                                 },
                             }}
+                            error={Boolean(errors.fullName)}
+                            helperText={errors.fullName?.message}
+                            {...register('fullName', { required: 'Name field is required' })}
                         />
                         <TextField
                             sx={{
@@ -131,25 +156,23 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                                     borderBottom: "#000",
                                 },
                             }}
-                            name="description"
                             label="Description"
                             multiline
                             rows={4}
                             variant="standard"
-                            defaultValue={product.description}
                             InputLabelProps={{
                                 style: {
                                     color: "#9A9A9A",
                                 },
                             }}
+                            {...register('description')}
                         />
-                        <FormControl variant="standard" sx={inputStyle} required>
-                            <InputLabel focused={false}>Category</InputLabel>
+                        <FormControl variant="standard" sx={inputStyle}>
+                            <InputLabel focused={false}>Category *</InputLabel>
                             <Select
-                                name="categoryId"
-                                label="Category"
-                                onChange={(e) => setOption(e.target.value as string)}
                                 value={option}
+                                error={Boolean(errors.categoryId)}
+                                {...register('categoryId', { onChange: (e) => setOption(e.target.value as string), required: 'Category field is required' })}
                             >
                                 {categories?.map((c: ICategory) => (
                                     <MenuItem value={c.id} key={c.id}>
@@ -162,58 +185,55 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             sx={inputStyle}
                             type="number"
                             label="Qty For Sale"
-                            name="quantityForSale"
                             variant="standard"
-                            defaultValue={product.quantityForSale}
                             InputLabelProps={{
                                 style: {
                                     color: "#9A9A9A",
                                 },
                             }}
+                            {...register('quantityForSale')}
                         />
                         <TextField
                             sx={inputStyle}
                             type="number"
                             label="Sale Price"
-                            name="price"
                             variant="standard"
-                            defaultValue={product.price}
                             InputLabelProps={{
                                 style: {
                                     color: "#9A9A9A",
                                 },
                             }}
+                            {...register('price')}
                         />
                         <TextField
                             sx={inputStyle}
                             type="number"
-                            label="Qty"
-                            name="quantity"
+                            label="Qty *"
                             variant="standard"
-                            required
-                            defaultValue={product.quantity}
                             InputLabelProps={{
                                 style: {
                                     color: "#9A9A9A",
                                 },
                             }}
+                            error={Boolean(errors.quantity)}
+                            helperText={errors.quantity?.message}
+                            {...register('quantity', { required: 'Quantity field is required' })}
                         />
                     </div>
                     <div className="rightModal">
-                        <img className="currentImg" src={image} />
+                        <img className="currentImg" src={imageUrl} />
                         <input
                             id="uploadInput"
                             className="inputImage"
                             accept="image/*"
-                            name="picture"
                             type="file"
-                            onChange={(e) => setImage(uploadImage(e))}
+                            {...register('image', { onChange: (e) => setImageUrl(uploadImage(e)) })}
                         />
                         <div className="uploadDelete">
                             <label htmlFor="uploadInput" className="uploadImg">
                                 Upload
                             </label>
-                            <button className="deleteImg">Remove</button>
+                            <button type='button' className="deleteImg" onClick={() => setImageUrl(imagePlaceholder)}>Remove</button>
                         </div>
                     </div>
                 </div>

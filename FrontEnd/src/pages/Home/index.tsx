@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Home = (): JSX.Element => {
   const navigate = useNavigate();
   sessionStorage.clear();
-  
+
   const handleLogin = async (): Promise<void> => {
     try {
       const result: AuthenticationResult = await instance.loginPopup(loginRequest);

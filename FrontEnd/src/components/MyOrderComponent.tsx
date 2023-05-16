@@ -1,6 +1,7 @@
 import { rejectOrder } from "../services/itemsService.ts";
 import { useState } from "react";
 import { IOrder } from "../types/types.ts";
+import { Fade } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Popup from "./Popup.tsx";
 
@@ -25,21 +26,23 @@ const MyOrderComponent = ({ order }: MyOrderProps) => {
 
     return (
         <>
-            <div id={`${order.id}`} className="order" >
-                <span className="nameColumn">{order.fullName}</span>
-                <div className="firstTwo">
-                    <span className="qtyColumn">{order.quantity}</span>
-                    <span className="priceColumn">{order.price} BGN</span>
+            <Fade in={true} timeout={1000}>
+                <div id={`${order.id}`} className="order" >
+                    <span className="nameColumn">{order.fullName}</span>
+                    <div className="firstTwo">
+                        <span className="qtyColumn">{order.quantity}</span>
+                        <span className="priceColumn">{order.price} BGN</span>
+                    </div>
+                    <span className="orderDateColumn">{order.date}</span>
+                    <div className="orderStatus">
+                        <span>{order.status}</span>
+                        {order.status === "Pending" &&
+                            <a className="cancelOrder" onClick={handleCancel}>
+                                <CloseIcon sx={{ fontSize: "large", color: "#ED1C25" }} />
+                            </a>}
+                    </div>
                 </div>
-                <span className="orderDateColumn">{order.date}</span>
-                <div className="orderStatus">
-                    <span>{order.status}</span>
-                    {order.status === "Pending" &&
-                        <a className="cancelOrder" onClick={handleCancel}>
-                            <CloseIcon sx={{ fontSize: "large", color: "#ED1C25" }} />
-                        </a>}
-                </div>
-            </div>
+            </Fade>
             <Popup string={str} onYes={onCancel} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
         </>
     );

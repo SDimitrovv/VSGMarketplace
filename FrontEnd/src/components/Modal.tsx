@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Fade, Dialog, IconButton } from '@mui/material';
+import { Dispatch, SetStateAction, forwardRef } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
 
 const modalStyle = {
     borderRadius: "20px",
@@ -34,7 +35,7 @@ const Modal = ({ showModal, setShowModal, children, modalType }: ModalProps) => 
         <Dialog
             open={showModal}
             TransitionComponent={Fade}
-            transitionDuration={500}
+            transitionDuration={300}
             keepMounted
             onClose={handleClose}
             PaperProps={{ sx: { ...modalStyle } }}>
@@ -42,7 +43,7 @@ const Modal = ({ showModal, setShowModal, children, modalType }: ModalProps) => 
                 <CloseIcon sx={{ color: '#000' }} />
             </IconButton>
             {children}
-        </Dialog >
+        </Dialog>
     );
 };
 

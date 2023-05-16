@@ -1,7 +1,7 @@
-import { useRef } from "react";
 import { completeOrder } from "../services/itemsService";
 import { IOrder } from "../types/types";
 import { Fade } from '@mui/material';
+import { useRef } from "react";
 
 type PendingOrderProps = {
     order: IOrder;
@@ -19,7 +19,7 @@ const PendingOrderComponent = ({ order }: PendingOrderProps) => {
     }
 
     return (
-        <Fade in={true} timeout={500}>
+        <Fade in={true} timeout={1000}>
             <div ref={orderRef} className="order" id={`${order.id}`} >
                 <div className="firstThree">
                     <span className="codeColumn">{order.code}</span>

@@ -5,7 +5,7 @@ type RequestParams = {
     method?: string;
     data?: object | FormData;
     headers?: Record<string, string>;
-}
+};
 
 export const makeRequest = async <T>({
     path,
@@ -14,32 +14,17 @@ export const makeRequest = async <T>({
     headers = {},
 }: RequestParams): Promise<T> => {
 
-    let options: { headers: Record<string, string>; body?: string | FormData }
+    const user = JSON.parse(sessionStorage.getItem("user") as string);
+    const options: { headers: Record<string, string>; body?: string | FormData } =
+        { headers: { Authorization: `Bearer ${user.token}`, ...headers } };
 
     if (method !== "GET") {
         if (headers["Content-Type"] === "application/json") {
-            options = {
-                headers: {
-                    ...headers,
-                },
-                body: JSON.stringify(data)
-            }
+            options.body = JSON.stringify(data);
         } else {
-            options = {
-                headers,
-                body: data as FormData
-            }
-        }
-    } else {
-        options = {
-            headers: {
-                ...headers,
-            }
+            options.body = data as FormData;
         }
     }
-
-    const user = JSON.parse(sessionStorage.getItem('user') as string);
-    options.headers["Authorization"] = `Bearer ${user.token}`;
 
     try {
         const response = await fetch(baseURL + path, {
@@ -48,11 +33,13 @@ export const makeRequest = async <T>({
         });
 
         if (!response.ok) {
-            throw new Error('Oops, something happened...');
+            throw new Error("Oops, something happened...");
         }
 
         const contentType = response.headers.get("content-type");
-        return contentType === "application/json; charset=utf-8" ? await response.json() : response;
+        return contentType?.includes("application/json")
+            ? await response.json()
+            : response;
     } catch (error) {
         const responseError = error as T;
         console.error(responseError);

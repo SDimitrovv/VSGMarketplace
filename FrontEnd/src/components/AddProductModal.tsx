@@ -1,16 +1,19 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import {
-    TextField, FormControl,
+    TextField,
+    FormControl,
     InputLabel,
     Select,
-    MenuItem
-} from '@mui/material';
+    MenuItem,
+    FormHelperText,
+} from "@mui/material";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { createProduct, loadCategories } from "../services/itemsService.ts";
-import { createImage } from "../services/pictureService.ts";
 import { ICategory, IProduct } from "../types/types.ts";
+import { useForm } from "react-hook-form";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
-import { uploadImage } from '../utils/uploadImage.ts';
-import Modal from './Modal.tsx';
+import { createImage } from "../services/pictureService.ts";
+import { uploadImage } from "../utils/uploadImage.ts";
+import Modal from "./Modal.tsx";
 
 const inputStyle = {
     color: "#9A9A9A",
@@ -27,80 +30,118 @@ const inputStyle = {
     },
 };
 
+type FormInputs = {
+    code: string;
+    fullName: string;
+    description?: string;
+    categoryId: number;
+    quantityForSale?: string;
+    price?: string;
+    quantity: string;
+    image?: FileList;
+};
+
 type AddModalProps = {
     setProducts: Dispatch<SetStateAction<IProduct[]>>;
     showAddModal: boolean;
     setShowAddModal: Dispatch<SetStateAction<boolean>>;
-}
+};
 
-const AddProductModal = ({ setProducts, showAddModal, setShowAddModal }: AddModalProps) => {
+const AddProductModal = ({
+    setProducts,
+    showAddModal,
+    setShowAddModal,
+}: AddModalProps) => {
     const [categories, setCategories] = useState<ICategory[]>();
-    const [image, setImage] = useState(imagePlaceholder);
-    const [option, setOption] = useState('');
+    const [imageUrl, setImageUrl] = useState(imagePlaceholder);
+    const [option, setOption] = useState("");
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        control,
+    } = useForm({
+        defaultValues: {
+            code: "",
+            fullName: "",
+            description: "",
+            categoryId: "",
+            quantityForSale: "",
+            price: "",
+            quantity: "",
+            image: "",
+        },
+        mode: "all",
+        reValidateMode: "onChange",
+    });
 
     useEffect(() => {
-        loadCategories().then(result => setCategories(result))
+        loadCategories().then((result) => setCategories(result));
     }, []);
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget as HTMLFormElement);
-        const image = formData.get("picture") as File;
-        formData.delete("picture");
+    const onSubmit = async (data: FormInputs): Promise<void> => {
+        let image: { name: string } | File = { name: "" };
+        if (data.image) {
+            image = data.image[0];
+            delete data.image;
+        }
 
-        const imageForm = new FormData();
-        imageForm.append("picture", image);
-        const itemData = Object.fromEntries(formData) as unknown as IProduct;
-
-        if (itemData.quantityForSale) {
-            if (itemData.quantity < itemData.quantityForSale && itemData.quantity < 0) {
-                return alert("Make sure that quantity is not less than quantity for sale!");
+        if (data.quantityForSale) {
+            if (data.quantity < data.quantityForSale && Number(data.quantity) < 0) {
+                return alert(
+                    "Make sure that quantity is not less than quantity for sale!"
+                );
             }
         }
 
-        const response = await createProduct(itemData);
+        const response = await createProduct(data);
         console.log("POST", response);
         if (image.name) {
-            const imgRes = await createImage(response.id, imageForm) as string;
+            const imageFormData = new FormData();
+            imageFormData.set("picture", image as File);
+            const imgRes = await createImage(response.id, imageFormData) as string;
             console.log("Image POST", imgRes);
             response.imageUrl = imgRes;
         }
 
-        setProducts(oldProducts => [...oldProducts, response]);
+        setProducts((oldProducts) => [...oldProducts, response]);
         setShowAddModal(false);
     };
 
     return (
-        <Modal showModal={showAddModal} setShowModal={setShowAddModal} >
-            <form className="addForm modalContent" onSubmit={onSubmit}>
+        <Modal showModal={showAddModal} setShowModal={setShowAddModal}>
+            <form className="addForm modalContent" onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                     <div className="leftModal">
                         <h2>Add New Item</h2>
                         <TextField
                             sx={inputStyle}
                             type="text"
-                            label="Code"
-                            name="code"
+                            label="Code *"
                             variant="standard"
-                            required
                             InputLabelProps={{
                                 style: {
-                                    color: '#9A9A9A'
-                                }
+                                    color: "#9A9A9A",
+                                },
                             }}
+                            error={Boolean(errors.code)}
+                            helperText={errors.code?.message}
+                            {...register("code", { required: "Code field is required" })}
                         />
                         <TextField
                             sx={inputStyle}
                             type="text"
-                            label="Name"
-                            name="fullName"
+                            label="Name *"
                             variant="standard"
-                            required
                             InputLabelProps={{
                                 style: {
-                                    color: '#9A9A9A'
-                                }
+                                    color: "#9A9A9A",
+                                },
                             }}
+                            error={Boolean(errors.fullName)}
+                            helperText={errors.fullName?.message}
+                            {...register("fullName", { required: "Name field is required" })}
                         />
                         <TextField
                             sx={{
@@ -110,72 +151,94 @@ const AddProductModal = ({ setProducts, showAddModal, setShowAddModal }: AddModa
                                     borderBottom: "#000",
                                 },
                             }}
-                            name="description"
                             label="Description"
                             multiline
                             rows={4}
                             variant="standard"
                             InputLabelProps={{
                                 style: {
-                                    color: '#9A9A9A'
-                                }
+                                    color: "#9A9A9A",
+                                },
                             }}
+                            {...register("description")}
                         />
-                        <FormControl variant="standard" sx={inputStyle} required>
-                            <InputLabel focused={false}>Category</InputLabel>
+                        <FormControl variant="standard" sx={inputStyle}>
+                            <InputLabel focused={false}>Category *</InputLabel>
                             <Select
-                                name="categoryId"
-                                label="Category"
                                 value={option}
-                                onChange={(e) => setOption(e.target.value as string)}
+                                error={Boolean(errors.categoryId)}
+                                {...register("categoryId", {
+                                    onChange: (e) => setOption(e.target.value as string),
+                                    required: "Category field is required",
+                                })}
                             >
-                                {categories?.map((c: ICategory) => <MenuItem value={c.id} key={c.id}>{c.type}</MenuItem>)}
+                                {categories?.map((c: ICategory) => (
+                                    <MenuItem value={c.id} key={c.id}>
+                                        {c.type}
+                                    </MenuItem>
+                                ))}
                             </Select>
+                            <FormHelperText error>
+                                {errors.categoryId?.message}
+                            </FormHelperText>
                         </FormControl>
                         <TextField
                             sx={inputStyle}
                             type="number"
                             label="Qty For Sale"
-                            name="quantityForSale"
                             variant="standard"
                             InputLabelProps={{
                                 style: {
-                                    color: '#9A9A9A'
-                                }
+                                    color: "#9A9A9A",
+                                },
                             }}
+                            {...register("quantityForSale")}
                         />
                         <TextField
                             sx={inputStyle}
                             type="number"
                             label="Sale Price"
-                            name="price"
                             variant="standard"
                             InputLabelProps={{
                                 style: {
-                                    color: '#9A9A9A'
-                                }
+                                    color: "#9A9A9A",
+                                },
                             }}
+                            {...register("price")}
                         />
                         <TextField
                             sx={inputStyle}
                             type="number"
-                            label="Qty"
-                            name="quantity"
+                            label="Qty *"
                             variant="standard"
-                            required
                             InputLabelProps={{
                                 style: {
-                                    color: '#9A9A9A'
-                                }
+                                    color: "#9A9A9A",
+                                },
                             }}
+                            error={Boolean(errors.quantity)}
+                            helperText={errors.quantity?.message}
+                            {...register("quantity", {
+                                required: "Quantity field is required",
+                            })}
                         />
                     </div>
                     <div className="rightModal">
-                        <img className="currentImg" src={image} />
-                        <input id="uploadInput" className="inputImage" accept="image/*" name="picture" type="file" onChange={(e) => setImage(uploadImage(e))} />
+                        <img className="currentImg" src={imageUrl} />
+                        <input
+                            id="uploadInput"
+                            className="inputImage"
+                            accept="image/*"
+                            type="file"
+                            {...register("image", {
+                                onChange: (e) => setImageUrl(uploadImage(e)),
+                            })}
+                        />
                         <div className="uploadDelete">
-                            <label htmlFor="uploadInput" className="uploadImg">Upload</label>
-                            <button className="deleteImg">Remove</button>
+                            <label htmlFor="uploadInput" className="uploadImg">
+                                Upload
+                            </label>
+                            <button type='button' className="deleteImg" onClick={() => setImageUrl(imagePlaceholder)}>Remove</button>
                         </div>
                     </div>
                 </div>

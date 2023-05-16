@@ -1,13 +1,11 @@
-import { TableCell, TableRow, tableCellClasses } from '@mui/material';
+import { TableCell, TableRow, tableCellClasses, styled, Fade } from '@mui/material';
 import { useState, useRef, Dispatch, SetStateAction } from 'react';
 import { deleteProduct } from "../services/itemsService.ts";
 import { IProduct } from "../types/types.ts";
-import { styled } from '@mui/material/styles';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditProductModal from "./EditProductModal.tsx";
 import EditIcon from '@mui/icons-material/Edit';
 import Popup from './Popup.tsx';
-import { Fade } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -54,7 +52,7 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
     return (
         <>
             {showEditModal && <EditProductModal product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />}
-            <Fade in={true} timeout={500}>
+            <Fade in={true} timeout={1000}>
                 <StyledTableRow ref={rowRef} id={`${product.id}`} className="productRow">
                     <StyledTableCell>{product.code}</StyledTableCell>
                     <StyledTableCell>{product.fullName}</StyledTableCell>
