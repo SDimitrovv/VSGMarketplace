@@ -16,7 +16,6 @@ namespace MarketplaceApplication.Helpers.Validators
                 .Length(1, 100);
 
             RuleFor(p => p.Price)
-                .NotNull().WithMessage("Price can't be null")
                 .GreaterThan(-1).WithMessage("Price must be positive number!");
 
             RuleFor(c => c.Quantity)
