@@ -16,10 +16,10 @@ namespace MarketplaceApplication.Services
 
         public ProductService(IProductRepository repository, ICategoryRepository categoryRepository, IMapper mapper, IOrderRepository orderRepository)
         {
-                _repository = repository;
-                _categoryRepository = categoryRepository;
-                _mapper = mapper;
-                _orderRepository = orderRepository;
+            _repository = repository;
+            _categoryRepository = categoryRepository;
+            _mapper = mapper;
+            _orderRepository = orderRepository;
         }
 
         public async Task<ProductAddedModel> Add(ProductAddModel model)
@@ -65,9 +65,15 @@ namespace MarketplaceApplication.Services
 
             var order = await _orderRepository.GetOrderByProductId(id);
 
+            if (order == null)
+            {
+                await _repository.Delete(id);
+                return;
+            }
+
             if (order.Status == "Pending")
             {
-                 ExceptionService.ThrowExceptionWhenOrderIsPending();
+                ExceptionService.ThrowExceptionWhenOrderIsPending();
             }
             else if (order.Status is "Finished" or "Declined")
             {
