@@ -4,6 +4,7 @@ using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
 using MarketplaceDomain.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace MarketplaceApplication.Services
 {
@@ -12,12 +13,14 @@ namespace MarketplaceApplication.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository,IMapper mapper)
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository,IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
                 _orderRepository = orderRepository;
                 _productRepository = productRepository;
                 _mapper = mapper;
+                _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IEnumerable<PendingOrdersGetModel>> GetPendingOrders()
@@ -25,9 +28,11 @@ namespace MarketplaceApplication.Services
             return await _orderRepository.GetPendingOrders();
         }
 
-        public async Task<IEnumerable<MyOrdersGetModel>> GetMyOrders(string email)
+        public async Task<IEnumerable<MyOrdersGetModel>> GetMyOrders()
         {
-            return await _orderRepository.GetMyOrders(email);
+            var userEmail = _httpContextAccessor.HttpContext.User.FindFirst("preferred_username")?.Value;
+
+            return await _orderRepository.GetMyOrders(userEmail);
         }
 
         public async Task<AddedOrderModel> CreateOrder(AddOrderModel model)
@@ -41,6 +46,8 @@ namespace MarketplaceApplication.Services
             order.ProductFullName = product.FullName;
             order.ProductPrice = product.Price;
             order.ProductCode = product.Code;
+            order.Email = _httpContextAccessor.HttpContext.User.FindFirst("preferred_username")?.Value;
+
 
             var orderId = await _orderRepository.Create(order);
             order.Id = orderId;
@@ -70,7 +77,9 @@ namespace MarketplaceApplication.Services
             await ExceptionService.ThrowExceptionWhenIdNotFound(id, _orderRepository);
 
             var newOrder = await _orderRepository.GetByID(id);
+            var userEmail = _httpContextAccessor.HttpContext.User.FindFirst("preferred_username")?.Value;
 
+            ExceptionService.ThrowExceptionWhenEmailNotTheSame(newOrder.Email, userEmail);
             ExceptionService.ThrowExceptionWhenOrderIsNotPending(newOrder.Status);
 
             newOrder.Status = Status.Declined.ToString();

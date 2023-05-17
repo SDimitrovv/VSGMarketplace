@@ -57,9 +57,9 @@ namespace MarketplaceAPI.Controllers
 
         [HttpGet]
         [Route("MyOrders")]
-        public async Task<IEnumerable<MyOrdersGetModel>> GetMyOrders(string email)
+        public async Task<IEnumerable<MyOrdersGetModel>> GetMyOrders()
         {
-            return await _orderService.GetMyOrders(email);
+            return await _orderService.GetMyOrders();
         }
     }
 }

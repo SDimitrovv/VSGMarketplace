@@ -1,5 +1,6 @@
 ﻿using MarketplaceApplication.Models.ExceptionModels;
 using MarketplaceApplication.Models.GenericRepository;
+using MarketplaceDomain.Enums;
 using System.Net;
 
 namespace MarketplaceApplication.Services
@@ -26,9 +27,16 @@ namespace MarketplaceApplication.Services
                 throw new HttpException("Order is not pending!", HttpStatusCode.BadRequest);
         }
 
-        public static void ThrowExceptionWhenOrderIsPending()
+        public static void ThrowExceptionWhenOrderIsPending(string status)
         {
-            throw new HttpException("Order is pending!", HttpStatusCode.BadRequest);
+            if (status == "Pending")
+                throw new HttpException("Order is pending!", HttpStatusCode.BadRequest);
+        }
+
+        public static void ThrowExceptionWhenEmailNotTheSame(string orderEmail, string userEmail)
+        {
+            if (orderEmail != userEmail)
+                throw new HttpException("Sorry!", HttpStatusCode.BadRequest);
         }
     }
 }

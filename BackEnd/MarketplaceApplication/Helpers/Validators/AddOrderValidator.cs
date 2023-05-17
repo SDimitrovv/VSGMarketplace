@@ -14,10 +14,6 @@ namespace MarketplaceApplication.Helpers.Validators
             RuleFor(c => c.ProductId)
                 .NotNull().WithMessage("ProductId can't be null")
                 .GreaterThan(-1).WithMessage("ProductId must be positive number!");
-
-            RuleFor(c => c.Email)
-                .NotNull().WithMessage("Email can't be null!")
-                .Length(3, 255);
         }
     }
 }

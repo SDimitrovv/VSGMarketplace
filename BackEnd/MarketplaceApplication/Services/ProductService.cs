@@ -71,18 +71,11 @@ namespace MarketplaceApplication.Services
                 return;
             }
 
-            if (order.Status == "Pending")
-            {
-                ExceptionService.ThrowExceptionWhenOrderIsPending();
-            }
-            else if (order.Status is "Finished" or "Declined")
-            {
-                order.ProductId = 0;
+            ExceptionService.ThrowExceptionWhenOrderIsPending(order.Status);
 
-                var updatedOrder = _mapper.Map<Order>(order);
-
-                await _orderRepository.Update(updatedOrder);
-            }
+            order.ProductId = 0;
+            var updatedOrder = _mapper.Map<Order>(order);
+            await _orderRepository.Update(updatedOrder);
 
             await _repository.Delete(id);
         }

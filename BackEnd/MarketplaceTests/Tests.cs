@@ -7,6 +7,7 @@ using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceApplication.Services;
 using MarketplaceDomain.Entities;
 using MarketplaceDomain.Enums;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 
@@ -19,17 +20,19 @@ namespace MarketplaceTests
         private Mock<IProductRepository> _productRepository;
         private IMapper _mapper;
         private IOrderService _orderService;
+        private HttpContextAccessor _contextAccessor;
 
         [SetUp]
         public void Setup()
         {
             _orderRepository = new Mock<IOrderRepository>();
             _productRepository = new Mock<IProductRepository>();
+            _contextAccessor = new HttpContextAccessor();
             _mapper = new Mapper(new MapperConfiguration(c =>
             {
                 c.AddProfile<OrderMapper>();
             }));
-            _orderService = new OrderService(_orderRepository.Object, _productRepository.Object, _mapper);
+            _orderService = new OrderService(_orderRepository.Object, _productRepository.Object, _mapper, _contextAccessor);
         }
 
         [Test]
