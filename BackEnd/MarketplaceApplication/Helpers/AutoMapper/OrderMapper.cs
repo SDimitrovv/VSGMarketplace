@@ -14,6 +14,8 @@ namespace MarketplaceApplication.Helpers.AutoMapper
                 .ForMember(o => o.Status, opt => opt.MapFrom(src => Status.Pending.ToString()));
 
             CreateMap<Order, AddedOrderModel>();
+
+            CreateMap<GetOrderModel, Order>();
         }
     }
 }

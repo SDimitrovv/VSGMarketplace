@@ -25,5 +25,10 @@ namespace MarketplaceApplication.Services
             if (status != "Pending")
                 throw new HttpException("Order is not pending!", HttpStatusCode.BadRequest);
         }
+
+        public static void ThrowExceptionWhenOrderIsPending()
+        {
+            throw new HttpException("Order is pending!", HttpStatusCode.BadRequest);
+        }
     }
 }

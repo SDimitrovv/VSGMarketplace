@@ -13,5 +13,11 @@
         public int ProductId { get; set; }
 
         public string Email { get; set; }
+
+        public string ProductCode { get; set; }
+
+        public string ProductFullName { get; set; }
+
+        public decimal ProductPrice { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MarketplaceApplication.Models.OrderModels.DTOs
 {
-    public class MyOrdersGetModel
+    public class GetOrderModel
     {
         public int Id { get; set; }
 
@@ -10,8 +10,14 @@
 
         public string Status { get; set; }
 
+        public int ProductId { get; set; }
+
+        public string Email { get; set; }
+
+        public string ProductCode { get; set; }
+
         public string ProductFullName { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal ProductPrice { get; set; }
     }
 }

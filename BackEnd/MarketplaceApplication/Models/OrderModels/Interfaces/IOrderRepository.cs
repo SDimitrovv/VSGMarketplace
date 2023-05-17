@@ -8,4 +8,5 @@ public interface IOrderRepository : IGenericRepository<Order>
 {
     Task<IEnumerable<PendingOrdersGetModel>> GetPendingOrders();
     Task<IEnumerable<MyOrdersGetModel>> GetMyOrders(string email);
+    Task<GetOrderModel> GetOrderByProductId(int productId);
 }

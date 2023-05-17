@@ -1,6 +1,4 @@
-﻿using MarketplaceDomain.Enums;
-
-namespace MarketplaceApplication.Models.OrderModels.DTOs
+﻿namespace MarketplaceApplication.Models.OrderModels.DTOs
 {
     public class PendingOrdersGetModel
     {
@@ -14,7 +12,7 @@ namespace MarketplaceApplication.Models.OrderModels.DTOs
 
         public string Email { get; set; }
 
-        public string Code { get; set; }
+        public string ProductCode { get; set; }
 
         public decimal Price { get; set; }
     }

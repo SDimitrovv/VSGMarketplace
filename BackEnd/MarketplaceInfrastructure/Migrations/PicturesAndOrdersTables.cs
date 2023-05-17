@@ -18,8 +18,11 @@ namespace MarketplaceInfrastructure.Migrations
                 .WithColumn("Quantity").AsInt32().NotNullable()
                 .WithColumn("Date").AsString(100).NotNullable()
                 .WithColumn("Status").AsString(10).NotNullable()
-                .WithColumn("ProductId").AsInt32().NotNullable().ForeignKey("Products", "Id")
-                .WithColumn("Email").AsString(255).NotNullable();
+                .WithColumn("ProductId").AsInt32().NotNullable()
+                .WithColumn("Email").AsString(255).NotNullable()
+                .WithColumn("ProductCode").AsString(100).NotNullable()
+                .WithColumn("ProductFullName").AsString(100).NotNullable()
+                .WithColumn("ProductPrice").AsDecimal(10, 2).NotNullable();
         }
 
         public override void Down()

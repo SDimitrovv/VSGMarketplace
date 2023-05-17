@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MarketplaceApplication.Models.CategoryModels.Interfaces;
+using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
@@ -10,13 +11,15 @@ namespace MarketplaceApplication.Services
     {
         private readonly IProductRepository _repository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
 
-        public ProductService(IProductRepository repository, ICategoryRepository categoryRepository, IMapper mapper)
+        public ProductService(IProductRepository repository, ICategoryRepository categoryRepository, IMapper mapper, IOrderRepository orderRepository)
         {
                 _repository = repository;
                 _categoryRepository = categoryRepository;
                 _mapper = mapper;
+                _orderRepository = orderRepository;
         }
 
         public async Task<ProductAddedModel> Add(ProductAddModel model)
@@ -59,6 +62,21 @@ namespace MarketplaceApplication.Services
         public async Task Delete(int id)
         {
             await ExceptionService.ThrowExceptionWhenIdNotFound(id, _repository);
+
+            var order = await _orderRepository.GetOrderByProductId(id);
+
+            if (order.Status == "Pending")
+            {
+                 ExceptionService.ThrowExceptionWhenOrderIsPending();
+            }
+            else if (order.Status is "Finished" or "Declined")
+            {
+                order.ProductId = 0;
+
+                var updatedOrder = _mapper.Map<Order>(order);
+
+                await _orderRepository.Update(updatedOrder);
+            }
 
             await _repository.Delete(id);
         }

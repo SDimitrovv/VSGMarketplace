@@ -33,10 +33,14 @@ namespace MarketplaceApplication.Services
         public async Task<AddedOrderModel> CreateOrder(AddOrderModel model)
         {
             await ExceptionService.ThrowExceptionWhenIdNotFound(model.ProductId, _productRepository);
+
             var product = await _productRepository.GetByID(model.ProductId);
             ExceptionService.ThrowExceptionWhenNotEnoughQuantityForSale(product.QuantityForSale, model.Quantity);
 
             var order = _mapper.Map<Order>(model);
+            order.ProductFullName = product.FullName;
+            order.ProductPrice = product.Price;
+            order.ProductCode = product.Code;
 
             var orderId = await _orderRepository.Create(order);
             order.Id = orderId;
