@@ -20,12 +20,10 @@ namespace MarketplaceApplication.Helpers.Validators
 
             RuleFor(c => c.Quantity)
                 .NotNull().WithMessage("Quantity can't be null")
-                .GreaterThan(-1).WithMessage("Quantity must be a positive number!");
+                .GreaterThanOrEqualTo(c => c.QuantityForSale).When(c => c.QuantityForSale != null).WithMessage("Sale quantity must be higher or equal to the quantity!");
 
             RuleFor(c => c.QuantityForSale)
-                .GreaterThan(-1).WithMessage("QuantityForSale must be a positive number!")
-                .Must((c, quantityForSale) => quantityForSale <= c.Quantity)
-                .WithMessage("QuantityForSale must be less than or equal to Quantity");
+                .GreaterThan(-1).WithMessage("QuantityForSale must be a positive number!");
 
             RuleFor(c => c.CategoryId)
                 .NotNull().WithMessage("CategoryId can't be null");
