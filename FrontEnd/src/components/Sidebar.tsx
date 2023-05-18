@@ -4,8 +4,8 @@ import { instance } from "../../authConfig";
 const Sidebar = () => {
     const user = JSON.parse(sessionStorage.getItem("user") as string);
     const profileName = user ? user.name.split(" ")[0] : "User";
-    const onLogout = async () => {
-        await instance.logoutRedirect({
+    const onLogout = () => {
+        instance.logoutRedirect({
             postLogoutRedirectUri: "/",
         });
     };

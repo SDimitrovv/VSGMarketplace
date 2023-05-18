@@ -25,9 +25,8 @@ const inputStyle = {
         borderBottom: "#000",
     },
     "@media screen and (max-width: 768px)": {
-        input: {
-            height: "34px !important",
-        },
+        height: "34px !important",
+        mb: "40px",
     },
 };
 
@@ -46,13 +45,12 @@ const AddProductModal = ({
     const [createImage] = useCreateImageMutation();
     const { data: categories } = useGetCategoriesQuery();
     const [imageUrl, setImageUrl] = useState(imagePlaceholder);
-    const [option, setOption] = useState("");
-
+    const [option, setOption] = useState({ value: '', name: '' });
     const {
         register,
         handleSubmit,
         formState: { errors },
-        control,
+        getValues
     } = useForm<IFormInputs>({
         defaultValues: {
             code: "",
@@ -64,7 +62,7 @@ const AddProductModal = ({
             quantity: null,
             image: null,
         },
-        mode: 'all'
+        mode: 'all',
     });
 
     const onSubmit = async (data: IFormInputs): Promise<void> => {
@@ -76,6 +74,8 @@ const AddProductModal = ({
         const response = await createProduct(data) as { data: IProduct };
         const responseData = response.data;
         console.log("POST", responseData);
+        console.log(option);
+
         if (image.name) {
             const imageForm = new FormData();
             imageForm.set("picture", image as File);
@@ -83,10 +83,10 @@ const AddProductModal = ({
             const imgRes = await createImage({ id, imageForm }) as { data: string };
             const newImgUrl = imgRes.data;
             console.log("Image POST", newImgUrl);
-            const newProduct = { ...responseData, imageUrl: newImgUrl }
+            const newProduct = { ...responseData, imageUrl: newImgUrl, type: option.name }
             setProducts((oldProducts) => [...oldProducts, newProduct]);
         } else {
-            setProducts((oldProducts) => [...oldProducts, { ...responseData }]);
+            setProducts((oldProducts) => [...oldProducts, { ...responseData, type: option.name }]);
         }
 
         setShowAddModal(false);
@@ -148,10 +148,10 @@ const AddProductModal = ({
                         <FormControl variant="standard" sx={inputStyle}>
                             <InputLabel focused={false}>Category *</InputLabel>
                             <Select
-                                value={option}
+                                value={option.value}
                                 error={Boolean(errors.categoryId)}
                                 {...register("categoryId", {
-                                    onChange: (e) => setOption(e.target.value as string),
+                                    onChange: (e) => setOption(e.target),
                                     required: "Category field is required",
                                 })}
                             >
@@ -182,6 +182,7 @@ const AddProductModal = ({
                                     value: 0,
                                     message: 'You cannot input less than 0'
                                 },
+                                validate: value => value as number < Number(getValues("quantity")) || 'Qty For Sale cannot be higher than Qty'
                             })}
                         />
                         <TextField
@@ -192,7 +193,7 @@ const AddProductModal = ({
                             InputLabelProps={{
                                 style: {
                                     color: "#9A9A9A",
-                                },
+                                }
                             }}
                             error={Boolean(errors.price)}
                             helperText={errors.price?.message}

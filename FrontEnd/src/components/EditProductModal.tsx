@@ -5,11 +5,11 @@ import {
     Select,
     MenuItem,
 } from "@mui/material";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { useDeleteImageMutation, useEditImageMutation } from "../services/imageService.ts";
+import { useState, Dispatch, SetStateAction } from "react";
+import { IFormInputs, ICategory, IProduct } from "../types/types.ts";
 import { useEditProductMutation } from "../services/productsService.ts";
 import { useGetCategoriesQuery } from "../services/categoriesService.ts";
-import { IFormInputs, ICategory, IProduct } from "../types/types.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { uploadImage } from "../utils/uploadImage.ts";
 import { useForm } from 'react-hook-form';
@@ -24,9 +24,8 @@ const inputStyle = {
         borderBottom: "#000",
     },
     "@media screen and (max-width: 768px)": {
-        input: {
-            height: "34px !important",
-        },
+        height: "34px !important",
+        mb: "40px",
     },
 };
 
@@ -38,17 +37,17 @@ type EditModalProps = {
 
 const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModalProps) => {
     const [imageUrl, setImageUrl] = useState(product.imageUrl ? product.imageUrl : imagePlaceholder);
+    const [option, setOption] = useState(product.categoryId.toString());
     const { data: categories } = useGetCategoriesQuery();
     const [editProduct] = useEditProductMutation();
     const [deleteImage] = useDeleteImageMutation();
     const [editImage] = useEditImageMutation();
-    const [option, setOption] = useState(``);
 
     const {
         register,
         handleSubmit,
         formState: { errors },
-        control,
+        getValues
     } = useForm<IFormInputs>({
         defaultValues: {
             code: product.code,
@@ -60,25 +59,14 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
             quantity: product.quantity,
             image: null
         },
+        mode: 'all',
     });
-
-    useEffect(() => {
-        setTimeout(() => {
-            setOption(`${product.categoryId}`);
-        }, 150);
-    }, []);
 
     const onSubmit = async (data: IFormInputs) => {
         let image: { name: string } | File = { name: '' };
         if (data.image) {
             image = data.image[0];
         }
-
-        // if (data.quantityForSale && data.quantity) {
-        //     if (data.quantity < data.quantityForSale && Number(data.quantity) < 0) {
-        //         return alert("Make sure that quantity is not less than quantity for sale!");
-        //     }
-        // }
 
         const currentImg = document.querySelector(".currentImg") as HTMLImageElement;
 
@@ -161,9 +149,15 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             <Select
                                 value={option}
                                 error={Boolean(errors.categoryId)}
-                                {...register('categoryId', { onChange: (e) => setOption(e.target.value as string), required: 'Category field is required' })}
-                            >
+                                {...register('categoryId', {
+                                    onChange: (e) => setOption(e.currentTarget.value as string),
+                                    required: 'Category field is required'
+                                })}>
+                                <MenuItem value={option} key={option}>
+                                    {product.type}
+                                </MenuItem>
                                 {categories?.map((c: ICategory) => (
+                                    c.type !== product.type &&
                                     <MenuItem value={c.id} key={c.id}>
                                         {c.type}
                                     </MenuItem>
@@ -187,7 +181,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                                     value: 0,
                                     message: 'You cannot input less than 0'
                                 },
-                                validate: value => value as number < product.quantity || 'Qty For Sale cannot be higher than quantity'
+                                validate: value => value as number < Number(getValues("quantity")) || 'Qty For Sale cannot be higher than Qty'
                             })}
                         />
                         <TextField
@@ -235,7 +229,9 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             className="inputImage"
                             accept="image/*"
                             type="file"
-                            {...register('image', { onChange: (e) => setImageUrl(uploadImage(e)) })}
+                            {...register('image', {
+                                onChange: (e) => setImageUrl(uploadImage(e))
+                            })}
                         />
                         <div className="uploadDelete">
                             <label htmlFor="uploadInput" className="uploadImg">

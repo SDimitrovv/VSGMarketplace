@@ -9,4 +9,17 @@
     border-radius: 4px;
     z-index: 1;
     margin: 4px;
+
+    .arrow {
+        position: absolute;
+
+        &::before {
+            background-color: white;
+            content: '';
+            display: block;
+            width: 14px;
+            height: 14px;
+            transform: rotate(45deg);
+        }
+    }
 }

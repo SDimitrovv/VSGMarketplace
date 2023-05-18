@@ -1,6 +1,5 @@
 import { Box, Popper, ClickAwayListener, Fade, styled } from "@mui/material";
 import { Dispatch, SetStateAction } from 'react';
-import { useRef } from "react";
 
 const StyledPopper = styled(Popper)(() => ({
     '&[data-popper-placement*="bottom"] .arrow': {
@@ -13,18 +12,6 @@ const StyledPopper = styled(Popper)(() => ({
     }
 }));
 
-const arrow = {
-    position: "absolute",
-    "&::before": {
-        backgroundColor: "white",
-        content: '""',
-        display: "block",
-        width: 14,
-        height: 14,
-        transform: "rotate(45deg)",
-    }
-}
-
 type PopupProps = {
     string: string,
     onYes: () => void,
@@ -33,8 +20,6 @@ type PopupProps = {
 }
 
 const Popup = ({ string, onYes, anchorEl, setAnchorEl }: PopupProps) => {
-    const popupRef = useRef<HTMLDivElement>(null);
-
     const onBuyClose = () => {
         setAnchorEl(null);
     }
@@ -78,8 +63,8 @@ const Popup = ({ string, onYes, anchorEl, setAnchorEl }: PopupProps) => {
             {({ TransitionProps }) => (
                 <ClickAwayListener onClickAway={onBuyClose}>
                     <Fade {...TransitionProps} timeout={500} >
-                        <div className="popup" ref={popupRef}>
-                            <Box component="span" className="arrow" sx={arrow} />
+                        <div className="popup">
+                            <Box component="span" className="arrow" />
                             <p>
                                 {string}
                             </p>

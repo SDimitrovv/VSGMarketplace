@@ -12,11 +12,11 @@ type CardComponentProps = {
 };
 
 const CardComponent = ({ product }: CardComponentProps) => {
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const [showProductModal, setShowProductModal] = useState(false);
+    const selectValue = useRef(1);
     const [createOrder] = useCreateOrderMutation();
     const navigate = useNavigate();
-    const selectValue = useRef(1);
-    const [showProductModal, setShowProductModal] = useState(false);
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const options = [];
     if (product.quantityForSale) {
@@ -29,7 +29,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
     }
 
     const setSelectValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        selectValue.current = Number(e.target.value);
+        selectValue.current = Number(e.currentTarget.value);
     };
 
     const onBuy = async () => {
@@ -56,12 +56,8 @@ const CardComponent = ({ product }: CardComponentProps) => {
 
     return (
         <>
-            {showProductModal && (
-                <ProductModal
-                    product={product}
-                    showProductModal={showProductModal}
-                    setShowProductModal={setShowProductModal} />
-            )}
+            <ProductModal product={product} showProductModal={showProductModal} setShowProductModal={setShowProductModal} />
+            <Popup string={str} onYes={onBuy} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={1000}>
                 <div id={`${product.id}`} className="product">
                     <a className="productButton" onClick={() => setShowProductModal(true)}>
@@ -116,7 +112,6 @@ const CardComponent = ({ product }: CardComponentProps) => {
                     </div>
                 </div>
             </Fade>
-            <Popup string={str} onYes={onBuy} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
         </>
     );
 };

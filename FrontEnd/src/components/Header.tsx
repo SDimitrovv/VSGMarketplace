@@ -33,10 +33,12 @@ const Header = () => {
         let [name1, name2]: string[] = path.split("-");
         name1 = name1.replace(name1[0], name1[0].toUpperCase());
         name2 = name2.replace(name2[0], name2[0].toUpperCase());
+        document.title = `${name1} ${name2}`;
         headerName.current = `${name1} ${name2}`;
     } else {
         //If page title is one word
         const pageTitle = path.replace(path[0], path[0].toUpperCase());
+        document.title = pageTitle;
         headerName.current = pageTitle;
     }
 

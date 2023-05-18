@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableFooter, styled ,tableCellClasses} from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableFooter, styled, tableCellClasses } from "@mui/material";
 import { useState, useRef } from 'react';
 import { IProduct } from "../types/types.ts";
 import RowComponent from "./RowComponent.tsx";

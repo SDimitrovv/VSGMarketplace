@@ -32,9 +32,9 @@ type RowComponentProps = {
 };
 
 const RowComponent = ({ product, setProducts }: RowComponentProps) => {
-    const [deleteProduct] = useDeleteProductMutation();
-    const [showEditModal, setShowEditModal] = useState(false);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [deleteProduct] = useDeleteProductMutation();
     const rowRef = useRef<HTMLTableRowElement>(null);
 
     const openPopup = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -52,8 +52,9 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
 
     return (
         <>
-            {showEditModal && <EditProductModal product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />}
-            <Fade in={true} timeout={1000}>
+            <EditProductModal product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />
+            <Popup string={str} onYes={handleDelete} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+            <Fade in={true} timeout={500}>
                 <StyledTableRow ref={rowRef} id={`${product.id}`} className="productRow">
                     <StyledTableCell>{product.code}</StyledTableCell>
                     <StyledTableCell>{product.fullName}</StyledTableCell>
@@ -70,7 +71,6 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
                     </StyledTableCell>
                 </StyledTableRow>
             </Fade>
-            <Popup string={str} onYes={handleDelete} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
         </>
     );
 };

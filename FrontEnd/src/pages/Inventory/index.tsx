@@ -24,20 +24,14 @@ const Inventory = () => {
 
     return (
         <>
-            {showAddModal && (
-                <AddProductModal
-                    setProducts={setProducts}
-                    showAddModal={showAddModal}
-                    setShowAddModal={setShowAddModal}
-                />
-            )}
+            <AddProductModal setProducts={setProducts} showAddModal={showAddModal} setShowAddModal={setShowAddModal} />
             <main id="inventoryMain">
                 <div id="searchSpace">
                     <div id="input">
                         <SearchIcon sx={{ fontSize: "14px" }} />
                         <input
                             onInput={(e) =>
-                                setSearchString((e.target as HTMLInputElement).value)
+                                setSearchString((e.currentTarget as HTMLInputElement).value)
                             }
                             type="text"
                             id="searchText"

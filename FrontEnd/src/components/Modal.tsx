@@ -1,6 +1,16 @@
-import { Fade, Dialog, IconButton } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
+import { Dialog, IconButton, Slide } from '@mui/material';
+import { Dispatch, SetStateAction, forwardRef } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import { TransitionProps } from '@mui/material/transitions';
+
+const Transition = forwardRef(function Transition(
+    props: TransitionProps & {
+        children: React.ReactElement;
+    },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const modalStyle = {
     borderRadius: "20px",
@@ -26,23 +36,18 @@ const Modal = ({ showModal, setShowModal, children, modalType }: ModalProps) => 
         modalStyle.width = "92%";
     }
 
-    const handleClose = () => {
-        setShowModal(false);
-    }
-
     return (
         <Dialog
             open={showModal}
-            TransitionComponent={Fade}
-            transitionDuration={300}
+            TransitionComponent={Transition}
             keepMounted
-            onClose={handleClose}
+            onClose={() => setShowModal(false)}
             PaperProps={{ sx: { ...modalStyle } }}>
-            <IconButton onClick={handleClose} sx={{ position: 'absolute', right: 0, top: 0 }}>
+            <IconButton onClick={() => setShowModal(false)} sx={{ position: 'absolute', right: 0, top: 0 }}>
                 <CloseIcon sx={{ color: '#000' }} />
             </IconButton>
             {children}
-        </Dialog>
+        </Dialog >
     );
 };
 
