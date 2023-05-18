@@ -3,7 +3,7 @@ import { IOrder } from "../../types/types.ts";
 import PendingOrderComponent from "../../components/PendingOrderComponent.tsx";
 
 const PendingOrders = () => {
-    const { data: orders } = useGetPendingOrdersQuery("/Order/PendingOrders");
+    const { data: orders } = useGetPendingOrdersQuery();
 
     return (
         <main id='pendingOrdersMain'>

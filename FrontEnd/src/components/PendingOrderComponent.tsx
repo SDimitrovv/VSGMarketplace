@@ -1,4 +1,4 @@
-import { completeOrder } from "../services/itemsService";
+import { useCompleteOrderMutation } from "../services/ordersService";
 import { IOrder } from "../types/types";
 import { Fade } from '@mui/material';
 import { useRef } from "react";
@@ -8,6 +8,7 @@ type PendingOrderProps = {
 }
 
 const PendingOrderComponent = ({ order }: PendingOrderProps) => {
+    const [completeOrder] = useCompleteOrderMutation();
     const orderRef = useRef<HTMLDivElement>(null);
 
     const onComplete = async () => {
@@ -22,7 +23,7 @@ const PendingOrderComponent = ({ order }: PendingOrderProps) => {
         <Fade in={true} timeout={1000}>
             <div ref={orderRef} className="order" id={`${order.id}`} >
                 <div className="firstThree">
-                    <span className="codeColumn">{order.code}</span>
+                    <span className="codeColumn">{order.productCode}</span>
                     <span className="qtyColumn">{order.quantity}</span>
                     <span className="priceColumn">{order.price} BGN</span>
                 </div>

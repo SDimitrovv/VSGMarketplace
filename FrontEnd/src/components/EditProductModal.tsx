@@ -6,11 +6,11 @@ import {
     MenuItem,
 } from "@mui/material";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { deleteImage, editImage } from "../services/pictureService.ts";
+import { useDeleteImageMutation, useEditImageMutation } from "../services/imageService.ts";
+import { useEditProductMutation } from "../services/productsService.ts";
 import { useGetCategoriesQuery } from "../services/categoriesService.ts";
-import { ICategory, IProduct } from "../types/types.ts";
+import { IFormInputs, ICategory, IProduct } from "../types/types.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
-import { editProduct } from "../services/itemsService.ts";
 import { uploadImage } from "../utils/uploadImage.ts";
 import { useForm } from 'react-hook-form';
 import Modal from "./Modal.tsx";
@@ -30,17 +30,6 @@ const inputStyle = {
     },
 };
 
-type FormInputs = {
-    code: string,
-    fullName: string,
-    description?: string,
-    categoryId: number,
-    quantityForSale?: string,
-    price?: string,
-    quantity: string,
-    image?: FileList
-};
-
 type EditModalProps = {
     product: IProduct;
     showEditModal: boolean;
@@ -48,8 +37,11 @@ type EditModalProps = {
 };
 
 const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModalProps) => {
-    const { data: categories } = useGetCategoriesQuery('/Category');
     const [imageUrl, setImageUrl] = useState(product.imageUrl ? product.imageUrl : imagePlaceholder);
+    const { data: categories } = useGetCategoriesQuery();
+    const [editProduct] = useEditProductMutation();
+    const [deleteImage] = useDeleteImageMutation();
+    const [editImage] = useEditImageMutation();
     const [option, setOption] = useState(``);
 
     const {
@@ -57,7 +49,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
         handleSubmit,
         formState: { errors },
         control,
-    } = useForm({
+    } = useForm<IFormInputs>({
         defaultValues: {
             code: product.code,
             fullName: product.fullName,
@@ -66,7 +58,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
             quantityForSale: product.quantityForSale ? product.quantityForSale : null,
             price: product.price ? product.price : null,
             quantity: product.quantity,
-            image: ""
+            image: null
         },
     });
 
@@ -76,34 +68,36 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
         }, 150);
     }, []);
 
-    const onSubmit = async (data: FormInputs): Promise<void> => {
+    const onSubmit = async (data: IFormInputs) => {
         let image: { name: string } | File = { name: '' };
         if (data.image) {
             image = data.image[0];
-            delete data.image;
         }
 
-        if (data.quantityForSale) {
-            if (data.quantity < data.quantityForSale && Number(data.quantity) < 0) {
-                return alert("Make sure that quantity is not less than quantity for sale!");
-            }
-        }
+        // if (data.quantityForSale && data.quantity) {
+        //     if (data.quantity < data.quantityForSale && Number(data.quantity) < 0) {
+        //         return alert("Make sure that quantity is not less than quantity for sale!");
+        //     }
+        // }
 
         const currentImg = document.querySelector(".currentImg") as HTMLImageElement;
 
         if (image.name) {
             const imageForm = new FormData();
             imageForm.append("newPicture", image as File);
-            const imgRes = await editImage(product.id as number, imageForm);
-            console.log("Image PUT", imgRes);
-            setImageUrl(imgRes as string);
+            const id = product.id
+            const imgRes = await editImage({ id, imageForm }) as { data: string };
+            const newImgUrl = imgRes.data;
+            console.log("Image PUT", newImgUrl);
+            setImageUrl(newImgUrl);
         } else if (currentImg.src !== product.imageUrl) {
             const res = await deleteImage(product.id as number);
             setImageUrl(imagePlaceholder);
             console.log("Image DELETE", res);
         }
 
-        const res = await editProduct(product.id as number, data);
+        const id = product.id
+        const res = await editProduct({ id, data }) as { data: IProduct };
         console.log("PUT", res);
 
         setShowEditModal(false);
@@ -186,7 +180,15 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                                     color: "#9A9A9A",
                                 },
                             }}
-                            {...register('quantityForSale')}
+                            error={Boolean(errors.quantityForSale)}
+                            helperText={errors.quantityForSale?.message}
+                            {...register("quantityForSale", {
+                                min: {
+                                    value: 0,
+                                    message: 'You cannot input less than 0'
+                                },
+                                validate: value => value as number < product.quantity || 'Qty For Sale cannot be higher than quantity'
+                            })}
                         />
                         <TextField
                             sx={inputStyle}
@@ -198,7 +200,12 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                                     color: "#9A9A9A",
                                 },
                             }}
-                            {...register('price')}
+                            {...register("price", {
+                                min: {
+                                    value: 0,
+                                    message: 'You cannot input less than 0'
+                                }
+                            })}
                         />
                         <TextField
                             sx={inputStyle}
@@ -212,7 +219,13 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             }}
                             error={Boolean(errors.quantity)}
                             helperText={errors.quantity?.message}
-                            {...register('quantity', { required: 'Quantity field is required' })}
+                            {...register('quantity', {
+                                required: 'Quantity field is required',
+                                min: {
+                                    value: 0,
+                                    message: 'Quantity must be 0 or higher'
+                                }
+                            })}
                         />
                     </div>
                     <div className="rightModal">

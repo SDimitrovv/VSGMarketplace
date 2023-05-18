@@ -1,35 +1,30 @@
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { useRef, useState } from "react";
-import { createOrder } from "../services/itemsService.ts";
 import { useNavigate } from "react-router-dom";
 import { IProduct } from "../types/types.ts";
 import { Fade } from '@mui/material';
 import ProductModal from "./ProductModal.tsx";
 import Popup from "./Popup.tsx";
+import { useCreateOrderMutation } from "../services/ordersService.ts";
 
 type CardComponentProps = {
     product: IProduct;
 };
 
 const CardComponent = ({ product }: CardComponentProps) => {
+    const [createOrder] = useCreateOrderMutation();
     const navigate = useNavigate();
     const selectValue = useRef(1);
     const [showProductModal, setShowProductModal] = useState(false);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-    if (!product.quantityForSale) {
-        product.quantityForSale = 1;
-    }
-
-    // if (!product.imageUrl) {
-    //     product.imageUrl = imagePlaceholder;
-    // }
-
     const options = [];
-    for (let i = 1; i <= product.quantityForSale + 1; i++) {
-        options.push({ value: i });
-        if (i > 50) {
-            break;
+    if (product.quantityForSale) {
+        for (let i = 1; i <= product.quantityForSale + 1; i++) {
+            options.push({ value: i });
+            if (i > 50) {
+                break;
+            }
         }
     }
 
@@ -39,9 +34,13 @@ const CardComponent = ({ product }: CardComponentProps) => {
 
     const onBuy = async () => {
         const user = JSON.parse(sessionStorage.getItem("user") as string);
-        const email = user.email;
+        const email: string = user.email;
 
-        const order = {
+        const order: {
+            quantity: number;
+            productId: number;
+            email: string
+        } = {
             quantity: selectValue.current,
             productId: product.id,
             email: email,
@@ -66,7 +65,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
             <Fade in={true} timeout={1000}>
                 <div id={`${product.id}`} className="product">
                     <a className="productButton" onClick={() => setShowProductModal(true)}>
-                        <img src={product.imageUrl} alt="Product-image" />
+                        <img src={product.imageUrl ? product.imageUrl : imagePlaceholder} alt="Product-image" />
                     </a>
                     <div className="productContent">
                         <div className="price">

@@ -3,7 +3,7 @@ import { IProduct } from "../../types/types";
 import CardComponent from "../../components/CardComponent";
 
 const Marketplace = () => {
-    const { data: products } = useGetMarketplaceQuery("");
+    const { data: products } = useGetMarketplaceQuery();
 
     return (
         <main id='marketplaceMain'>

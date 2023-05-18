@@ -8,10 +8,10 @@ import {
 } from "@mui/material";
 import { useState, Dispatch, SetStateAction } from "react";
 import { useCreateProductMutation } from "../services/productsService.ts";
+import { useCreateImageMutation } from "../services/imageService.ts";
 import { useGetCategoriesQuery } from "../services/categoriesService.ts";
-import { ICategory, IProduct } from "../types/types.ts";
+import { ICategory, IFormInputs, IProduct } from "../types/types.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
-import { createImage } from "../services/pictureService.ts";
 import { uploadImage } from "../utils/uploadImage.ts";
 import { useForm } from "react-hook-form";
 import Modal from "./Modal.tsx";
@@ -31,26 +31,11 @@ const inputStyle = {
     },
 };
 
-type FormInputs = {
-    code: string;
-    fullName: string;
-    description?: string;
-    categoryId: number;
-    quantityForSale?: string;
-    price?: string;
-    quantity: string;
-    image?: FileList;
-};
-
 type AddModalProps = {
     setProducts: Dispatch<SetStateAction<IProduct[]>>;
     showAddModal: boolean;
     setShowAddModal: Dispatch<SetStateAction<boolean>>;
 };
-
-type CreatedProduct = {
-    data: IProduct;
-}
 
 const AddProductModal = ({
     setProducts,
@@ -58,7 +43,8 @@ const AddProductModal = ({
     setShowAddModal,
 }: AddModalProps) => {
     const [createProduct] = useCreateProductMutation();
-    const { data: categories } = useGetCategoriesQuery('/Category');
+    const [createImage] = useCreateImageMutation();
+    const { data: categories } = useGetCategoriesQuery();
     const [imageUrl, setImageUrl] = useState(imagePlaceholder);
     const [option, setOption] = useState("");
 
@@ -67,45 +53,42 @@ const AddProductModal = ({
         handleSubmit,
         formState: { errors },
         control,
-    } = useForm({
+    } = useForm<IFormInputs>({
         defaultValues: {
             code: "",
             fullName: "",
             description: "",
-            categoryId: "",
+            categoryId: null,
             quantityForSale: null,
             price: null,
-            quantity: "",
-            image: "",
+            quantity: null,
+            image: null,
         },
+        mode: 'all'
     });
 
-    const onSubmit = async (data: FormInputs): Promise<void> => {
+    const onSubmit = async (data: IFormInputs): Promise<void> => {
         let image: { name: string } | File = { name: "" };
         if (data.image) {
             image = data.image[0];
         }
 
-        if (data.quantityForSale) {
-            if (data.quantity < data.quantityForSale && Number(data.quantity) < 0) {
-                return alert(
-                    "Make sure that quantity is not less than quantity for sale!"
-                );
-            }
-        }
-
-        const response = await createProduct(data) as CreatedProduct;
+        const response = await createProduct(data) as { data: IProduct };
         const responseData = response.data;
         console.log("POST", responseData);
         if (image.name) {
-            const imageFormData = new FormData();
-            imageFormData.set("picture", image as File);
-            const imgRes = await createImage(responseData.id, imageFormData) as string;
-            console.log("Image POST", imgRes);
-            responseData.imageUrl = imgRes;
+            const imageForm = new FormData();
+            imageForm.set("picture", image as File);
+            const id = responseData.id
+            const imgRes = await createImage({ id, imageForm }) as { data: string };
+            const newImgUrl = imgRes.data;
+            console.log("Image POST", newImgUrl);
+            const newProduct = { ...responseData, imageUrl: newImgUrl }
+            setProducts((oldProducts) => [...oldProducts, newProduct]);
+        } else {
+            setProducts((oldProducts) => [...oldProducts, { ...responseData }]);
         }
 
-        setProducts((oldProducts) => [...oldProducts, responseData]);
         setShowAddModal(false);
     };
 
@@ -192,7 +175,14 @@ const AddProductModal = ({
                                     color: "#9A9A9A",
                                 },
                             }}
-                            {...register("quantityForSale")}
+                            error={Boolean(errors.quantityForSale)}
+                            helperText={errors.quantityForSale?.message}
+                            {...register("quantityForSale", {
+                                min: {
+                                    value: 0,
+                                    message: 'You cannot input less than 0'
+                                },
+                            })}
                         />
                         <TextField
                             sx={inputStyle}
@@ -204,7 +194,14 @@ const AddProductModal = ({
                                     color: "#9A9A9A",
                                 },
                             }}
-                            {...register("price")}
+                            error={Boolean(errors.price)}
+                            helperText={errors.price?.message}
+                            {...register("price", {
+                                min: {
+                                    value: 0,
+                                    message: 'You cannot input less than 0'
+                                }
+                            })}
                         />
                         <TextField
                             sx={inputStyle}
@@ -218,8 +215,12 @@ const AddProductModal = ({
                             }}
                             error={Boolean(errors.quantity)}
                             helperText={errors.quantity?.message}
-                            {...register("quantity", {
-                                required: "Quantity field is required",
+                            {...register('quantity', {
+                                required: 'Quantity field is required',
+                                min: {
+                                    value: 0,
+                                    message: 'Quantity must be 0 or higher'
+                                }
                             })}
                         />
                     </div>

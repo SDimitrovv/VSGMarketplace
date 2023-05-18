@@ -1,11 +1,11 @@
 import { TableCell, TableRow, tableCellClasses, styled, Fade } from '@mui/material';
 import { useState, useRef, Dispatch, SetStateAction } from 'react';
-import { deleteProduct } from "../services/itemsService.ts";
 import { IProduct } from "../types/types.ts";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditProductModal from "./EditProductModal.tsx";
 import EditIcon from '@mui/icons-material/Edit';
 import Popup from './Popup.tsx';
+import { useDeleteProductMutation } from '../services/productsService.ts';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -32,6 +32,7 @@ type RowComponentProps = {
 };
 
 const RowComponent = ({ product, setProducts }: RowComponentProps) => {
+    const [deleteProduct] = useDeleteProductMutation();
     const [showEditModal, setShowEditModal] = useState(false);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const rowRef = useRef<HTMLTableRowElement>(null);
@@ -44,7 +45,7 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
         setAnchorEl(null);
         const res = await deleteProduct(product.id);
         setProducts(oldProducts => oldProducts.filter(p => p !== product))
-        console.log(res);
+        console.log("DELETE", res);
     }
 
     const str = `Are you sure you want to remove this item ?`;

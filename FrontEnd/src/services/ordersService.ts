@@ -1,31 +1,33 @@
+import { IOrder } from "../types/types";
 import { baseApi } from "../utils/baseApi";
 
 const GetMyOrders = "getMyOrders";
 const GetPendingOrders = "getPendingOrders";
 const CreateOrder = "createOrder";
-
-const user = JSON.parse(sessionStorage.getItem("user") as string);
+const CompleteOrder = "completeOrder";
+const RejectOrder = "rejectOrder";
 
 const ordersServices = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        [GetMyOrders]: builder.query({
-            query: (email) => ({
-                url: `/Order/MyOrders?email=${email}`,
-                headers: { Authorization: `Bearer ${user.token}` },
-            }),
-        }),
-        [GetPendingOrders]: builder.query({
-            query: () => ({
-                url: "/Order/PendingOrders",
-                headers: { Authorization: `Bearer ${user.token}` },
-            }),
-        }),
-        [CreateOrder]: builder.mutation({
+        [GetMyOrders]: builder.query<IOrder[], void>({ query: () => `/Order/MyOrders` }),
+        [GetPendingOrders]: builder.query<IOrder[], void>({ query: () => "/Order/PendingOrders" }),
+        [CreateOrder]: builder.mutation<void, object>({
             query: (data) => ({
                 method: "POST",
                 url: "/Order",
-                headers: { Authorization: `Bearer ${user.token}` },
                 body: data,
+            }),
+        }),
+        [CompleteOrder]: builder.mutation<void, number>({
+            query: (id) => ({
+                method: "PUT",
+                url: "/Order/Complete/" + id,
+            }),
+        }),
+        [RejectOrder]: builder.mutation<void, number>({
+            query: (id) => ({
+                method: "PUT",
+                url: "/Order/Reject/" + id,
             }),
         }),
     }),
@@ -33,5 +35,8 @@ const ordersServices = baseApi.injectEndpoints({
 
 export const {
     useGetMyOrdersQuery,
-    useGetPendingOrdersQuery
+    useGetPendingOrdersQuery,
+    useCreateOrderMutation,
+    useCompleteOrderMutation,
+    useRejectOrderMutation
 } = ordersServices;

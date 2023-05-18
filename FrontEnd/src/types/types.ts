@@ -16,15 +16,27 @@ export interface IOrder {
     quantity: number;
     date: string;
     status: string;
-    fullName: string;
+    productFullName: string;
     email: string;
-    code: string;
+    productCode: string;
     price: number;
 }
 
 export interface IErrorResponse {
     Code: number;
     ErrorMessage: string;
+}
+
+
+export interface IFormInputs {
+    code: string;
+    fullName: string;
+    description: string;
+    categoryId: number | null;
+    quantityForSale: number | null;
+    price: number | null;
+    quantity: number | null;
+    image: FileList | null;
 }
 
 export interface IResponse<T> {

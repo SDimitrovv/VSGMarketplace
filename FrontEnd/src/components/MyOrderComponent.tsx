@@ -1,4 +1,4 @@
-import { rejectOrder } from "../services/itemsService.ts";
+import { useRejectOrderMutation } from "../services/ordersService.ts";
 import { useState } from "react";
 import { IOrder } from "../types/types.ts";
 import { Fade } from '@mui/material';
@@ -10,34 +10,33 @@ type MyOrderProps = {
 }
 
 const MyOrderComponent = ({ order }: MyOrderProps) => {
+    const [rejectOrder] = useRejectOrderMutation();
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    const handleCancel = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        setAnchorEl(e.currentTarget)
-    }
+    const [currentStatus, setCurrentStatus] = useState(order.status);
 
     const str = `Are you sure you want to reject this order ?`;
 
     const onCancel = async () => {
         const res = await rejectOrder(order.id);
         console.log(res);
+        setCurrentStatus("Declined");
         setAnchorEl(null);
-        order.status = "Declined";
     }
 
     return (
         <>
             <Fade in={true} timeout={1000}>
                 <div id={`${order.id}`} className="order" >
-                    <span className="nameColumn">{order.fullName}</span>
+                    <span className="nameColumn">{order.productFullName}</span>
                     <div className="firstTwo">
                         <span className="qtyColumn">{order.quantity}</span>
                         <span className="priceColumn">{order.price} BGN</span>
                     </div>
                     <span className="orderDateColumn">{order.date}</span>
                     <div className="orderStatus">
-                        <span>{order.status}</span>
-                        {order.status === "Pending" &&
-                            <a className="cancelOrder" onClick={handleCancel}>
+                        <span>{currentStatus}</span>
+                        {currentStatus === "Pending" &&
+                            <a className="cancelOrder" onClick={e => setAnchorEl(e.currentTarget)}>
                                 <CloseIcon sx={{ fontSize: "large", color: "#ED1C25" }} />
                             </a>}
                     </div>

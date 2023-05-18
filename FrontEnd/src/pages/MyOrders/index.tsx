@@ -3,9 +3,7 @@ import { IOrder } from "../../types/types.ts";
 import MyOrderComponent from "../../components/MyOrderComponent.tsx";
 
 const MyOrders = () => {
-    const user = JSON.parse(sessionStorage.getItem("user") as string);
-    const email = user.email;
-    const { data: orders } = useGetMyOrdersQuery(email);
+    const { data: orders } = useGetMyOrdersQuery();
 
     return (
         <main id='myOrdersMain'>
