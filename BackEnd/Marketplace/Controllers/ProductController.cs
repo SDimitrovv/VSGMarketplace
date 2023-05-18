@@ -52,9 +52,9 @@ namespace MarketplaceAPI.Controllers
         {
             await _productEditValidator.ValidateAndThrowAsync(newProduct);
 
-            var editedProduct = await _productService.Update(id, newProduct);
+            await _productService.Update(id, newProduct);
 
-            return Ok(editedProduct);
+            return Ok();
         }
 
         [HttpDelete]

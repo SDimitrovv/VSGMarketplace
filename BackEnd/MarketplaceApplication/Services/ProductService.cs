@@ -29,11 +29,9 @@ namespace MarketplaceApplication.Services
             var product = _mapper.Map<Product>(model);
 
             var productId = await _repository.Create(product);
-            var categoryType = await _categoryRepository.GetByID(product.CategoryId);
 
             var newProduct = _mapper.Map<ProductAddedModel>(product);
             newProduct.Id = productId;
-            newProduct.Type = categoryType.Type;
 
             return newProduct;
         }
@@ -45,7 +43,7 @@ namespace MarketplaceApplication.Services
             return await _repository.GetDetails(id);
         }
 
-        public async Task<ProductEditedModel> Update(int productId, ProductEditModel newProduct)
+        public async Task Update(int productId, ProductEditModel newProduct)
         {
             await ExceptionService.ThrowExceptionWhenIdNotFound(productId, _repository);
 
@@ -53,10 +51,6 @@ namespace MarketplaceApplication.Services
             product.Id = productId;
 
             await _repository.Update(product);
-
-            var editedProduct = _mapper.Map<ProductEditedModel>(product);
-
-            return editedProduct;
         }
 
         public async Task Delete(int id)

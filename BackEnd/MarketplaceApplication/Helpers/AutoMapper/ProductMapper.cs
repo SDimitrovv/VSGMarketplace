@@ -13,8 +13,6 @@ namespace MarketplaceApplication.Helpers.AutoMapper
             CreateMap<Product, ProductAddedModel>();
 
             CreateMap<ProductEditModel, Product>();
-
-            CreateMap<Product, ProductEditedModel>();
         }
     }
 }
