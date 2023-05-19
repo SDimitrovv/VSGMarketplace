@@ -14,6 +14,7 @@ const Home = (): JSX.Element => {
       const email = result.account?.username.toLowerCase();
       sessionStorage.setItem("user", JSON.stringify({ name, token, email }));
       navigate('/marketplace');
+      location.reload();
     } catch (error) {
       console.log(error);
     }

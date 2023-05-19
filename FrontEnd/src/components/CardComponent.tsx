@@ -1,11 +1,12 @@
+import { useCreateOrderMutation } from "../services/ordersService.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IProduct } from "../types/types.ts";
 import { Fade } from '@mui/material';
+import { toast } from "react-toastify";
 import ProductModal from "./ProductModal.tsx";
 import Popup from "./Popup.tsx";
-import { useCreateOrderMutation } from "../services/ordersService.ts";
 
 type CardComponentProps = {
     product: IProduct;
@@ -46,9 +47,13 @@ const CardComponent = ({ product }: CardComponentProps) => {
             email: email,
         };
 
-        const res = await createOrder(order);
-        console.log("ORDER CREATED", res);
-        navigate("/my-orders");
+        const response = await createOrder(order);
+        if (!('error' in response)) {
+            toast.success('Order placed!');
+            navigate("/my-orders");
+        }
+
+        setAnchorEl(null);
     };
 
     const str = `Are you sure you want to buy ${selectValue.current} item for
@@ -59,7 +64,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
             <ProductModal product={product} showProductModal={showProductModal} setShowProductModal={setShowProductModal} />
             <Popup string={str} onYes={onBuy} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={1000}>
-                <div id={`${product.id}`} className="product">
+                <div id={product.id.toString()} className="product">
                     <a className="productButton" onClick={() => setShowProductModal(true)}>
                         <img src={product.imageUrl ? product.imageUrl : imagePlaceholder} alt="Product-image" />
                     </a>

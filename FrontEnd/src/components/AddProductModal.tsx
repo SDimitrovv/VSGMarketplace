@@ -14,6 +14,7 @@ import { ICategory, IFormInputs, IProduct } from "../types/types.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { uploadImage } from "../utils/uploadImage.ts";
 import { useForm } from "react-hook-form";
+import { toast } from 'react-toastify';
 import Modal from "./Modal.tsx";
 
 const inputStyle = {
@@ -50,7 +51,8 @@ const AddProductModal = ({
         register,
         handleSubmit,
         formState: { errors },
-        getValues
+        getValues,
+        reset
     } = useForm<IFormInputs>({
         defaultValues: {
             code: "",
@@ -72,9 +74,14 @@ const AddProductModal = ({
         }
 
         const response = await createProduct(data) as { data: IProduct };
+        if (!('error' in response)) {
+            toast.success('Created successfully!');
+        } else {
+            setShowAddModal(false);
+            return
+        }
+
         const responseData = response.data;
-        console.log("POST", responseData);
-        console.log(option);
 
         if (image.name) {
             const imageForm = new FormData();
@@ -90,6 +97,7 @@ const AddProductModal = ({
         }
 
         setShowAddModal(false);
+        reset();
     };
 
     return (
@@ -182,7 +190,6 @@ const AddProductModal = ({
                                     value: 0,
                                     message: 'You cannot input less than 0'
                                 },
-                                validate: value => value as number < Number(getValues("quantity")) || 'Qty For Sale cannot be higher than Qty'
                             })}
                         />
                         <TextField
@@ -221,7 +228,8 @@ const AddProductModal = ({
                                 min: {
                                     value: 0,
                                     message: 'Quantity must be 0 or higher'
-                                }
+                                },
+                                validate: value => value as number >= Number(getValues("quantityForSale")) || 'Qty For Sale cannot be higher than Qty'
                             })}
                         />
                     </div>
@@ -233,7 +241,7 @@ const AddProductModal = ({
                             accept="image/*"
                             type="file"
                             {...register("image", {
-                                onChange: (e) => setImageUrl(uploadImage(e)),
+                                onChange: (e) => setImageUrl(uploadImage(e))
                             })}
                         />
                         <div className="uploadDelete">

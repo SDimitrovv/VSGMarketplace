@@ -17,18 +17,21 @@ const ordersServices = baseApi.injectEndpoints({
                 url: "/Order",
                 body: data,
             }),
+            transformErrorResponse: () => 'Something went wrong... Try again',
         }),
         [CompleteOrder]: builder.mutation<void, number>({
             query: (id) => ({
                 method: "PUT",
                 url: "/Order/Complete/" + id,
             }),
+            transformErrorResponse: () => 'Something went wrong... Try again',
         }),
         [RejectOrder]: builder.mutation<void, number>({
             query: (id) => ({
                 method: "PUT",
                 url: "/Order/Reject/" + id,
             }),
+            transformErrorResponse: () => 'Something went wrong... Try again',
         }),
     }),
 });

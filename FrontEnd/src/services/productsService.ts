@@ -19,6 +19,7 @@ const productsServices = baseApi.injectEndpoints({
         url: "/Product",
         body: data,
       }),
+      transformErrorResponse: () => 'Something went wrong... Try again',
     }),
     [EditProduct]: builder.mutation<IProduct, { id: number, data: IFormInputs }>({
       query: ({ id, data }) => ({
@@ -26,12 +27,14 @@ const productsServices = baseApi.injectEndpoints({
         url: "/Product/" + id,
         body: data,
       }),
+      transformErrorResponse: () => 'Something went wrong... Try again',
     }),
     [DeleteProduct]: builder.mutation<void, number>({
       query: (id) => ({
         method: "DELETE",
         url: "/Product/" + id,
       }),
+      transformErrorResponse: () => 'Something went wrong... Try again',
     }),
   }),
 });

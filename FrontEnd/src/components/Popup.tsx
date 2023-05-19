@@ -20,9 +20,6 @@ type PopupProps = {
 }
 
 const Popup = ({ string, onYes, anchorEl, setAnchorEl }: PopupProps) => {
-    const onBuyClose = () => {
-        setAnchorEl(null);
-    }
 
     return (
         <StyledPopper
@@ -61,7 +58,7 @@ const Popup = ({ string, onYes, anchorEl, setAnchorEl }: PopupProps) => {
                 }
             ]}>
             {({ TransitionProps }) => (
-                <ClickAwayListener onClickAway={onBuyClose}>
+                <ClickAwayListener onClickAway={() => setAnchorEl(null)}>
                     <Fade {...TransitionProps} timeout={500} >
                         <div className="popup">
                             <Box component="span" className="arrow" />
@@ -72,7 +69,7 @@ const Popup = ({ string, onYes, anchorEl, setAnchorEl }: PopupProps) => {
                                 <button className="yes" onClick={onYes}>
                                     Yes
                                 </button>
-                                <button className="no" onClick={onBuyClose}>
+                                <button className="no" onClick={() => setAnchorEl(null)}>
                                     No
                                 </button>
                             </div>

@@ -6,13 +6,14 @@ import {
     MenuItem,
 } from "@mui/material";
 import { useDeleteImageMutation, useEditImageMutation } from "../services/imageService.ts";
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction, } from "react";
 import { IFormInputs, ICategory, IProduct } from "../types/types.ts";
 import { useEditProductMutation } from "../services/productsService.ts";
 import { useGetCategoriesQuery } from "../services/categoriesService.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { uploadImage } from "../utils/uploadImage.ts";
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import Modal from "./Modal.tsx";
 
 const inputStyle = {
@@ -42,12 +43,11 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
     const [editProduct] = useEditProductMutation();
     const [deleteImage] = useDeleteImageMutation();
     const [editImage] = useEditImageMutation();
-
     const {
         register,
         handleSubmit,
         formState: { errors },
-        getValues
+        getValues,
     } = useForm<IFormInputs>({
         defaultValues: {
             code: product.code,
@@ -85,8 +85,13 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
         }
 
         const id = product.id
-        const res = await editProduct({ id, data }) as { data: IProduct };
-        console.log("PUT", res);
+        const response = await editProduct({ id, data }) as { data: IProduct };
+        if (!('error' in response)) {
+            toast.success('Modified successfully!');
+        } else {
+            setShowEditModal(false);
+            return
+        }
 
         setShowEditModal(false);
     };
@@ -181,7 +186,6 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                                     value: 0,
                                     message: 'You cannot input less than 0'
                                 },
-                                validate: value => value as number < Number(getValues("quantity")) || 'Qty For Sale cannot be higher than Qty'
                             })}
                         />
                         <TextField
@@ -218,14 +222,15 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                                 min: {
                                     value: 0,
                                     message: 'Quantity must be 0 or higher'
-                                }
+                                },
+                                validate: value => value as number >= Number(getValues("quantityForSale")) || 'Qty cannot be less than Qty For Sale'
                             })}
                         />
                     </div>
                     <div className="rightModal">
                         <img className="currentImg" src={imageUrl} />
                         <input
-                            id="uploadInput"
+                            id="editUploadInput"
                             className="inputImage"
                             accept="image/*"
                             type="file"
@@ -234,7 +239,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             })}
                         />
                         <div className="uploadDelete">
-                            <label htmlFor="uploadInput" className="uploadImg">
+                            <label htmlFor="editUploadInput" className="uploadImg">
                                 Upload
                             </label>
                             <button type='button' className="deleteImg" onClick={() => setImageUrl(imagePlaceholder)}>Remove</button>
@@ -246,5 +251,6 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
         </Modal>
     );
 };
+
 
 export default EditProductModal;

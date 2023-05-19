@@ -6,6 +6,7 @@ import EditProductModal from "./EditProductModal.tsx";
 import EditIcon from '@mui/icons-material/Edit';
 import Popup from './Popup.tsx';
 import { useDeleteProductMutation } from '../services/productsService.ts';
+import { toast } from 'react-toastify';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -43,9 +44,11 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
 
     const handleDelete = async () => {
         setAnchorEl(null);
-        const res = await deleteProduct(product.id);
-        setProducts(oldProducts => oldProducts.filter(p => p !== product))
-        console.log("DELETE", res);
+        const response = await deleteProduct(product.id);
+        if (!('error' in response)) {
+            toast.success('Deleted successfully!');
+            setProducts(oldProducts => oldProducts.filter(p => p !== product))
+        }
     }
 
     const str = `Are you sure you want to remove this item ?`;
@@ -55,7 +58,7 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
             <EditProductModal product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />
             <Popup string={str} onYes={handleDelete} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={500}>
-                <StyledTableRow ref={rowRef} id={`${product.id}`} className="productRow">
+                <StyledTableRow ref={rowRef} id={product.id.toString()} className="productRow">
                     <StyledTableCell>{product.code}</StyledTableCell>
                     <StyledTableCell>{product.fullName}</StyledTableCell>
                     <StyledTableCell>{product.type}</StyledTableCell>
