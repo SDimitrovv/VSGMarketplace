@@ -14,9 +14,8 @@ const MyOrders = () => {
                 <span className="orderDateColumn">Order Date</span>
                 <span className="orderStatus">Status</span>
             </div>
-            {orders
-                ? orders.map((order: IOrder) => <MyOrderComponent order={order} key={order.id} />)
-                : <div className="order" >No orders</div>}
+            {orders && orders.map((order: IOrder) => <MyOrderComponent order={order} key={order.id} />)}
+            {orders?.length === 0 && <div className="order" >No orders</div>}
         </main>
     );
 };

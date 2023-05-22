@@ -7,9 +7,8 @@ const Marketplace = () => {
 
     return (
         <main id='marketplaceMain'>
-            {products
-                ? products.map((product: IProduct) => <CardComponent product={product} key={product.id} />)
-                : <div>No products</div>}
+            {products && products.map((product: IProduct) => <CardComponent product={product} key={product.id} />)}
+            {products?.length === 0 && <div>No products</div>}
         </main>
     )
 };

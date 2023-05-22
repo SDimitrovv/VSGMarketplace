@@ -27,7 +27,6 @@ export interface IErrorResponse {
     ErrorMessage: string;
 }
 
-
 export interface IFormInputs {
     code: string;
     fullName: string;
@@ -47,4 +46,11 @@ export interface IResponse<T> {
 export interface ICategory {
     type: string;
     id: number;
+}
+
+export interface IUser {
+    email: string;
+    token: string;
+    name: string;
+    memberType: string;
 }

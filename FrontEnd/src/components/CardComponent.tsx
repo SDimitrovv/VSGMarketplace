@@ -2,7 +2,7 @@ import { useCreateOrderMutation } from "../services/ordersService.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IProduct } from "../types/types.ts";
+import { IProduct, IUser } from "../types/types.ts";
 import { Fade } from '@mui/material';
 import { toast } from "react-toastify";
 import ProductModal from "./ProductModal.tsx";
@@ -34,8 +34,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
     };
 
     const onBuy = async () => {
-        const user = JSON.parse(sessionStorage.getItem("user") as string);
-        const email: string = user.email;
+        const user: IUser = JSON.parse(sessionStorage.getItem("user") as string);
 
         const order: {
             quantity: number;
@@ -44,7 +43,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
         } = {
             quantity: selectValue.current,
             productId: product.id,
-            email: email,
+            email: user.email,
         };
 
         const response = await createOrder(order);
@@ -66,7 +65,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
             <Fade in={true} timeout={1000}>
                 <div id={product.id.toString()} className="product">
                     <a className="productButton" onClick={() => setShowProductModal(true)}>
-                        <img src={product.imageUrl ? product.imageUrl : imagePlaceholder} alt="Product-image" />
+                        <img src={product.imageUrl || imagePlaceholder} alt="Product-image" />
                     </a>
                     <div className="productContent">
                         <div className="price">

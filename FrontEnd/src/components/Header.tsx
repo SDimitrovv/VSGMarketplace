@@ -1,12 +1,13 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useRef } from 'react';
+import { IUser } from "../types/types";
 
 const Header = () => {
     const location = useLocation();
     const path = location.pathname.replace("/", "");
     const headerName = useRef(path);
 
-    const user = JSON.parse(sessionStorage.getItem("user") as string);
+    const user: IUser = JSON.parse(sessionStorage.getItem("user") as string);
     const profileName = user.name.split(" ")[0];
 
     const root = document.querySelector("#root") as HTMLElement;
@@ -44,7 +45,7 @@ const Header = () => {
 
     return (
         <header>
-            <NavLink id="logo" to="/">
+            <NavLink id="logo" to="/marketplace">
                 <img src="/images/marketplace-mini-logo.png" alt="Marketplace-logo" />
             </NavLink>
             <span id="pageTitle">{headerName.current}</span>

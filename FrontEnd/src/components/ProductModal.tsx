@@ -13,7 +13,7 @@ const ProductModal = ({ product, showProductModal, setShowProductModal }: Produc
     return (
         <Modal showModal={showProductModal} setShowModal={setShowProductModal} modalType='productModal'>
             <div id="productModal" className="modalContent" >
-                <img id="modalImage" src={product.imageUrl ? product.imageUrl : imagePlaceholder} />
+                <img id="modalImage" src={product.imageUrl || imagePlaceholder} />
                 <div id="modalFrameOne">
                     <div id="modalFrameTwo">
                         <div id="productName">

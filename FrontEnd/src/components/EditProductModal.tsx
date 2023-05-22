@@ -16,20 +16,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Modal from "./Modal.tsx";
 
-const inputStyle = {
-    color: "#9A9A9A",
-    mb: "66px",
-    width: "100%",
-    height: "0px",
-    ".MuiInputBase-root::after": {
-        borderBottom: "#000",
-    },
-    "@media screen and (max-width: 768px)": {
-        height: "34px !important",
-        mb: "40px",
-    },
-};
-
 type EditModalProps = {
     product: IProduct;
     showEditModal: boolean;
@@ -37,12 +23,12 @@ type EditModalProps = {
 };
 
 const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModalProps) => {
-    const [imageUrl, setImageUrl] = useState(product.imageUrl ? product.imageUrl : imagePlaceholder);
+    const [imageUrl, setImageUrl] = useState(product.imageUrl || imagePlaceholder);
     const [option, setOption] = useState(product.categoryId.toString());
     const { data: categories } = useGetCategoriesQuery();
-    const [editProduct] = useEditProductMutation();
+    const [editProduct, { isLoading: fetchingProduct }] = useEditProductMutation();
+    const [editImage, { isLoading: fetchingImage }] = useEditImageMutation();
     const [deleteImage] = useDeleteImageMutation();
-    const [editImage] = useEditImageMutation();
     const {
         register,
         handleSubmit,
@@ -54,8 +40,8 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
             fullName: product.fullName,
             description: product.description,
             categoryId: product.categoryId,
-            quantityForSale: product.quantityForSale ? product.quantityForSale : null,
-            price: product.price ? product.price : null,
+            quantityForSale: product.quantityForSale || null,
+            price: product.price || null,
             quantity: product.quantity,
             image: null
         },
@@ -63,17 +49,16 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
     });
 
     const onSubmit = async (data: IFormInputs) => {
-        let image: { name: string } | File = { name: '' };
-        if (data.image) {
-            image = data.image[0];
-        }
+        const image: { name: string } | File = data.image ? data.image[0] : { name: '' };
+        data.quantityForSale = data.quantityForSale || null;
+        data.price = data.price || null;
 
         const currentImg = document.querySelector(".currentImg") as HTMLImageElement;
 
         if (image.name) {
             const imageForm = new FormData();
             imageForm.append("newPicture", image as File);
-            const id = product.id
+            const id = product.id;
             const imgRes = await editImage({ id, imageForm }) as { data: string };
             const newImgUrl = imgRes.data;
             console.log("Image PUT", newImgUrl);
@@ -84,7 +69,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
             console.log("Image DELETE", res);
         }
 
-        const id = product.id
+        const id = product.id;
         const response = await editProduct({ id, data }) as { data: IProduct };
         if (!('error' in response)) {
             toast.success('Modified successfully!');
@@ -103,21 +88,16 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                     <div className="leftModal">
                         <h2>Modify Item</h2>
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="text"
                             label="Code *"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             error={Boolean(errors.code)}
                             helperText={errors.code?.message}
                             {...register('code', { required: 'Code field is required' })}
                         />
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="text"
                             label="Name *"
                             variant="standard"
@@ -149,7 +129,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             }}
                             {...register('description')}
                         />
-                        <FormControl variant="standard" sx={inputStyle}>
+                        <FormControl variant="standard" className='formInput'>
                             <InputLabel focused={false}>Category *</InputLabel>
                             <Select
                                 value={option}
@@ -170,7 +150,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             </Select>
                         </FormControl>
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="number"
                             label="Qty For Sale"
                             variant="standard"
@@ -189,7 +169,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             })}
                         />
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="number"
                             label="Sale Price"
                             variant="standard"
@@ -206,7 +186,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             })}
                         />
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="number"
                             label="Qty *"
                             variant="standard"
@@ -246,7 +226,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                         </div>
                     </div>
                 </div>
-                <button type="submit">Modify</button>
+                <button type="submit" disabled={fetchingProduct || fetchingImage}>{(fetchingProduct || fetchingImage) ? 'Submitting...' : 'Modify'}</button>
             </form>
         </Modal>
     );

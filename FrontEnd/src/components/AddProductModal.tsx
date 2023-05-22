@@ -17,20 +17,6 @@ import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import Modal from "./Modal.tsx";
 
-const inputStyle = {
-    color: "#9A9A9A",
-    mb: "66px",
-    width: "100%",
-    height: "0px",
-    ".MuiInputBase-root::after": {
-        borderBottom: "#000",
-    },
-    "@media screen and (max-width: 768px)": {
-        height: "34px !important",
-        mb: "40px",
-    },
-};
-
 type AddModalProps = {
     setProducts: Dispatch<SetStateAction<IProduct[]>>;
     showAddModal: boolean;
@@ -42,11 +28,11 @@ const AddProductModal = ({
     showAddModal,
     setShowAddModal,
 }: AddModalProps) => {
-    const [createProduct] = useCreateProductMutation();
-    const [createImage] = useCreateImageMutation();
+    const [createProduct, { isLoading: fetchingProduct }] = useCreateProductMutation();
+    const [createImage, { isLoading: fetchingImage }] = useCreateImageMutation();
     const { data: categories } = useGetCategoriesQuery();
     const [imageUrl, setImageUrl] = useState(imagePlaceholder);
-    const [option, setOption] = useState({ value: '', name: '' });
+    const [option, setOption] = useState('');
     const {
         register,
         handleSubmit,
@@ -68,20 +54,18 @@ const AddProductModal = ({
     });
 
     const onSubmit = async (data: IFormInputs): Promise<void> => {
-        let image: { name: string } | File = { name: "" };
-        if (data.image) {
-            image = data.image[0];
-        }
+        const image: { name: string } | File = data.image ? data.image[0] : { name: '' };
+        data.quantityForSale = data.quantityForSale || null;
+        data.price = data.price || null;
 
         const response = await createProduct(data) as { data: IProduct };
-        if (!('error' in response)) {
-            toast.success('Created successfully!');
-        } else {
+        if ('error' in response) {
             setShowAddModal(false);
             return
         }
 
         const responseData = response.data;
+        const selectedCategory = categories?.filter(c => data.categoryId === c.id)[0] as ICategory;
 
         if (image.name) {
             const imageForm = new FormData();
@@ -90,13 +74,17 @@ const AddProductModal = ({
             const imgRes = await createImage({ id, imageForm }) as { data: string };
             const newImgUrl = imgRes.data;
             console.log("Image POST", newImgUrl);
-            const newProduct = { ...responseData, imageUrl: newImgUrl, type: option.name }
+            const newProduct = { ...responseData, imageUrl: newImgUrl, type: selectedCategory.type }
             setProducts((oldProducts) => [...oldProducts, newProduct]);
         } else {
-            setProducts((oldProducts) => [...oldProducts, { ...responseData, type: option.name }]);
+            const newProduct = { ...responseData, type: selectedCategory.type }
+            setProducts((oldProducts) => [...oldProducts, newProduct]);
         }
 
+        setOption('');
+        toast.success('Created successfully!');
         setShowAddModal(false);
+        setImageUrl(imagePlaceholder);
         reset();
     };
 
@@ -107,7 +95,7 @@ const AddProductModal = ({
                     <div className="leftModal">
                         <h2>Add New Item</h2>
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="text"
                             label="Code *"
                             variant="standard"
@@ -121,7 +109,7 @@ const AddProductModal = ({
                             {...register("code", { required: "Code field is required" })}
                         />
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="text"
                             label="Name *"
                             variant="standard"
@@ -153,13 +141,13 @@ const AddProductModal = ({
                             }}
                             {...register("description")}
                         />
-                        <FormControl variant="standard" sx={inputStyle}>
+                        <FormControl variant="standard" className='formInput'>
                             <InputLabel focused={false}>Category *</InputLabel>
                             <Select
-                                value={option.value}
+                                value={option}
                                 error={Boolean(errors.categoryId)}
                                 {...register("categoryId", {
-                                    onChange: (e) => setOption(e.target),
+                                    onChange: (e) => setOption(e.target.value),
                                     required: "Category field is required",
                                 })}
                             >
@@ -174,7 +162,7 @@ const AddProductModal = ({
                             </FormHelperText>
                         </FormControl>
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="number"
                             label="Qty For Sale"
                             variant="standard"
@@ -193,7 +181,7 @@ const AddProductModal = ({
                             })}
                         />
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="number"
                             label="Sale Price"
                             variant="standard"
@@ -212,7 +200,7 @@ const AddProductModal = ({
                             })}
                         />
                         <TextField
-                            sx={inputStyle}
+                            className='formInput'
                             type="number"
                             label="Qty *"
                             variant="standard"
@@ -252,7 +240,7 @@ const AddProductModal = ({
                         </div>
                     </div>
                 </div>
-                <button type="submit">Add</button>
+                <button type="submit" disabled={fetchingProduct || fetchingImage}>{(fetchingProduct || fetchingImage) ? 'Submitting...' : 'Add'}</button>
             </form>
         </Modal>
     );

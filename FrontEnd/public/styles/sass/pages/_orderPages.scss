@@ -8,7 +8,8 @@
     #headingSection,
     .order {
         @include flex-align(row, center);
-        width: 97%;
+        box-sizing: border-box;
+        width: 100%;
         margin-top: 20px;
         background: #dadcdd;
         border-radius: 10px;
@@ -33,14 +34,12 @@
     }
 
     .order {
-        position: relative;
         border: 1px solid #dadcdd;
         background-color: $general-white;
-        border-radius: 10px;
         font-weight: 400;
         font-size: 14px;
         padding: 6px 20px;
-        min-height: 40px;
+        min-height: 52px;
 
         .firstThree {
             display: flex;

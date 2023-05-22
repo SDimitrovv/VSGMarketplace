@@ -15,9 +15,8 @@ const PendingOrders = () => {
                 <span className="orderDateColumn">Order Date</span>
                 <span className="actionColumn">Action</span>
             </div>
-            {orders
-                ? orders.map((order: IOrder) => <PendingOrderComponent order={order} key={order.id} />)
-                : <div className="order" >No orders</div>}
+            {orders && orders.map((order: IOrder) => <PendingOrderComponent order={order} key={order.id} />)}
+            {orders?.length === 0 && <div className="order" >No orders</div>}
         </main>
     );
 };
