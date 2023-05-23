@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Models\CategoryModels\Interfaces\" />
-    <Folder Include="Models\LocationModels\DTOs\" />
     <Folder Include="Models\OrderModels\Interfaces\" />
     <Folder Include="Models\PictureModels\DTOs\" />
     <Folder Include="Models\PictureModels\Interfaces\" />

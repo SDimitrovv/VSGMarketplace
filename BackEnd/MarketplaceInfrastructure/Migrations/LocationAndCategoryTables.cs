@@ -15,6 +15,9 @@ namespace MarketplaceInfrastructure.Migrations
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity()
                 .WithColumn("Type").AsString(200).NotNullable();
 
+            Insert.IntoTable("Locations").Row(new { City = "Plovdiv" });
+            Insert.IntoTable("Locations").Row(new { City = "Veliko Tarnovo" });
+
             Insert.IntoTable("Categories").Row(new { Type = "Laptop" });
             Insert.IntoTable("Categories").Row(new { Type = "Monitor" });
             Insert.IntoTable("Categories").Row(new { Type = "PC" });

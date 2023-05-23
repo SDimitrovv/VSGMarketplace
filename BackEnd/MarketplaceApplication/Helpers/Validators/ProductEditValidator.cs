@@ -27,6 +27,9 @@ namespace MarketplaceApplication.Helpers.Validators
 
             RuleFor(c => c.CategoryId)
                 .NotNull().WithMessage("CategoryId can't be null");
+
+            RuleFor(c => c.LocationId)
+                .NotNull().WithMessage("LocationId can't be null");
         }
     }
 }
