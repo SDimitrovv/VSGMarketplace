@@ -1,3 +1,4 @@
+using MarketplaceAPI.Identity;
 using MarketplaceAPI.Swagger;
 using MarketplaceApplication.Helpers.Configurations;
 using MarketplaceApplication.Helpers.Middleware;
@@ -32,7 +33,10 @@ builder.Services.AddAuthentication(x =>
     x.Audience = builder.Configuration["JwtSettings:Audience"];
     x.Authority = builder.Configuration["JwtSettings:Authority"];
 });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(IdentityData.AdminUserPolicy, p => p.RequireClaim(IdentityData.AdminUserClaim, "f2123818-3d51-4fe4-990b-b072a80da143"));
+});
 
 builder.Services.AddControllers();
 
@@ -57,11 +61,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 CreateDatabase.Create(app.Services.GetRequiredService<IConfiguration>());
 

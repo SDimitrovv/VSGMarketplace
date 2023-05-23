@@ -48,7 +48,6 @@ namespace MarketplaceApplication.Services
             order.ProductCode = product.Code;
             order.Email = _httpContextAccessor.HttpContext.User.FindFirst("preferred_username")?.Value;
 
-
             var orderId = await _orderRepository.Create(order);
             order.Id = orderId;
 

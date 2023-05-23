@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MarketplaceAPI.Identity;
 using MarketplaceApplication.Models.OrderModels.DTOs;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MarketplaceAPI.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
@@ -20,6 +20,7 @@ namespace MarketplaceAPI.Controllers
             _addOrderValidator = addOrderValidator;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] AddOrderModel model)
         {
@@ -30,6 +31,7 @@ namespace MarketplaceAPI.Controllers
             return CreatedAtAction(null, order);
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpPut]
         [Route("Complete/{id}")]
         public async Task<IActionResult> EditComplete(int id)
@@ -39,6 +41,7 @@ namespace MarketplaceAPI.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPut]
         [Route("Reject/{id}")]
         public async Task<IActionResult> EditReject(int id)
@@ -48,6 +51,7 @@ namespace MarketplaceAPI.Controllers
             return Ok();
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpGet]
         [Route("PendingOrders")]
         public async Task<IEnumerable<PendingOrdersGetModel>> GetPendingOrders()
@@ -55,6 +59,7 @@ namespace MarketplaceAPI.Controllers
             return await _orderService.GetPendingOrders();
         }
 
+        [Authorize]
         [HttpGet]
         [Route("MyOrders")]
         public async Task<IEnumerable<MyOrdersGetModel>> GetMyOrders()

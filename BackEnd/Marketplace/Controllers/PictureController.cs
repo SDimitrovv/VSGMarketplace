@@ -1,4 +1,5 @@
-﻿using MarketplaceApplication.Models.PictureModels.Interfaces;
+﻿using MarketplaceAPI.Identity;
+using MarketplaceApplication.Models.PictureModels.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace MarketplaceAPI.Controllers
 
         public PictureController(IPictureService pictureService) => _pictureService = pictureService;
 
+        [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpPost]
         public async Task<IActionResult> Add(int productId, IFormFile picture)
         {
@@ -21,6 +23,7 @@ namespace MarketplaceAPI.Controllers
             return CreatedAtAction(null, imageUrl);
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> Edit(int id, IFormFile newPicture)
@@ -31,6 +34,7 @@ namespace MarketplaceAPI.Controllers
             return Ok(imageUrl);
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)

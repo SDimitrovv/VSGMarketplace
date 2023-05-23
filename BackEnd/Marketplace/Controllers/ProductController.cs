@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MarketplaceAPI.Identity;
 using MarketplaceApplication.Models.PictureModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
@@ -29,6 +30,7 @@ namespace MarketplaceAPI.Controllers
             _productEditValidator = productEditValidator;
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ProductAddModel model)
         {
@@ -39,6 +41,7 @@ namespace MarketplaceAPI.Controllers
             return CreatedAtAction(null, product);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("{id}")]
         public async Task<ProductGetDetailsModel> GetProductDetails(int id)
@@ -46,6 +49,7 @@ namespace MarketplaceAPI.Controllers
             return await _productService.GetDetails(id);
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> Edit(int id, ProductEditModel newProduct)
@@ -57,6 +61,7 @@ namespace MarketplaceAPI.Controllers
             return Ok();
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -67,6 +72,7 @@ namespace MarketplaceAPI.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpGet]
         [Route("Marketplace")]
         public async Task<IEnumerable<ProductGetMarketplaceModel>> GetMarketplace()
@@ -74,6 +80,7 @@ namespace MarketplaceAPI.Controllers
             return await _productService.GetMarketplace();
         }
 
+        [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpGet]
         [Route("Inventory")]
         public async Task<IEnumerable<ProductGetInventoryModel>> GetInventory()

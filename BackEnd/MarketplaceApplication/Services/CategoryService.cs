@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MarketplaceApplication.Models.CategoryModels.DTOs;
 using MarketplaceApplication.Models.CategoryModels.Interfaces;
+using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceDomain.Entities;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -40,6 +41,20 @@ namespace MarketplaceApplication.Services
             //await _db.StringSetAsync(CacheKey, JsonConvert.SerializeObject(categoriesFromDb));
 
             return categoriesModel;
+        }
+
+        public async Task<int> Add(string type)
+        {
+            var addCategory = new Category()
+            {
+                Type = type
+            };
+
+            var categoryId = await _repository.Create(addCategory);
+
+            // await _db.KeyDeleteAsync(CacheKey);
+
+            return categoryId;
         }
     }
 }
