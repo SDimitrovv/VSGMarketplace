@@ -16,7 +16,7 @@ const modalStyle = {
     borderRadius: "20px",
     margin: 0,
     width: "92%",
-    maxHeight: "740px",
+    maxHeight: "842px",
     "@media screen and (max-width: 768px)": {
         maxHeight: "96%",
     }

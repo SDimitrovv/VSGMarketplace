@@ -9,8 +9,8 @@ const RejectOrder = "rejectOrder";
 
 const ordersServices = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        [GetMyOrders]: builder.query<IOrder[], void>({ query: () => `/Order/MyOrders` }),
-        [GetPendingOrders]: builder.query<IOrder[], void>({ query: () => "/Order/PendingOrders" }),
+        [GetMyOrders]: builder.query<IOrder[], void>({ query: () => `/Order/My-Orders` }),
+        [GetPendingOrders]: builder.query<IOrder[], void>({ query: () => "/Order/Pending-Orders" }),
         [CreateOrder]: builder.mutation<void, object>({
             query: (data) => ({
                 method: "POST",

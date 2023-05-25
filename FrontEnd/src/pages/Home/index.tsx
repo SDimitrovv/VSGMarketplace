@@ -1,12 +1,12 @@
-import { setUser } from '../../redux/authSlice';
+// import { setUser } from '../../redux/authSlice';
 import { instance, loginRequest } from '../../../authConfig';
 import { AuthenticationResult } from '@azure/msal-browser';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Home = (): JSX.Element => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   sessionStorage.clear();
 
   const handleLogin = async (): Promise<void> => {
@@ -26,7 +26,7 @@ const Home = (): JSX.Element => {
       }
 
       const user = { name, token, email, memberType };
-      dispatch(setUser(user));
+      // dispatch(setUser(user));
 
       sessionStorage.setItem("user", JSON.stringify(user));
       navigate('/marketplace');

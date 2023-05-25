@@ -7,7 +7,9 @@ export interface IProduct {
     quantityForSale?: number;
     description?: string;
     categoryId: number;
+    locationId: number;
     type: string;
+    city: string;
     imageUrl?: string;
 }
 
@@ -32,6 +34,7 @@ export interface IFormInputs {
     fullName: string;
     description: string;
     categoryId: number | null;
+    locationId: number | null;
     quantityForSale: number | null;
     price: number | null;
     quantity: number | null;
@@ -45,6 +48,11 @@ export interface IResponse<T> {
 
 export interface ICategory {
     type: string;
+    id: number;
+}
+
+export interface ILocation {
+    city: string;
     id: number;
 }
 

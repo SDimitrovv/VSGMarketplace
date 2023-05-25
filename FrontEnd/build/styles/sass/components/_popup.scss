@@ -1,0 +1,25 @@
+.popup {
+    @include flex-align(column, center);
+    color: $general-black;
+    width: 280px;
+    height: 80px;
+    padding: 14px;
+    background-color: $general-white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    z-index: 1;
+    margin: 4px;
+
+    .arrow {
+        position: absolute;
+
+        &::before {
+            background-color: white;
+            content: '';
+            display: block;
+            width: 14px;
+            height: 14px;
+            transform: rotate(45deg);
+        }
+    }
+}

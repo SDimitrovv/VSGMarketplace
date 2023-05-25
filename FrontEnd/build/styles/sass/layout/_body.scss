@@ -1,0 +1,64 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+@include responsive-desktop;
+
+body {
+    height: 100vh;
+    background-color: $body-background;
+    font-family: 'Roboto';
+
+    #asideMain {
+        display: flex;
+        width: 100%;
+    }
+}
+
+main {
+    padding: 20px 26px;
+    width: 100%;
+}
+
+small {
+    color: $border-gray;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+    pointer-events: none;
+}
+
+.closeModal {
+    cursor: pointer;
+    position: absolute;
+    left: 94%;
+    top: 2%;
+    background: none;
+}
+
+button,
+a {
+    pointer-events: auto;
+}
+
+a {
+    color: $general-white;
+    text-decoration: none;
+}
+
+svg {
+    pointer-events: none;
+}
+
+@media screen and (max-width: 768px) {
+    #asideMain {
+        @include flex-align(column, center);
+        height: calc(100vh - 60px);
+    }
+
+    @include responsive-mobile;
+}

@@ -6,11 +6,12 @@ import {
     MenuItem,
     FormHelperText,
 } from "@mui/material";
+import { ICategory, IFormInputs, ILocation, IProduct } from "../types/types.ts";
 import { useState, Dispatch, SetStateAction } from "react";
 import { useCreateProductMutation } from "../services/productsService.ts";
 import { useCreateImageMutation } from "../services/imageService.ts";
 import { useGetCategoriesQuery } from "../services/categoriesService.ts";
-import { ICategory, IFormInputs, IProduct } from "../types/types.ts";
+import { useGetLocationQuery } from "../services/locationsService.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
 import { uploadImage } from "../utils/uploadImage.ts";
 import { useForm } from "react-hook-form";
@@ -31,8 +32,10 @@ const AddProductModal = ({
     const [createProduct, { isLoading: fetchingProduct }] = useCreateProductMutation();
     const [createImage, { isLoading: fetchingImage }] = useCreateImageMutation();
     const { data: categories } = useGetCategoriesQuery();
+    const { data: locations } = useGetLocationQuery();
     const [imageUrl, setImageUrl] = useState(imagePlaceholder);
-    const [option, setOption] = useState('');
+    const [selectOption, setSelectOption] = useState('');
+    const [locationOption, setLocationOption] = useState('');
     const {
         register,
         handleSubmit,
@@ -45,6 +48,7 @@ const AddProductModal = ({
             fullName: "",
             description: "",
             categoryId: null,
+            locationId: null,
             quantityForSale: null,
             price: null,
             quantity: null,
@@ -81,7 +85,8 @@ const AddProductModal = ({
             setProducts((oldProducts) => [...oldProducts, newProduct]);
         }
 
-        setOption('');
+        setSelectOption('');
+        setLocationOption('');
         toast.success('Created successfully!');
         setShowAddModal(false);
         setImageUrl(imagePlaceholder);
@@ -144,10 +149,10 @@ const AddProductModal = ({
                         <FormControl variant="standard" className='formInput'>
                             <InputLabel focused={false}>Category *</InputLabel>
                             <Select
-                                value={option}
+                                value={selectOption}
                                 error={Boolean(errors.categoryId)}
                                 {...register("categoryId", {
-                                    onChange: (e) => setOption(e.target.value),
+                                    onChange: (e) => setSelectOption(e.target.value),
                                     required: "Category field is required",
                                 })}
                             >
@@ -159,6 +164,26 @@ const AddProductModal = ({
                             </Select>
                             <FormHelperText error>
                                 {errors.categoryId?.message}
+                            </FormHelperText>
+                        </FormControl>
+                        <FormControl variant="standard" className='formInput'>
+                            <InputLabel focused={false}>Location *</InputLabel>
+                            <Select
+                                value={locationOption}
+                                error={Boolean(errors.locationId)}
+                                {...register('locationId', {
+                                    onChange: (e) => setLocationOption(e.target.value),
+                                    required: "Location field is required",
+                                })}
+                            >
+                                {locations?.map((l: ILocation) => (
+                                    <MenuItem value={l.id} key={l.id}>
+                                        {l.city}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            <FormHelperText error>
+                                {errors.locationId?.message}
                             </FormHelperText>
                         </FormControl>
                         <TextField

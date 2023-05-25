@@ -4,10 +4,11 @@ import {
     InputLabel,
     Select,
     MenuItem,
+    FormHelperText,
 } from "@mui/material";
 import { useDeleteImageMutation, useEditImageMutation } from "../services/imageService.ts";
 import { useState, Dispatch, SetStateAction, } from "react";
-import { IFormInputs, ICategory, IProduct } from "../types/types.ts";
+import { IFormInputs, ICategory, IProduct, ILocation } from "../types/types.ts";
 import { useEditProductMutation } from "../services/productsService.ts";
 import { useGetCategoriesQuery } from "../services/categoriesService.ts";
 import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
@@ -15,6 +16,7 @@ import { uploadImage } from "../utils/uploadImage.ts";
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Modal from "./Modal.tsx";
+import { useGetLocationQuery } from "../services/locationsService.ts";
 
 type EditModalProps = {
     product: IProduct;
@@ -24,8 +26,10 @@ type EditModalProps = {
 
 const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModalProps) => {
     const [imageUrl, setImageUrl] = useState(product.imageUrl || imagePlaceholder);
-    const [option, setOption] = useState(product.categoryId.toString());
+    const [selectOption, setSelectOption] = useState(product.categoryId.toString());
+    const [locationOption, setLocationOption] = useState(product.locationId.toString());
     const { data: categories } = useGetCategoriesQuery();
+    const { data: locations } = useGetLocationQuery();
     const [editProduct, { isLoading: fetchingProduct }] = useEditProductMutation();
     const [editImage, { isLoading: fetchingImage }] = useEditImageMutation();
     const [deleteImage] = useDeleteImageMutation();
@@ -40,6 +44,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
             fullName: product.fullName,
             description: product.description,
             categoryId: product.categoryId,
+            locationId: product.locationId,
             quantityForSale: product.quantityForSale || null,
             price: product.price || null,
             quantity: product.quantity,
@@ -132,13 +137,14 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                         <FormControl variant="standard" className='formInput'>
                             <InputLabel focused={false}>Category *</InputLabel>
                             <Select
-                                value={option}
+                                value={selectOption}
                                 error={Boolean(errors.categoryId)}
-                                {...register('categoryId', {
-                                    onChange: (e) => setOption(e.currentTarget.value as string),
-                                    required: 'Category field is required'
-                                })}>
-                                <MenuItem value={option} key={option}>
+                                {...register("categoryId", {
+                                    onChange: (e) => setSelectOption(e.target.value),
+                                    required: "Category field is required",
+                                })}
+                            >
+                                <MenuItem value={selectOption} key={selectOption}>
                                     {product.type}
                                 </MenuItem>
                                 {categories?.map((c: ICategory) => (
@@ -148,6 +154,30 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                                     </MenuItem>
                                 ))}
                             </Select>
+                        </FormControl>
+                        <FormControl variant="standard" className='formInput'>
+                            <InputLabel focused={false}>Location *</InputLabel>
+                            <Select
+                                value={locationOption}
+                                error={Boolean(errors.locationId)}
+                                {...register('locationId', {
+                                    onChange: (e) => setLocationOption(e.target.value),
+                                    required: "Location field is required",
+                                })}
+                            >
+                                <MenuItem value={locationOption} key={locationOption}>
+                                    {product.city}
+                                </MenuItem>
+                                {locations?.map((l: ILocation) => (
+                                    l.city !== product.city &&
+                                    <MenuItem value={l.id} key={l.id}>
+                                        {l.city}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            <FormHelperText error>
+                                {errors.locationId?.message}
+                            </FormHelperText>
                         </FormControl>
                         <TextField
                             className='formInput'

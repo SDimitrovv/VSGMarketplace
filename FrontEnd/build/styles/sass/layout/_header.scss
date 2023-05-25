@@ -1,0 +1,58 @@
+//Header
+
+header {
+  display: flex;
+  justify-content: space-between;
+  background-color: $general-white;
+  font-family: "Montserrat";
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 16px;
+  height: 54px;
+
+  #logo {
+    width: 30px;
+    height: 30px;
+    padding-right: 70px;
+  }
+
+  #pageTitle {
+    font-size: 30px;
+  }
+
+  .profileGreet {
+    @include flex-align(row, center);
+
+    span {
+      font-weight: 700;
+      margin-right: 10px;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  #closeMenu,
+  #hamburger {
+    cursor: pointer;
+    color: $main-color;
+    display: none;
+    align-self: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    #logo {
+      padding-right: 0px;
+    }
+
+    .profileGreet {
+      display: none;
+    }
+
+    #hamburger {
+      display: block;
+    }
+  }
+}

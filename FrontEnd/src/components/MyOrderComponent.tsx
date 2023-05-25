@@ -1,5 +1,5 @@
 import { useRejectOrderMutation } from "../services/ordersService.ts";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { IOrder } from "../types/types.ts";
 import { toast } from "react-toastify";
 import { Fade } from '@mui/material';
@@ -11,9 +11,9 @@ type MyOrderProps = {
 }
 
 const MyOrderComponent = ({ order }: MyOrderProps) => {
-    const [rejectOrder, { isLoading }] = useRejectOrderMutation();
+    const [rejectOrder] = useRejectOrderMutation();
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    const currentStatus = useRef(order.status);
+    const [currentStatus, setCurrentStatus] = useState(order.status);
 
     const str = `Are you sure you want to reject this order ?`;
 
@@ -22,7 +22,7 @@ const MyOrderComponent = ({ order }: MyOrderProps) => {
         setAnchorEl(null);
         if (!('error' in response)) {
             setTimeout(() => {
-                currentStatus.current = "Declined";
+                setCurrentStatus("Declined");
             }, 600);
             toast.info('Order declined.');
         }
@@ -40,8 +40,8 @@ const MyOrderComponent = ({ order }: MyOrderProps) => {
                     </div>
                     <span className="orderDateColumn">{order.date}</span>
                     <div className="orderStatus">
-                        <span>{isLoading ? currentStatus.current = 'Rejecting...' : currentStatus.current}</span>
-                        {currentStatus.current === "Pending" &&
+                        <span>{currentStatus}</span>
+                        {currentStatus === "Pending" &&
                             <a className="cancelOrder" onClick={e => setAnchorEl(e.currentTarget)}>
                                 <CloseIcon sx={{ fontSize: "large", color: "#ED1C25" }} />
                             </a>}

@@ -57,7 +57,8 @@ const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) 
                             count={filteredProducts.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
-                            onPageChange={(e, newPage) => setPage(newPage)}
+                            onPageChange={(e, newPage) => {console.log(e),
+                             setPage(newPage)}}
                             onRowsPerPageChange={handleChangeRowsPerPage}
                         />
                     </TableRow>

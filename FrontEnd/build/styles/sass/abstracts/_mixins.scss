@@ -1,0 +1,73 @@
+@mixin responsive-mobile {
+    #hamburger {
+        display: block;
+    }
+
+    aside {
+        position: fixed;
+        left: -100%;
+    }
+}
+
+@mixin responsive-desktop {
+
+    #hamburger,
+    #closeMenu {
+        display: none;
+    }
+
+    aside {
+        left: -100%;
+        position: static;
+    }
+}
+
+@mixin flex-align($direction, $align) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+}
+
+//Pop up window with yes and no
+
+@mixin pop-up() {
+  
+}
+
+//Triangle on top of pop up window
+
+@mixin triangle($left) {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: $left;
+    border-style: solid;
+    border-width: 0 7px 10px 7px;
+    border-color: transparent transparent $general-white transparent;
+}
+
+//Modals styling
+
+@mixin modal($height, $width) {
+    @include flex-align(column, space-between);
+    height: $height;
+    width: $width;
+    background-color: $general-white;
+    border-radius: 20px;
+}
+
+//General button styling
+
+@mixin button($backgroundColor) {
+    cursor: pointer;
+    margin-top: 20px;
+    color: $general-white;
+    width: 120px;
+    height: 40px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    background: $backgroundColor;
+}
