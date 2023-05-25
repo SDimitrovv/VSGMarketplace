@@ -88,7 +88,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
 
     return (
         <Modal showModal={showEditModal} setShowModal={setShowEditModal} >
-            <form className="editForm modalContent" onSubmit={handleSubmit(onSubmit)}>
+            <form className="editForm" onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                     <div className="leftModal">
                         <h2>Modify Item</h2>

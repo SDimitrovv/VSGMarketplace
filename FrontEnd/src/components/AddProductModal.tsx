@@ -95,7 +95,7 @@ const AddProductModal = ({
 
     return (
         <Modal showModal={showAddModal} setShowModal={setShowAddModal}>
-            <form className="addForm modalContent" onSubmit={handleSubmit(onSubmit)}>
+            <form className="addForm" onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                     <div className="leftModal">
                         <h2>Add New Item</h2>

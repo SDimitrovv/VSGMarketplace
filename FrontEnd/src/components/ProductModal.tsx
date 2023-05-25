@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
+import { imagePlaceholder } from '../utils/imagePlaceholder';
 import { IProduct } from "../types/types";
 import Modal from './Modal';
-import { imagePlaceholder } from '../utils/imagePlaceholder';
 
 type ProductModalProps = {
     product: IProduct;
@@ -12,7 +12,7 @@ type ProductModalProps = {
 const ProductModal = ({ product, showProductModal, setShowProductModal }: ProductModalProps) => {
     return (
         <Modal showModal={showProductModal} setShowModal={setShowProductModal} modalType='productModal'>
-            <div id="productModal" className="modalContent" >
+            <div id="productModal">
                 <img id="modalImage" src={product.imageUrl || imagePlaceholder} />
                 <div id="modalFrameOne">
                     <div id="modalFrameTwo">

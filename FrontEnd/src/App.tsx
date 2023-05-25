@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store.js';
 import Navigation from "./Navigation";
 import 'react-toastify/dist/ReactToastify.css';
+import '/src/styles.scss';
 
 function App() {
   return (

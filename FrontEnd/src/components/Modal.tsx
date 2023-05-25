@@ -1,7 +1,7 @@
-import { Dialog, IconButton, Slide } from '@mui/material';
 import { Dispatch, SetStateAction, forwardRef } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
+import { Dialog, IconButton, Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -13,13 +13,7 @@ const Transition = forwardRef(function Transition(
 });
 
 const modalStyle = {
-    borderRadius: "20px",
-    margin: 0,
     width: "92%",
-    maxHeight: "842px",
-    "@media screen and (max-width: 768px)": {
-        maxHeight: "96%",
-    }
 }
 
 type ModalProps = {

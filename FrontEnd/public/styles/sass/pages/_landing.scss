@@ -32,15 +32,13 @@
 }
 
 @media screen and (max-width: 768px) {
-    #asideMain {
-        #landingMain {
-            width: 100%;
-            height: 100%;
-            margin: 0;
+    #landingMain {
+        width: 100%;
+        height: 100%;
+        margin: 0;
 
-            #marketplaceLogo {
-                width: 80%;
-            }
+        #marketplaceLogo {
+            width: 80%;
         }
     }
 }
