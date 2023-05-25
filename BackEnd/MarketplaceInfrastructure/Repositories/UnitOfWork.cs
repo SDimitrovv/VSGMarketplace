@@ -1,7 +1,7 @@
 ﻿using MarketplaceApplication.Models.GenericRepository;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace MarketplaceInfrastructure.Repositories
 {

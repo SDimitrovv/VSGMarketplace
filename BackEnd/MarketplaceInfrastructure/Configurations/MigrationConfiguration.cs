@@ -12,7 +12,7 @@ namespace MarketplaceInfrastructure.Configurations
             services.AddFluentMigratorCore()
                     .ConfigureRunner(conf => conf.AddSqlServer()
                     .WithGlobalConnectionString("DefaultConnection")
-                    .ScanIn(typeof(LocationAndCategoryTables).Assembly).For.Migrations());
+                    .ScanIn(typeof(LocationAndCategoryTables_01).Assembly).For.Migrations());
 
             return services;
         }

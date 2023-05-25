@@ -53,7 +53,7 @@ namespace MarketplaceAPI.Controllers
 
         [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpGet]
-        [Route("PendingOrders")]
+        [Route("Pending-Orders")]
         public async Task<IEnumerable<PendingOrdersGetModel>> GetPendingOrders()
         {
             return await _orderService.GetPendingOrders();
@@ -61,7 +61,7 @@ namespace MarketplaceAPI.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("MyOrders")]
+        [Route("My-Orders")]
         public async Task<IEnumerable<MyOrdersGetModel>> GetMyOrders()
         {
             return await _orderService.GetMyOrders();
