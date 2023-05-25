@@ -28,6 +28,11 @@ const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) 
         setPage(0);
     };
 
+    const handleChangePage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
+        console.log(e);
+        setPage(newPage);
+    }
+
     return (
         <TableContainer component="div" id="tableBorder" ref={tableRef}>
             <Table aria-label="sticky table">
@@ -57,8 +62,7 @@ const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) 
                             count={filteredProducts.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
-                            onPageChange={(e, newPage) => {console.log(e),
-                             setPage(newPage)}}
+                            onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
                         />
                     </TableRow>

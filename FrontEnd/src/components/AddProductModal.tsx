@@ -70,6 +70,7 @@ const AddProductModal = ({
 
         const responseData = response.data;
         const selectedCategory = categories?.filter(c => data.categoryId === c.id)[0] as ICategory;
+        const selectedCity = locations?.filter(l => data.locationId === l.id)[0] as ILocation;
 
         if (image.name) {
             const imageForm = new FormData();
@@ -78,10 +79,10 @@ const AddProductModal = ({
             const imgRes = await createImage({ id, imageForm }) as { data: string };
             const newImgUrl = imgRes.data;
             console.log("Image POST", newImgUrl);
-            const newProduct = { ...responseData, imageUrl: newImgUrl, type: selectedCategory.type }
+            const newProduct = { ...responseData, imageUrl: newImgUrl, type: selectedCategory.type, city: selectedCity.city }
             setProducts((oldProducts) => [...oldProducts, newProduct]);
         } else {
-            const newProduct = { ...responseData, type: selectedCategory.type }
+            const newProduct = { ...responseData, type: selectedCategory.type, city: selectedCity.city }
             setProducts((oldProducts) => [...oldProducts, newProduct]);
         }
 

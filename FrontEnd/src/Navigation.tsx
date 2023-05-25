@@ -2,7 +2,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy } from "react";
 import Layout from "./components/Layout";
-import ProtectedRoute from "./components/ProtectedRoute";
+import UserRoute from "./components/UserRoute";
 import AdminRoute from "./components/AdminRoute";
 
 const Home = lazy(() => import('./pages/Home'));
@@ -17,15 +17,15 @@ const Navigation = () => {
         <BrowserRouter>
             <Routes>
                 <Route index element={<Home />} />
-                <Route element={<ProtectedRoute />}>
+                <Route path="*" element={<NotFound />} />
+                <Route element={<UserRoute />}>
                     <Route path="marketplace" element={<Layout><Marketplace /></Layout>} />
+                    <Route path="my-orders" element={<Layout><MyOrders /></Layout>} />
                     <Route element={<AdminRoute />} >
                         <Route path="inventory" element={<Layout><Inventory /></Layout>} />
                         <Route path="pending-orders" element={<Layout><PendingOrders /></Layout>} />
                     </Route >
-                    <Route path="my-orders" element={<Layout><MyOrders /></Layout>} />
                 </Route>
-                <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter >
     )

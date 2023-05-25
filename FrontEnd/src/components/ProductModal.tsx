@@ -22,6 +22,7 @@ const ProductModal = ({ product, showProductModal, setShowProductModal }: Produc
                         </div>
                         <div id="priceAndQty">
                             <b>{product.price} BGN</b>
+                            <small>Location: {product.city}</small>
                             <small>Qty: {product.quantityForSale}</small>
                         </div>
                     </div>

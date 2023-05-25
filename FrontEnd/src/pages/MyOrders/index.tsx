@@ -3,7 +3,7 @@ import { IOrder } from "../../types/types.ts";
 import MyOrderComponent from "../../components/MyOrderComponent.tsx";
 
 const MyOrders = () => {
-    const { data: orders } = useGetMyOrdersQuery();
+    const { data: orders, isLoading } = useGetMyOrdersQuery();
 
     return (
         <main id='myOrdersMain'>
@@ -15,6 +15,7 @@ const MyOrders = () => {
                 <span className="orderStatus">Status</span>
             </div>
             {orders && orders.map((order: IOrder) => <MyOrderComponent order={order} key={order.id} />)}
+            {isLoading && <div className="order" >Loading...</div>}
             {orders?.length === 0 && <div className="order" >No orders</div>}
         </main>
     );

@@ -7,23 +7,6 @@
     justify-content: flex-end;
     margin-top: 10px;
 
-    #input {
-        @include flex-align(row, flex-end);
-        width: 240px;
-        height: 36px;
-        border-bottom: 1px solid #000;
-
-        input {
-            outline: none;
-            padding-bottom: 2px;
-        }
-
-        svg {
-            padding-bottom: 6px;
-            margin-right: 10px;
-        }
-    }
-
     button {
         cursor: pointer;
         margin-left: 20px;
@@ -113,7 +96,7 @@
                 height: 0;
 
                 .MuiInputBase-root::after {
-                    border-bottom: "#000",
+                    border-bottom: #000,
                 }
 
                 @media screen and (max-width: 768px) {
@@ -159,16 +142,13 @@
 
 @media screen and (max-width: 768px) {
     #searchSpace {
-        @include flex-align(row, flex-end);
-        justify-content: space-between;
-        margin: 20px 10px;
+        @include flex-align(column, flex-start);
+        margin-left: 12px;
 
-        #input {
-            width: 46%;
-
-            input {
-                width: 50%;
-            }
+        .MuiFormControl-root,
+        svg {
+            margin-left: 4px;
+            margin-bottom: 12px;
         }
     }
 

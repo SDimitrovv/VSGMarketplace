@@ -55,7 +55,7 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
 
     return (
         <>
-            <EditProductModal product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />
+            <EditProductModal setProducts={setProducts} product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />
             <Popup string={str} onYes={handleDelete} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={500}>
                 <StyledTableRow ref={rowRef} id={product.id.toString()} className="productRow">

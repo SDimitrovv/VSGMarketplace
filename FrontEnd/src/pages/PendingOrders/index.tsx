@@ -3,7 +3,7 @@ import { IOrder } from "../../types/types.ts";
 import PendingOrderComponent from "../../components/PendingOrderComponent.tsx";
 
 const PendingOrders = () => {
-    const { data: orders } = useGetPendingOrdersQuery();
+    const { data: orders, isLoading } = useGetPendingOrdersQuery();
 
     return (
         <main id='pendingOrdersMain'>
@@ -16,6 +16,7 @@ const PendingOrders = () => {
                 <span className="actionColumn">Action</span>
             </div>
             {orders && orders.map((order: IOrder) => <PendingOrderComponent order={order} key={order.id} />)}
+            {isLoading && <div className="order" >Loading...</div>}
             {orders?.length === 0 && <div className="order" >No orders</div>}
         </main>
     );

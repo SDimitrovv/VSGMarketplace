@@ -4,8 +4,8 @@ import { IUser } from "../types/types";
 
 const Sidebar = () => {
     const user: IUser = JSON.parse(sessionStorage.getItem("user") as string);
-    const isAdmin = user.memberType === 'Admin';
-    const profileName = user.name.split(" ")[0];
+    const isAdmin = user?.memberType === 'Admin';
+    const profileName = user?.name.split(" ")[0];
     const onLogout = () => {
         instance.logoutRedirect({
             postLogoutRedirectUri: "/",

@@ -30,7 +30,7 @@ const Home = (): JSX.Element => {
 
       sessionStorage.setItem("user", JSON.stringify(user));
       navigate('/marketplace');
-      location.reload();
+      // location.reload();
     } catch (error) {
       console.log(error);
     }

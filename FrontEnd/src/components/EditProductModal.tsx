@@ -19,12 +19,13 @@ import Modal from "./Modal.tsx";
 import { useGetLocationQuery } from "../services/locationsService.ts";
 
 type EditModalProps = {
+    setProducts: Dispatch<SetStateAction<IProduct[]>>;
     product: IProduct;
     showEditModal: boolean;
     setShowEditModal: Dispatch<SetStateAction<boolean>>;
 };
 
-const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModalProps) => {
+const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModal }: EditModalProps) => {
     const [imageUrl, setImageUrl] = useState(product.imageUrl || imagePlaceholder);
     const [selectOption, setSelectOption] = useState(product.categoryId.toString());
     const [locationOption, setLocationOption] = useState(product.locationId.toString());
@@ -68,7 +69,7 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
             const newImgUrl = imgRes.data;
             console.log("Image PUT", newImgUrl);
             setImageUrl(newImgUrl);
-        } else if (currentImg.src !== product.imageUrl) {
+        } else if (currentImg.src !== product.imageUrl && product.imageUrl !== null) {
             const res = await deleteImage(product.id as number);
             setImageUrl(imagePlaceholder);
             console.log("Image DELETE", res);
@@ -76,13 +77,21 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
 
         const id = product.id;
         const response = await editProduct({ id, data }) as { data: IProduct };
-        if (!('error' in response)) {
-            toast.success('Modified successfully!');
-        } else {
+        if ('error' in response) {
             setShowEditModal(false);
             return
+        } else {
+            toast.success('Modified successfully!');
         }
 
+        const selectedCategory = categories?.filter(c => data.categoryId === c.id)[0] as ICategory;
+        const selectedCity = locations?.filter(l => data.locationId === l.id)[0] as ILocation;
+
+        const currentData = { ...data };
+        delete currentData.image;
+
+        const editedProduct = { ...currentData, id: product.id, type: selectedCategory.type, city: selectedCity.city } as IProduct;
+        setProducts(oldProducts => oldProducts.map(p => p.id === editedProduct.id ? editedProduct : p));
         setShowEditModal(false);
     };
 
@@ -97,6 +106,11 @@ const EditProductModal = ({ product, showEditModal, setShowEditModal }: EditModa
                             type="text"
                             label="Code *"
                             variant="standard"
+                            InputLabelProps={{
+                                style: {
+                                    color: "#9A9A9A",
+                                },
+                            }}
                             error={Boolean(errors.code)}
                             helperText={errors.code?.message}
                             {...register('code', { required: 'Code field is required' })}

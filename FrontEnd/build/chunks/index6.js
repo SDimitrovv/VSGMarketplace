@@ -1,1 +1,0 @@
-import{j as e,N as o}from"../index.js";const s=()=>e.jsxs("section",{id:"errorSection",children:[e.jsx("h2",{children:"Error 404..."}),e.jsx("p",{children:"This page doesn't exist"}),e.jsx(o,{to:"/",style:{color:"#9a9a9a"},children:e.jsx("i",{children:"Click here to go to homepage"})})]});export{s as default};

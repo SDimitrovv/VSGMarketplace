@@ -106,7 +106,6 @@
 
             #productName {
                 @include flex-align(column, flex-start);
-                width: 390px;
             }
 
             #priceAndQty {
@@ -153,6 +152,7 @@
                 }
 
                 b {
+                    align-self: flex-start;
                     font-family: "Roboto";
                     font-style: normal;
                     font-weight: 700;

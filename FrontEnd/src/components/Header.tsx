@@ -8,7 +8,7 @@ const Header = () => {
     const headerName = useRef(path);
 
     const user: IUser = JSON.parse(sessionStorage.getItem("user") as string);
-    const profileName = user.name.split(" ")[0];
+    const profileName = user?.name.split(" ")[0];
 
     const root = document.querySelector("#root") as HTMLElement;
 
