@@ -33,6 +33,8 @@ const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) 
         setPage(newPage);
     }
 
+    const rowHeight = (10 - filteredProducts.length) * 55;
+
     return (
         <TableContainer component="div" id="tableBorder" ref={tableRef}>
             <Table aria-label="sticky table">
@@ -56,9 +58,18 @@ const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) 
                         </TableRow>}
                 </TableBody>
                 <TableFooter>
+                    {filteredProducts.length < 10 && window.innerWidth > 768 &&
+                        <TableRow sx={{ height: rowHeight }}>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                        </TableRow>}
                     <TableRow>
                         <TablePagination
-                            rowsPerPageOptions={[10, 20]}
+                            rowsPerPageOptions={[10]}
                             count={filteredProducts.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
@@ -68,7 +79,7 @@ const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) 
                     </TableRow>
                 </TableFooter>
             </Table>
-        </TableContainer>
+        </TableContainer >
     );
 };
 

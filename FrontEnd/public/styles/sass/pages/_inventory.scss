@@ -52,7 +52,7 @@
     border-radius: 4px;
     margin-top: 40px;
     width: 99%;
-    // height: 88%;
+    height: 85%;
 
     .edit,
     .delete {
@@ -89,5 +89,6 @@
         margin: 20px 10px;
         width: auto;
         height: auto;
+        min-height: 250px;
     }
 }

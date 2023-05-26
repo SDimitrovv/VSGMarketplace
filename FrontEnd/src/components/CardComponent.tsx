@@ -21,7 +21,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
 
     const options = [];
     if (product.quantityForSale) {
-        for (let i = 1; i <= product.quantityForSale + 1; i++) {
+        for (let i = 1; i <= product.quantityForSale; i++) {
             options.push({ value: i });
             if (i > 50) {
                 break;

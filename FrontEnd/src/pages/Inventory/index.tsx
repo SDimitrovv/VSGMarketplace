@@ -74,11 +74,10 @@ const Inventory = () => {
                         </div>
                     </button>
                 </div>
-                {isLoading && <div>Loading...</div>}
                 {products &&
                     <InventoryTable
-                        setProducts={setProducts}
-                        filteredProducts={filteredProducts}
+                    setProducts={setProducts}
+                    filteredProducts={filteredProducts}
                     />
                 }
             </main>

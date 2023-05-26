@@ -55,10 +55,10 @@ svg {
 }
 
 @media screen and (max-width: 768px) {
+    @include responsive-mobile;
+
     #asideMain {
         @include flex-align(column, center);
         height: calc(100vh - 60px);
     }
-
-    @include responsive-mobile;
 }
