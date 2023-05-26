@@ -1,0 +1,139 @@
+//Modals for adding and editing items
+
+.MuiPaper-root.MuiDialog-paper {
+    border-radius: 20px;
+    margin: 0;
+    max-height: 842px;
+
+    .closeIcon {
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        svg {
+            color: $general-black;
+        }
+    }
+
+    .addForm,
+    .editForm {
+        @include flex-align(column, space-between);
+        background-color: $general-white;
+        overflow-y: auto;
+        overflow-x: auto;
+
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-top: 8%;
+
+            .leftModal {
+                @include flex-align(column, flex-start);
+                font-family: "Inter";
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 17px;
+                width: 40%;
+                margin-left: 8%;
+
+                h2 {
+                    font-weight: 700;
+                    font-size: 24px;
+                    line-height: 29px;
+                    margin-bottom: 40px;
+                }
+
+                .formInput {
+                    padding-bottom: 2px;
+                    color: $general-gray;
+                    margin-bottom: 64px;
+                    width: 100%;
+                    height: 0;
+
+                    @include material-ui;
+
+                    @media screen and (max-width: 768px) {
+                        height: 34px !important;
+                        margin-bottom: 40px;
+                    }
+                }
+
+                .description {
+                    margin-bottom: 20px;
+                    width: 100%;
+
+                    @include material-ui;
+                }
+            }
+
+            .rightModal {
+                @include flex-align(column, center);
+                width: 50%;
+                justify-content: center;
+                margin-top: 14%;
+
+                img {
+                    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+                    max-width: 260px;
+                    max-height: 150px;
+                }
+
+                .uploadDelete {
+                    @include flex-align(column, center);
+                    justify-content: space-evenly;
+                }
+
+                .uploadImg {
+                    @include button($upload-image);
+                    @include flex-align(column, center);
+                    justify-content: center;
+                }
+
+                .deleteImg {
+                    @include button($main-color);
+                }
+
+                .inputImage {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        max-height: 96%;
+        width: 92%;
+
+        .addForm,
+        .editForm {
+            @include flex-align(column, space-between);
+            height: 100%;
+            width: 100%;
+            background-color: $general-white;
+            border-radius: 20px;
+
+            .row {
+                @include flex-align(column, center);
+                margin-top: 16px;
+
+                .leftModal,
+                .rightModal {
+                    margin: 8px;
+                    width: 90%;
+
+                    h2 {
+                        margin-bottom: 28px;
+                    }
+
+                    .uploadDelete {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

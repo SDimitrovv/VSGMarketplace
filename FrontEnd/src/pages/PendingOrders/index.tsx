@@ -16,8 +16,8 @@ const PendingOrders = () => {
                 <span className="actionColumn">Action</span>
             </div>
             {orders && orders.map((order: IOrder) => <PendingOrderComponent order={order} key={order.id} />)}
-            {isLoading && <div className="order" >Loading...</div>}
-            {orders?.length === 0 && <div className="order" >No orders</div>}
+            {isLoading && <div className="order">Loading...</div>}
+            {orders?.length === 0 && <div className="order">No orders</div>}
         </main>
     );
 };

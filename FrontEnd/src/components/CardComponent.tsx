@@ -47,12 +47,13 @@ const CardComponent = ({ product }: CardComponentProps) => {
         };
 
         const response = await createOrder(order);
-        if (!('error' in response)) {
-            toast.success('Order placed!');
-            navigate("/my-orders");
+        if ('error' in response) {
+            setAnchorEl(null);
+            return;
         }
 
-        setAnchorEl(null);
+        toast.success('Order placed!');
+        navigate("/my-orders");
     };
 
     const str = `Are you sure you want to buy ${selectValue.current} item for

@@ -36,8 +36,8 @@ const Modal = ({ showModal, setShowModal, children, modalType }: ModalProps) => 
             TransitionComponent={Transition}
             onClose={() => setShowModal(false)}
             PaperProps={{ sx: modalStyle }}>
-            <IconButton onClick={() => setShowModal(false)} sx={{ position: 'absolute', right: 0, top: 0 }}>
-                <CloseIcon sx={{ color: '#000' }} />
+            <IconButton className='closeIcon' onClick={() => setShowModal(false)}>
+                <CloseIcon />
             </IconButton>
             {children}
         </Dialog >

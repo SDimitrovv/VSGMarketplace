@@ -65,24 +65,23 @@ const AddProductModal = ({
         const response = await createProduct(data) as { data: IProduct };
         if ('error' in response) {
             setShowAddModal(false);
-            return
+            return;
         }
 
         const responseData = response.data;
         const selectedCategory = categories?.filter(c => data.categoryId === c.id)[0] as ICategory;
         const selectedCity = locations?.filter(l => data.locationId === l.id)[0] as ILocation;
+        const id = responseData.id;
 
         if (image.name) {
             const imageForm = new FormData();
             imageForm.set("picture", image as File);
-            const id = responseData.id
             const imgRes = await createImage({ id, imageForm }) as { data: string };
             const newImgUrl = imgRes.data;
-            console.log("Image POST", newImgUrl);
-            const newProduct = { ...responseData, imageUrl: newImgUrl, type: selectedCategory.type, city: selectedCity.city }
+            const newProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city, imageUrl: newImgUrl } as IProduct;
             setProducts((oldProducts) => [...oldProducts, newProduct]);
         } else {
-            const newProduct = { ...responseData, type: selectedCategory.type, city: selectedCity.city }
+            const newProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city } as IProduct;
             setProducts((oldProducts) => [...oldProducts, newProduct]);
         }
 
@@ -105,11 +104,6 @@ const AddProductModal = ({
                             type="text"
                             label="Code *"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             error={Boolean(errors.code)}
                             helperText={errors.code?.message}
                             {...register("code", { required: "Code field is required" })}
@@ -119,32 +113,16 @@ const AddProductModal = ({
                             type="text"
                             label="Name *"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             error={Boolean(errors.fullName)}
                             helperText={errors.fullName?.message}
                             {...register("fullName", { required: "Name field is required" })}
                         />
                         <TextField
-                            sx={{
-                                mb: "20px",
-                                width: "100%",
-                                ".MuiInputBase-root::after": {
-                                    borderBottom: "#000",
-                                },
-                            }}
+                            className='description'
                             label="Description"
                             multiline
                             rows={4}
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             {...register("description")}
                         />
                         <FormControl variant="standard" className='formInput'>
@@ -192,11 +170,6 @@ const AddProductModal = ({
                             type="number"
                             label="Qty For Sale"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             error={Boolean(errors.quantityForSale)}
                             helperText={errors.quantityForSale?.message}
                             {...register("quantityForSale", {
@@ -211,11 +184,6 @@ const AddProductModal = ({
                             type="number"
                             label="Sale Price"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                }
-                            }}
                             error={Boolean(errors.price)}
                             helperText={errors.price?.message}
                             {...register("price", {
@@ -230,11 +198,6 @@ const AddProductModal = ({
                             type="number"
                             label="Qty *"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             error={Boolean(errors.quantity)}
                             helperText={errors.quantity?.message}
                             {...register('quantity', {

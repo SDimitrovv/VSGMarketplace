@@ -26,14 +26,14 @@ type EditModalProps = {
 };
 
 const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModal }: EditModalProps) => {
-    const [imageUrl, setImageUrl] = useState(product.imageUrl || imagePlaceholder);
-    const [selectOption, setSelectOption] = useState(product.categoryId.toString());
     const [locationOption, setLocationOption] = useState(product.locationId.toString());
-    const { data: categories } = useGetCategoriesQuery();
-    const { data: locations } = useGetLocationQuery();
+    const [selectOption, setSelectOption] = useState(product.categoryId.toString());
+    const [imageUrl, setImageUrl] = useState(product.imageUrl || imagePlaceholder);
     const [editProduct, { isLoading: fetchingProduct }] = useEditProductMutation();
     const [editImage, { isLoading: fetchingImage }] = useEditImageMutation();
     const [deleteImage] = useDeleteImageMutation();
+    const { data: categories } = useGetCategoriesQuery();
+    const { data: locations } = useGetLocationQuery();
     const {
         register,
         handleSubmit,
@@ -60,23 +60,25 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
         data.price = data.price || null;
 
         const currentImg = document.querySelector(".currentImg") as HTMLImageElement;
+        const selectedCategory = categories?.filter(c => data.categoryId === c.id)[0] as ICategory;
+        const selectedCity = locations?.filter(l => data.locationId === l.id)[0] as ILocation;
+        const id = product.id;
 
         if (image.name) {
             const imageForm = new FormData();
             imageForm.append("newPicture", image as File);
-            const id = product.id;
             const imgRes = await editImage({ id, imageForm }) as { data: string };
             const newImgUrl = imgRes.data;
-            console.log("Image PUT", newImgUrl);
             setImageUrl(newImgUrl);
+            const editedProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city, imageUrl: newImgUrl } as IProduct;
+            setProducts(oldProducts => oldProducts.map(p => p.id === editedProduct.id ? editedProduct : p));
         } else if (currentImg.src !== product.imageUrl && product.imageUrl !== null) {
-            const res = await deleteImage(product.id as number);
+            await deleteImage(id);
             setImageUrl(imagePlaceholder);
-            console.log("Image DELETE", res);
         }
 
-        const id = product.id;
         const response = await editProduct({ id, data }) as { data: IProduct };
+
         if ('error' in response) {
             setShowEditModal(false);
             return
@@ -84,13 +86,7 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
             toast.success('Modified successfully!');
         }
 
-        const selectedCategory = categories?.filter(c => data.categoryId === c.id)[0] as ICategory;
-        const selectedCity = locations?.filter(l => data.locationId === l.id)[0] as ILocation;
-
-        const currentData = { ...data };
-        delete currentData.image;
-
-        const editedProduct = { ...currentData, id: product.id, type: selectedCategory.type, city: selectedCity.city } as IProduct;
+        const editedProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city } as IProduct;
         setProducts(oldProducts => oldProducts.map(p => p.id === editedProduct.id ? editedProduct : p));
         setShowEditModal(false);
     };
@@ -106,11 +102,6 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                             type="text"
                             label="Code *"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             error={Boolean(errors.code)}
                             helperText={errors.code?.message}
                             {...register('code', { required: 'Code field is required' })}
@@ -120,32 +111,16 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                             type="text"
                             label="Name *"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             error={Boolean(errors.fullName)}
                             helperText={errors.fullName?.message}
                             {...register('fullName', { required: 'Name field is required' })}
                         />
                         <TextField
-                            sx={{
-                                mb: "20px",
-                                width: "100%",
-                                ".MuiInputBase-root::after": {
-                                    borderBottom: "#000",
-                                },
-                            }}
+                            className='description'
                             label="Description"
                             multiline
                             rows={4}
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             {...register('description')}
                         />
                         <FormControl variant="standard" className='formInput'>
@@ -198,11 +173,6 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                             type="number"
                             label="Qty For Sale"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             error={Boolean(errors.quantityForSale)}
                             helperText={errors.quantityForSale?.message}
                             {...register("quantityForSale", {
@@ -217,11 +187,6 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                             type="number"
                             label="Sale Price"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             {...register("price", {
                                 min: {
                                     value: 0,
@@ -234,11 +199,6 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                             type="number"
                             label="Qty *"
                             variant="standard"
-                            InputLabelProps={{
-                                style: {
-                                    color: "#9A9A9A",
-                                },
-                            }}
                             error={Boolean(errors.quantity)}
                             helperText={errors.quantity?.message}
                             {...register('quantity', {

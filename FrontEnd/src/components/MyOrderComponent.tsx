@@ -20,12 +20,15 @@ const MyOrderComponent = ({ order }: MyOrderProps) => {
     const onCancel = async () => {
         const response = await rejectOrder(order.id);
         setAnchorEl(null);
-        if (!('error' in response)) {
-            setTimeout(() => {
-                setCurrentStatus("Declined");
-            }, 600);
-            toast.info('Order declined.');
+        if ('error' in response) {
+            return;
         }
+
+        setTimeout(() => {
+            setCurrentStatus("Declined");
+        }, 600);
+
+        toast.info('Order declined.');
     }
 
     return (
@@ -43,7 +46,7 @@ const MyOrderComponent = ({ order }: MyOrderProps) => {
                         <span>{currentStatus}</span>
                         {currentStatus === "Pending" &&
                             <a className="cancelOrder" onClick={e => setAnchorEl(e.currentTarget)}>
-                                <CloseIcon sx={{ fontSize: "large", color: "#ED1C25" }} />
+                                <CloseIcon />
                             </a>}
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 import { useCompleteOrderMutation } from "../services/ordersService";
 import { IOrder } from "../types/types";
-import { Fade } from '@mui/material';
 import { useRef } from "react";
 import { toast } from "react-toastify";
+import { Fade } from '@mui/material';
 
 type PendingOrderProps = {
     order: IOrder;
@@ -14,10 +14,12 @@ const PendingOrderComponent = ({ order }: PendingOrderProps) => {
 
     const onComplete = async () => {
         const response = await completeOrder(order.id);
-        if (!('error' in response)) {
-            orderRef.current?.remove();
-            toast.success('Order completed!');
+        if ('error' in response) {
+            return;
         }
+
+        orderRef.current?.remove();
+        toast.success('Order completed!');
     }
 
     return (

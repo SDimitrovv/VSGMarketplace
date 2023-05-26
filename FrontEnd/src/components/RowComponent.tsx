@@ -1,12 +1,12 @@
 import { TableCell, TableRow, tableCellClasses, styled, Fade } from '@mui/material';
 import { useState, useRef, Dispatch, SetStateAction } from 'react';
+import { useDeleteProductMutation } from '../services/productsService.ts';
 import { IProduct } from "../types/types.ts";
+import { toast } from 'react-toastify';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditProductModal from "./EditProductModal.tsx";
 import EditIcon from '@mui/icons-material/Edit';
 import Popup from './Popup.tsx';
-import { useDeleteProductMutation } from '../services/productsService.ts';
-import { toast } from 'react-toastify';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -38,17 +38,15 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
     const [deleteProduct] = useDeleteProductMutation();
     const rowRef = useRef<HTMLTableRowElement>(null);
 
-    const openPopup = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        setAnchorEl(e.currentTarget)
-    }
-
     const handleDelete = async () => {
         setAnchorEl(null);
         const response = await deleteProduct(product.id);
-        if (!('error' in response)) {
-            toast.success('Deleted successfully!');
-            setProducts(oldProducts => oldProducts.filter(p => p !== product))
+        if ('error' in response) {
+            return;
         }
+
+        toast.success('Deleted successfully!');
+        setProducts(oldProducts => oldProducts.filter(p => p !== product));
     }
 
     const str = `Are you sure you want to remove this item ?`;
@@ -66,10 +64,10 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
                     <StyledTableCell>{product.quantity}</StyledTableCell>
                     <StyledTableCell>
                         <a className="edit" onClick={() => setShowEditModal(true)}>
-                            <EditIcon sx={{ fontSize: "medium" }} />
+                            <EditIcon />
                         </a>
-                        <a className="delete" onClick={openPopup}>
-                            <DeleteOutlineIcon sx={{ fontSize: "medium" }} />
+                        <a className="delete" onClick={e => setAnchorEl(e.currentTarget)}>
+                            <DeleteOutlineIcon />
                         </a>
                     </StyledTableCell>
                 </StyledTableRow>

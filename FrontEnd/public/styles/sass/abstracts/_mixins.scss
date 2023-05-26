@@ -28,34 +28,6 @@
     align-items: $align;
 }
 
-//Pop up window with yes and no
-
-@mixin pop-up() {
-  
-}
-
-//Triangle on top of pop up window
-
-@mixin triangle($left) {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: $left;
-    border-style: solid;
-    border-width: 0 7px 10px 7px;
-    border-color: transparent transparent $general-white transparent;
-}
-
-//Modals styling
-
-@mixin modal($height, $width) {
-    @include flex-align(column, space-between);
-    height: $height;
-    width: $width;
-    background-color: $general-white;
-    border-radius: 20px;
-}
-
 //General button styling
 
 @mixin button($backgroundColor) {
@@ -70,4 +42,16 @@
     font-size: 18px;
     line-height: 24px;
     background: $backgroundColor;
+}
+
+//Material UI styling
+
+@mixin material-ui {
+    .MuiInputBase-root::after {
+        border-bottom: $general-black;
+    }
+
+    label {
+        color: $general-gray;
+    }
 }

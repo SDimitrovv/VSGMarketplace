@@ -11,8 +11,8 @@
         box-sizing: border-box;
         width: 100%;
         margin-top: 20px;
-        background: #dadcdd;
-        border-radius: 10px;
+        background: $orders-heading;
+        border-radius: 10px; 
         font-family: "Roboto";
         font-style: normal;
         font-weight: 700;
@@ -29,12 +29,17 @@
             .cancelOrder {
                 cursor: pointer;
                 margin-left: 28px;
+
+                svg {
+                    font-size: large;
+                    color: $main-color;
+                }
             }
         }
     }
 
     .order {
-        border: 1px solid #dadcdd;
+        border: 1px solid $orders-heading;
         background-color: $general-white;
         font-weight: 400;
         font-size: 14px;
