@@ -88,9 +88,10 @@ namespace MarketplaceApplication.Services
                 return;
             }
 
-            order.ProductId = 0;
-            var updatedOrder = _mapper.Map<Order>(order);
-            await _orderRepository.Update(updatedOrder);
+            if (order.Status == "Pending")
+            {
+                throw new HttpException("Order is pending!", HttpStatusCode.NotFound);
+            }
 
             await _productRepository.Delete(id);
         }
