@@ -38,7 +38,8 @@ namespace MarketplaceInfrastructure.Repositories
         {
             var query = @"SELECT *
                         FROM Orders
-                        WHERE ProductId = @productId";
+                        WHERE ProductId = @productId
+                        AND Status = 'Pending'";
 
             var order = await Connection.QueryFirstOrDefaultAsync<GetOrderModel>(query, new { productId }, Transaction);
 

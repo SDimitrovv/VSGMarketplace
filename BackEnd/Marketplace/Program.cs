@@ -23,15 +23,15 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "SampleInstance";
 });
 
-builder.Services.AddAuthentication(x =>
+builder.Services.AddAuthentication(conf =>
 {
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(x =>
+    conf.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    conf.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    conf.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(jwt =>
 {
-    x.Audience = builder.Configuration["JwtSettings:Audience"];
-    x.Authority = builder.Configuration["JwtSettings:Authority"];
+    jwt.Audience = builder.Configuration["JwtSettings:Audience"];
+    jwt.Authority = builder.Configuration["JwtSettings:Authority"];
 });
 builder.Services.AddAuthorization(options =>
 {
