@@ -1,10 +1,10 @@
-import { useRejectOrderMutation } from "../services/ordersService.ts";
+import { useRejectOrderMutation } from "../../services/ordersService.ts";
 import { useState } from "react";
-import { IOrder } from "../types/types.ts";
+import { IOrder } from "../../types/types.ts";
 import { toast } from "react-toastify";
 import { Fade } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import Popup from "./Popup.tsx";
+import Popup from "../../components/Popup.tsx";
 
 type MyOrderProps = {
     order: IOrder;

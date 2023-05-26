@@ -1,12 +1,12 @@
-import { useCreateOrderMutation } from "../services/ordersService.ts";
-import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
+import { useCreateOrderMutation } from "../../services/ordersService.ts";
+import { imagePlaceholder } from "../../utils/imagePlaceholder.ts";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IProduct, IUser } from "../types/types.ts";
+import { IProduct, IUser } from "../../types/types.ts";
 import { Fade } from '@mui/material';
 import { toast } from "react-toastify";
 import ProductModal from "./ProductModal.tsx";
-import Popup from "./Popup.tsx";
+import Popup from "../../components/Popup.tsx";
 
 type CardComponentProps = {
     product: IProduct;
@@ -19,15 +19,15 @@ const CardComponent = ({ product }: CardComponentProps) => {
     const [createOrder] = useCreateOrderMutation();
     const navigate = useNavigate();
 
-    const options = [];
-    if (product.quantityForSale) {
-        for (let i = 1; i <= product.quantityForSale; i++) {
-            options.push({ value: i });
-            if (i > 50) {
-                break;
-            }
-        }
-    }
+    // const options = [];
+    // if (product.quantityForSale) {
+    //     for (let i = 1; i <= product.quantityForSale; i++) {
+    //         options.push({ value: i });
+    //         if (i > 50) {
+    //             break;
+    //         }
+    //     }
+    // }
 
     const setSelectValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
         selectValue.current = Number(e.currentTarget.value);
@@ -81,9 +81,9 @@ const CardComponent = ({ product }: CardComponentProps) => {
                                         className="randomNumberSelect"
                                         onChange={setSelectValue}
                                     >
-                                        {options.map((n) => (
-                                            <option value={n.value} key={n.value}>
-                                                {n.value}
+                                        {Array(product.quantityForSale).fill(1).map((n, i) => n + i).map((o) => (
+                                            <option value={o} key={o}>
+                                                {o}
                                             </option>
                                         ))}
                                     </select>

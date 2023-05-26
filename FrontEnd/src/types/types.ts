@@ -24,11 +24,6 @@ export interface IOrder {
     price: number;
 }
 
-export interface IErrorResponse {
-    Code: number;
-    ErrorMessage: string;
-}
-
 export interface IFormInputs {
     code: string;
     fullName: string;
@@ -39,11 +34,6 @@ export interface IFormInputs {
     price: number | null;
     quantity: number | null;
     image: FileList | null;
-}
-
-export interface IResponse<T> {
-    Product: T;
-    Error: IErrorResponse;
 }
 
 export interface ICategory {

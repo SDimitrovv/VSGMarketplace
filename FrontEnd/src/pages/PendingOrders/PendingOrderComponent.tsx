@@ -1,5 +1,5 @@
-import { useCompleteOrderMutation } from "../services/ordersService";
-import { IOrder } from "../types/types";
+import { useCompleteOrderMutation } from "../../services/ordersService";
+import { IOrder } from "../../types/types";
 import { useRef } from "react";
 import { toast } from "react-toastify";
 import { Fade } from '@mui/material';

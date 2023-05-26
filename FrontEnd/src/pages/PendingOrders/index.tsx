@@ -1,6 +1,6 @@
 import { useGetPendingOrdersQuery } from '../../services/ordersService.ts';
 import { IOrder } from "../../types/types.ts";
-import PendingOrderComponent from "../../components/PendingOrderComponent.tsx";
+import PendingOrderComponent from "./PendingOrderComponent.tsx";
 
 const PendingOrders = () => {
     const { data: orders, isLoading } = useGetPendingOrdersQuery();

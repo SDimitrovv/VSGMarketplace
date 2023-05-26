@@ -6,99 +6,96 @@ import {
     MenuItem,
     FormHelperText,
 } from "@mui/material";
-import { ICategory, IFormInputs, ILocation, IProduct } from "../types/types.ts";
-import { useState, Dispatch, SetStateAction } from "react";
-import { useCreateProductMutation } from "../services/productsService.ts";
-import { useCreateImageMutation } from "../services/imageService.ts";
-import { useGetCategoriesQuery } from "../services/categoriesService.ts";
-import { useGetLocationQuery } from "../services/locationsService.ts";
-import { imagePlaceholder } from "../utils/imagePlaceholder.ts";
-import { uploadImage } from "../utils/uploadImage.ts";
-import { useForm } from "react-hook-form";
+import { useDeleteImageMutation, useEditImageMutation } from "../../services/imageService.ts";
+import { useState, Dispatch, SetStateAction, } from "react";
+import { IFormInputs, ICategory, IProduct, ILocation } from "../../types/types.ts";
+import { useEditProductMutation } from "../../services/productsService.ts";
+import { useGetCategoriesQuery } from "../../services/categoriesService.ts";
+import { imagePlaceholder } from "../../utils/imagePlaceholder.ts";
+import { uploadImage } from "../../utils/uploadImage.ts";
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import Modal from "./Modal.tsx";
+import Modal from "../../components/Modal.tsx";
+import { useGetLocationQuery } from "../../services/locationsService.ts";
 
-type AddModalProps = {
+type EditModalProps = {
     setProducts: Dispatch<SetStateAction<IProduct[]>>;
-    showAddModal: boolean;
-    setShowAddModal: Dispatch<SetStateAction<boolean>>;
+    product: IProduct;
+    showEditModal: boolean;
+    setShowEditModal: Dispatch<SetStateAction<boolean>>;
 };
 
-const AddProductModal = ({
-    setProducts,
-    showAddModal,
-    setShowAddModal,
-}: AddModalProps) => {
-    const [createProduct, { isLoading: fetchingProduct }] = useCreateProductMutation();
-    const [createImage, { isLoading: fetchingImage }] = useCreateImageMutation();
+const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModal }: EditModalProps) => {
+    const [locationOption, setLocationOption] = useState(product.locationId.toString());
+    const [selectOption, setSelectOption] = useState(product.categoryId.toString());
+    const [imageUrl, setImageUrl] = useState(product.imageUrl || imagePlaceholder);
+    const [editProduct, { isLoading: fetchingProduct }] = useEditProductMutation();
+    const [editImage, { isLoading: fetchingImage }] = useEditImageMutation();
+    const [deleteImage] = useDeleteImageMutation();
     const { data: categories } = useGetCategoriesQuery();
     const { data: locations } = useGetLocationQuery();
-    const [imageUrl, setImageUrl] = useState(imagePlaceholder);
-    const [selectOption, setSelectOption] = useState('');
-    const [locationOption, setLocationOption] = useState('');
     const {
         register,
         handleSubmit,
         formState: { errors },
         getValues,
-        reset
     } = useForm<IFormInputs>({
         defaultValues: {
-            code: "",
-            fullName: "",
-            description: "",
-            categoryId: null,
-            locationId: null,
-            quantityForSale: null,
-            price: null,
-            quantity: null,
-            image: null,
+            code: product.code,
+            fullName: product.fullName,
+            description: product.description,
+            categoryId: product.categoryId,
+            locationId: product.locationId,
+            quantityForSale: product.quantityForSale || null,
+            price: product.price || null,
+            quantity: product.quantity,
+            image: null
         },
         mode: 'all',
     });
 
-    const onSubmit = async (data: IFormInputs): Promise<void> => {
+    const onSubmit = async (data: IFormInputs) => {
         const image: { name: string } | File = data.image ? data.image[0] : { name: '' };
         data.quantityForSale = data.quantityForSale || null;
         data.price = data.price || null;
 
-        const response = await createProduct(data) as { data: IProduct };
-        if ('error' in response) {
-            setShowAddModal(false);
-            return;
-        }
-
-        const responseData = response.data;
+        const currentImg = document.querySelector(".currentImg") as HTMLImageElement;
         const selectedCategory = categories?.filter(c => data.categoryId === c.id)[0] as ICategory;
         const selectedCity = locations?.filter(l => data.locationId === l.id)[0] as ILocation;
-        const id = responseData.id;
+        const id = product.id;
 
         if (image.name) {
             const imageForm = new FormData();
-            imageForm.set("picture", image as File);
-            const imgRes = await createImage({ id, imageForm }) as { data: string };
+            imageForm.append("newPicture", image as File);
+            const imgRes = await editImage({ id, imageForm }) as { data: string };
             const newImgUrl = imgRes.data;
-            const newProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city, imageUrl: newImgUrl } as IProduct;
-            setProducts((oldProducts) => [...oldProducts, newProduct]);
-        } else {
-            const newProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city } as IProduct;
-            setProducts((oldProducts) => [...oldProducts, newProduct]);
+            setImageUrl(newImgUrl);
+            const editedProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city, imageUrl: newImgUrl } as IProduct;
+            setProducts(oldProducts => oldProducts.map(p => p.id === editedProduct.id ? editedProduct : p));
+        } else if (currentImg.src !== product.imageUrl && product.imageUrl !== null) {
+            await deleteImage(id);
         }
 
-        setSelectOption('');
-        setLocationOption('');
-        toast.success('Created successfully!');
-        setShowAddModal(false);
-        setImageUrl(imagePlaceholder);
-        reset();
+        const response = await editProduct({ id, data }) as { data: IProduct };
+
+        if ('error' in response) {
+            setShowEditModal(false);
+            return
+        } else {
+            toast.success('Modified successfully!');
+        }
+
+        const editedProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city } as IProduct;
+        setProducts(oldProducts => oldProducts.map(p => p.id === editedProduct.id ? editedProduct : p));
+        setShowEditModal(false);
     };
 
     return (
-        <Modal showModal={showAddModal} setShowModal={setShowAddModal}>
-            <form className="addForm" onSubmit={handleSubmit(onSubmit)}>
+        <Modal showModal={showEditModal} setShowModal={setShowEditModal} >
+            <form className="editForm" onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                     <div className="leftModal">
-                        <h2>Add New Item</h2>
+                        <h2>Modify Item</h2>
                         <TextField
                             className='formInput'
                             type="text"
@@ -106,7 +103,7 @@ const AddProductModal = ({
                             variant="standard"
                             error={Boolean(errors.code)}
                             helperText={errors.code?.message}
-                            {...register("code", { required: "Code field is required" })}
+                            {...register('code', { required: 'Code field is required' })}
                         />
                         <TextField
                             className='formInput'
@@ -115,7 +112,7 @@ const AddProductModal = ({
                             variant="standard"
                             error={Boolean(errors.fullName)}
                             helperText={errors.fullName?.message}
-                            {...register("fullName", { required: "Name field is required" })}
+                            {...register('fullName', { required: 'Name field is required' })}
                         />
                         <TextField
                             className='description'
@@ -123,7 +120,7 @@ const AddProductModal = ({
                             multiline
                             rows={4}
                             variant="standard"
-                            {...register("description")}
+                            {...register('description')}
                         />
                         <FormControl variant="standard" className='formInput'>
                             <InputLabel focused={false}>Category *</InputLabel>
@@ -135,15 +132,16 @@ const AddProductModal = ({
                                     required: "Category field is required",
                                 })}
                             >
+                                <MenuItem value={selectOption} key={selectOption}>
+                                    {product.type}
+                                </MenuItem>
                                 {categories?.map((c: ICategory) => (
+                                    c.type !== product.type &&
                                     <MenuItem value={c.id} key={c.id}>
                                         {c.type}
                                     </MenuItem>
                                 ))}
                             </Select>
-                            <FormHelperText error>
-                                {errors.categoryId?.message}
-                            </FormHelperText>
                         </FormControl>
                         <FormControl variant="standard" className='formInput'>
                             <InputLabel focused={false}>Location *</InputLabel>
@@ -155,7 +153,11 @@ const AddProductModal = ({
                                     required: "Location field is required",
                                 })}
                             >
+                                <MenuItem value={locationOption} key={locationOption}>
+                                    {product.city}
+                                </MenuItem>
                                 {locations?.map((l: ILocation) => (
+                                    l.city !== product.city &&
                                     <MenuItem value={l.id} key={l.id}>
                                         {l.city}
                                     </MenuItem>
@@ -184,8 +186,6 @@ const AddProductModal = ({
                             type="number"
                             label="Sale Price"
                             variant="standard"
-                            error={Boolean(errors.price)}
-                            helperText={errors.price?.message}
                             {...register("price", {
                                 min: {
                                     value: 0,
@@ -206,33 +206,34 @@ const AddProductModal = ({
                                     value: 0,
                                     message: 'Quantity must be 0 or higher'
                                 },
-                                validate: value => value as number >= Number(getValues("quantityForSale")) || 'Qty For Sale cannot be higher than Qty'
+                                validate: value => value as number >= Number(getValues("quantityForSale")) || 'Qty cannot be less than Qty For Sale'
                             })}
                         />
                     </div>
                     <div className="rightModal">
                         <img className="currentImg" src={imageUrl} />
                         <input
-                            id="uploadInput"
+                            id="editUploadInput"
                             className="inputImage"
                             accept="image/*"
                             type="file"
-                            {...register("image", {
+                            {...register('image', {
                                 onChange: (e) => setImageUrl(uploadImage(e))
                             })}
                         />
                         <div className="uploadDelete">
-                            <label htmlFor="uploadInput" className="uploadImg">
+                            <label htmlFor="editUploadInput" className="uploadImg">
                                 Upload
                             </label>
                             <button type='button' className="deleteImg" onClick={() => setImageUrl(imagePlaceholder)}>Remove</button>
                         </div>
                     </div>
                 </div>
-                <button type="submit" disabled={fetchingProduct || fetchingImage}>{(fetchingProduct || fetchingImage) ? 'Submitting...' : 'Add'}</button>
+                <button type="submit" disabled={fetchingProduct || fetchingImage}>{(fetchingProduct || fetchingImage) ? 'Submitting...' : 'Modify'}</button>
             </form>
         </Modal>
     );
 };
 
-export default AddProductModal;
+
+export default EditProductModal;

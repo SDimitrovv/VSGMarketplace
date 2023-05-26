@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import { imagePlaceholder } from '../utils/imagePlaceholder';
-import { IProduct } from "../types/types";
-import Modal from './Modal';
+import { imagePlaceholder } from '../../utils/imagePlaceholder';
+import { IProduct } from "../../types/types";
+import Modal from '../../components/Modal';
 
 type ProductModalProps = {
     product: IProduct;

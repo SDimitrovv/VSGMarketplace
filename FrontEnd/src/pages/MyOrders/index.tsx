@@ -1,6 +1,6 @@
 import { useGetMyOrdersQuery } from "../../services/ordersService.ts";
 import { IOrder } from "../../types/types.ts";
-import MyOrderComponent from "../../components/MyOrderComponent.tsx";
+import MyOrderComponent from "./MyOrderComponent.tsx";
 
 const MyOrders = () => {
     const { data: orders, isLoading } = useGetMyOrdersQuery();

@@ -1,12 +1,12 @@
 import { TableCell, TableRow, tableCellClasses, styled, Fade } from '@mui/material';
 import { useState, useRef, Dispatch, SetStateAction } from 'react';
-import { useDeleteProductMutation } from '../services/productsService.ts';
-import { IProduct } from "../types/types.ts";
+import { useDeleteProductMutation } from '../../services/productsService.ts';
+import { IProduct } from "../../types/types.ts";
 import { toast } from 'react-toastify';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditProductModal from "./EditProductModal.tsx";
 import EditIcon from '@mui/icons-material/Edit';
-import Popup from './Popup.tsx';
+import Popup from '../../components/Popup.tsx';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {

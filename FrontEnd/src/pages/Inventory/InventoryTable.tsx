@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableFooter, styled, tableCellClasses } from "@mui/material";
 import { useState, useRef } from 'react';
-import { IProduct } from "../types/types.ts";
+import { IProduct } from "../../types/types.ts";
 import RowComponent from "./RowComponent.tsx";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -14,11 +14,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 type InventoryTableProps = {
+    isLoading: boolean;
     filteredProducts: IProduct[];
     setProducts: React.Dispatch<React.SetStateAction<IProduct[]>>
 }
 
-const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) => {
+const InventoryTable = ({ isLoading, filteredProducts, setProducts }: InventoryTableProps) => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(0);
     const tableRef = useRef<HTMLDivElement>(null);
@@ -29,7 +30,7 @@ const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) 
     };
 
     const handleChangePage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
-        console.log(e);
+        e;
         setPage(newPage);
     }
 
@@ -54,7 +55,12 @@ const InventoryTable = ({ filteredProducts, setProducts }: InventoryTableProps) 
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((product: IProduct) => <RowComponent setProducts={setProducts} product={product} key={product.id} />)
                         : <TableRow>
-                            <StyledTableCell>No Products</StyledTableCell>
+                            <StyledTableCell>{isLoading ? 'Loading...' : 'No Products'}</StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
                         </TableRow>}
                 </TableBody>
                 <TableFooter>

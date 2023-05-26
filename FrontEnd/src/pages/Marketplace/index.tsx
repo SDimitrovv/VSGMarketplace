@@ -1,6 +1,6 @@
 import { useGetMarketplaceQuery } from '../../services/productsService';
 import { IProduct } from "../../types/types";
-import CardComponent from "../../components/CardComponent";
+import CardComponent from "./CardComponent";
 
 const Marketplace = () => {
     const { data: products, isLoading } = useGetMarketplaceQuery();
