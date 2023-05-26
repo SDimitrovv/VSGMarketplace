@@ -1,10 +1,12 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using MarketplaceApplication.Models.ExceptionModels;
 using MarketplaceApplication.Models.PictureModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using System.Net;
 
 namespace MarketplaceApplication.Services
 {
@@ -14,7 +16,10 @@ namespace MarketplaceApplication.Services
         private readonly IProductRepository _productRepository;
         private readonly Cloudinary _cloudinary;
 
-        public PictureService(IPictureRepository pictureRepository, IProductRepository productRepository, IConfiguration configuration)
+        public PictureService(
+            IPictureRepository pictureRepository, 
+            IProductRepository productRepository, 
+            IConfiguration configuration)
         {
             _pictureRepository = pictureRepository;
             _productRepository = productRepository;
@@ -30,7 +35,8 @@ namespace MarketplaceApplication.Services
 
         public async Task<string> UploadPicture(IFormFile file, int productId)
         {
-            await ExceptionService.ThrowExceptionWhenIdNotFound(productId, _productRepository);
+            var product = await _productRepository.GetById(productId);
+            if (product == null) throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
 
             byte[] bytes;
             using (var stream = new MemoryStream())
@@ -62,7 +68,8 @@ namespace MarketplaceApplication.Services
 
         public async Task DeletePicture(int productId)
         {
-            await ExceptionService.ThrowExceptionWhenIdNotFound(productId, _productRepository);
+            var product = await _productRepository.GetById(productId);
+            if (product == null) throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
 
             var pictureForDelete = await _pictureRepository.GetPicture(productId);
 

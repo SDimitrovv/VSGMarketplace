@@ -16,7 +16,11 @@ namespace MarketplaceApplication.Services
         private const string CacheKey = "categoriesStoyan";
         private static ConnectionMultiplexer _redis;
         private readonly IDatabase _db;
-        public CategoryService(ICategoryRepository repository, IMapper mapper, IConfiguration config)
+
+        public CategoryService(
+            ICategoryRepository repository, 
+            IMapper mapper, 
+            IConfiguration config)
         {
             _repository = repository;
             _mapper = mapper;

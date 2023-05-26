@@ -9,7 +9,9 @@ namespace MarketplaceApplication.Services
         private readonly ILocationRepository _repository;
         private readonly IMapper _mapper;
 
-        public LocationService(ILocationRepository repository, IMapper mapper)
+        public LocationService(
+            ILocationRepository repository, 
+            IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

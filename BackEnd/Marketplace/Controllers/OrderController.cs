@@ -14,7 +14,9 @@ namespace MarketplaceAPI.Controllers
         private readonly IOrderService _orderService;
         private readonly IValidator<AddOrderModel> _addOrderValidator;
 
-        public OrderController(IOrderService orderService, IValidator<AddOrderModel> addOrderValidator)
+        public OrderController(
+            IOrderService orderService, 
+            IValidator<AddOrderModel> addOrderValidator)
         {
             _orderService = orderService;
             _addOrderValidator = addOrderValidator;

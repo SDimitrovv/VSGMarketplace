@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using MarketplaceApplication.Models.ExceptionModels;
 using MarketplaceApplication.Models.OrderModels.DTOs;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
 using MarketplaceDomain.Enums;
 using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace MarketplaceApplication.Services
 {
@@ -15,7 +17,11 @@ namespace MarketplaceApplication.Services
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository,IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public OrderService(
+            IOrderRepository orderRepository, 
+            IProductRepository productRepository, 
+            IMapper mapper, 
+            IHttpContextAccessor httpContextAccessor)
         {
                 _orderRepository = orderRepository;
                 _productRepository = productRepository;
@@ -37,10 +43,10 @@ namespace MarketplaceApplication.Services
 
         public async Task<AddedOrderModel> CreateOrder(AddOrderModel model)
         {
-            await ExceptionService.ThrowExceptionWhenIdNotFound(model.ProductId, _productRepository);
-
             var product = await _productRepository.GetById(model.ProductId);
-            ExceptionService.ThrowExceptionWhenNotEnoughQuantityForSale(product.QuantityForSale, model.Quantity);
+            if (product == null) throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
+
+            if (model.Quantity > product.QuantityForSale) throw new HttpException("Not enough quantity for sale!", HttpStatusCode.BadRequest);
 
             var order = _mapper.Map<Order>(model);
             order.ProductFullName = product.FullName;
@@ -60,32 +66,32 @@ namespace MarketplaceApplication.Services
 
         public async Task UpdateComplete(int id)
         {
-            await ExceptionService.ThrowExceptionWhenIdNotFound(id, _orderRepository);
+            var order = await _orderRepository.GetById(id);
+            if (order == null) throw new HttpException("Order id not found!", HttpStatusCode.NotFound);
 
-            var newOrder = await _orderRepository.GetById(id);
+            if (order.Status != "Pending") throw new HttpException("Order is not pending!", HttpStatusCode.BadRequest);
 
-            ExceptionService.ThrowExceptionWhenOrderIsNotPending(newOrder.Status);
+            order.Status = Status.Finished.ToString();
 
-            newOrder.Status = Status.Finished.ToString();
-
-            await _orderRepository.Update(newOrder);
+            await _orderRepository.Update(order);
         }
 
         public async Task UpdateReject(int id)
         {
-            await ExceptionService.ThrowExceptionWhenIdNotFound(id, _orderRepository);
+            var order = await _orderRepository.GetById(id);
+            if (order == null) throw new HttpException("Order id not found!", HttpStatusCode.NotFound);
 
-            var newOrder = await _orderRepository.GetById(id);
             var userEmail = _httpContextAccessor.HttpContext.User.FindFirst("preferred_username")?.Value;
 
-            ExceptionService.ThrowExceptionWhenEmailNotTheSame(newOrder.Email, userEmail);
-            ExceptionService.ThrowExceptionWhenOrderIsNotPending(newOrder.Status);
+            if (order.Email != userEmail) throw new HttpException("Sorry!", HttpStatusCode.BadRequest);
 
-            newOrder.Status = Status.Declined.ToString();
+            if (order.Status != "Pending") throw new HttpException("Order is not pending!", HttpStatusCode.BadRequest);
 
-            await _orderRepository.Update(newOrder);
+            order.Status = Status.Declined.ToString();
 
-            await _productRepository.ReturnQuantity(newOrder.ProductId, newOrder.Quantity);
+            await _orderRepository.Update(order);
+
+            await _productRepository.ReturnQuantity(order.ProductId, order.Quantity);
         }
     }
 }

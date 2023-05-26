@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using MarketplaceApplication.Models.CategoryModels.Interfaces;
+using MarketplaceApplication.Models.ExceptionModels;
 using MarketplaceApplication.Models.LocationModels.Interfaces;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
+using System.Net;
 
 namespace MarketplaceApplication.Services
 {
@@ -16,7 +18,12 @@ namespace MarketplaceApplication.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
 
-        public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository, ILocationRepository locationRepository, IMapper mapper, IOrderRepository orderRepository)
+        public ProductService(
+            IProductRepository productRepository, 
+            ICategoryRepository categoryRepository, 
+            ILocationRepository locationRepository, 
+            IMapper mapper, 
+            IOrderRepository orderRepository)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
@@ -27,8 +34,11 @@ namespace MarketplaceApplication.Services
 
         public async Task<ProductAddedModel> Add(ProductAddModel model)
         {
-            await ExceptionService.ThrowExceptionWhenIdNotFound(model.CategoryId, _categoryRepository);
-            await ExceptionService.ThrowExceptionWhenIdNotFound(model.LocationId, _locationRepository);
+            var category = await _categoryRepository.GetById(model.CategoryId);
+            if (category == null) throw new HttpException("Category id not found!", HttpStatusCode.NotFound);
+
+            var location = await _locationRepository.GetById(model.LocationId);
+            if (location == null) throw new HttpException("Location id not found!", HttpStatusCode.NotFound);
 
             var product = _mapper.Map<Product>(model);
 
@@ -42,26 +52,33 @@ namespace MarketplaceApplication.Services
 
         public async Task<ProductGetDetailsModel> GetDetails(int id)
         {
-            await ExceptionService.ThrowExceptionWhenIdNotFound(id, _productRepository);
+            var product = await _productRepository.GetDetails(id);
+            if (product == null) throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
 
-            return await _productRepository.GetDetails(id);
+            return product;
         }
 
         public async Task Update(int productId, ProductEditModel newProduct)
         {
-            await ExceptionService.ThrowExceptionWhenIdNotFound(productId, _productRepository);
-            await ExceptionService.ThrowExceptionWhenIdNotFound(newProduct.CategoryId, _categoryRepository);
-            await ExceptionService.ThrowExceptionWhenIdNotFound(newProduct.LocationId, _locationRepository);
+            var product = await _productRepository.GetById(productId);
+            if (product == null) throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
 
-            var product = _mapper.Map<Product>(newProduct);
-            product.Id = productId;
+            var category = await _categoryRepository.GetById(newProduct.CategoryId);
+            if (category == null) throw new HttpException("Category id not found!", HttpStatusCode.NotFound);
 
-            await _productRepository.Update(product);
+            var location = await _locationRepository.GetById(newProduct.LocationId);
+            if (location == null) throw new HttpException("Location id not found!", HttpStatusCode.NotFound);
+
+            var editedProduct = _mapper.Map<Product>(newProduct);
+            editedProduct.Id = productId;
+
+            await _productRepository.Update(editedProduct);
         }
 
         public async Task Delete(int id)
         {
-            await ExceptionService.ThrowExceptionWhenIdNotFound(id, _productRepository);
+            var product = await _productRepository.GetById(id);
+            if (product == null) throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
 
             var order = await _orderRepository.GetOrderByProductId(id);
 
@@ -70,8 +87,6 @@ namespace MarketplaceApplication.Services
                 await _productRepository.Delete(id);
                 return;
             }
-
-            ExceptionService.ThrowExceptionWhenOrderIsPending(order.Status);
 
             order.ProductId = 0;
             var updatedOrder = _mapper.Map<Order>(order);
