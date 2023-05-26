@@ -40,7 +40,7 @@ namespace MarketplaceTests
         {
             var orderId = 1;
             var order = new Order { Id = orderId, Status = Status.Pending.ToString() };
-            _orderRepository.Setup(r => r.GetByID(orderId)).ReturnsAsync(order);
+            _orderRepository.Setup(r => r.GetById(orderId)).ReturnsAsync(order);
 
             await _orderService.UpdateComplete(orderId);
 
@@ -54,7 +54,7 @@ namespace MarketplaceTests
             var productId = 2;
             var orderQuantity = 3;
             var order = new Order { Id = orderId, Status = Status.Pending.ToString(), ProductId = productId, Quantity = orderQuantity };
-            _orderRepository.Setup(r => r.GetByID(orderId)).ReturnsAsync(order);
+            _orderRepository.Setup(r => r.GetById(orderId)).ReturnsAsync(order);
 
             await _orderService.UpdateReject(orderId);
 
@@ -69,7 +69,7 @@ namespace MarketplaceTests
             var productQuantityForSale = 5;
             var addOrderModel = new AddOrderModel { ProductId = productId, Quantity = 3 };
             var product = new Product { Id = productId, QuantityForSale = productQuantityForSale };
-            _productRepository.Setup(r => r.GetByID(productId)).ReturnsAsync(product);
+            _productRepository.Setup(r => r.GetById(productId)).ReturnsAsync(product);
 
             var result = await _orderService.CreateOrder(addOrderModel);
 
@@ -84,7 +84,7 @@ namespace MarketplaceTests
         {
             var productId = 1;
             var addOrderModel = new AddOrderModel { ProductId = productId, Quantity = 3 };
-            _productRepository.Setup(r => r.GetByID(productId))!.ReturnsAsync(null as Product);
+            _productRepository.Setup(r => r.GetById(productId))!.ReturnsAsync(null as Product);
 
             Assert.ThrowsAsync<HttpException>(async () => await _orderService.CreateOrder(addOrderModel));
         }
@@ -96,7 +96,7 @@ namespace MarketplaceTests
             var productQuantityForSale = 5;
             var addOrderModel = new AddOrderModel { ProductId = productId, Quantity = 7 };
             var product = new Product { Id = productId, QuantityForSale = productQuantityForSale };
-            _productRepository.Setup(r => r.GetByID(productId)).ReturnsAsync(product);
+            _productRepository.Setup(r => r.GetById(productId)).ReturnsAsync(product);
 
             Assert.ThrowsAsync<HttpException>(async () => await _orderService.CreateOrder(addOrderModel));
         }

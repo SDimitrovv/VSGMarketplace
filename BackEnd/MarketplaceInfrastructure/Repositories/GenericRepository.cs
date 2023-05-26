@@ -25,7 +25,7 @@ namespace MarketplaceInfrastructure.Repositories
             return collection;
         }
 
-        public async Task<T> GetByID(int id)
+        public async Task<T> GetById(int id)
         {
             var entity = await Connection.GetAsync<T>(id, Transaction);
 

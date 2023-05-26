@@ -1,6 +1,5 @@
 ﻿using MarketplaceApplication.Models.ExceptionModels;
 using MarketplaceApplication.Models.GenericRepository;
-using MarketplaceDomain.Enums;
 using System.Net;
 
 namespace MarketplaceApplication.Services
@@ -9,7 +8,7 @@ namespace MarketplaceApplication.Services
     {
         public static async Task ThrowExceptionWhenIdNotFound<T>(int id, IGenericRepository<T> repository)
         {
-            var entity = await repository.GetByID(id);
+            var entity = await repository.GetById(id);
 
             if (entity == null)
                 throw new HttpException($"{typeof(T).Name} id not found!", HttpStatusCode.NotFound);

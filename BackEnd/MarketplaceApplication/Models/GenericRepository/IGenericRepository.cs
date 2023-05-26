@@ -4,7 +4,7 @@ public interface IGenericRepository<T>
 {
     Task<IEnumerable<T>> GetAll();
 
-    Task<T> GetByID(int id);
+    Task<T> GetById(int id);
 
     Task<int> Create(T entity);
 
