@@ -39,7 +39,7 @@ namespace MarketplaceApplication.Services
         {
             await ExceptionService.ThrowExceptionWhenIdNotFound(model.ProductId, _productRepository);
 
-            var product = await _productRepository.GetByID(model.ProductId);
+            var product = await _productRepository.GetById(model.ProductId);
             ExceptionService.ThrowExceptionWhenNotEnoughQuantityForSale(product.QuantityForSale, model.Quantity);
 
             var order = _mapper.Map<Order>(model);
@@ -62,7 +62,7 @@ namespace MarketplaceApplication.Services
         {
             await ExceptionService.ThrowExceptionWhenIdNotFound(id, _orderRepository);
 
-            var newOrder = await _orderRepository.GetByID(id);
+            var newOrder = await _orderRepository.GetById(id);
 
             ExceptionService.ThrowExceptionWhenOrderIsNotPending(newOrder.Status);
 
@@ -75,7 +75,7 @@ namespace MarketplaceApplication.Services
         {
             await ExceptionService.ThrowExceptionWhenIdNotFound(id, _orderRepository);
 
-            var newOrder = await _orderRepository.GetByID(id);
+            var newOrder = await _orderRepository.GetById(id);
             var userEmail = _httpContextAccessor.HttpContext.User.FindFirst("preferred_username")?.Value;
 
             ExceptionService.ThrowExceptionWhenEmailNotTheSame(newOrder.Email, userEmail);

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MarketplaceAPI.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
