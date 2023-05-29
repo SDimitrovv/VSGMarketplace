@@ -23,7 +23,7 @@ const Home = (): JSX.Element => {
 
       const user = { name, token, email, memberType };
 
-      sessionStorage.setItem("user", JSON.stringify(user));
+      sessionStorage.setItem('user', JSON.stringify(user));
       navigate('/marketplace');
     } catch (error) {
       throw new Error(error as string);
@@ -32,8 +32,8 @@ const Home = (): JSX.Element => {
 
   return (
     <main id='landingMain'>
-      <img id="marketplaceLogo" src="/images/home/vsg-marketplace-logo.png" alt="Marketplace-logo" />
-      <a id="loginButton" onClick={handleLogin}>
+      <img id='marketplaceLogo' src='/images/home/vsg-marketplace-logo.png' alt='Marketplace-logo' />
+      <a id='loginButton' onClick={handleLogin}>
         LOGIN
       </a>
     </main>

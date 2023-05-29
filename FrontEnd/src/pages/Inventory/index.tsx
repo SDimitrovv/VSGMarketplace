@@ -1,12 +1,12 @@
-import { useGetInventoryQuery } from "../../services/productsService";
-import { useGetLocationQuery } from "../../services/locationsService.ts";
-import { ILocation, IProduct } from "../../types/types.ts";
-import { useState, useEffect } from "react";
-import AddProductModal from "./AddProductModal.tsx";
+import { useGetInventoryQuery } from '../../services/productsService';
+import { useGetLocationQuery } from '../../services/locationsService.ts';
+import { ILocation, IProduct } from '../../types/types.ts';
+import { useState, useEffect } from 'react';
+import AddProductModal from './AddProductModal.tsx';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import InventoryTable from "./InventoryTable.tsx";
-import SearchIcon from "@mui/icons-material/Search";
-import AddIcon from "@mui/icons-material/Add";
+import InventoryTable from './InventoryTable.tsx';
+import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
 import {
     Box,
     TextField,
@@ -14,26 +14,26 @@ import {
     InputLabel,
     Select,
     MenuItem,
-} from "@mui/material";
+} from '@mui/material';
 
 const Inventory = () => {
     const { data: locations } = useGetLocationQuery();
     const { data, isLoading } = useGetInventoryQuery();
-    const [locationOption, setLocationOption] = useState(0);
+    const [locationId, setLocationId] = useState(0);
     const [products, setProducts] = useState<IProduct[]>([]);
     const [showAddModal, setShowAddModal] = useState(false);
-    const [searchString, setSearchString] = useState("");
+    const [searchString, setSearchString] = useState('');
 
     useEffect(() => {
         if (data) {
-            if (!locationOption) {
+            if (!locationId) {
                 setProducts(data);
             } else {
-                const filteredByLocation = data.filter(p => p.locationId === Number(locationOption));
+                const filteredByLocation = data.filter(p => p.locationId === Number(locationId));
                 setProducts(filteredByLocation);
             }
         }
-    }, [data, locationOption]);
+    }, [data, locationId]);
 
     const filteredProducts = products.filter((p) =>
         p.fullName.toLowerCase().includes(searchString.toLowerCase())
@@ -41,12 +41,12 @@ const Inventory = () => {
 
     return (
         <>
-            <AddProductModal setProducts={setProducts} showAddModal={showAddModal} setShowAddModal={setShowAddModal} />
-            <main id="inventoryMain">
-                <div id="searchSpace">
+            <AddProductModal products={data} setProducts={setProducts} showAddModal={showAddModal} setShowAddModal={setShowAddModal} />
+            <main id='inventoryMain'>
+                <div id='searchSpace'>
                     <Box className='searchProduct'>
                         <SearchIcon />
-                        <TextField label="Search..." variant="standard"
+                        <TextField label='Search...' variant='standard'
                             onInput={(e) => setSearchString((e.target as HTMLInputElement).value)}
                         />
                     </Box>
@@ -55,8 +55,8 @@ const Inventory = () => {
                         <FormControl variant='standard'>
                             <InputLabel>Location</InputLabel>
                             <Select
-                                value={locationOption}
-                                onChange={(e) => setLocationOption(Number(e.target.value))}
+                                value={locationId}
+                                onChange={(e) => setLocationId(Number(e.target.value))}
                             >
                                 <MenuItem value='0' key='0'>All Locations</MenuItem>
                                 {locations?.map((l: ILocation) => (
@@ -67,7 +67,7 @@ const Inventory = () => {
                             </Select>
                         </FormControl>
                     </Box>
-                    <button id="addButton" onClick={() => setShowAddModal(true)}>
+                    <button id='addButton' onClick={() => setShowAddModal(true)}>
                         <div id='addButtonSpace'>
                             <AddIcon />
                             <span>Add new</span>

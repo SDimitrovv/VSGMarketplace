@@ -1,5 +1,5 @@
-import { Middleware, isRejectedWithValue } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import { Middleware, isRejectedWithValue } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 export const baseApiMiddleware: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {

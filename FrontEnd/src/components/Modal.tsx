@@ -9,11 +9,11 @@ const Transition = forwardRef(function Transition(
     },
     ref: React.Ref<unknown>,
 ) {
-    return <Slide direction="up" ref={ref} {...props} />;
+    return <Slide direction='up' ref={ref} {...props} />;
 });
 
 const modalStyle = {
-    width: "92%",
+    width: '92%',
 }
 
 type ModalProps = {
@@ -25,9 +25,9 @@ type ModalProps = {
 
 const Modal = ({ showModal, setShowModal, children, modalType }: ModalProps) => {
     if (modalType === 'productModal') {
-        modalStyle.width = "fit-content";
+        modalStyle.width = 'fit-content';
     } else {
-        modalStyle.width = "92%";
+        modalStyle.width = '92%';
     }
 
     return (

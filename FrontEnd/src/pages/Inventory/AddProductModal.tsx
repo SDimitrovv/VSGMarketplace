@@ -5,26 +5,28 @@ import {
     Select,
     MenuItem,
     FormHelperText,
-} from "@mui/material";
-import { ICategory, IFormInputs, ILocation, IProduct } from "../../types/types.ts";
-import { useState, Dispatch, SetStateAction } from "react";
-import { useCreateProductMutation } from "../../services/productsService.ts";
-import { useCreateImageMutation } from "../../services/imageService.ts";
-import { useGetCategoriesQuery } from "../../services/categoriesService.ts";
-import { useGetLocationQuery } from "../../services/locationsService.ts";
-import { imagePlaceholder } from "../../utils/imagePlaceholder.ts";
-import { uploadImage } from "../../utils/uploadImage.ts";
-import { useForm } from "react-hook-form";
+} from '@mui/material';
+import { ICategory, IFormInputs, ILocation, IProduct } from '../../types/types.ts';
+import { useState, Dispatch, SetStateAction } from 'react';
+import { useCreateProductMutation } from '../../services/productsService.ts';
+import { useCreateImageMutation } from '../../services/imageService.ts';
+import { useGetCategoriesQuery } from '../../services/categoriesService.ts';
+import { useGetLocationQuery } from '../../services/locationsService.ts';
+import { imagePlaceholder } from '../../utils/imagePlaceholder.ts';
+import { uploadImage } from '../../utils/uploadImage.ts';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import Modal from "../../components/Modal.tsx";
+import Modal from '../../components/Modal.tsx';
 
 type AddModalProps = {
+    products: IProduct[] | undefined;
     setProducts: Dispatch<SetStateAction<IProduct[]>>;
     showAddModal: boolean;
     setShowAddModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const AddProductModal = ({
+    products,
     setProducts,
     showAddModal,
     setShowAddModal,
@@ -44,9 +46,9 @@ const AddProductModal = ({
         reset
     } = useForm<IFormInputs>({
         defaultValues: {
-            code: "",
-            fullName: "",
-            description: "",
+            code: '',
+            fullName: '',
+            description: '',
             categoryId: null,
             locationId: null,
             quantityForSale: null,
@@ -75,7 +77,7 @@ const AddProductModal = ({
 
         if (image.name) {
             const imageForm = new FormData();
-            imageForm.set("picture", image as File);
+            imageForm.set('picture', image as File);
             const imgRes = await createImage({ id, imageForm }) as { data: string };
             const newImgUrl = imgRes.data;
             const newProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city, imageUrl: newImgUrl } as IProduct;
@@ -95,44 +97,47 @@ const AddProductModal = ({
 
     return (
         <Modal showModal={showAddModal} setShowModal={setShowAddModal}>
-            <form className="addForm" onSubmit={handleSubmit(onSubmit)}>
-                <div className="row">
-                    <div className="leftModal">
+            <form className='addForm' onSubmit={handleSubmit(onSubmit)}>
+                <div className='row'>
+                    <div className='leftModal'>
                         <h2>Add New Item</h2>
                         <TextField
                             className='formInput'
-                            type="text"
-                            label="Code *"
-                            variant="standard"
+                            type='text'
+                            label='Code *'
+                            variant='standard'
                             error={Boolean(errors.code)}
                             helperText={errors.code?.message}
-                            {...register("code", { required: "Code field is required" })}
+                            {...register('code', {
+                                required: 'Code field is required',
+                                validate: value => products ? products.some(p => p.code !== value) : false || 'Code already exists'
+                            })}
                         />
                         <TextField
                             className='formInput'
-                            type="text"
-                            label="Name *"
-                            variant="standard"
+                            type='text'
+                            label='Name *'
+                            variant='standard'
                             error={Boolean(errors.fullName)}
                             helperText={errors.fullName?.message}
-                            {...register("fullName", { required: "Name field is required" })}
+                            {...register('fullName', { required: 'Name field is required' })}
                         />
                         <TextField
                             className='description'
-                            label="Description"
+                            label='Description'
                             multiline
                             rows={4}
-                            variant="standard"
-                            {...register("description")}
+                            variant='standard'
+                            {...register('description')}
                         />
-                        <FormControl variant="standard" className='formInput'>
+                        <FormControl variant='standard' className='formInput'>
                             <InputLabel focused={false}>Category *</InputLabel>
                             <Select
                                 value={selectOption}
                                 error={Boolean(errors.categoryId)}
-                                {...register("categoryId", {
+                                {...register('categoryId', {
                                     onChange: (e) => setSelectOption(e.target.value),
-                                    required: "Category field is required",
+                                    required: 'Category field is required',
                                 })}
                             >
                                 {categories?.map((c: ICategory) => (
@@ -145,14 +150,14 @@ const AddProductModal = ({
                                 {errors.categoryId?.message}
                             </FormHelperText>
                         </FormControl>
-                        <FormControl variant="standard" className='formInput'>
+                        <FormControl variant='standard' className='formInput'>
                             <InputLabel focused={false}>Location *</InputLabel>
                             <Select
                                 value={locationOption}
                                 error={Boolean(errors.locationId)}
                                 {...register('locationId', {
                                     onChange: (e) => setLocationOption(e.target.value),
-                                    required: "Location field is required",
+                                    required: 'Location field is required',
                                 })}
                             >
                                 {locations?.map((l: ILocation) => (
@@ -167,12 +172,12 @@ const AddProductModal = ({
                         </FormControl>
                         <TextField
                             className='formInput'
-                            type="number"
-                            label="Qty For Sale"
-                            variant="standard"
+                            type='number'
+                            label='Qty For Sale'
+                            variant='standard'
                             error={Boolean(errors.quantityForSale)}
                             helperText={errors.quantityForSale?.message}
-                            {...register("quantityForSale", {
+                            {...register('quantityForSale', {
                                 min: {
                                     value: 0,
                                     message: 'You cannot input less than 0'
@@ -181,12 +186,12 @@ const AddProductModal = ({
                         />
                         <TextField
                             className='formInput'
-                            type="number"
-                            label="Sale Price"
-                            variant="standard"
+                            type='number'
+                            label='Sale Price'
+                            variant='standard'
                             error={Boolean(errors.price)}
                             helperText={errors.price?.message}
-                            {...register("price", {
+                            {...register('price', {
                                 min: {
                                     value: 0,
                                     message: 'You cannot input less than 0'
@@ -195,9 +200,9 @@ const AddProductModal = ({
                         />
                         <TextField
                             className='formInput'
-                            type="number"
-                            label="Qty *"
-                            variant="standard"
+                            type='number'
+                            label='Qty *'
+                            variant='standard'
                             error={Boolean(errors.quantity)}
                             helperText={errors.quantity?.message}
                             {...register('quantity', {
@@ -206,30 +211,30 @@ const AddProductModal = ({
                                     value: 0,
                                     message: 'Quantity must be 0 or higher'
                                 },
-                                validate: value => value as number >= Number(getValues("quantityForSale")) || 'Qty For Sale cannot be higher than Qty'
+                                validate: value => value as number >= Number(getValues('quantityForSale')) || 'Qty For Sale cannot be higher than Qty'
                             })}
                         />
                     </div>
-                    <div className="rightModal">
-                        <img className="currentImg" src={imageUrl} />
+                    <div className='rightModal'>
+                        <img className='currentImg' src={imageUrl} />
                         <input
-                            id="uploadInput"
-                            className="inputImage"
-                            accept="image/*"
-                            type="file"
-                            {...register("image", {
+                            id='uploadInput'
+                            className='inputImage'
+                            accept='image/*'
+                            type='file'
+                            {...register('image', {
                                 onChange: (e) => setImageUrl(uploadImage(e))
                             })}
                         />
-                        <div className="uploadDelete">
-                            <label htmlFor="uploadInput" className="uploadImg">
+                        <div className='uploadDelete'>
+                            <label htmlFor='uploadInput' className='uploadImg'>
                                 Upload
                             </label>
-                            <button type='button' className="deleteImg" onClick={() => setImageUrl(imagePlaceholder)}>Remove</button>
+                            <button type='button' className='deleteImg' onClick={() => setImageUrl(imagePlaceholder)}>Remove</button>
                         </div>
                     </div>
                 </div>
-                <button type="submit" disabled={fetchingProduct || fetchingImage}>{(fetchingProduct || fetchingImage) ? 'Submitting...' : 'Add'}</button>
+                <button type='submit' disabled={fetchingProduct || fetchingImage}>{(fetchingProduct || fetchingImage) ? 'Submitting...' : 'Add'}</button>
             </form>
         </Modal>
     );

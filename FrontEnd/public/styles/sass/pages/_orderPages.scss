@@ -12,8 +12,8 @@
         width: 100%;
         margin-top: 20px;
         background: $orders-heading;
-        border-radius: 10px; 
-        font-family: "Roboto";
+        border-radius: 10px;
+        font-family: 'Roboto';
         font-style: normal;
         font-weight: 700;
         font-size: 18px;
@@ -167,31 +167,31 @@
                 }
 
                 .nameColumn::before {
-                    content: "Name: ";
+                    content: 'Name: ';
                 }
 
                 .codeColumn::before {
-                    content: "Code";
+                    content: 'Code';
                 }
 
                 .qtyColumn::before {
-                    content: "Qty";
+                    content: 'Qty';
                 }
 
                 .priceColumn::before {
-                    content: "Price";
+                    content: 'Price';
                 }
 
                 .orderedByColumn::before {
-                    content: "Ordered by: ";
+                    content: 'Ordered by: ';
                 }
 
                 .orderDateColumn::before {
-                    content: "Order date: ";
+                    content: 'Order date: ';
                 }
 
                 .orderStatus::before {
-                    content: "Status: ";
+                    content: 'Status: ';
                     margin-right: 4px;
                 }
 

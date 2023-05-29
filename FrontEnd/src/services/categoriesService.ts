@@ -1,11 +1,11 @@
-import { ICategory } from "../types/types";
-import { baseApi } from "../utils/baseApi";
+import { ICategory } from '../types/types';
+import { baseApi } from '../utils/baseApi';
 
-const GetCategories = "getCategories";
+const GetCategories = 'getCategories';
 
 const categoriesServices = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        [GetCategories]: builder.query<ICategory[], void>({ query: () => "/Category" })
+        [GetCategories]: builder.query<ICategory[], void>({ query: () => '/Category' })
     }),
 });
 

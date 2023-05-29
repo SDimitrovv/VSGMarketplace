@@ -1,10 +1,10 @@
 import { TableCell, TableRow, tableCellClasses, styled, Fade } from '@mui/material';
 import { useState, useRef, Dispatch, SetStateAction } from 'react';
 import { useDeleteProductMutation } from '../../services/productsService.ts';
-import { IProduct } from "../../types/types.ts";
+import { IProduct } from '../../types/types.ts';
 import { toast } from 'react-toastify';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditProductModal from "./EditProductModal.tsx";
+import EditProductModal from './EditProductModal.tsx';
 import EditIcon from '@mui/icons-material/Edit';
 import Popup from '../../components/Popup.tsx';
 
@@ -49,24 +49,24 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
         setProducts(oldProducts => oldProducts.filter(p => p !== product));
     }
 
-    const str = `Are you sure you want to remove this item ?`;
+    const popupMessage = `Are you sure you want to remove this item ?`;
 
     return (
         <>
             <EditProductModal setProducts={setProducts} product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />
-            <Popup string={str} onYes={handleDelete} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+            <Popup popupMessage={popupMessage} onYes={handleDelete} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={500}>
-                <StyledTableRow ref={rowRef} id={product.id.toString()} className="productRow">
+                <StyledTableRow ref={rowRef} id={product.id.toString()}>
                     <StyledTableCell>{product.code}</StyledTableCell>
                     <StyledTableCell>{product.fullName}</StyledTableCell>
                     <StyledTableCell>{product.type}</StyledTableCell>
                     <StyledTableCell>{product.quantityForSale}</StyledTableCell>
                     <StyledTableCell>{product.quantity}</StyledTableCell>
                     <StyledTableCell>
-                        <a className="edit" onClick={() => setShowEditModal(true)}>
+                        <a className='edit' onClick={() => setShowEditModal(true)}>
                             <EditIcon />
                         </a>
-                        <a className="delete" onClick={e => setAnchorEl(e.currentTarget)}>
+                        <a className='delete' onClick={e => setAnchorEl(e.currentTarget)}>
                             <DeleteOutlineIcon />
                         </a>
                     </StyledTableCell>

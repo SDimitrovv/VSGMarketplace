@@ -10,7 +10,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
     return (
         <>
             <Header />
-            <div id="asideMain">
+            <div id='asideMain'>
                 <Sidebar />
                 <Suspense>
                     {children}

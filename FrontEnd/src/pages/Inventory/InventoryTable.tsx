@@ -1,7 +1,7 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableFooter, styled, tableCellClasses } from "@mui/material";
-import { useState, useRef } from 'react';
-import { IProduct } from "../../types/types.ts";
-import RowComponent from "./RowComponent.tsx";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableFooter, styled, tableCellClasses } from '@mui/material';
+import { IProduct } from '../../types/types.ts';
+import { useState } from 'react';
+import RowComponent from './RowComponent.tsx';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -22,7 +22,6 @@ type InventoryTableProps = {
 const InventoryTable = ({ isLoading, filteredProducts, setProducts }: InventoryTableProps) => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(0);
-    const tableRef = useRef<HTMLDivElement>(null);
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(Number(event.target.value));
@@ -37,8 +36,8 @@ const InventoryTable = ({ isLoading, filteredProducts, setProducts }: InventoryT
     const rowHeight = (10 - filteredProducts.length) * 55;
 
     return (
-        <TableContainer component="div" id="tableBorder" ref={tableRef}>
-            <Table aria-label="sticky table">
+        <TableContainer component='div' id='tableBorder'>
+            <Table aria-label='sticky table'>
                 <TableHead>
                     <TableRow>
                         <StyledTableCell><b>Code</b></StyledTableCell>

@@ -1,6 +1,6 @@
-import { baseApiMiddleware } from "../utils/baseApiMiddleware";
-import { configureStore } from "@reduxjs/toolkit";
-import { baseApi } from "../utils/baseApi";
+import { baseApiMiddleware } from '../utils/baseApiMiddleware';
+import { configureStore } from '@reduxjs/toolkit';
+import { baseApi } from '../utils/baseApi';
 
 export const store = configureStore({
   reducer: {

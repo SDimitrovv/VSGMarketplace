@@ -1,1 +1,1 @@
-export const imagePlaceholder = "/images/inventory/no-image-placeholder.png";
+export const imagePlaceholder = '/images/inventory/no-image-placeholder.png';

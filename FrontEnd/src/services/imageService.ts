@@ -1,16 +1,16 @@
-import { baseApi } from "../utils/baseApi";
+import { baseApi } from '../utils/baseApi';
 
-const CreateImage = "createImage";
-const EditImage = "editImage";
-const DeleteImage = "deleteImage";
+const CreateImage = 'createImage';
+const EditImage = 'editImage';
+const DeleteImage = 'deleteImage';
 
-// const GetImagesTag = "getImagesTag";
+// const GetImagesTag = 'getImagesTag';
 
 const ImageServices = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         [CreateImage]: builder.mutation<string, { id: number, imageForm: FormData }>({
             query: ({ id, imageForm }) => ({
-                method: "POST",
+                method: 'POST',
                 url: '/Picture?productId=' + id,
                 body: imageForm,
                 responseHandler: (response) => response.text()
@@ -18,16 +18,16 @@ const ImageServices = baseApi.injectEndpoints({
         }),
         [EditImage]: builder.mutation<string, { id: number, imageForm: FormData }>({
             query: ({ id, imageForm }) => ({
-                method: "PUT",
-                url: "/Picture/" + id,
+                method: 'PUT',
+                url: '/Picture/' + id,
                 body: imageForm,
                 responseHandler: (response) => response.text()
             }),
         }),
         [DeleteImage]: builder.mutation<void, number>({
             query: (id) => ({
-                method: "DELETE",
-                url: "/Picture/" + id,
+                method: 'DELETE',
+                url: '/Picture/' + id,
             }),
         }),
     }),

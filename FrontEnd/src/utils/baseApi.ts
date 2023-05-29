@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IUser } from '../types/types';
 
-const baseURL = "https://auto.loanvantage360.com/internship/EvaluationSystemStoyan/api";
+const baseURL = 'https://auto.loanvantage360.com/internship/EvaluationSystemStoyan/api';
 
 export const baseApi = createApi({
   reducerPath: 'baseApi',
