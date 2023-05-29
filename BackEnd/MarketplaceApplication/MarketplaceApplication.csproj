@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <Folder Include="Models\CategoryModels\Interfaces\" />
+    <Folder Include="Models\UserModels\" />
     <Folder Include="Models\OrderModels\Interfaces\" />
-    <Folder Include="Models\PictureModels\DTOs\" />
     <Folder Include="Models\PictureModels\Interfaces\" />
     <Folder Include="Models\ProductModels\Interfaces\" />
   </ItemGroup>
@@ -25,7 +25,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-    <PackageReference Include="StackExchange.Redis" Version="2.2.4" />
   </ItemGroup>
 
   <ItemGroup>

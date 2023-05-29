@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿ using AutoMapper;
 using MarketplaceApplication.Models.CategoryModels.Interfaces;
 using MarketplaceApplication.Models.ExceptionModels;
 using MarketplaceApplication.Models.LocationModels.Interfaces;
@@ -7,6 +7,7 @@ using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceDomain.Entities;
 using System.Net;
+using System.Reflection;
 
 namespace MarketplaceApplication.Services
 {
@@ -34,6 +35,9 @@ namespace MarketplaceApplication.Services
 
         public async Task<ProductAddedModel> Add(ProductAddModel model)
         {
+            var productFromDb = await _productRepository.GetByCode(model.Code);
+            if (productFromDb?.Code == model.Code) throw new HttpException("Code already exists!", HttpStatusCode.BadRequest);
+
             var category = await _categoryRepository.GetById(model.CategoryId);
             if (category == null) throw new HttpException("Category id not found!", HttpStatusCode.NotFound);
 
@@ -60,6 +64,9 @@ namespace MarketplaceApplication.Services
 
         public async Task Update(int productId, ProductEditModel newProduct)
         {
+            var productFromDb = await _productRepository.GetByCode(newProduct.Code);
+            if (productFromDb?.Code == newProduct.Code && productFromDb.Id != productId) throw new HttpException("Code already exists!", HttpStatusCode.BadRequest);
+
             var product = await _productRepository.GetById(productId);
             if (product == null) throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
 
@@ -90,7 +97,7 @@ namespace MarketplaceApplication.Services
 
             if (order.Status == "Pending")
             {
-                throw new HttpException("Order is pending!", HttpStatusCode.NotFound);
+                throw new HttpException("Order is pending!", HttpStatusCode.BadRequest);
             }
 
             await _productRepository.Delete(id);

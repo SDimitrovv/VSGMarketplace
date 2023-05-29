@@ -17,12 +17,6 @@ builder.Host.ConfigureLogging(logging =>
     })
     .UseNLog();
 
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration = builder.Configuration["ConnectionString:Redis"];
-    options.InstanceName = "SampleInstance";
-});
-
 builder.Services.AddAuthentication(conf =>
 {
     conf.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

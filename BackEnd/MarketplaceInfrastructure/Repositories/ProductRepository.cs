@@ -12,6 +12,17 @@ namespace MarketplaceInfrastructure.Repositories
         {
         }
 
+        public async Task<Product> GetByCode(string code)
+        {
+            var query = @"SELECT p.*
+                        FROM Products AS p                      
+                        WHERE p.Code = @code";
+
+            var product = await Connection.QueryFirstOrDefaultAsync<Product>(query, new { code }, Transaction);
+
+            return product;
+        }
+
         public async Task<ProductGetDetailsModel> GetDetails(int id)
         {
             var query = @"SELECT p.*, c.Type, l.City, pic.ImageUrl

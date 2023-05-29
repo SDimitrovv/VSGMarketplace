@@ -8,6 +8,7 @@ using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.PictureModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.DTOs;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
+using MarketplaceApplication.Models.UserModels;
 using MarketplaceApplication.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +25,7 @@ namespace MarketplaceApplication.Helpers.Configurations
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IPictureService, PictureService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IValidator<ProductAddModel>, ProductAddValidator>();
             services.AddScoped<IValidator<ProductEditModel>, ProductEditValidator>();

@@ -1,5 +1,4 @@
 ﻿using MarketplaceApplication.Models.ProductModels.DTOs;
-using MarketplaceDomain.Entities;
 
 namespace MarketplaceApplication.Models.ProductModels.Interfaces;
 
