@@ -1,5 +1,5 @@
 import { useDeleteImageMutation, useEditImageMutation } from '../../services/imageService.ts';
-import { useState, Dispatch, SetStateAction, } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { IFormInputs, ICategory, IProduct, ILocation } from '../../types/types.ts';
 import { useEditProductMutation } from '../../services/productsService.ts';
 import { useGetCategoriesQuery } from '../../services/categoriesService.ts';
@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Modal from '../../components/Modal.tsx';
 import {
+    CircularProgress,
     TextField,
     FormControl,
     InputLabel,
@@ -29,15 +30,15 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
     const [locationOption, setLocationOption] = useState(product.locationId.toString());
     const [selectOption, setSelectOption] = useState(product.categoryId.toString());
     const [imageUrl, setImageUrl] = useState(product.imageUrl || imagePlaceholder);
-    const [editProduct, { isLoading: fetchingProduct }] = useEditProductMutation();
-    const [editImage, { isLoading: fetchingImage }] = useEditImageMutation();
+    const [editProduct] = useEditProductMutation();
+    const [editImage] = useEditImageMutation();
     const [deleteImage] = useDeleteImageMutation();
     const { data: categories } = useGetCategoriesQuery();
     const { data: locations } = useGetLocationQuery();
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
         getValues,
     } = useForm<IFormInputs>({
         defaultValues: {
@@ -92,7 +93,7 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
 
     return (
         <Modal showModal={showEditModal} setShowModal={setShowEditModal} >
-            <form className='editForm' onSubmit={handleSubmit(onSubmit)}>
+            <form className='modalContent' onSubmit={handleSubmit(onSubmit)}>
                 <div className='row'>
                     <div className='leftModal'>
                         <h2>Modify Item</h2>
@@ -229,7 +230,10 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                         </div>
                     </div>
                 </div>
-                <button type='submit' disabled={fetchingProduct || fetchingImage}>{(fetchingProduct || fetchingImage) ? 'Submitting...' : 'Modify'}</button>
+                {isSubmitting
+                    ? <CircularProgress className='circular' />
+                    : <button type='submit'>Modify</button>
+                }
             </form>
         </Modal>
     );

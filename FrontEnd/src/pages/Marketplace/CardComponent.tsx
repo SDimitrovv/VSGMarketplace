@@ -64,7 +64,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
             <ProductModal product={product} showProductModal={showProductModal} setShowProductModal={setShowProductModal} />
             <Popup popupMessage={popupMessage} onYes={onBuy} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={1000}>
-                <div id={product.id.toString()} className='product'>
+                <div id={product.id.toString()} className='product' role='cell'>
                     <a className='productButton' onClick={() => setShowProductModal(true)}>
                         <img src={product.imageUrl || imagePlaceholder} alt='Product-image' />
                     </a>
@@ -88,7 +88,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
                                         ))}
                                     </select>
                                 </div>
-                                <button type='button' className='buyButton' onClick={(e) => setAnchorEl(e.currentTarget)} >
+                                <button type='button' role='button' className='buyButton' onClick={(e) => setAnchorEl(e.currentTarget)} >
                                     <svg
                                         xmlns='http://www.w3.org/2000/svg'
                                         width='31'

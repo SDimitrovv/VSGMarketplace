@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Popup should render Popup component 1`] = `
+<div
+  class="css-yjcbyf-MuiPopper-root MuiPopper-root"
+  data-popper-escaped=""
+  data-popper-placement="bottom"
+  data-popper-reference-hidden=""
+  role="tooltip"
+  style="position: absolute; top: 0px; left: 0px; margin: 0px; transform: translate(0px, 0px);"
+>
+  <div
+    class="popup"
+    style="opacity: 1; webkit-transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+  >
+    <span
+      class="arrow MuiBox-root css-0"
+      style="position: absolute; left: 0px; transform: translate(0px, 0px);"
+    />
+    <p>
+      Are you sure you want to buy 1 item for
+    10 BGN ?
+    </p>
+    <div
+      class="buttons"
+    >
+      <button
+        class="yes"
+      >
+        Yes
+      </button>
+      <button
+        class="no"
+      >
+        No
+      </button>
+    </div>
+  </div>
+</div>
+`;

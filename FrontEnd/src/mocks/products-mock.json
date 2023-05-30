@@ -1,0 +1,30 @@
+[
+    {
+        "categoryId": 1,
+        "city": "Plovdiv",
+        "code": "234234dfbdfbdf",
+        "description": "Descrr",
+        "fullName": "HP 41",
+        "id": 1,
+        "imageUrl": "https://res.cloudinary.com/dwmtkp1d1/image/upload/v1685344548/Marketplace/product_1_picture_59cb8fb2-6468-47b6-b879-e9ae0fd7aea1.jpg",
+        "locationId": 1,
+        "price": 321,
+        "quantity": 14,
+        "quantityForSale": 12,
+        "type": "Laptop"
+    },
+    {
+        "categoryId": 1,
+        "city": "Plovdiv",
+        "code": "6575gjhjgh",
+        "description": "Descrr",
+        "fullName": "Acer 21",
+        "id": 2,
+        "imageUrl": "https://res.cloudinary.com/dwmtkp1d1/image/upload/v1685344570/Marketplace/product_2_picture_9dd5a560-0af3-4d8c-9e6c-e3d95383fe4f.jpg",
+        "locationId": 1,
+        "price": 345,
+        "quantity": 12,
+        "quantityForSale": 10,
+        "type": "Laptop"
+    }
+]

@@ -4,6 +4,7 @@ import {
     InputLabel,
     Select,
     MenuItem,
+    CircularProgress,
     FormHelperText,
 } from '@mui/material';
 import { ICategory, IFormInputs, ILocation, IProduct } from '../../types/types.ts';
@@ -31,8 +32,8 @@ const AddProductModal = ({
     showAddModal,
     setShowAddModal,
 }: AddModalProps) => {
-    const [createProduct, { isLoading: fetchingProduct }] = useCreateProductMutation();
-    const [createImage, { isLoading: fetchingImage }] = useCreateImageMutation();
+    const [createProduct] = useCreateProductMutation();
+    const [createImage] = useCreateImageMutation();
     const { data: categories } = useGetCategoriesQuery();
     const { data: locations } = useGetLocationQuery();
     const [imageUrl, setImageUrl] = useState(imagePlaceholder);
@@ -41,7 +42,7 @@ const AddProductModal = ({
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
         getValues,
         reset
     } = useForm<IFormInputs>({
@@ -97,7 +98,7 @@ const AddProductModal = ({
 
     return (
         <Modal showModal={showAddModal} setShowModal={setShowAddModal}>
-            <form className='addForm' onSubmit={handleSubmit(onSubmit)}>
+            <form className='modalContent' onSubmit={handleSubmit(onSubmit)}>
                 <div className='row'>
                     <div className='leftModal'>
                         <h2>Add New Item</h2>
@@ -234,7 +235,10 @@ const AddProductModal = ({
                         </div>
                     </div>
                 </div>
-                <button type='submit' disabled={fetchingProduct || fetchingImage}>{(fetchingProduct || fetchingImage) ? 'Submitting...' : 'Add'}</button>
+                {isSubmitting
+                    ? <CircularProgress className='circular' />
+                    : <button type='submit'>Add</button>
+                }
             </form>
         </Modal>
     );

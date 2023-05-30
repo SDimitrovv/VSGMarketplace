@@ -15,8 +15,7 @@
         }
     }
 
-    .addForm,
-    .editForm {
+    .modalContent {
         @include flex-align(column, space-between);
         background-color: $general-white;
         overflow-y: auto;
@@ -99,6 +98,12 @@
                 }
             }
         }
+    }
+
+    .circular {
+        align-self: center;
+        margin: 4% 0;
+        color: $main-color;
     }
 
     @media screen and (max-width: 768px) {

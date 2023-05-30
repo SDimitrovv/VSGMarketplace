@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "type": "Laptop"
+    },
+    {
+        "id": 2,
+        "type": "Monitor"
+    },
+    {
+        "id": 3,
+        "type": "PC"
+    },
+    {
+        "id": 4,
+        "type": "Mouse"
+    },
+    {
+        "id": 5,
+        "type": "Keyboard"
+    }
+]

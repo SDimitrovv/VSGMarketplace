@@ -9,7 +9,7 @@ export const baseApi = createApi({
     baseUrl: baseURL,
     prepareHeaders: (headers) => {
       const user: IUser = JSON.parse(sessionStorage.getItem('user') as string);
-      headers.set('Authorization', `Bearer ${user.token}`);
+      headers.set('Authorization', `Bearer ${user?.token}`);
       return headers;
     },
   }),
