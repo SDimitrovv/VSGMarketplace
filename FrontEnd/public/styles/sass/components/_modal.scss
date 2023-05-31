@@ -110,8 +110,7 @@
         max-height: 96%;
         width: 92%;
 
-        .addForm,
-        .editForm {
+        .modalContent {
             @include flex-align(column, space-between);
             height: 100%;
             width: 100%;

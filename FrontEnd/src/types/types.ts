@@ -28,8 +28,8 @@ export interface IFormInputs {
     code: string;
     fullName: string;
     description: string;
-    categoryId: number | null;
-    locationId: number | null;
+    categoryId: number | string;
+    locationId: number | string;
     quantityForSale: number | null;
     price: number | null;
     quantity: number | null;

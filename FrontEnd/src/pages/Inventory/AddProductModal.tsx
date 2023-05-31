@@ -1,12 +1,3 @@
-import {
-    TextField,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    CircularProgress,
-    FormHelperText,
-} from '@mui/material';
 import { ICategory, IFormInputs, ILocation, IProduct } from '../../types/types.ts';
 import { useState, Dispatch, SetStateAction } from 'react';
 import { useCreateProductMutation } from '../../services/productsService.ts';
@@ -18,6 +9,15 @@ import { uploadImage } from '../../utils/uploadImage.ts';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Modal from '../../components/Modal.tsx';
+import {
+    TextField,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    CircularProgress,
+    FormHelperText,
+} from '@mui/material';
 
 type AddModalProps = {
     products: IProduct[] | undefined;
@@ -27,7 +27,7 @@ type AddModalProps = {
 };
 
 const AddProductModal = ({
-    //products,
+    // products,
     setProducts,
     showAddModal,
     setShowAddModal,
@@ -51,8 +51,8 @@ const AddProductModal = ({
             code: '',
             fullName: '',
             description: '',
-            categoryId: null,
-            locationId: null,
+            categoryId: '',
+            locationId: '',
             quantityForSale: null,
             price: null,
             quantity: null,
@@ -112,7 +112,7 @@ const AddProductModal = ({
                             helperText={errors.code?.message}
                             {...register('code', {
                                 required: 'Code field is required',
-                                // validate: value => products ? products.some(p => p.code !== value) : false || 'Code already exists'
+                                // validate: value => products?.some(p => p.code !== value) || 'Code already exists'
                             })}
                         />
                         <TextField
@@ -149,7 +149,7 @@ const AddProductModal = ({
                                 ))}
                             </Select>
                             <FormHelperText error>
-                                {watch('categoryId') === null && errors.categoryId?.message ? errors.categoryId?.message : ''}
+                                {watch('categoryId') === '' && errors.categoryId?.message ? errors.categoryId?.message : ''}
                             </FormHelperText>
                         </FormControl>
                         <FormControl variant='standard' className='formInput'>
@@ -169,7 +169,7 @@ const AddProductModal = ({
                                 ))}
                             </Select>
                             <FormHelperText error>
-                                {watch('locationId') === null && errors.locationId?.message ? errors.locationId?.message : ''}
+                                {watch('locationId') === '' && errors.locationId?.message ? errors.locationId?.message : ''}
                             </FormHelperText>
                         </FormControl>
                         <TextField
