@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Marketplace it should match the snapshot 1`] = `
+exports[`Marketplace should match the snapshot 1`] = `
 <div>
   <main
     id="marketplaceMain"

@@ -24,7 +24,7 @@ const PendingOrderComponent = ({ order }: PendingOrderProps) => {
 
     return (
         <Fade in={true} timeout={1000}>
-            <div ref={orderRef} className='order' id={order.id.toString()} >
+            <div ref={orderRef} className='order' id={order.id.toString()} role='cell'>
                 <div className='firstThree'>
                     <span className='codeColumn'>{order.productCode}</span>
                     <span className='qtyColumn'>{order.quantity}</span>

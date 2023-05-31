@@ -40,6 +40,7 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
         handleSubmit,
         formState: { errors, isSubmitting },
         getValues,
+        watch
     } = useForm<IFormInputs>({
         defaultValues: {
             code: product.code,
@@ -52,7 +53,7 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
             quantity: product.quantity,
             image: null
         },
-        mode: 'all',
+        mode: 'onChange',
     });
 
     const onSubmit = async (data: IFormInputs) => {
@@ -143,6 +144,9 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                                     </MenuItem>
                                 ))}
                             </Select>
+                            <FormHelperText error>
+                                {watch('locationId') === null && errors.locationId?.message ? errors.locationId?.message : ''}
+                            </FormHelperText>
                         </FormControl>
                         <FormControl variant='standard' className='formInput'>
                             <InputLabel focused={false}>Location *</InputLabel>
@@ -165,7 +169,7 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                                 ))}
                             </Select>
                             <FormHelperText error>
-                                {errors.locationId?.message}
+                                {watch('categoryId') === null && errors.categoryId?.message ? errors.categoryId?.message : ''}
                             </FormHelperText>
                         </FormControl>
                         <TextField

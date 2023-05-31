@@ -27,7 +27,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
     />
   </button>
   <form
-    class="addForm"
+    class="modalContent"
   >
     <div
       class="row"

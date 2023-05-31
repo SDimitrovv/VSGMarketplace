@@ -1,0 +1,22 @@
+[
+    {
+        "date": "2023-05-31 04:16",
+        "productCode": "1",
+        "id": 1,
+        "price": 12,
+        "email": "ERedzhepov@vsgbg.com",
+        "productFullName": "1",
+        "quantity": 1,
+        "status": "Declined"
+    },
+    {
+        "date": "2023-05-31 04:17",
+        "productCode": "2",
+        "id": 2,
+        "email": "ERedzhepov@vsgbg.com",
+        "price": 12,
+        "productFullName": "2",
+        "quantity": 2,
+        "status": "Pending"
+    }
+]

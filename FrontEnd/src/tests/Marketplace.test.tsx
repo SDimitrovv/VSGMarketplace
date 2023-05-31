@@ -8,12 +8,12 @@ describe('Marketplace', () => {
     afterEach(() => mockServer.resetHandlers());
 
     afterAll(() => mockServer.close());
-    it('should render Marketplace component with card items', async () => {
+    it('should render with card items', async () => {
         render(<Marketplace />);
-        const cells = await screen.findAllByRole('cell');
-        expect(cells).toHaveLength(2);
+        const productCards = await screen.findAllByRole('cell');
+        expect(productCards).toHaveLength(2);
     });
-    it('it should match the snapshot', async () => {
+    it('should match the snapshot', async () => {
         const { container } = render(<Marketplace />);
         expect(container).toMatchSnapshot();
     });

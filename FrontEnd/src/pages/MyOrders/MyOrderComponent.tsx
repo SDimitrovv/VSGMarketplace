@@ -35,7 +35,7 @@ const MyOrderComponent = ({ order }: MyOrderProps) => {
         <>
             <Popup popupMessage={popupMessage} onYes={onCancel} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={1000}>
-                <div id={order.id.toString()} className='order' >
+                <div id={order.id.toString()} className='order' role='cell'>
                     <span className='nameColumn'>{order.productFullName}</span>
                     <div className='firstTwo'>
                         <span className='qtyColumn'>{order.quantity}</span>

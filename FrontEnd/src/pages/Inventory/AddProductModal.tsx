@@ -27,7 +27,7 @@ type AddModalProps = {
 };
 
 const AddProductModal = ({
-    products,
+    //products,
     setProducts,
     showAddModal,
     setShowAddModal,
@@ -44,7 +44,8 @@ const AddProductModal = ({
         handleSubmit,
         formState: { errors, isSubmitting },
         getValues,
-        reset
+        reset,
+        watch
     } = useForm<IFormInputs>({
         defaultValues: {
             code: '',
@@ -57,7 +58,7 @@ const AddProductModal = ({
             quantity: null,
             image: null,
         },
-        mode: 'all',
+        mode: 'onChange',
     });
 
     const onSubmit = async (data: IFormInputs): Promise<void> => {
@@ -111,7 +112,7 @@ const AddProductModal = ({
                             helperText={errors.code?.message}
                             {...register('code', {
                                 required: 'Code field is required',
-                                validate: value => products ? products.some(p => p.code !== value) : false || 'Code already exists'
+                                // validate: value => products ? products.some(p => p.code !== value) : false || 'Code already exists'
                             })}
                         />
                         <TextField
@@ -135,7 +136,7 @@ const AddProductModal = ({
                             <InputLabel focused={false}>Category *</InputLabel>
                             <Select
                                 value={selectOption}
-                                error={Boolean(errors.categoryId)}
+                                error={(Boolean(errors.categoryId) && Boolean(errors.categoryId?.message))}
                                 {...register('categoryId', {
                                     onChange: (e) => setSelectOption(e.target.value),
                                     required: 'Category field is required',
@@ -148,7 +149,7 @@ const AddProductModal = ({
                                 ))}
                             </Select>
                             <FormHelperText error>
-                                {errors.categoryId?.message}
+                                {watch('categoryId') === null && errors.categoryId?.message ? errors.categoryId?.message : ''}
                             </FormHelperText>
                         </FormControl>
                         <FormControl variant='standard' className='formInput'>
@@ -168,7 +169,7 @@ const AddProductModal = ({
                                 ))}
                             </Select>
                             <FormHelperText error>
-                                {errors.locationId?.message}
+                                {watch('locationId') === null && errors.locationId?.message ? errors.locationId?.message : ''}
                             </FormHelperText>
                         </FormControl>
                         <TextField
