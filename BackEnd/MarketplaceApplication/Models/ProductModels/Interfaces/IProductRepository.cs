@@ -9,8 +9,6 @@ public interface IProductRepository : IGenericRepository<Product>
     Task<ProductGetDetailsModel> GetDetails(int id);
     Task<IEnumerable<ProductGetInventoryModel>> GetInventory();
     Task<IEnumerable<ProductGetMarketplaceModel>> GetMarketplace();
-    Task ReduceQuantity(int productId, int quantityReduce);
-    Task ReturnQuantity(int productId, int quantityReturn);
     Task<Product> GetByCode(string code);
 
 }
