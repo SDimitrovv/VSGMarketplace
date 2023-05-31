@@ -56,6 +56,7 @@ namespace MarketplaceApplication.Services
             var orderId = await _orderRepository.Create(order);
             order.Id = orderId;
 
+            product.Quantity -= model.Quantity;
             product.QuantityForSale -= model.Quantity;
             await _productRepository.Update(product);
 
@@ -93,6 +94,7 @@ namespace MarketplaceApplication.Services
 
             var product = await _productRepository.GetById(order.ProductId);
 
+            product.Quantity += order.Quantity;
             product.QuantityForSale += order.Quantity;
             await _productRepository.Update(product);
         }
