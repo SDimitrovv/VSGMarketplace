@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketplaceInfrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketplaceApplication", "MarketplaceApplication\MarketplaceApplication.csproj", "{E8D52E4E-6B6E-4BC5-AFD7-C0712E4FC66E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketplaceTests", "MarketplaceTests\MarketplaceTests.csproj", "{9B433B3B-D87C-4669-8C9C-443D31F62FD3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{E8D52E4E-6B6E-4BC5-AFD7-C0712E4FC66E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8D52E4E-6B6E-4BC5-AFD7-C0712E4FC66E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8D52E4E-6B6E-4BC5-AFD7-C0712E4FC66E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B433B3B-D87C-4669-8C9C-443D31F62FD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B433B3B-D87C-4669-8C9C-443D31F62FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B433B3B-D87C-4669-8C9C-443D31F62FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B433B3B-D87C-4669-8C9C-443D31F62FD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,11 +3,10 @@ using MarketplaceApplication.Models.ExceptionModels;
 using MarketplaceApplication.Models.OrderModels.DTOs;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
+using MarketplaceApplication.Models.UserModels;
 using MarketplaceDomain.Entities;
 using MarketplaceDomain.Enums;
-using Microsoft.AspNetCore.Http;
 using System.Net;
-using MarketplaceApplication.Models.UserModels;
 
 namespace MarketplaceApplication.Services
 {
@@ -57,7 +56,9 @@ namespace MarketplaceApplication.Services
             var orderId = await _orderRepository.Create(order);
             order.Id = orderId;
 
-            await _productRepository.ReduceQuantity(order.ProductId, order.Quantity);
+            product.Quantity -= model.Quantity;
+            product.QuantityForSale -= model.Quantity;
+            await _productRepository.Update(product);
 
             var newOrder = _mapper.Map<AddedOrderModel>(order);
 
@@ -91,7 +92,11 @@ namespace MarketplaceApplication.Services
 
             await _orderRepository.Update(order);
 
-            await _productRepository.ReturnQuantity(order.ProductId, order.Quantity);
+            var product = await _productRepository.GetById(order.ProductId);
+
+            product.Quantity += order.Quantity;
+            product.QuantityForSale += order.Quantity;
+            await _productRepository.Update(product);
         }
     }
 }
