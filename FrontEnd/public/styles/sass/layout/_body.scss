@@ -32,26 +32,9 @@ img {
     pointer-events: none;
 }
 
-.closeModal {
-    cursor: pointer;
-    position: absolute;
-    left: 94%;
-    top: 2%;
-    background: none;
-}
-
-button,
-a {
-    pointer-events: auto;
-}
-
 a {
     color: $general-white;
     text-decoration: none;
-}
-
-svg {
-    pointer-events: none;
 }
 
 @media screen and (max-width: 768px) {
