@@ -1,0 +1,16 @@
+#unauthorizedMain {
+    @include flex-align(column, center);
+    gap: 10px;
+
+    img {
+        height: 600px;
+
+        @media screen and (max-width: 768px) {
+            height: auto;
+        }
+    }
+
+    a {
+        color: $general-gray;
+    }
+}

@@ -1,0 +1,10 @@
+#notFoundMain {
+    @include flex-align(column, center);
+    gap: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+
+    a {
+        color: $general-gray;
+    }
+}
