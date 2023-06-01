@@ -51,11 +51,11 @@ aside {
                 color: $general-black;
                 height: 46px;
                 border-radius: 10px;
-            }
 
-            .navButton:hover {
-                cursor: pointer;
-                box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+                &:hover {
+                    cursor: pointer;
+                    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+                }
             }
 
             .navButton.active {
@@ -63,12 +63,14 @@ aside {
                 background: $main-color;
                 box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 
-                .icon>path {
-                    fill: $general-white;
+                .icon {
+                    color: $general-white
                 }
             }
 
             .icon {
+                font-size: medium;
+                color: $main-color;
                 margin: 0px 14px;
             }
 

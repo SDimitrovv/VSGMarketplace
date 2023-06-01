@@ -7,13 +7,11 @@ header {
   font-family: 'Montserrat';
   box-sizing: border-box;
   width: 100%;
-  padding: 12px 16px;
+  padding: 8px 10px;
   height: 54px;
 
   #logo {
-    width: 30px;
-    height: 30px;
-    padding-right: 70px;
+    padding-right: 68px;
   }
 
   #pageTitle {
@@ -40,6 +38,10 @@ header {
     color: $main-color;
     display: none;
     align-self: center;
+
+    svg {
+      font-size: 40px;
+    }
   }
 
   @media screen and (max-width: 768px) {

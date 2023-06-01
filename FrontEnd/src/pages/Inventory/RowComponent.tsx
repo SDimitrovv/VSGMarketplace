@@ -60,7 +60,7 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
                     <StyledTableCell>{product.code}</StyledTableCell>
                     <StyledTableCell>{product.fullName}</StyledTableCell>
                     <StyledTableCell>{product.type}</StyledTableCell>
-                    <StyledTableCell>{product.quantityForSale}</StyledTableCell>
+                    <StyledTableCell>{product.quantityForSale || 0}</StyledTableCell>
                     <StyledTableCell>{product.quantity}</StyledTableCell>
                     <StyledTableCell>
                         <a className='edit' onClick={() => setShowEditModal(true)}>
