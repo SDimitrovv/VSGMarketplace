@@ -12,13 +12,14 @@ namespace MarketplaceInfrastructure.Repositories
         {
         }
 
-        public async Task<Product> GetByCode(string code)
+        public async Task<Product> GetByCode(string code, int locationId)
         {
             var query = @"SELECT p.*
                         FROM Products AS p                      
-                        WHERE p.Code = @code";
+                        WHERE p.Code = @code
+                        AND p.LocationId = @locationId";
 
-            var product = await Connection.QueryFirstOrDefaultAsync<Product>(query, new { code }, Transaction);
+            var product = await Connection.QueryFirstOrDefaultAsync<Product>(query, new { code, locationId }, Transaction);
 
             return product;
         }

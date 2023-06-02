@@ -9,7 +9,7 @@ namespace MarketplaceInfrastructure.Migrations
         {
             Create.Table("Products")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity()
-                .WithColumn("Code").AsString(100).NotNullable().Unique()
+                .WithColumn("Code").AsString(100).NotNullable()
                 .WithColumn("FullName").AsString(100).NotNullable()
                 .WithColumn("Price").AsDecimal(10, 2).NotNullable()
                 .WithColumn("Quantity").AsInt32().NotNullable()

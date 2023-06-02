@@ -7,7 +7,7 @@ public interface IProductService
     Task<ProductGetDetailsModel> GetDetails(int id);
     Task<IEnumerable<ProductGetInventoryModel>> GetInventory();
     Task<IEnumerable<ProductGetMarketplaceModel>> GetMarketplace();
-    Task<ProductAddedModel> Add(ProductAddModel model);
-    Task Update(int productId, ProductEditModel newProduct);
+    Task<ProductAddedModel> Add(ProductAddModel addModel);
+    Task Update(int productId, ProductEditModel editModel);
     Task Delete(int id);
 }
