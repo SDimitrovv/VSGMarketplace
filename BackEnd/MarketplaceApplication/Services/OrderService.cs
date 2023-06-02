@@ -43,9 +43,11 @@ namespace MarketplaceApplication.Services
         public async Task<AddedOrderModel> CreateOrder(AddOrderModel model)
         {
             var product = await _productRepository.GetById(model.ProductId);
-            if (product == null) throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
+            if (product == null) 
+                throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
 
-            if (model.Quantity > product.QuantityForSale) throw new HttpException("Not enough quantity for sale!", HttpStatusCode.BadRequest);
+            if (model.Quantity > product.QuantityForSale) 
+                throw new HttpException("Not enough quantity for sale!", HttpStatusCode.BadRequest);
 
             var order = _mapper.Map<Order>(model);
             order.ProductFullName = product.FullName;
@@ -68,9 +70,11 @@ namespace MarketplaceApplication.Services
         public async Task UpdateComplete(int id)
         {
             var order = await _orderRepository.GetById(id);
-            if (order == null) throw new HttpException("Order id not found!", HttpStatusCode.NotFound);
+            if (order == null) 
+                throw new HttpException("Order id not found!", HttpStatusCode.NotFound);
 
-            if (order.Status != "Pending") throw new HttpException("Order is not pending!", HttpStatusCode.BadRequest);
+            if (order.Status != "Pending") 
+                throw new HttpException("Order is not pending!", HttpStatusCode.BadRequest);
 
             order.Status = Status.Finished.ToString();
 
@@ -80,13 +84,15 @@ namespace MarketplaceApplication.Services
         public async Task UpdateReject(int id)
         {
             var order = await _orderRepository.GetById(id);
-            if (order == null) throw new HttpException("Order id not found!", HttpStatusCode.NotFound);
+            if (order == null) 
+                throw new HttpException("Order id not found!", HttpStatusCode.NotFound);
 
             var userEmail = _userService.GetEmail("preferred_username");
+            if (order.Email != userEmail) 
+                throw new HttpException("Sorry!", HttpStatusCode.BadRequest);
 
-            if (order.Email != userEmail) throw new HttpException("Sorry!", HttpStatusCode.BadRequest);
-
-            if (order.Status != "Pending") throw new HttpException("Order is not pending!", HttpStatusCode.BadRequest);
+            if (order.Status != "Pending") 
+                throw new HttpException("Order is not pending!", HttpStatusCode.BadRequest);
 
             order.Status = Status.Declined.ToString();
 

@@ -4,6 +4,6 @@
     {
         public string Email { get; set; }
 
-        public List<> LendedItems { get; set; }
+        public IEnumerable<LendedItemsPerUserModel> LendedItems { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 using MarketplaceApplication.Models.GenericRepository;
 using MarketplaceApplication.Models.LendModels.DTOs;
 using MarketplaceApplication.Models.LendModels.Interfaces;
@@ -16,14 +17,15 @@ namespace MarketplaceInfrastructure.Repositories
         {
         }
 
-        public Task<IEnumerable<AllLendedItemsModel>> GetAllLendedItems()
+        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLendedItems(string email)
         {
-            throw new NotImplementedException();
-        }
+            var query = @"SELECT l.*
+                        FROM Lends AS l
+                        WHERE l.Email = @email";
 
-        public Task<IEnumerable<MyLendedItemsModel>> GetMyLendedItems(string email)
-        {
-            throw new NotImplementedException();
+            var lends = await Connection.QueryAsync<MyLendedItemsModel>(query, new {email}, Transaction);
+
+            return lends;
         }
     }
 }

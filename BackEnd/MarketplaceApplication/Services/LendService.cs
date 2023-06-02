@@ -1,28 +1,116 @@
-﻿using MarketplaceApplication.Models.LendModels.DTOs;
+﻿using AutoMapper;
+using MarketplaceApplication.Models.ExceptionModels;
+using MarketplaceApplication.Models.LendModels.DTOs;
 using MarketplaceApplication.Models.LendModels.Interfaces;
+using MarketplaceApplication.Models.ProductModels.Interfaces;
+using MarketplaceApplication.Models.UserModels;
+using System.Net;
+using MarketplaceDomain.Entities;
+using CloudinaryDotNet.Actions;
+using MarketplaceApplication.Models.OrderModels.Interfaces;
 
 namespace MarketplaceApplication.Services
 {
     public class LendService : ILendService
     {
-        public Task<IEnumerable<AllLendedItemsModel>> GetAllLendedItems()
+        private readonly ILendRepository _lendRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
+        private readonly IUserService _userService;
+
+        public LendService(
+            ILendRepository lendRepository,
+            IProductRepository productRepository,
+            IMapper mapper,
+            IUserService userService)
         {
-            throw new NotImplementedException();
+            _lendRepository = lendRepository;
+            _productRepository = productRepository;
+            _mapper = mapper;
+            _userService = userService;
         }
 
-        public Task<IEnumerable<MyLendedItemsModel>> GetMyLendedItems()
+        public async Task<AddedLendModel> CreateLend(AddLendModel model)
         {
-            throw new NotImplementedException();
+            var product = await _productRepository.GetById(model.ProductId);
+            if (product == null)
+                throw new HttpException("Product id not found!", HttpStatusCode.NotFound);
+
+            if (model.Quantity > product.QuantityForLend)
+                throw new HttpException("Not enough quantity for lend!", HttpStatusCode.BadRequest);
+
+            var lend = _mapper.Map<Lend>(model);
+            lend.ProductFullName = product.FullName;
+            lend.ProductCode = product.Code;
+            lend.Email = _userService.GetEmail("preferred_username");
+
+            var lendId = await _lendRepository.Create(lend);
+            lend.Id = lendId;
+
+            product.Quantity -= model.Quantity;
+            product.QuantityForLend -= model.Quantity;
+            await _productRepository.Update(product);
+
+            var newLend = _mapper.Map<AddedLendModel>(lend);
+
+            return newLend;
         }
 
-        public Task<AddedLendModel> CreateLend(AddLendModel model)
+        public async Task ReturnItem(int id)
         {
-            throw new NotImplementedException();
+            var lend = await _lendRepository.GetById(id);
+            if (lend == null)
+                throw new HttpException("Lend id not found!", HttpStatusCode.NotFound);
+
+            var userEmail = _userService.GetEmail("preferred_username");
+            if (lend.Email != userEmail)
+                throw new HttpException("Sorry!", HttpStatusCode.BadRequest);
+
+            //Maybe chek if endDate is alredy returned 
+
+            lend.EndDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+
+            await _lendRepository.Update(lend);
+
+            var product = await _productRepository.GetById(lend.ProductId);
+
+            product.Quantity += lend.Quantity;
+            product.QuantityForLend += lend.Quantity;
+            await _productRepository.Update(product);
         }
 
-        public Task ReturnItem(int id)
+        public async Task<IEnumerable<AllLendedItemsModel>> GetAllLendedItems()
         {
-            throw new NotImplementedException();
+            var lends = await _lendRepository.GetAll();
+
+            var allLendedItems = lends
+                .GroupBy(l => l.Email)
+                .Select(g => new AllLendedItemsModel
+                {
+                    Email = g.Key,
+                    LendedItems = g
+                        .Select(l => new LendedItemsPerUserModel
+                        {
+                            Id = l.Id,
+                            StartDate = l.StartDate,
+                            EndDate = l.EndDate,
+                            Quantity = l.Quantity,
+                            ProductId = l.ProductId,
+                            ProductCode = l.ProductCode,
+                            ProductFullName = l.ProductFullName
+                        })
+                });
+
+            return allLendedItems;
         }
+
+        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLendedItems()
+        {
+            var userEmail = _userService.GetEmail("preferred_username");
+
+            return await _lendRepository.GetMyLendedItems(userEmail);
+        }
+
+
     }
 }
