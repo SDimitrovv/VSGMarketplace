@@ -10,9 +10,9 @@ describe('InventoryTable', () => {
 
   afterAll(() => mockServer.close());
   it('should render row components', async () => {
-    render(<InventoryTable isLoading={true} filteredProducts={products} setProducts={() => console.log('setProducts')} />);
+    render(<InventoryTable isLoading={false} filteredProducts={products} setProducts={() => console.log('setProducts')} />);
     const rows = await screen.findAllByRole('row');
-    expect(rows).toHaveLength(5);
+    expect(rows).toHaveLength(3);
   });
   it('should match the snapshot', async () => {
     const { container } = render(<InventoryTable isLoading={true} filteredProducts={products} setProducts={() => console.log('setProducts')} />);

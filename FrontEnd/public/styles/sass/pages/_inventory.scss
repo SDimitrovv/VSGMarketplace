@@ -7,12 +7,11 @@
     justify-content: flex-end;
     margin-top: 10px;
 
-    .searchProduct,
-    .location {
+    .searchProduct {
         @include flex-align(row, flex-end);
 
         .MuiInputBase-root {
-            width: 140px;
+            width: 180px;
         }
 
         @include material-ui;
@@ -52,7 +51,18 @@
     border-radius: 4px;
     margin-top: 40px;
     width: 99%;
-    height: 85%;
+    height: 81.2%;
+
+    .MuiDataGrid-cell:focus {
+        color:$general-gray
+    }
+    .MuiDataGrid-columnHeaderTitle {
+        font-weight: 800;
+    }
+
+    .MuiDataGrid-columnSeparator {
+        display: none;
+    }
 
     .edit,
     .delete {
@@ -73,22 +83,34 @@
     }
 }
 
+.MuiDataGrid-filterForm {
+    @include material-ui;
+
+    label.Mui-focused {
+        color: $general-gray;
+    }
+}
+
 @media screen and (max-width: 768px) {
     #searchSpace {
-        @include flex-align(column, flex-start);
-        margin-left: 12px;
-
-        .searchProduct,
-        .location {
-            margin-bottom: 18px;
-        }
+        justify-content: space-around;
+        margin-right: 12px;
     }
 
     #tableBorder {
-        margin-top: 20px;
-        margin: 20px 10px;
+        margin: 0 10px;
+        margin-top: 10px;
         width: auto;
         height: auto;
-        min-height: 250px;
+
+        .MuiDataGrid-root {
+            width: 700px;
+        }
+    }
+
+    .MuiDataGrid-filterForm {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 }

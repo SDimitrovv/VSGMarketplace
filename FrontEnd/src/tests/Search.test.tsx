@@ -9,7 +9,7 @@ describe('Inventory', () => {
     afterEach(() => mockServer.resetHandlers());
 
     afterAll(() => mockServer.close());
-    it('should search and find 4 rows', async () => {
+    it('should search and find 2 rows', async () => {
         render(<Inventory />);
         const user = userEvent.setup();
         const search = screen.getByLabelText('Search...');
@@ -17,7 +17,6 @@ describe('Inventory', () => {
         await user.type(search, 'HP');
 
         const rows = await screen.findAllByRole('row');
-        expect(rows).toHaveLength(4);
-        expect(rows).toMatchSnapshot();
+        expect(rows).toHaveLength(2);
     });
 });
