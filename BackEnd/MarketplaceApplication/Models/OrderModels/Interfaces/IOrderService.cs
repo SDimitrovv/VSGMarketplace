@@ -1,6 +1,4 @@
 ﻿using MarketplaceApplication.Models.OrderModels.DTOs;
-using MarketplaceApplication.Models.ProductModels.DTOs;
-using MarketplaceDomain.Entities;
 
 namespace MarketplaceApplication.Models.OrderModels.Interfaces;
 

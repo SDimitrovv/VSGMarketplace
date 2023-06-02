@@ -2,6 +2,8 @@
 using MarketplaceApplication.Helpers.AutoMapper;
 using MarketplaceApplication.Helpers.Validators;
 using MarketplaceApplication.Models.CategoryModels.Interfaces;
+using MarketplaceApplication.Models.LendModels.DTOs;
+using MarketplaceApplication.Models.LendModels.Interfaces;
 using MarketplaceApplication.Models.LocationModels.Interfaces;
 using MarketplaceApplication.Models.OrderModels.DTOs;
 using MarketplaceApplication.Models.OrderModels.Interfaces;
@@ -26,10 +28,12 @@ namespace MarketplaceApplication.Helpers.Configurations
             services.AddScoped<IPictureService, PictureService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILendService, LendService>();
 
             services.AddScoped<IValidator<ProductAddModel>, ProductAddValidator>();
             services.AddScoped<IValidator<ProductEditModel>, ProductEditValidator>();
             services.AddScoped<IValidator<AddOrderModel>, AddOrderValidator>();
+            services.AddScoped<IValidator<AddLendModel>, AddLendValidator>();
 
             return services;
         }

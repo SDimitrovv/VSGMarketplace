@@ -14,6 +14,8 @@
 
         public int QuantityForSale { get; set; }
 
+        public int QuantityForLend { get; set; }
+
         public string Description { get; set; }
 
         public int CategoryId { get; set; }
