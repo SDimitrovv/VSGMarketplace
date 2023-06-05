@@ -6,5 +6,5 @@ namespace MarketplaceApplication.Models.LendModels.Interfaces;
 
 public interface ILendRepository : IGenericRepository<Lend>
 {
-    Task<IEnumerable<MyLendedItemsModel>> GetMyLentItems(string email);
+    Task<IEnumerable<MyLentItemsModel>> GetMyLentItems(string email);
 }

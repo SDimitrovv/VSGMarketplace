@@ -72,17 +72,17 @@ namespace MarketplaceApplication.Services
             await _productRepository.Update(product);
         }
 
-        public async Task<IEnumerable<AllLendedItemsModel>> GetAllLentItems()
+        public async Task<IEnumerable<AllLentItemsModel>> GetAllLentItems()
         {
             var lends = await _lendRepository.GetAll();
 
             var allLendedItems = lends
                 .GroupBy(l => l.Email)
-                .Select(g => new AllLendedItemsModel
+                .Select(g => new AllLentItemsModel
                 {
                     Email = g.Key,
-                    LendedItems = g
-                        .Select(l => new LendedItemsPerUserModel
+                    LentItems = g
+                        .Select(l => new LentItemsPerUserModel
                         {
                             Id = l.Id,
                             StartDate = l.StartDate,
@@ -97,7 +97,7 @@ namespace MarketplaceApplication.Services
             return allLendedItems;
         }
 
-        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLentItems()
+        public async Task<IEnumerable<MyLentItemsModel>> GetMyLentItems()
         {
             var userEmail = _userService.GetEmail("preferred_username");
 

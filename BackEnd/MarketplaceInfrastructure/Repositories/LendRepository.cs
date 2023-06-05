@@ -12,13 +12,13 @@ namespace MarketplaceInfrastructure.Repositories
         {
         }
 
-        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLentItems(string email)
+        public async Task<IEnumerable<MyLentItemsModel>> GetMyLentItems(string email)
         {
             var query = @"SELECT l.*
                         FROM Lends AS l
                         WHERE l.Email = @email";
 
-            var lends = await Connection.QueryAsync<MyLendedItemsModel>(query, new {email}, Transaction);
+            var lends = await Connection.QueryAsync<MyLentItemsModel>(query, new {email}, Transaction);
 
             return lends;
         }
