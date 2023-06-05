@@ -72,7 +72,7 @@ namespace MarketplaceApplication.Services
             await _productRepository.Update(product);
         }
 
-        public async Task<IEnumerable<AllLendedItemsModel>> GetAllLendedItems()
+        public async Task<IEnumerable<AllLendedItemsModel>> GetAllLentItems()
         {
             var lends = await _lendRepository.GetAll();
 
@@ -92,17 +92,16 @@ namespace MarketplaceApplication.Services
                             ProductCode = l.ProductCode,
                             ProductFullName = l.ProductFullName
                         })
-                        .Where(l => l.EndDate == null)
                 });
 
             return allLendedItems;
         }
 
-        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLendedItems()
+        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLentItems()
         {
             var userEmail = _userService.GetEmail("preferred_username");
 
-            return await _lendRepository.GetMyLendedItems(userEmail);
+            return await _lendRepository.GetMyLentItems(userEmail);
         }
 
 

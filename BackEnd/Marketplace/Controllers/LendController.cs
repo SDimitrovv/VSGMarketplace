@@ -36,7 +36,7 @@ namespace MarketplaceAPI.Controllers
         [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> Return(int id)
         {
             await _lendService.ReturnItem(id);
 
@@ -45,18 +45,18 @@ namespace MarketplaceAPI.Controllers
 
         [Authorize(Policy = IdentityData.AdminUserPolicy)]
         [HttpGet]
-        [Route("Lended-Items")]
-        public async Task<IEnumerable<AllLendedItemsModel>> GetAllLendedItems()
+        [Route("Lent-Items")]
+        public async Task<IEnumerable<AllLendedItemsModel>> GetAllLentItems()
         {
-            return await _lendService.GetAllLendedItems();
+            return await _lendService.GetAllLentItems();
         }
 
         [Authorize]
         [HttpGet]
-        [Route("My-Lended-Items")]
-        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLendedItems()
+        [Route("My-Lent-Items")]
+        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLentItems()
         {
-            return await _lendService.GetMyLendedItems();
+            return await _lendService.GetMyLentItems();
         }
     }
 }

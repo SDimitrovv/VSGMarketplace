@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using MarketplaceApplication.Models.GenericRepository;
 using MarketplaceApplication.Models.LendModels.DTOs;
 using MarketplaceApplication.Models.LendModels.Interfaces;
@@ -17,7 +12,7 @@ namespace MarketplaceInfrastructure.Repositories
         {
         }
 
-        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLendedItems(string email)
+        public async Task<IEnumerable<MyLendedItemsModel>> GetMyLentItems(string email)
         {
             var query = @"SELECT l.*
                         FROM Lends AS l
