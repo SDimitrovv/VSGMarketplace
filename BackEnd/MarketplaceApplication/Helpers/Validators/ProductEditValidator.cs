@@ -24,15 +24,8 @@ namespace MarketplaceApplication.Helpers.Validators
             RuleFor(c => c.Quantity)
                 .NotNull()
                 .WithMessage("Quantity can't be null")
-                .GreaterThanOrEqualTo(c => c.QuantityForSale + c.QuantityForLend)
-                .When(c => c.QuantityForSale != null && c.QuantityForLend != null)
-                .WithMessage("Sale quantity and lend quantity must be higher or equal to the quantity")
-                .GreaterThanOrEqualTo(c => c.QuantityForSale)
-                .When(c => c.QuantityForSale != null && c.QuantityForLend == null)
-                .WithMessage("Sale quantity must be higher or equal to the quantity")
-                .GreaterThanOrEqualTo(c => c.QuantityForLend)
-                .When(c => c.QuantityForSale == null && c.QuantityForLend != null)
-                .WithMessage("Lend quantity must be higher or equal to the quantity");
+                .GreaterThanOrEqualTo(c => (c.QuantityForLend ?? 0) + (c.QuantityForSale ?? 0))
+                .WithMessage("Sale quantity and lend quantity must be higher or equal to the quantity");
 
             RuleFor(c => c.QuantityForSale)
                 .GreaterThan(-1)

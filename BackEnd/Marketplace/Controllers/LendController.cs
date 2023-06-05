@@ -28,7 +28,7 @@ namespace MarketplaceAPI.Controllers
         {
             await _addLendValidator.ValidateAndThrowAsync(model);
 
-            var lend = _lendService.CreateLend(model);
+            var lend = await _lendService.CreateLend(model);
 
             return CreatedAtAction(null, lend);
         }

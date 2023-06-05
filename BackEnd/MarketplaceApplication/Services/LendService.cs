@@ -4,10 +4,8 @@ using MarketplaceApplication.Models.LendModels.DTOs;
 using MarketplaceApplication.Models.LendModels.Interfaces;
 using MarketplaceApplication.Models.ProductModels.Interfaces;
 using MarketplaceApplication.Models.UserModels;
-using System.Net;
 using MarketplaceDomain.Entities;
-using CloudinaryDotNet.Actions;
-using MarketplaceApplication.Models.OrderModels.Interfaces;
+using System.Net;
 
 namespace MarketplaceApplication.Services
 {
@@ -42,7 +40,6 @@ namespace MarketplaceApplication.Services
             var lend = _mapper.Map<Lend>(model);
             lend.ProductFullName = product.FullName;
             lend.ProductCode = product.Code;
-            lend.Email = _userService.GetEmail("preferred_username");
 
             var lendId = await _lendRepository.Create(lend);
             lend.Id = lendId;
@@ -61,10 +58,6 @@ namespace MarketplaceApplication.Services
             var lend = await _lendRepository.GetById(id);
             if (lend == null)
                 throw new HttpException("Lend id not found!", HttpStatusCode.NotFound);
-
-            var userEmail = _userService.GetEmail("preferred_username");
-            if (lend.Email != userEmail)
-                throw new HttpException("Sorry!", HttpStatusCode.BadRequest);
 
             //Maybe chek if endDate is alredy returned 
 
@@ -99,6 +92,7 @@ namespace MarketplaceApplication.Services
                             ProductCode = l.ProductCode,
                             ProductFullName = l.ProductFullName
                         })
+                        .Where(l => l.EndDate == null)
                 });
 
             return allLendedItems;
