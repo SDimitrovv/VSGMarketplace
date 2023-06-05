@@ -33,8 +33,7 @@
         border-radius: 4px;
 
         #addButtonSpace {
-            display: flex;
-            align-items: center;
+            @include flex-align(row, center);
             justify-content: center;
 
             svg {

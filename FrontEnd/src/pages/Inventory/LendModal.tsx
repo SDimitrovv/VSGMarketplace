@@ -72,13 +72,13 @@ const LendModal = ({
                             {...register('email', { required: 'Name field is required' })}
                         />
                         <FormControl variant='standard' className='formInput'>
-                            <InputLabel focused={false}>QTY For Lend *</InputLabel>
+                            <InputLabel focused={false}>Qty For Lend *</InputLabel>
                             <Select
                                 value={selectOption}
                                 error={(Boolean(errors.quantity) && Boolean(errors.quantity?.message))}
                                 {...register('quantity', {
                                     onChange: (e) => setSelectOption(e.target.value),
-                                    required: 'QTY For Lend field is required',
+                                    required: 'Qty For Lend field is required',
                                 })}
                             >
                                 {Array(product.quantityForLend).fill(1).map((n, i) => n + i).map((o) => (

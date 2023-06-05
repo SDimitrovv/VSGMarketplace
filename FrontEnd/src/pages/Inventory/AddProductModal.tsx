@@ -64,8 +64,9 @@ const AddProductModal = ({
 
     const onSubmit = async (data: IFormInputs): Promise<void> => {
         const image: { name: string } | File = data.image ? data.image[0] : { name: '' };
-        data.quantityForSale = data.quantityForSale || null;
-        data.price = data.price || null;
+        data.quantityForSale = data.quantityForSale || 0;
+        data.quantityForLend = data.quantityForLend || 0;
+        data.price = data.price || 0;
 
         const response = await createProduct(data) as { data: IProduct };
         if ('error' in response) {

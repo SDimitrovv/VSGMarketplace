@@ -1,7 +1,7 @@
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Typography';
 import { ILendItem, IUserLentItems } from '../../types/types.ts';
 import { useGetLentItemsQuery } from '../../services/lendService.ts';
 import LentItemsComponent from './LentItemsComponent.tsx';
@@ -18,7 +18,10 @@ const LentItems = () => {
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                         >
-                            <Typography>{userLentItem.email}</Typography>
+                            <Box component='div'>
+                                <img src='/images/profile-image.png' />
+                                <span>{userLentItem.email}</span>
+                            </Box>
                         </AccordionSummary>
                         <AccordionDetails>
                             <div id='headingSection'>

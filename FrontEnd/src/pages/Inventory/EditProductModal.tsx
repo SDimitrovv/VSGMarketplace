@@ -59,8 +59,9 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
 
     const onSubmit = async (data: IFormInputs) => {
         const image: { name: string } | File = data.image ? data.image[0] : { name: '' };
-        data.quantityForSale = data.quantityForSale || null;
-        data.price = data.price || null;
+        data.quantityForSale = data.quantityForSale || 0;
+        data.quantityForLend = data.quantityForLend || 0;
+        data.price = data.price || 0;
 
         const currentImg = document.querySelector('.currentImg') as HTMLImageElement;
         const selectedCategory = categories?.filter(c => data.categoryId === c.id)[0] as ICategory;

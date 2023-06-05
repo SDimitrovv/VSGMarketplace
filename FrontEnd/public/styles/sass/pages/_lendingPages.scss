@@ -3,8 +3,19 @@
 #lendOrdersMain,
 #myItemsMain {
     @include flex-align(column, flex-start);
-    align-content: center;
 
+    // User section
+    .MuiTypography-root {
+        @include flex-align(row, center);
+        justify-content: center;
+
+        img {
+            height: 24px;
+            margin-right: 10px;
+        }
+    }
+
+    // User item section
     #headingSection,
     .lend {
         @include flex-align(row, center);
@@ -104,18 +115,6 @@
             .nameColumn {
                 width: 100%;
                 border-bottom: 1px solid $border-gray;
-                border-spacing: 0;
-                border-collapse: collapse;
-            }
-
-            .lendStatus {
-                margin: 0;
-                width: 100%;
-                padding: 10px 0;
-
-                span {
-                    padding: 0;
-                }
             }
 
             .nameColumn,
@@ -128,23 +127,16 @@
                 }
             }
 
-            .codeColumn,
-            .qtyColumn {
-                &::before {
-                    display: block;
-                }
-            }
-
             .nameColumn::before {
                 content: 'Name: ';
             }
 
             .codeColumn::before {
-                content: 'Code';
+                content: 'Code: ';
             }
 
             .qtyColumn::before {
-                content: 'Qty';
+                content: 'Qty: ';
             }
 
             .startDateColumn::before {
