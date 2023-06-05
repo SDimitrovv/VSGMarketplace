@@ -2,9 +2,10 @@ export interface IProduct {
     id: number;
     code: string;
     fullName: string;
-    price: number;
+    price?: number;
     quantity: number;
     quantityForSale?: number;
+    quantityForLend?: number;
     description?: string;
     categoryId: number;
     locationId: number;
@@ -24,6 +25,22 @@ export interface IOrder {
     price: number;
 }
 
+export interface ILendItem {
+    id: number;
+    email: string;
+    startDate: string;
+    endDate: string;
+    quantity: number;
+    productId: number;
+    productCode: string;
+    productFullName: string;
+}
+
+export interface IUserLentItems {
+    email: string;
+    lentItems: ILendItem[];
+}
+
 export interface IFormInputs {
     code: string;
     fullName: string;
@@ -31,9 +48,16 @@ export interface IFormInputs {
     categoryId: number | string;
     locationId: number | string;
     quantityForSale: number | null;
+    quantityForLend: number | null;
     price: number | null;
     quantity: number | null;
     image: FileList | null;
+}
+
+export interface ILendInputs {
+    quantity: number | null;
+    productId: number;
+    email: string;
 }
 
 export interface ICategory {

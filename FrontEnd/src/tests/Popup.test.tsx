@@ -3,7 +3,7 @@ import CardComponent from '../pages/Marketplace/CardComponent';
 import { render, screen } from 'test-utils';
 import { IProduct } from 'types/types';
 
-const product: IProduct = { id: 1, code: '123', fullName: 'Product', price: 10, quantity: 11, categoryId: 1, locationId: 1, type: 'Laptop', city: 'Plovdiv' }
+const product: IProduct = { id: 1, code: '123', fullName: 'Product', quantity: 11, categoryId: 1, locationId: 1, type: 'Laptop', city: 'Plovdiv' }
 describe('Popup', () => {
     it('should render Popup component', async () => {
         render(<CardComponent product={product} />);

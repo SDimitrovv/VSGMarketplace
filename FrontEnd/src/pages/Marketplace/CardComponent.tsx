@@ -57,7 +57,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
     };
 
     const popupMessage = `Are you sure you want to buy ${selectValue.current} item for
-    ${product.price * selectValue.current} BGN ?`;
+    ${product.price as number * selectValue.current} BGN ?`;
 
     return (
         <>

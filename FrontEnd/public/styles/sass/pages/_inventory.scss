@@ -54,8 +54,9 @@
     height: 81.2%;
 
     .MuiDataGrid-cell:focus {
-        color:$general-gray
+        color: $general-gray
     }
+
     .MuiDataGrid-columnHeaderTitle {
         font-weight: 800;
     }
@@ -65,7 +66,8 @@
     }
 
     .edit,
-    .delete {
+    .delete,
+    .lend {
         cursor: pointer;
 
         svg {
@@ -80,6 +82,11 @@
     .delete {
         margin-left: 10px;
         color: $delete-image;
+    }
+
+    .lend {
+        margin-left: 10px;
+        color: $return-button;
     }
 }
 

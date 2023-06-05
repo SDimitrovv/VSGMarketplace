@@ -252,7 +252,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             for=":rk:"
             id=":rk:-label"
           >
-            Sale Price
+            Qty For Lend
           </label>
           <div
             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl css-v4u5dn-MuiInputBase-root-MuiInput-root"
@@ -261,7 +261,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
               aria-invalid="false"
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
               id=":rk:"
-              name="price"
+              name="quantityForLend"
               type="number"
               value=""
             />
@@ -276,7 +276,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             for=":rl:"
             id=":rl:-label"
           >
-            Qty *
+            Sale Price
           </label>
           <div
             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl css-v4u5dn-MuiInputBase-root-MuiInput-root"
@@ -285,6 +285,30 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
               aria-invalid="false"
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
               id=":rl:"
+              name="price"
+              type="number"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="MuiFormControl-root MuiTextField-root formInput css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="false"
+            for=":rm:"
+            id=":rm:-label"
+          >
+            Qty *
+          </label>
+          <div
+            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl css-v4u5dn-MuiInputBase-root-MuiInput-root"
+          >
+            <input
+              aria-invalid="false"
+              class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+              id=":rm:"
               name="quantity"
               type="number"
               value=""

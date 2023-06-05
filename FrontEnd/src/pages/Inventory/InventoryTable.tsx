@@ -16,6 +16,7 @@ const InventoryTable = ({ isLoading, filteredProducts, setProducts }: InventoryT
         { field: 'category', headerName: 'Category', flex: 2 },
         { field: 'location', headerName: 'Location', flex: 2 },
         { field: 'forSale', headerName: 'For Sale', flex: 2 },
+        { field: 'forLend', headerName: 'For Lend', flex: 2 },
         { field: 'qty', headerName: 'QTY', flex: 2 },
         {
             field: 'actions', headerName: 'Actions', flex: 2, disableColumnMenu: true, hideSortIcons: true,
@@ -33,6 +34,7 @@ const InventoryTable = ({ isLoading, filteredProducts, setProducts }: InventoryT
         category: product.type,
         location: product.city,
         forSale: product.quantityForSale,
+        forLend: product.quantityForLend,
         qty: product.quantity,
         actions: product
     }));

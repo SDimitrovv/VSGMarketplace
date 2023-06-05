@@ -3,6 +3,8 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
+import DevicesIcon from '@mui/icons-material/Devices';
 import { instance } from '../../authConfig';
 import { NavLink } from 'react-router-dom';
 import { IUser } from '../types/types';
@@ -45,12 +47,24 @@ const Sidebar = () => {
                                     Pending Orders
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink to='/lent-items' className={({ isActive }) => `${isActive && 'active'} navButton`} >
+                                    <DevicesOtherIcon className='icon' />
+                                    Lent Items
+                                </NavLink>
+                            </li>
                         </>
                     }
                     <li>
                         <NavLink to='/my-orders' className={({ isActive }) => `${isActive && 'active'} navButton`} >
                             <LocalMallOutlinedIcon className='icon' />
                             My Orders
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/my-items' className={({ isActive }) => `${isActive && 'active'} navButton`} >
+                            <DevicesIcon className='icon' />
+                            My Items
                         </NavLink>
                     </li>
                     <li id='logout' >

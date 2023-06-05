@@ -49,6 +49,7 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
             categoryId: product.categoryId,
             locationId: product.locationId,
             quantityForSale: product.quantityForSale || null,
+            quantityForLend: product.quantityForLend || null,
             price: product.price || null,
             quantity: product.quantity,
             image: null
@@ -189,6 +190,20 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                         <TextField
                             className='formInput'
                             type='number'
+                            label='Qty For Lend'
+                            variant='standard'
+                            error={Boolean(errors.quantityForLend)}
+                            helperText={errors.quantityForLend?.message}
+                            {...register('quantityForLend', {
+                                min: {
+                                    value: 0,
+                                    message: 'You cannot input less than 0'
+                                },
+                            })}
+                        />
+                        <TextField
+                            className='formInput'
+                            type='number'
                             label='Sale Price'
                             variant='standard'
                             {...register('price', {
@@ -211,7 +226,9 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
                                     value: 0,
                                     message: 'Quantity must be 0 or higher'
                                 },
-                                validate: value => value as number >= Number(getValues('quantityForSale')) || 'Qty cannot be less than Qty For Sale'
+                                validate: value =>
+                                    value as number >= Number(getValues('quantityForSale')) + Number(getValues('quantityForLend'))
+                                    || 'Qty cannot be less than Qty For Sale + Qty For Lend'
                             })}
                         />
                     </div>

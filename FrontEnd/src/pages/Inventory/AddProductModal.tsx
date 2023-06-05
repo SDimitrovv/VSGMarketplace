@@ -54,6 +54,7 @@ const AddProductModal = ({
             categoryId: '',
             locationId: '',
             quantityForSale: null,
+            quantityForLend: null,
             price: null,
             quantity: null,
             image: null,
@@ -189,6 +190,20 @@ const AddProductModal = ({
                         <TextField
                             className='formInput'
                             type='number'
+                            label='Qty For Lend'
+                            variant='standard'
+                            error={Boolean(errors.quantityForLend)}
+                            helperText={errors.quantityForLend?.message}
+                            {...register('quantityForLend', {
+                                min: {
+                                    value: 0,
+                                    message: 'You cannot input less than 0'
+                                },
+                            })}
+                        />
+                        <TextField
+                            className='formInput'
+                            type='number'
                             label='Sale Price'
                             variant='standard'
                             error={Boolean(errors.price)}
@@ -213,7 +228,9 @@ const AddProductModal = ({
                                     value: 0,
                                     message: 'Quantity must be 0 or higher'
                                 },
-                                validate: value => value as number >= Number(getValues('quantityForSale')) || 'Qty For Sale cannot be higher than Qty'
+                                validate: value =>
+                                    value as number >= Number(getValues('quantityForSale')) + Number(getValues('quantityForLend'))
+                                    || 'Qty cannot be less than Qty For Sale + Qty For Lend'
                             })}
                         />
                     </div>

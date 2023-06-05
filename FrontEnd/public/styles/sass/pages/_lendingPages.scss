@@ -1,0 +1,165 @@
+//Pending Lend and My Lend page
+
+#lendOrdersMain,
+#myItemsMain {
+    @include flex-align(column, flex-start);
+    align-content: center;
+
+    #headingSection,
+    .lend {
+        @include flex-align(row, center);
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 20px;
+        background: $orders-heading;
+        border-radius: 10px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 20px;
+        padding: 20px 20px;
+    }
+
+    .lend {
+        border: 1px solid $orders-heading;
+        background-color: $general-white;
+        font-weight: 400;
+        font-size: 14px;
+        padding: 6px 20px;
+        min-height: 52px;
+
+        .firstThree {
+            display: flex;
+            width: 45%;
+
+            span {
+                width: 33%;
+            }
+        }
+
+        .firstTwo {
+            display: flex;
+            width: 30%;
+
+            span {
+                width: 50%;
+            }
+        }
+    }
+
+    .codeColumn {
+        width: 15%;
+    }
+
+    .qtyColumn {
+        width: 15%;
+    }
+
+    .nameColumn {
+        width: 25%;
+    }
+
+    .startDateColumn {
+        width: 30%;
+    }
+
+    .returnButton {
+        @include button($return-button);
+        font-style: normal;
+        font-size: 16px;
+        margin-top: 0px;
+        width: 90px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    #lendOrdersMain,
+    #myItemsMain {
+        #headingSection {
+            display: none;
+        }
+
+        .MuiAccordionDetails-root {
+            @include flex-align(column, center);
+        }
+
+        .lend {
+            @include flex-align(column, center);
+            align-self: center;
+            min-height: fit-content;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            padding: 0px 10px;
+            width: 80%;
+
+            span {
+                width: 100%;
+                padding: 10px 0px;
+            }
+
+            .firstThree,
+            .firstTwo,
+            .startDateColumn,
+            .nameColumn {
+                width: 100%;
+                border-bottom: 1px solid $border-gray;
+                border-spacing: 0;
+                border-collapse: collapse;
+            }
+
+            .lendStatus {
+                margin: 0;
+                width: 100%;
+                padding: 10px 0;
+
+                span {
+                    padding: 0;
+                }
+            }
+
+            .nameColumn,
+            .codeColumn,
+            .qtyColumn,
+            .startDateColumn,
+            .returnColumn {
+                &::before {
+                    font-weight: 700;
+                }
+            }
+
+            .codeColumn,
+            .qtyColumn {
+                &::before {
+                    display: block;
+                }
+            }
+
+            .nameColumn::before {
+                content: 'Name: ';
+            }
+
+            .codeColumn::before {
+                content: 'Code';
+            }
+
+            .qtyColumn::before {
+                content: 'Qty';
+            }
+
+            .startDateColumn::before {
+                content: 'Start date: ';
+            }
+
+            .returnColumn::before {
+                content: 'Return: ';
+                margin-right: 4px;
+            }
+
+            .returnButton {
+                margin: 14px 0;
+                align-self: center;
+            }
+        }
+    }
+}

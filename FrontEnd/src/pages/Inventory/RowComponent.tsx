@@ -5,8 +5,10 @@ import { toast } from 'react-toastify';
 import { Fade } from '@mui/material'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditProductModal from './EditProductModal.tsx';
+import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
 import EditIcon from '@mui/icons-material/Edit';
 import Popup from '../../components/Popup.tsx';
+import LendModal from './LendModal.tsx';
 
 type RowComponentProps = {
     product: IProduct;
@@ -16,6 +18,7 @@ type RowComponentProps = {
 const RowComponent = ({ product, setProducts }: RowComponentProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showLendModal, setShowLendModal] = useState(false);
     const [deleteProduct] = useDeleteProductMutation();
 
     const handleDelete = async () => {
@@ -34,11 +37,15 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
     return (
         <>
             <EditProductModal setProducts={setProducts} product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />
+            <LendModal setProducts={setProducts} product={product} showLendModal={showLendModal} setShowLendModal={setShowLendModal} />
             <Popup popupMessage={popupMessage} onYes={handleDelete} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={1000}>
                 <div>
                     <a className='edit' onClick={() => setShowEditModal(true)}>
                         <EditIcon />
+                    </a>
+                    <a className='lend' onClick={() => setShowLendModal(true)}>
+                        <AddHomeWorkIcon />
                     </a>
                     <a className='delete' onClick={e => setAnchorEl(e.currentTarget)}>
                         <DeleteOutlineIcon />
