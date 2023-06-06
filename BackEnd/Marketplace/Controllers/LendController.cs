@@ -38,9 +38,9 @@ namespace MarketplaceAPI.Controllers
         [Route("Return/{id}")]
         public async Task<IActionResult> Return(int id)
         {
-            await _lendService.ReturnItem(id);
+            var endDate = await _lendService.ReturnItem(id);
 
-            return Ok();
+            return Ok(endDate);
         }
 
         [Authorize(Policy = IdentityData.AdminUserPolicy)]

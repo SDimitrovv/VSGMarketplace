@@ -53,7 +53,7 @@ namespace MarketplaceApplication.Services
             return newLend;
         }
 
-        public async Task ReturnItem(int id)
+        public async Task<string> ReturnItem(int id)
         {
             var lend = await _lendRepository.GetById(id);
             if (lend == null)
@@ -70,6 +70,8 @@ namespace MarketplaceApplication.Services
             product.Quantity += lend.Quantity;
             product.QuantityForLend += lend.Quantity;
             await _productRepository.Update(product);
+
+            return lend.EndDate;
         }
 
         public async Task<IEnumerable<AllLentItemsModel>> GetAllLentItems()
