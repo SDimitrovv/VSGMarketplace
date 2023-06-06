@@ -7,5 +7,5 @@ public interface ILendService
     Task<IEnumerable<AllLentItemsModel>> GetAllLentItems();
     Task<IEnumerable<MyLentItemsModel>> GetMyLentItems();
     Task<AddedLendModel> CreateLend(AddLendModel model);
-    Task ReturnItem(int id);
+    Task<string> ReturnItem(int id);
 }
