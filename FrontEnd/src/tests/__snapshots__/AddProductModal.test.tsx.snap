@@ -132,9 +132,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             <div
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="mui-component-select-categoryId"
               class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-              id="mui-component-select-categoryId"
               role="button"
               tabindex="0"
             >
@@ -148,7 +146,6 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
               aria-hidden="true"
               aria-invalid="false"
               class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-              name="categoryId"
               tabindex="-1"
               value=""
             />
@@ -183,9 +180,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             <div
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby="mui-component-select-locationId"
               class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-              id="mui-component-select-locationId"
               role="button"
               tabindex="0"
             >
@@ -199,7 +194,6 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
               aria-hidden="true"
               aria-invalid="false"
               class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-              name="locationId"
               tabindex="-1"
               value=""
             />

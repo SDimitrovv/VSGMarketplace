@@ -21,11 +21,9 @@ const LentItemsComponent = ({ lentItem }: LentItemProps) => {
 
     return (
         <div className='lend' role='cell'>
-            <div className='firstTwo'>
-                <span className='codeColumn'>{lentItem.productCode}</span>
-                <span className='qtyColumn'>{lentItem.quantity}</span>
-            </div>
+            <span className='codeColumn'>{lentItem.productCode}</span>
             <span className='nameColumn'>{lentItem.productFullName}</span>
+            <span className='qtyColumn'>{lentItem.quantity}</span>
             <span className='startDateColumn'>{lentItem.startDate}</span>
             {returnStatus
                 ? <span className='returnColumn'>{returnStatus}</span>

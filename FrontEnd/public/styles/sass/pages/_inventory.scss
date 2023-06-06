@@ -1,11 +1,13 @@
 //Inventory page
 
-//Search
+// Search and add product spot
 
 #searchSpace {
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
+
+    //Search
 
     .searchProduct {
         @include flex-align(row, flex-end);
@@ -20,6 +22,8 @@
             margin: 4px;
         }
     }
+
+    // Add product button
 
     #addButton {
         cursor: pointer;
