@@ -1,9 +1,15 @@
 import { useGetMyOrdersQuery } from '../../services/ordersService.ts';
+import { useState, useEffect } from 'react';
 import { IOrder } from '../../types/types.ts';
 import MyOrderComponent from './MyOrderComponent.tsx';
 
 const MyOrders = () => {
-    const { data: orders, isLoading } = useGetMyOrdersQuery();
+    const { data, isLoading } = useGetMyOrdersQuery();
+    const [orders, setOrders] = useState<IOrder[]>([]);
+
+    useEffect(() => {
+        data && setOrders(data);
+    }, [data]);
 
     return (
         <main id='myOrdersMain'>
@@ -16,7 +22,7 @@ const MyOrders = () => {
             </div>
             {orders?.length !== 0 && (
                 orders?.map((order: IOrder) => (
-                    <MyOrderComponent order={order} key={order.id} />
+                    <MyOrderComponent order={order} setOrders={setOrders} key={order.id} />
                 ))
             )}
             {(orders?.length === 0 || !orders) && !isLoading && <div className='order'>No Orders</div>}

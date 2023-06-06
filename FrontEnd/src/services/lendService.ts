@@ -18,10 +18,11 @@ const lendServices = baseApi.injectEndpoints({
             }),
             transformErrorResponse: () => 'Something went wrong... Try again',
         }),
-        [CompleteLend]: builder.mutation<void, number>({
+        [CompleteLend]: builder.mutation<string, number>({
             query: (id) => ({
                 method: 'PUT',
                 url: '/Lend/Return/' + id,
+                responseHandler: (response) => response.text()
             }),
             transformErrorResponse: () => 'Something went wrong... Try again',
         }),

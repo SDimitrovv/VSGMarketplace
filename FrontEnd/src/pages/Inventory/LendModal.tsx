@@ -45,18 +45,16 @@ const LendModal = ({
 
     const onSubmit = async (data: ILendInputs): Promise<void> => {
         const response = await createLend({ productId: product.id, ...data });
-        if ('error' in response) {
-            return;
+        if ('data' in response) {
+            setProducts(oldProducts => oldProducts.map(p =>
+                p.id === product.id
+                    ? { ...p, quantityForLend: (p.quantityForLend as number) - (data.quantity as number), quantity: (p.quantity as number) - (data.quantity as number) }
+                    : p)
+            );
+            toast.success('Lent successfully!');
+            setShowLendModal(false);
+            reset();
         }
-
-        setProducts(oldProducts => oldProducts.map(p =>
-            p.id === product.id
-                ? { ...p, quantityForLend: (p.quantityForLend as number) - (data.quantity as number), quantity: (p.quantity as number) - (data.quantity as number) }
-                : p)
-        );
-        toast.success('Lent successfully!');
-        setShowLendModal(false);
-        reset();
     };
 
     return (

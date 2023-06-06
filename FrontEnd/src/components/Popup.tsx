@@ -20,7 +20,6 @@ type PopupProps = {
 }
 
 const Popup = ({ popupMessage, onYes, anchorEl, setAnchorEl }: PopupProps) => {
-
     return (
         <StyledPopper
             anchorEl={anchorEl}

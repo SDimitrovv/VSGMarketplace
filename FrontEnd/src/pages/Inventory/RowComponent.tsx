@@ -24,12 +24,10 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
     const handleDelete = async () => {
         setAnchorEl(null);
         const response = await deleteProduct(product.id);
-        if ('error' in response) {
-            return;
+        if ('data' in response) {
+            toast.success('Deleted successfully!');
+            setProducts(oldProducts => oldProducts.filter(p => p !== product));
         }
-
-        toast.success('Deleted successfully!');
-        setProducts(oldProducts => oldProducts.filter(p => p !== product));
     }
 
     const popupMessage = `Are you sure you want to remove this item ?`;
@@ -44,12 +42,14 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
                     <a className='edit' onClick={() => setShowEditModal(true)}>
                         <EditIcon />
                     </a>
-                    <a className='lend' onClick={() => setShowLendModal(true)}>
-                        <AddHomeWorkIcon />
-                    </a>
                     <a className='delete' onClick={e => setAnchorEl(e.currentTarget)}>
                         <DeleteOutlineIcon />
                     </a>
+                    {Boolean(product.quantityForLend) &&
+                        <a className='lend' onClick={() => setShowLendModal(true)}>
+                            <AddHomeWorkIcon />
+                        </a>
+                    }
                 </div>
             </Fade>
         </>

@@ -79,15 +79,12 @@ const EditProductModal = ({ setProducts, product, showEditModal, setShowEditModa
 
         const response = await editProduct({ id, data }) as { data: IProduct };
 
-        if ('error' in response) {
-            return
-        } else {
+        if ('data' in response) {
+            const editedProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city } as IProduct;
+            setProducts(oldProducts => oldProducts.map(p => p.id === editedProduct.id ? editedProduct : p));
+            setShowEditModal(false);
             toast.success('Modified successfully!');
         }
-
-        const editedProduct = { ...data, id: id, type: selectedCategory.type, city: selectedCity.city } as IProduct;
-        setProducts(oldProducts => oldProducts.map(p => p.id === editedProduct.id ? editedProduct : p));
-        setShowEditModal(false);
     };
 
     return (

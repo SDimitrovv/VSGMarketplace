@@ -47,13 +47,12 @@ const CardComponent = ({ product }: CardComponentProps) => {
         };
 
         const response = await createOrder(order);
-        if ('error' in response) {
-            setAnchorEl(null);
-            return;
+        if ('data' in response) {
+            toast.success('Order placed!');
+            navigate('/my-orders');
         }
 
-        toast.success('Order placed!');
-        navigate('/my-orders');
+        setAnchorEl(null);
     };
 
     const popupMessage = `Are you sure you want to buy ${selectValue.current} item for
@@ -64,7 +63,7 @@ const CardComponent = ({ product }: CardComponentProps) => {
             <ProductModal product={product} showProductModal={showProductModal} setShowProductModal={setShowProductModal} />
             <Popup popupMessage={popupMessage} onYes={onBuy} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={1000}>
-                <div id={product.id.toString()} className='product' role='cell'>
+                <div className='product' role='cell'>
                     <a className='productButton' onClick={() => setShowProductModal(true)}>
                         <img src={product.imageUrl || imagePlaceholder} alt='Product-image' />
                     </a>

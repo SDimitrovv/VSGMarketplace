@@ -1,30 +1,28 @@
 import { useCompleteOrderMutation } from '../../services/ordersService';
+import { Dispatch } from 'react';
 import { IOrder } from '../../types/types';
-import { useRef } from 'react';
 import { toast } from 'react-toastify';
 import { Fade } from '@mui/material';
 
 type PendingOrderProps = {
     order: IOrder;
+    setOrders: Dispatch<React.SetStateAction<IOrder[]>>;
 }
 
-const PendingOrderComponent = ({ order }: PendingOrderProps) => {
+const PendingOrderComponent = ({ order, setOrders }: PendingOrderProps) => {
     const [completeOrder] = useCompleteOrderMutation();
-    const orderRef = useRef<HTMLDivElement>(null);
 
     const onComplete = async () => {
         const response = await completeOrder(order.id);
-        if ('error' in response) {
-            return;
+        if ('data' in response) {
+            setOrders(oldOrders => oldOrders.filter(o => o.id !== order.id));
+            toast.success('Order completed!');
         }
-
-        orderRef.current?.remove();
-        toast.success('Order completed!');
     }
 
     return (
         <Fade in={true} timeout={1000}>
-            <div ref={orderRef} className='order' id={order.id.toString()} role='cell'>
+            <div className='order' role='cell'>
                 <div className='firstThree'>
                     <span className='codeColumn'>{order.productCode}</span>
                     <span className='qtyColumn'>{order.quantity}</span>
