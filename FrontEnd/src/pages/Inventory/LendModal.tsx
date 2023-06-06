@@ -1,8 +1,8 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useCreateLendMutation } from '../../services/lendService.ts';
 import { ILendInputs, IProduct } from '../../types/types.ts';
+import { useForm, Controller } from 'react-hook-form';
 import { imagePlaceholder } from '../../utils/imagePlaceholder.ts';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Modal from '../../components/Modal.tsx';
 import {
@@ -24,17 +24,17 @@ type LendModalProps = {
 
 const LendModal = ({
     product,
+    setProducts,
     showLendModal,
     setShowLendModal,
 }: LendModalProps) => {
-    const [selectOption, setSelectOption] = useState('');
     const [createLend] = useCreateLendMutation();
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
         reset,
-        watch
+        control
     } = useForm<ILendInputs>({
         defaultValues: {
             email: '',
@@ -44,13 +44,16 @@ const LendModal = ({
     });
 
     const onSubmit = async (data: ILendInputs): Promise<void> => {
-        const response = await createLend({ productId: product.id, quantity: data.quantity, email: data.email });
+        const response = await createLend({ productId: product.id, ...data });
         if ('error' in response) {
-            setShowLendModal(false);
             return;
         }
 
-        setSelectOption('');
+        setProducts(oldProducts => oldProducts.map(p =>
+            p.id === product.id
+                ? { ...p, quantityForLend: (p.quantityForLend as number) - (data.quantity as number), quantity: (p.quantity as number) - (data.quantity as number) }
+                : p)
+        );
         toast.success('Lent successfully!');
         setShowLendModal(false);
         reset();
@@ -69,28 +72,37 @@ const LendModal = ({
                             variant='standard'
                             error={Boolean(errors.email)}
                             helperText={errors.email?.message}
-                            {...register('email', { required: 'Name field is required' })}
+                            {...register('email', { required: 'Email field is required' })}
                         />
-                        <FormControl variant='standard' className='formInput'>
-                            <InputLabel focused={false}>Qty For Lend *</InputLabel>
-                            <Select
-                                value={selectOption}
-                                error={(Boolean(errors.quantity) && Boolean(errors.quantity?.message))}
-                                {...register('quantity', {
-                                    onChange: (e) => setSelectOption(e.target.value),
-                                    required: 'Qty For Lend field is required',
-                                })}
-                            >
-                                {Array(product.quantityForLend).fill(1).map((n, i) => n + i).map((o) => (
-                                    <MenuItem value={o} key={o}>
-                                        {o}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            <FormHelperText error>
-                                {watch('quantity') === null && errors.quantity?.message ? errors.quantity?.message : ''}
-                            </FormHelperText>
-                        </FormControl>
+                        <Controller
+                            control={control}
+                            name='quantity'
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: 'Quantity field is required'
+                                }
+                            }}
+                            render={({ field: { onChange, value } }) => (
+                                <FormControl variant='standard' className='formInput'>
+                                    <InputLabel focused={false}>Quantity *</InputLabel>
+                                    <Select
+                                        value={value || ''}
+                                        error={Boolean(errors.quantity)}
+                                        onChange={onChange}
+                                    >
+                                        {Array(product.quantityForLend).fill(1).map((n, i) => n + i).map((o) => (
+                                            <MenuItem value={o} key={o}>
+                                                {o}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                    <FormHelperText error>
+                                        {errors.quantity && errors.quantity.message}
+                                    </FormHelperText>
+                                </FormControl>
+                            )}
+                        />
                     </div>
                     <div className='rightModal'>
                         <img className='currentImg' src={product.imageUrl || imagePlaceholder} />
@@ -101,7 +113,7 @@ const LendModal = ({
                     : <button type='submit'>Lend</button>
                 }
             </form>
-        </Modal>
+        </Modal >
     );
 };
 

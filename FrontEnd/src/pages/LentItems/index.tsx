@@ -14,7 +14,7 @@ const LentItems = () => {
         <main id='lendOrdersMain'>
             {lentItems?.length !== 0 && (
                 lentItems?.map((userLentItem: IUserLentItems) => (
-                    <Accordion sx={{ width: '100%', mt: 2 }} key={userLentItem.email}>
+                    <Accordion className='accordion' key={userLentItem.email}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                         >

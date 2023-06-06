@@ -55,9 +55,8 @@ export interface IFormInputs {
 }
 
 export interface ILendInputs {
-    quantity: number | null;
-    productId: number;
     email: string;
+    quantity: number | null;
 }
 
 export interface ICategory {

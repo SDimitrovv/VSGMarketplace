@@ -39,17 +39,6 @@ const Popup = ({ popupMessage, onYes, anchorEl, setAnchorEl }: PopupProps) => {
                     },
                 },
                 {
-                    name: 'preventOverflow',
-                    enabled: true,
-                    options: {
-                        altAxis: true,
-                        altBoundary: true,
-                        tether: true,
-                        rootBoundary: 'document',
-                        padding: 8,
-                    },
-                },
-                {
                     name: 'arrow',
                     enabled: true,
                     options: {

@@ -4,9 +4,9 @@ import { useCreateProductMutation } from '../../services/productsService.ts';
 import { useCreateImageMutation } from '../../services/imageService.ts';
 import { useGetCategoriesQuery } from '../../services/categoriesService.ts';
 import { useGetLocationQuery } from '../../services/locationsService.ts';
+import { useForm, Controller } from 'react-hook-form';
 import { imagePlaceholder } from '../../utils/imagePlaceholder.ts';
 import { uploadImage } from '../../utils/uploadImage.ts';
-import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Modal from '../../components/Modal.tsx';
 import {
@@ -27,7 +27,6 @@ type AddModalProps = {
 };
 
 const AddProductModal = ({
-    // products,
     setProducts,
     showAddModal,
     setShowAddModal,
@@ -37,15 +36,13 @@ const AddProductModal = ({
     const { data: categories } = useGetCategoriesQuery();
     const { data: locations } = useGetLocationQuery();
     const [imageUrl, setImageUrl] = useState(imagePlaceholder);
-    const [selectOption, setSelectOption] = useState('');
-    const [locationOption, setLocationOption] = useState('');
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
         getValues,
         reset,
-        watch
+        control
     } = useForm<IFormInputs>({
         defaultValues: {
             code: '',
@@ -70,7 +67,6 @@ const AddProductModal = ({
 
         const response = await createProduct(data) as { data: IProduct };
         if ('error' in response) {
-            setShowAddModal(false);
             return;
         }
 
@@ -91,8 +87,6 @@ const AddProductModal = ({
             setProducts((oldProducts) => [...oldProducts, newProduct]);
         }
 
-        setSelectOption('');
-        setLocationOption('');
         toast.success('Created successfully!');
         setShowAddModal(false);
         setImageUrl(imagePlaceholder);
@@ -114,7 +108,6 @@ const AddProductModal = ({
                             helperText={errors.code?.message}
                             {...register('code', {
                                 required: 'Code field is required',
-                                // validate: value => products?.some(p => p.code !== value) || 'Code already exists'
                             })}
                         />
                         <TextField
@@ -134,46 +127,64 @@ const AddProductModal = ({
                             variant='standard'
                             {...register('description')}
                         />
-                        <FormControl variant='standard' className='formInput'>
-                            <InputLabel focused={false}>Category *</InputLabel>
-                            <Select
-                                value={selectOption}
-                                error={(Boolean(errors.categoryId) && Boolean(errors.categoryId?.message))}
-                                {...register('categoryId', {
-                                    onChange: (e) => setSelectOption(e.target.value),
-                                    required: 'Category field is required',
-                                })}
-                            >
-                                {categories?.map((c: ICategory) => (
-                                    <MenuItem value={c.id} key={c.id}>
-                                        {c.type}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            <FormHelperText error>
-                                {watch('categoryId') === '' && errors.categoryId?.message ? errors.categoryId?.message : ''}
-                            </FormHelperText>
-                        </FormControl>
-                        <FormControl variant='standard' className='formInput'>
-                            <InputLabel focused={false}>Location *</InputLabel>
-                            <Select
-                                value={locationOption}
-                                error={Boolean(errors.locationId)}
-                                {...register('locationId', {
-                                    onChange: (e) => setLocationOption(e.target.value),
-                                    required: 'Location field is required',
-                                })}
-                            >
-                                {locations?.map((l: ILocation) => (
-                                    <MenuItem value={l.id} key={l.id}>
-                                        {l.city}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            <FormHelperText error>
-                                {watch('locationId') === '' && errors.locationId?.message ? errors.locationId?.message : ''}
-                            </FormHelperText>
-                        </FormControl>
+                        <Controller
+                            control={control}
+                            name='categoryId'
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: 'Category field is required'
+                                }
+                            }}
+                            render={({ field: { onChange, value } }) => (
+                                <FormControl variant='standard' className='formInput'>
+                                    <InputLabel focused={false}>Category *</InputLabel>
+                                    <Select
+                                        value={value}
+                                        error={Boolean(errors.categoryId)}
+                                        onChange={onChange}
+                                    >
+                                        {categories?.map((c: ICategory) => (
+                                            <MenuItem value={c.id} key={c.id}>
+                                                {c.type}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                    <FormHelperText error>
+                                        {errors.categoryId && errors.categoryId.message}
+                                    </FormHelperText>
+                                </FormControl>
+                            )}
+                        />
+                        <Controller
+                            control={control}
+                            name='locationId'
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: 'Location field is required'
+                                }
+                            }}
+                            render={({ field: { onChange, value } }) => (
+                                <FormControl variant='standard' className='formInput'>
+                                    <InputLabel focused={false}>Location *</InputLabel>
+                                    <Select
+                                        value={value}
+                                        error={Boolean(errors.locationId)}
+                                        onChange={onChange}
+                                    >
+                                        {locations?.map((l: ILocation) => (
+                                            <MenuItem value={l.id} key={l.id}>
+                                                {l.city}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                    <FormHelperText error>
+                                        {errors.locationId && errors.locationId.message}
+                                    </FormHelperText>
+                                </FormControl>
+                            )}
+                        />
                         <TextField
                             className='formInput'
                             type='number'
@@ -259,7 +270,7 @@ const AddProductModal = ({
                     : <button type='submit'>Add</button>
                 }
             </form>
-        </Modal>
+        </Modal >
     );
 };
 
