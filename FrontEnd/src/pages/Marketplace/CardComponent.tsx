@@ -55,13 +55,18 @@ const CardComponent = ({ product }: CardComponentProps) => {
         setAnchorEl(null);
     };
 
-    const popupMessage = `Are you sure you want to buy ${selectValue.current} item for
-    ${product.price as number * selectValue.current} BGN ?`;
+    const PopupMessage: () => JSX.Element = () => {
+        return (
+            <p>
+                Are you sure you want to buy <b>{selectValue.current}</b> item for <b>{product.price as number * selectValue.current} BGN</b>?
+            </p>
+        )
+    };
 
     return (
         <>
             <ProductModal product={product} showProductModal={showProductModal} setShowProductModal={setShowProductModal} />
-            <Popup popupMessage={popupMessage} onYes={onBuy} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+            <Popup PopupMessage={PopupMessage} onYes={onBuy} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={1000}>
                 <div className='product' role='cell'>
                     <a className='productButton' onClick={() => setShowProductModal(true)}>

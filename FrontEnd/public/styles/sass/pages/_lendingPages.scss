@@ -9,9 +9,11 @@
         @include flex-align(row, center);
         justify-content: center;
 
-        img {
-            height: 24px;
+        .MuiAvatar-root {
+            background-color:$main-color;
             margin-right: 10px;
+            height:36px;
+            width:36px;
         }
     }
 
@@ -44,15 +46,6 @@
         font-size: 14px;
         padding: 6px 20px;
         min-height: 52px;
-
-        .firstThree {
-            display: flex;
-            width: 45%;
-
-            span {
-                width: 33%;
-            }
-        }
 
         .firstTwo {
             display: flex;

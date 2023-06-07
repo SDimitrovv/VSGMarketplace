@@ -1,11 +1,8 @@
+import { AccordionSummary, AccordionDetails, Avatar, Fade, Accordion } from '@mui/material';
 import { ILendItem, IUserLentItems } from '../../types/types.ts';
 import { useGetLentItemsQuery } from '../../services/lendService.ts';
-import { Fade } from '@mui/material';
 import LentItemsComponent from './LentItemsComponent.tsx';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Accordion from '@mui/material/Accordion';
 import Box from '@mui/material/Typography';
 
 const LentItems = () => {
@@ -17,11 +14,9 @@ const LentItems = () => {
                 lentItems?.map((userLentItem: IUserLentItems) => (
                     <Fade in={true} timeout={1000} key={userLentItem.email}>
                         <Accordion className='accordion'>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                            >
+                            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Box component='div'>
-                                    <img src='/images/profile-image.png' />
+                                    <Avatar>{userLentItem.email[0].toUpperCase()}</Avatar>
                                     <span>{userLentItem.email}</span>
                                 </Box>
                             </AccordionSummary>

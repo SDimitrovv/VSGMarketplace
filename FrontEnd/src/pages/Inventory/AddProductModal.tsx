@@ -138,11 +138,14 @@ const AddProductModal = ({
                             }}
                             render={({ field: { onChange, value } }) => (
                                 <FormControl variant='standard' className='formInput'>
-                                    <InputLabel focused={false}>Category *</InputLabel>
+                                    <InputLabel htmlFor='categoryId' focused={false}>Category *</InputLabel>
                                     <Select
                                         value={value}
                                         error={Boolean(errors.categoryId)}
                                         onChange={onChange}
+                                        inputProps={{
+                                            id: 'categoryId'
+                                        }}
                                     >
                                         {categories?.map((c: ICategory) => (
                                             <MenuItem value={c.id} key={c.id}>
@@ -167,11 +170,14 @@ const AddProductModal = ({
                             }}
                             render={({ field: { onChange, value } }) => (
                                 <FormControl variant='standard' className='formInput'>
-                                    <InputLabel focused={false}>Location *</InputLabel>
+                                    <InputLabel htmlFor='locationId' focused={false}>Location *</InputLabel>
                                     <Select
                                         value={value}
                                         error={Boolean(errors.locationId)}
                                         onChange={onChange}
+                                        inputProps={{
+                                            id: 'locationId'
+                                        }}
                                     >
                                         {locations?.map((l: ILocation) => (
                                             <MenuItem value={l.id} key={l.id}>

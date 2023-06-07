@@ -13,13 +13,13 @@ const StyledPopper = styled(Popper)(() => ({
 }));
 
 type PopupProps = {
-    popupMessage: string,
+    PopupMessage: () => JSX.Element,
     onYes: () => void,
     anchorEl: HTMLElement | null,
     setAnchorEl: Dispatch<SetStateAction<HTMLElement | null>>
 }
 
-const Popup = ({ popupMessage, onYes, anchorEl, setAnchorEl }: PopupProps) => {
+const Popup = ({ PopupMessage, onYes, anchorEl, setAnchorEl }: PopupProps) => {
     return (
         <StyledPopper
             anchorEl={anchorEl}
@@ -50,9 +50,7 @@ const Popup = ({ popupMessage, onYes, anchorEl, setAnchorEl }: PopupProps) => {
                     <Fade {...TransitionProps} timeout={500} >
                         <div className='popup'>
                             <Box component='span' className='arrow' />
-                            <p>
-                                {popupMessage}
-                            </p>
+                            <PopupMessage />
                             <div className='buttons'>
                                 <button className='yes' onClick={onYes}>
                                     Yes

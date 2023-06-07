@@ -15,8 +15,6 @@ const MyOrderComponent = ({ order, setOrders }: MyOrderProps) => {
     const [rejectOrder] = useRejectOrderMutation();
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-    const popupMessage = `Are you sure you want to reject this order ?`;
-
     const onCancel = async () => {
         setAnchorEl(null);
         const response = await rejectOrder(order.id);
@@ -26,9 +24,17 @@ const MyOrderComponent = ({ order, setOrders }: MyOrderProps) => {
         }
     }
 
+    const PopupMessage: () => JSX.Element = () => {
+        return (
+            <p>
+                Are you sure you want to reject this order?
+            </p>
+        )
+    };
+
     return (
         <>
-            <Popup popupMessage={popupMessage} onYes={onCancel} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+            <Popup PopupMessage={PopupMessage} onYes={onCancel} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={1000}>
                 <div className='order' role='cell'>
                     <span className='nameColumn'>{order.productFullName}</span>

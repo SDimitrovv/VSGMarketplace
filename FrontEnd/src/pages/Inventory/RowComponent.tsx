@@ -30,13 +30,19 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
         }
     }
 
-    const popupMessage = `Are you sure you want to remove this item ?`;
-
+    const PopupMessage: () => JSX.Element = () => {
+        return (
+            <p>
+                Are you sure you want to remove this item?
+            </p>
+        )
+    };
+    
     return (
         <>
             <EditProductModal setProducts={setProducts} product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />
             <LendModal setProducts={setProducts} product={product} showLendModal={showLendModal} setShowLendModal={setShowLendModal} />
-            <Popup popupMessage={popupMessage} onYes={handleDelete} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+            <Popup PopupMessage={PopupMessage} onYes={handleDelete} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <Fade in={true} timeout={1000}>
                 <div>
                     <a className='edit' onClick={() => setShowEditModal(true)}>

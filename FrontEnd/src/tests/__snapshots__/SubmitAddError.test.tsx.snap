@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AddProductModal should render AddProductModal component 1`] = `
+exports[`AddProductModal renders the modal and submits the form 1`] = `
 <div
   aria-labelledby=":r0:"
   class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-ccpzmr-MuiPaper-root-MuiDialog-paper"
@@ -42,10 +42,10 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
           class="MuiFormControl-root MuiTextField-root formInput css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
         >
           <label
-            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
-            data-shrink="false"
-            for=":rg:"
-            id=":rg:-label"
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard css-1c2i806-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="true"
+            for=":r1:"
+            id=":r1:-label"
           >
             Code *
           </label>
@@ -55,7 +55,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-              id=":rg:"
+              id=":r1:"
               name="code"
               type="text"
               value=""
@@ -66,10 +66,10 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
           class="MuiFormControl-root MuiTextField-root formInput css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
         >
           <label
-            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
-            data-shrink="false"
-            for=":rh:"
-            id=":rh:-label"
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard css-1c2i806-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="true"
+            for=":r2:"
+            id=":r2:-label"
           >
             Name *
           </label>
@@ -79,7 +79,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-              id=":rh:"
+              id=":r2:"
               name="fullName"
               type="text"
               value=""
@@ -92,8 +92,8 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="false"
-            for=":ri:"
-            id=":ri:-label"
+            for=":r3:"
+            id=":r3:-label"
           >
             Description
           </label>
@@ -103,7 +103,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             <textarea
               aria-invalid="false"
               class="MuiInputBase-input MuiInput-input MuiInputBase-inputMultiline css-66dh3a-MuiInputBase-input-MuiInput-input"
-              id=":ri:"
+              id=":r3:"
               name="description"
               rows="4"
               style="height: 0px; overflow: hidden;"
@@ -128,12 +128,12 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             Category *
           </label>
           <div
-            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl  css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary Mui-error MuiInputBase-formControl  css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root"
           >
             <div
               aria-expanded="false"
               aria-haspopup="listbox"
-              class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+              class="MuiSelect-select MuiSelect-standard Mui-error MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
               role="button"
               tabindex="0"
             >
@@ -145,7 +145,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             </div>
             <input
               aria-hidden="true"
-              aria-invalid="false"
+              aria-invalid="true"
               class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
               id="categoryId"
               tabindex="-1"
@@ -165,7 +165,9 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
           </div>
           <p
             class="MuiFormHelperText-root Mui-error MuiFormHelperText-sizeMedium css-1d1r5q-MuiFormHelperText-root"
-          />
+          >
+            Category field is required
+          </p>
         </div>
         <div
           class="MuiFormControl-root formInput css-1nrlq1o-MuiFormControl-root"
@@ -178,12 +180,12 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             Location *
           </label>
           <div
-            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl  css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary Mui-error MuiInputBase-formControl  css-m5hdmq-MuiInputBase-root-MuiInput-root-MuiSelect-root"
           >
             <div
               aria-expanded="false"
               aria-haspopup="listbox"
-              class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+              class="MuiSelect-select MuiSelect-standard Mui-error MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
               role="button"
               tabindex="0"
             >
@@ -195,7 +197,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             </div>
             <input
               aria-hidden="true"
-              aria-invalid="false"
+              aria-invalid="true"
               class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
               id="locationId"
               tabindex="-1"
@@ -215,7 +217,9 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
           </div>
           <p
             class="MuiFormHelperText-root Mui-error MuiFormHelperText-sizeMedium css-1d1r5q-MuiFormHelperText-root"
-          />
+          >
+            Location field is required
+          </p>
         </div>
         <div
           class="MuiFormControl-root MuiTextField-root formInput css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
@@ -223,8 +227,8 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="false"
-            for=":rj:"
-            id=":rj:-label"
+            for=":r4:"
+            id=":r4:-label"
           >
             Qty For Sale
           </label>
@@ -234,7 +238,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-              id=":rj:"
+              id=":r4:"
               name="quantityForSale"
               type="number"
               value=""
@@ -247,8 +251,8 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="false"
-            for=":rk:"
-            id=":rk:-label"
+            for=":r5:"
+            id=":r5:-label"
           >
             Qty For Lend
           </label>
@@ -258,7 +262,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-              id=":rk:"
+              id=":r5:"
               name="quantityForLend"
               type="number"
               value=""
@@ -271,8 +275,8 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="false"
-            for=":rl:"
-            id=":rl:-label"
+            for=":r6:"
+            id=":r6:-label"
           >
             Sale Price
           </label>
@@ -282,7 +286,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-              id=":rl:"
+              id=":r6:"
               name="price"
               type="number"
               value=""
@@ -293,10 +297,10 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
           class="MuiFormControl-root MuiTextField-root formInput css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
         >
           <label
-            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
-            data-shrink="false"
-            for=":rm:"
-            id=":rm:-label"
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard css-1c2i806-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="true"
+            for=":r7:"
+            id=":r7:-label"
           >
             Qty *
           </label>
@@ -306,7 +310,7 @@ exports[`AddProductModal should render AddProductModal component 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiInput-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-              id=":rm:"
+              id=":r7:"
               name="quantity"
               type="number"
               value=""
