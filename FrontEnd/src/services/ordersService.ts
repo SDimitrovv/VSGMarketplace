@@ -1,4 +1,4 @@
-import { IOrder } from '../types/types';
+import { IOrder, IErrorResponse } from '../types/types';
 import { baseApi } from '../utils/baseApi';
 
 const GetMyOrders = 'getMyOrders';
@@ -17,21 +17,21 @@ const ordersServices = baseApi.injectEndpoints({
                 url: '/Order',
                 body: data,
             }),
-            transformErrorResponse: () => 'Something went wrong... Try again',
+            transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
         }),
         [CompleteOrder]: builder.mutation<void, number>({
             query: (id) => ({
                 method: 'PUT',
                 url: '/Order/Complete/' + id,
             }),
-            transformErrorResponse: () => 'Something went wrong... Try again',
+            transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
         }),
         [RejectOrder]: builder.mutation<void, number>({
             query: (id) => ({
                 method: 'PUT',
                 url: '/Order/Reject/' + id,
             }),
-            transformErrorResponse: () => 'Something went wrong... Try again',
+            transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
         }),
     }),
 });

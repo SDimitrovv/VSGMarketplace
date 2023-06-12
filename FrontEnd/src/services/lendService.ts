@@ -1,4 +1,4 @@
-import { ILendItem, IUserLentItems } from '../types/types';
+import { ILendItem, IUserLentItems, IErrorResponse } from '../types/types';
 import { baseApi } from '../utils/baseApi';
 
 const GetMyLentItems = 'getMyLentItems';
@@ -16,7 +16,7 @@ const lendServices = baseApi.injectEndpoints({
                 url: '/Lend',
                 body: data,
             }),
-            transformErrorResponse: () => 'Something went wrong... Try again',
+            transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
         }),
         [CompleteLend]: builder.mutation<string, number>({
             query: (id) => ({
@@ -24,7 +24,7 @@ const lendServices = baseApi.injectEndpoints({
                 url: '/Lend/Return/' + id,
                 responseHandler: (response) => response.text()
             }),
-            transformErrorResponse: () => 'Something went wrong... Try again',
+            transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
         }),
     }),
 });

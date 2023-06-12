@@ -1,3 +1,4 @@
+import { IErrorResponse } from 'types/types';
 import { baseApi } from '../utils/baseApi';
 
 const CreateImage = 'createImage';
@@ -15,6 +16,7 @@ const ImageServices = baseApi.injectEndpoints({
                 body: imageForm,
                 responseHandler: (response) => response.text()
             }),
+            transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
         }),
         [EditImage]: builder.mutation<string, { id: number, imageForm: FormData }>({
             query: ({ id, imageForm }) => ({
@@ -23,12 +25,14 @@ const ImageServices = baseApi.injectEndpoints({
                 body: imageForm,
                 responseHandler: (response) => response.text()
             }),
+            transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
         }),
         [DeleteImage]: builder.mutation<void, number>({
             query: (id) => ({
                 method: 'DELETE',
                 url: '/Picture/' + id,
             }),
+            transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
         }),
     }),
 });

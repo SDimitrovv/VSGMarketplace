@@ -5,8 +5,10 @@ const GetLocation = 'getLocation';
 
 const locationsService = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        [GetLocation]: builder.query<ILocation[], void>({ query: () => '/Location' })
+        [GetLocation]: builder.query<ILocation[], void>({ query: () => '/Location' }),
+        transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
     }),
+
 });
 
 export const {

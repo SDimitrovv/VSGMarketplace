@@ -1,4 +1,4 @@
-import { IFormInputs, IProduct } from '../types/types';
+import { IErrorResponse, IFormInputs, IProduct } from '../types/types';
 import { baseApi } from '../utils/baseApi';
 
 const GetMarketplace = 'getMarketplace';
@@ -19,7 +19,7 @@ const productsServices = baseApi.injectEndpoints({
         url: '/Product',
         body: data,
       }),
-      transformErrorResponse: () => 'Something went wrong... Try again',
+      transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
     }),
     [EditProduct]: builder.mutation<IProduct, { id: number, data: IFormInputs }>({
       query: ({ id, data }) => ({
@@ -27,14 +27,14 @@ const productsServices = baseApi.injectEndpoints({
         url: '/Product/' + id,
         body: data,
       }),
-      transformErrorResponse: () => 'Something went wrong... Try again',
+      transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
     }),
     [DeleteProduct]: builder.mutation<void, number>({
       query: (id) => ({
         method: 'DELETE',
         url: '/Product/' + id,
       }),
-      transformErrorResponse: () => 'Something went wrong... Try again',
+      transformErrorResponse: (response: IErrorResponse) => `${response.data[0].ErrorMessage}`,
     }),
   }),
 });

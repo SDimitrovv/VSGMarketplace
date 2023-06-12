@@ -37,7 +37,7 @@ const RowComponent = ({ product, setProducts }: RowComponentProps) => {
             </p>
         )
     };
-    
+
     return (
         <>
             <EditProductModal setProducts={setProducts} product={product} showEditModal={showEditModal} setShowEditModal={setShowEditModal} />

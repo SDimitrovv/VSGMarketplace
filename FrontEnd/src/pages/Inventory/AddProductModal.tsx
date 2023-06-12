@@ -107,8 +107,8 @@ const AddProductModal = ({
                             error={Boolean(errors.code)}
                             helperText={errors.code?.message}
                             {...register('code', {
-                                required: 'Code field is required',
-                            })}
+                               required: 'Code field is required',
+                           })}
                         />
                         <TextField
                             className='formInput'

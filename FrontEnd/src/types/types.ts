@@ -69,6 +69,14 @@ export interface ILocation {
     id: number;
 }
 
+export interface IErrorResponse {
+    status: number;
+    data: {
+        Code: number;
+        ErrorMessage: string;
+    }[];
+}
+
 export interface IUser {
     email: string;
     token: string;
