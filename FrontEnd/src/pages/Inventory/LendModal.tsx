@@ -31,16 +31,16 @@ const LendModal = ({
     setShowLendModal,
 }: LendModalProps) => {
     const [createLend] = useCreateLendMutation();
-    const [employees, setEmployees] = useState<{ label: string, value: string }[]>([])
+    const [employees, setEmployees] = useState<{ label: string; value: string }[]>([]);
     const { data: users } = useGetEmployeesQuery();
     const {
         handleSubmit,
         formState: { errors, isSubmitting },
         reset,
-        control
+        control,
     } = useForm<ILendInputs>({
         defaultValues: {
-            email: { label: '', value: '' },
+            email: null,
             quantity: null,
         },
         mode: 'onChange',
@@ -48,23 +48,31 @@ const LendModal = ({
 
     useEffect(() => {
         if (users) {
-            setEmployees(users.map((e) => (
-                {
+            setEmployees(
+                users.map(e => ({
                     label: e.name,
-                    value: e.email
-                }
-            )));
+                    value: e.email,
+                }))
+            );
         }
-    }, [users])
-
+    }, [users]);
 
     const onSubmit = async (data: ILendInputs): Promise<void> => {
-        const response = await createLend({ productId: product.id, email: data.email.value, quantity: data.quantity });
+        const email = (data.email as { label: string; value: string; }).value;
+        const response = await createLend({
+            productId: product.id,
+            email: email,
+            quantity: data.quantity,
+        });
         if ('data' in response) {
-            setProducts(oldProducts => oldProducts.map(p =>
-                p.id === product.id
-                    ? { ...p, quantityForLend: (p.quantityForLend as number) - (data.quantity as number), quantity: (p.quantity as number) - (data.quantity as number) }
-                    : p)
+            setProducts((oldProducts) =>
+                oldProducts.map((p) =>
+                    p.id === product.id ? {
+                        ...p,
+                        quantityForLend: (p.quantityForLend as number) - (data.quantity as number),
+                        quantity: (p.quantity as number) - (data.quantity as number),
+                    } : p
+                )
             );
             toast.success('Lent successfully!');
             setShowLendModal(false);
@@ -90,14 +98,22 @@ const LendModal = ({
                             render={({ field: { onChange, value } }) => (
                                 <Autocomplete
                                     className='formInput'
-                                    onChange={(e, item) => {
-                                        console.log(e);
-                                        onChange(item)
-                                    }}
                                     options={employees}
-                                    renderInput={(params) =>
-                                        <TextField variant='standard' value={value} {...params} label="Email *" />
-                                    }
+                                    value={value as { label: string; value: string; }}
+                                    onChange={(e, item) => {
+                                        e;
+                                        onChange(item);
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            error={Boolean(errors.email)}
+                                            helperText={errors.email?.message}
+                                            className='formInput'
+                                            variant='standard'
+                                            label='Email *'
+                                            {...params}
+                                        />
+                                    )}
                                 />
                             )}
                         />
@@ -107,22 +123,26 @@ const LendModal = ({
                             rules={{
                                 required: {
                                     value: true,
-                                    message: 'Quantity field is required'
-                                }
+                                    message: 'Quantity field is required',
+                                },
                             }}
                             render={({ field: { onChange, value } }) => (
                                 <FormControl variant='standard' className='formInput'>
                                     <InputLabel focused={false}>Quantity *</InputLabel>
                                     <Select
                                         value={value || ''}
-                                        error={Boolean(errors.quantity)}
                                         onChange={onChange}
+                                        error={Boolean(errors.quantity)}
                                     >
-                                        {Array(product.quantityForLend).fill(1).map((n, i) => n + i).map((o) => (
-                                            <MenuItem value={o} key={o}>
-                                                {o}
-                                            </MenuItem>
-                                        ))}
+                                        {Array(product.quantityForLend)
+                                            .fill(1)
+                                            .map((n, i) => n + i)
+                                            .map((o) => (
+                                                <MenuItem value={o} key={o}>
+                                                    {o}
+                                                </MenuItem>
+                                            ))
+                                        }
                                     </Select>
                                     <FormHelperText error>
                                         {errors.quantity && errors.quantity.message}
@@ -132,15 +152,19 @@ const LendModal = ({
                         />
                     </div>
                     <div className='rightModal'>
-                        <img className='currentImg' src={product.imageUrl || imagePlaceholder} />
+                        <img
+                            className='currentImg'
+                            src={product.imageUrl || imagePlaceholder}
+                        />
                     </div>
                 </div>
-                {isSubmitting
-                    ? <CircularProgress className='circular' />
-                    : <button type='submit'>Lend</button>
-                }
+                {isSubmitting ? (
+                    <CircularProgress className='circular' />
+                ) : (
+                    <button type='submit'>Lend</button>
+                )}
             </form>
-        </Modal >
+        </Modal>
     );
 };
 

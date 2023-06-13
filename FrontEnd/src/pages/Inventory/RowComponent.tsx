@@ -6,9 +6,9 @@ import { Fade } from '@mui/material'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditProductModal from './EditProductModal.tsx';
 import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
+import LendModal from './LendModal.tsx';
 import EditIcon from '@mui/icons-material/Edit';
 import Popup from '../../components/Popup.tsx';
-import LendModal from './LendModal.tsx';
 
 type RowComponentProps = {
     product: IProduct;

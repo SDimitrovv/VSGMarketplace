@@ -55,7 +55,7 @@ export interface IFormInputs {
 }
 
 export interface ILendInputs {
-    email: { label: string, value: string };
+    email: { label: string, value: string } | null;
     quantity: number | null;
 }
 
