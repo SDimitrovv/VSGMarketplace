@@ -5,18 +5,19 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
 import DevicesIcon from '@mui/icons-material/Devices';
-import { useGetUsersQuery } from '../utils/userApi';
+import { IUser, IEmployee } from '../types/types';
 import { instance } from '../../authConfig';
 import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
-import { IUser } from '../types/types';
 
-const Sidebar = () => {
-    const { data: users } = useGetUsersQuery();
-    const user: IUser = JSON.parse(sessionStorage.getItem('user') as string);
-    const currentUser = users?.find(u => u.name === user.name);
-    const isAdmin = user?.memberType === 'Admin';
-    const profileName = user?.name.split(' ')[0];
+type SidebarProps = {
+    loggedUser: IUser;
+    userInfo: IEmployee;
+}
+
+const Sidebar = ({ loggedUser, userInfo }: SidebarProps) => {
+    const isAdmin = loggedUser?.memberType === 'Admin';
+    const profileName = loggedUser?.name.split(' ')[0];
     const onLogout = () => {
         instance.logoutRedirect({
             postLogoutRedirectUri: '/',
@@ -26,7 +27,7 @@ const Sidebar = () => {
     return (
         <aside>
             <div className='profileGreet profileGreet2'>
-                <Avatar src={currentUser?.avatar || '/images/profile-image.png'} alt='Profile-picture' />
+                <Avatar src={userInfo?.avatar || '/images/profile-image.png'} alt='Profile-picture' />
                 <span>Hi, {profileName}</span>
             </div>
             <nav>

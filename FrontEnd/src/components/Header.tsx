@@ -1,20 +1,21 @@
-import CloseIcon from '@mui/icons-material/Close';
-import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
-import { IUser } from '../types/types';
-import { useGetUsersQuery } from '../utils/userApi';
+import { IEmployee, IUser } from '../types/types';
 import { Avatar } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
 
-const Header = () => {
+type HeaderProps = {
+    loggedUser: IUser;
+    userInfo: IEmployee;
+}
+
+const Header = ({ loggedUser, userInfo }: HeaderProps) => {
     const location = useLocation();
     const path = location.pathname.replace('/', '');
     const headerName = useRef(path);
 
-    const { data: users } = useGetUsersQuery();
-    const user: IUser = JSON.parse(sessionStorage.getItem('user') as string);
-    const currentUser = users?.find(u => u.name === user.name);
-    const profileName = user?.name.split(' ')[0];
+    const profileName = loggedUser?.name.split(' ')[0];
 
     const root = document.querySelector('#root') as HTMLElement;
 
@@ -57,7 +58,7 @@ const Header = () => {
             <span id='pageTitle'>{headerName.current}</span>
             <div className='profileGreet'>
                 <span>Hi, {profileName}</span>
-                <Avatar src={currentUser?.avatar || '/images/profile-image.png'} alt='Profile-picture' />
+                <Avatar src={userInfo?.avatar || '/images/profile-image.png'} alt='Profile-picture' />
             </div>
             <a id='hamburger' onClick={onHamburger}>
                 <MenuIcon />

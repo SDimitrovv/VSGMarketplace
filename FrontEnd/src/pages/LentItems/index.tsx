@@ -1,14 +1,14 @@
 import { AccordionSummary, AccordionDetails, Avatar, Fade, Accordion } from '@mui/material';
 import { ILendItem, IUserLentItems } from '../../types/types.ts';
 import { useGetLentItemsQuery } from '../../services/lendService.ts';
-import { useGetUsersQuery } from '../../utils/userApi.ts';
+import { useGetEmployeesQuery } from '../../utils/userApi.ts';
 import LentItemsComponent from './LentItemsComponent.tsx';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Typography';
 
 const LentItems = () => {
     const { data: lentItems, isLoading } = useGetLentItemsQuery();
-    const { data: employees } = useGetUsersQuery();
+    const { data: employees } = useGetEmployeesQuery();
 
     return (
         <main id='lendOrdersMain'>

@@ -3,7 +3,7 @@ import { useCreateLendMutation } from '../../services/lendService.ts';
 import { ILendInputs, IProduct } from '../../types/types.ts';
 import { useForm, Controller } from 'react-hook-form';
 import { imagePlaceholder } from '../../utils/imagePlaceholder.ts';
-import { useGetUsersQuery } from '../../utils/userApi.ts';
+import { useGetEmployeesQuery } from '../../utils/userApi.ts';
 import { toast } from 'react-toastify';
 import Modal from '../../components/Modal.tsx';
 import {
@@ -32,7 +32,7 @@ const LendModal = ({
 }: LendModalProps) => {
     const [createLend] = useCreateLendMutation();
     const [employees, setEmployees] = useState<{ label: string, value: string }[]>([])
-    const { data: users } = useGetUsersQuery();
+    const { data: users } = useGetEmployeesQuery();
     const {
         handleSubmit,
         formState: { errors, isSubmitting },

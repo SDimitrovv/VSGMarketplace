@@ -10,11 +10,11 @@ const Navigation = () => {
             <Routes>
                 <Route index element={<Home />} />
                 <Route path='*' element={<NotFound />} />
-                <Route element={<UserRoute />}>
-                    <Route path='marketplace' element={<Layout ><Marketplace /></Layout>} />
-                    <Route path='my-orders' element={<Layout ><MyOrders /></Layout>} />
-                    <Route path='my-items' element={<Layout ><MyItems /></Layout>} />
-                    <Route element={<Layout ><AdminRoute /></Layout>} >
+                <Route element={<Layout ><UserRoute /></Layout>}>
+                    <Route path='marketplace' element={<Marketplace />} />
+                    <Route path='my-orders' element={<MyOrders />} />
+                    <Route path='my-items' element={<MyItems />} />
+                    <Route element={<AdminRoute />} >
                         <Route path='inventory' element={<Inventory />} />
                         <Route path='pending-orders' element={<PendingOrders />} />
                         <Route path='lent-items' element={<LentItems />} />

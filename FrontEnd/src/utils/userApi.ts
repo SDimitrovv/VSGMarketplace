@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEmployee, IEmployeesResponse } from "types/types";
 
 const baseUrl = 'https://sm-server.netlify.app/.netlify/functions/get_all_employees_data_from_bob';
+const GetEmployees = 'getEmployees';
 
 export const userApi = createApi({
   reducerPath: "userAPI",
@@ -9,7 +10,7 @@ export const userApi = createApi({
     baseUrl: baseUrl,
   }),
   endpoints: (builder) => ({
-    getUsers: builder.query<IEmployee[], void>({
+    [GetEmployees]: builder.query<IEmployee[], void>({
       query: () => ({
         url: "",
         headers: {
@@ -22,4 +23,4 @@ export const userApi = createApi({
   keepUnusedDataFor: 86400,
 });
 
-export const { useGetUsersQuery } = userApi;
+export const { useGetEmployeesQuery } = userApi;
