@@ -96,7 +96,7 @@ const LendModal = ({
                                     }}
                                     options={employees}
                                     renderInput={(params) =>
-                                        <TextField variant='standard' value={value} {...params} label="Email" />
+                                        <TextField variant='standard' value={value} {...params} label="Email *" />
                                     }
                                 />
                             )}
