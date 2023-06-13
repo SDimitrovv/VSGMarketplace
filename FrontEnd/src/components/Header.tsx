@@ -3,13 +3,17 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { IUser } from '../types/types';
+import { useGetUsersQuery } from '../utils/userApi';
+import { Avatar } from '@mui/material';
 
 const Header = () => {
     const location = useLocation();
     const path = location.pathname.replace('/', '');
     const headerName = useRef(path);
 
+    const { data: users } = useGetUsersQuery();
     const user: IUser = JSON.parse(sessionStorage.getItem('user') as string);
+    const currentUser = users?.find(u => u.name === user.name);
     const profileName = user?.name.split(' ')[0];
 
     const root = document.querySelector('#root') as HTMLElement;
@@ -53,7 +57,7 @@ const Header = () => {
             <span id='pageTitle'>{headerName.current}</span>
             <div className='profileGreet'>
                 <span>Hi, {profileName}</span>
-                <img src='/images/profile-image.png' alt='Profile-picture' />
+                <Avatar src={currentUser?.avatar || '/images/profile-image.png'} alt='Profile-picture' />
             </div>
             <a id='hamburger' onClick={onHamburger}>
                 <MenuIcon />

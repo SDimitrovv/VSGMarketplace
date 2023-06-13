@@ -55,7 +55,7 @@ export interface IFormInputs {
 }
 
 export interface ILendInputs {
-    email: string;
+    email: { label: string, value: string };
     quantity: number | null;
 }
 
@@ -82,4 +82,14 @@ export interface IUser {
     token: string;
     name: string;
     memberType: string;
+}
+
+export interface IEmployee {
+    avatar: string;
+    name: string;
+    email: string;
+}
+
+export interface IEmployeesResponse {
+    employees: IEmployee[]
 }

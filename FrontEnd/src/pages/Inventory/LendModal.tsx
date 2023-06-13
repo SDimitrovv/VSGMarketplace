@@ -1,12 +1,14 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useCreateLendMutation } from '../../services/lendService.ts';
 import { ILendInputs, IProduct } from '../../types/types.ts';
 import { useForm, Controller } from 'react-hook-form';
 import { imagePlaceholder } from '../../utils/imagePlaceholder.ts';
+import { useGetUsersQuery } from '../../utils/userApi.ts';
 import { toast } from 'react-toastify';
 import Modal from '../../components/Modal.tsx';
 import {
     TextField,
+    Autocomplete,
     FormControl,
     InputLabel,
     Select,
@@ -29,22 +31,35 @@ const LendModal = ({
     setShowLendModal,
 }: LendModalProps) => {
     const [createLend] = useCreateLendMutation();
+    const [employees, setEmployees] = useState<{ label: string, value: string }[]>([])
+    const { data: users } = useGetUsersQuery();
     const {
-        register,
         handleSubmit,
         formState: { errors, isSubmitting },
         reset,
         control
     } = useForm<ILendInputs>({
         defaultValues: {
-            email: '',
+            email: { label: '', value: '' },
             quantity: null,
         },
         mode: 'onChange',
     });
 
+    useEffect(() => {
+        if (users) {
+            setEmployees(users.map((e) => (
+                {
+                    label: e.name,
+                    value: e.email
+                }
+            )));
+        }
+    }, [users])
+
+
     const onSubmit = async (data: ILendInputs): Promise<void> => {
-        const response = await createLend({ productId: product.id, ...data });
+        const response = await createLend({ productId: product.id, email: data.email.value, quantity: data.quantity });
         if ('data' in response) {
             setProducts(oldProducts => oldProducts.map(p =>
                 p.id === product.id
@@ -63,14 +78,28 @@ const LendModal = ({
                 <div className='row'>
                     <div className='leftModal'>
                         <h2>Lend Item</h2>
-                        <TextField
-                            className='formInput'
-                            type='text'
-                            label='Email *'
-                            variant='standard'
-                            error={Boolean(errors.email)}
-                            helperText={errors.email?.message}
-                            {...register('email', { required: 'Email field is required' })}
+                        <Controller
+                            control={control}
+                            name='email'
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: 'Email field is required'
+                                }
+                            }}
+                            render={({ field: { onChange, value } }) => (
+                                <Autocomplete
+                                    className='formInput'
+                                    onChange={(e, item) => {
+                                        console.log(e);
+                                        onChange(item)
+                                    }}
+                                    options={employees}
+                                    renderInput={(params) =>
+                                        <TextField variant='standard' value={value} {...params} label="Email" />
+                                    }
+                                />
+                            )}
                         />
                         <Controller
                             control={control}
